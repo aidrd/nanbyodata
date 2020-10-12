@@ -1,0 +1,146 @@
+@font-face {
+	font-family: 'Glyphicons Halflings';
+	src: url('../fonts/bootstrap/glyphicons-halflings-regular.eot');
+	src: url('../fonts/bootstrap/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('../fonts/bootstrap/glyphicons-halflings-regular.woff2') format('woff2'), url('../fonts/bootstrap/glyphicons-halflings-regular.woff') format('woff'), url('../fonts/bootstrap/glyphicons-halflings-regular.ttf') format('truetype'), url('../fonts/bootstrap/glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg');
+}
+.glyphicon {
+	position: relative;
+	top: 1px;
+	display: inline-block;
+	font-family: 'Glyphicons Halflings';
+	font-style: normal;
+	font-weight: normal;
+	line-height: 1;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+.glyphicon-info-sign:before {
+	content: "\e086";
+}
+
+#tokeninput {
+	width: 80%;
+	margin: 0px auto;
+}
+ul.token-input-list-facebook {
+	width: 80%;
+	margin: 10px auto;
+}
+
+ul.token-input-list-facebook li input {
+	font-size: 16px;
+}
+
+li.token-input-token-result-facebook {
+	font-size:16px;
+}
+
+li.token-input-token-result-facebook span.token-input-token-word-facebook.token-input-token-information-facebook {
+	top: 4px;
+	font-size:20px;
+}
+li.token-input-token-result-facebook span.token-input-token-word-facebook.token-input-token-id-facebook {
+	font-size:14px;
+}
+li.token-input-token-result-facebook span.token-input-token-word-facebook.token-input-token-name-facebook {
+/*	font-weight: bold !important;*/
+}
+li.token-input-token-result-facebook span.token-input-token-word-facebook.token-input-token-name-facebook {
+	color: #3777B5 !important;
+}
+li.token-input-token-result-facebook.token-input-selected-dropdown-item-facebook span.token-input-token-word-facebook.token-input-token-name-facebook {
+/*	color: inherit !important;	/* マウスオーバー時の色をとりあえず、デフォルトにしておく */
+/*	color: #D0E8FF !important;*/
+/*	color: #f5c6ce !important;*/
+	color: #f5d7dc !important;
+}
+
+li.token-input-token-result-facebook span.token-input-token-word-facebook.token-input-token-information-facebook {
+/*	cursor: pointer !important;*/
+}
+li.token-input-token-result-facebook span.token-input-token-word-facebook.token-input-token-synonym-facebook {
+/*	color: #3777B5 !important;*/
+}
+
+div.token-input-dropdown-facebook {
+	overflow: auto;
+}
+
+div.token-input-dropdown-number-of-hits-facebook {
+	color: #707070;
+	font-weight: bold;
+	padding: 4px;
+}
+
+.popup-hierarchy-hpo-results-tooltip-facebook {
+}
+.popup-hierarchy-hpo-results-tooltip-title-facebook {
+	display: none;
+	color: #fff;
+	background-color: #bfbfbf;
+	font-weight: bold;
+	padding: 4px;
+}
+
+.popup-hierarchy-hpo-content-table-facebook {
+	display:table;
+	border-collapse:separate;
+	border-spacing: 2px;
+/*	width:100%;*/
+	margin: 0 auto;
+}
+.popup-hierarchy-hpo-content-tr-facebook {
+	display:table-row;
+}
+.popup-hierarchy-hpo-content-th-facebook {
+	display:table-cell;
+	text-align: left;
+	vertical-align: top;
+	font-weight: bold;
+	white-space: nowrap;
+	width: 1%;
+}
+.popup-hierarchy-hpo-content-td-facebook {
+	display:table-cell;
+	text-align: left;
+	vertical-align: top;
+}
+.popup-hierarchy-hpo-content-td-colon-facebook {
+	display:table-cell;
+	text-align: center;
+	vertical-align: top;
+	white-space: nowrap;
+	width: 1%;
+}
+
+.popup-hierarchy-hpo-results-tooltip-facebook .popup-hierarchy-hpo-content-table-facebook {
+	background-color: #ffffff;
+	color: #4B5270;
+	border: 0px solid #2A3356;
+	border-radius: 6px;
+	padding: 10px;
+/*	box-shadow: 0px 0px 5px 5px rgba(42,51,86,0.5);*/
+	box-shadow: 0 24px 38px 3px rgba(0,0,0,0.14),
+              0 9px 46px 8px rgba(0,0,0,0.12),
+              0 11px 15px -7px rgba(0,0,0,0.2);
+	width: 100%;
+}
+
+.popup-hierarchy-hpo-results-tooltip-facebook .popup-hierarchy-hpo-content-table-facebook .popup-hierarchy-hpo-content-td-facebook
+{
+	color: #848484;
+}
+.popup-hierarchy-hpo-results-tooltip-facebook .popup-hierarchy-hpo-content-table-facebook .popup-hierarchy-hpo-content-td-id-facebook,
+.popup-hierarchy-hpo-results-tooltip-facebook .popup-hierarchy-hpo-content-table-facebook .popup-hierarchy-hpo-content-td-name-facebook,
+.popup-hierarchy-hpo-results-tooltip-facebook .popup-hierarchy-hpo-content-table-facebook .popup-hierarchy-hpo-content-td-english-facebook
+{
+/*
+	color: #707070;
+	font-weight: bold;
+*/
+}
+.popup-hierarchy-hpo-results-tooltip-facebook .popup-hierarchy-hpo-content-table-facebook .popup-hierarchy-hpo-content-td-name-facebook,
+.popup-hierarchy-hpo-results-tooltip-facebook .popup-hierarchy-hpo-content-table-facebook .popup-hierarchy-hpo-content-td-english-facebook
+{
+	color: #3777B5;
+}
