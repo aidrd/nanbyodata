@@ -1007,3 +1007,33 @@ a[target="_blank"]::after {
 #service-disease {
   margin-top: 0px;
 }
+
+/* イラスト追加CSS始め*/
+.illustWrapper {
+  display: flex;
+  margin-bottom: 50px;
+  justify-content: center;
+}
+.illustcard {
+  width: 290px;
+  height: auto;
+  border-radius: 0;
+  margin: 0 20px;
+  border: none;
+}
+.illust-body .icon2 {
+  height: 280px;
+  padding-bottom: 5px;
+  display: block;
+  margin: 0 auto;
+}
+.illust-body .illust-title {
+  text-align: center;
+  font-size: 17px;
+  color: #13295A;
+  letter-spacing: 1px;
+}
+.illust-body .illust-text {
+  text-align: left;
+}
+/* イラスト追加CSS終了*/
