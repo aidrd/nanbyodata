@@ -23,6 +23,8 @@ ul.token-input-list-facebook {
     box-shadow: none;
     height: 44px;
     margin: 0 auto;
+    /*追加*/
+    border-radius: 30px;
 }
 
 ul.token-input-list-facebook li input {

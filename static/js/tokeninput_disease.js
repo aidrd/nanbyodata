@@ -18,3 +18,16 @@
 		},{theme:'facebook',placeholder:"疾患名を入力"});
 	});
 }(jQuery));
+
+$(function() {
+    $('#token-input-tokeninput').keyup(function() {
+	if ($(this).val()) {
+	    $('.token-input-list-facebook').css('border-radius', '24px 24px 0 0');
+	    } else {
+		$('.token-input-list-facebook').css('border-radius', '30px');
+		}
+	});
+    $('#token-input-tokeninput').blur(function() {
+	$('.token-input-list-facebook').css('border-radius', '30px');
+	});
+});
