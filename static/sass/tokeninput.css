@@ -24,7 +24,9 @@
 }
 ul.token-input-list-facebook {
 	width: 80%;
-	margin: 10px auto;
+	margin: 0 auto;
+	margin-top: 10px;
+	margin-bottom: 19px;
 }
 
 ul.token-input-list-facebook li input {
