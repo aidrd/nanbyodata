@@ -8,6 +8,7 @@ import json
 import sys
 import datetime
 import copy
+import pronto
 #import mojimoji
 #from werkzeug import secure_filename
 from io import StringIO, BytesIO
@@ -15,6 +16,7 @@ import csv
 # https://blog.capilano-fw.com/?p=398
 from flask_babel import gettext,Babel
 from flask_cors import CORS
+
 
 
 app = Flask(__name__)
@@ -91,10 +93,50 @@ def nando_file(filename):
 @app.route('/disease/NANDO:<string:id_nando>', methods=['GET'])
 def REST_API_disease(id_nando=""):
     if request.method == 'GET':
+
+        # parse nando.ttl
+        onto = pronto.Ontology('/opt/services/case/app/nanbyodata/ontology/nando.obo')
+        breadcrumb_list_html = ""
+        sup = onto[id_nando].superclasses()
+        pre_term = next(sup)
+        subclass_list_html = make_selector_subclasses(onto, pre_term.id, "")
+        breadcrumb_list_html = ' (' + subclass_list_html + ') ' if subclass_list_html != "" else ""
+        while True:
+            try:
+                term = next(sup)
+                subclass_list_html = make_selector_subclasses(onto, term.id, pre_term.id)
+                breadcrumb_list_html = ' > ' + subclass_list_html + breadcrumb_list_html
+                pre_term = term
+            except StopIteration:
+                break
+        breadcrumb_list_html = '<font size="2">難病</font>' + breadcrumb_list_html
+
         return render_template('disease.html',
-                               id_nando=id_nando)
+                               id_nando=id_nando,
+                               breadcrumb_list_html=breadcrumb_list_html
+        )
     else:
         return render_template('index.html')
 
     return
+
+
+def make_selector_subclasses(onto, id_nando, pre_id_nando):
+    html_selector = ""
+    flag_subclass = 0
+    sub = onto[id_nando].subclasses(with_self=False, distance=1)
+    html_selector = '<select name="' + pre_id_nando + '" style="width:150px;" onChange="location.href=value;"><br>'
+    html_selector = html_selector + '<option>下位疾患</option><br>' if pre_id_nando == "" else html_selector
+    while True:
+        try:
+            term = next(sub)
+            html_selected = " selected" if term.id == pre_id_nando else ""
+            html_selector = html_selector + '<option value="https://nanbyodata.jp/disease/NANDO:' + term.id + '"' + html_selected + '>' + term.name + '</option><br>'
+            flag_subclass = 1
+        except StopIteration:
+            break
+    html_selector = html_selector + '</select>'
+    html_selector = html_selector if flag_subclass == 1 else ""
+
+    return html_selector
 

@@ -25,8 +25,8 @@
 	<!-- TogoStanza -->
 	<!--script src="/static/js/webcomponents-loader.js"></script-->
 	<script src="https://cdn.jsdelivr.net/npm/@webcomponents/webcomponentsjs@1.3.0/webcomponents-loader.js" crossorigin></script>
-	<link rel="import" href="https://nanbyodata.jp/togostanza/nando_entry/" />
-	<link rel="import" href="https://nanbyodata.jp/togostanza/medgen_entry/" />
+	<link rel="import" href="https://nanbyodata.jp/stanza/nando_entry/" />
+	<link rel="import" href="https://nanbyodata.jp/stanza/medgen_entry/" />
 
 </head>
 
@@ -93,11 +93,9 @@
 		<!-- Contents -->
                 <section id="service">
                   <div class="container" id="nando">
+		    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ breadcrumb_list_html |safe }}
 		    <togostanza-nando_entry nando_id='{{ id_nando }}'></togostanza-nando_entry>
 		  </div>
-                  <!--div class="container" id="medgen">
-		    <togostanza-medgen_entry nando_id='{{ id_nando }}'></togostanza-medgen_entry>
-		  </div-->
 		</section>
 
 		<!--- modal　内容 -->
