@@ -1,0 +1,27 @@
+{
+  "@context": {
+    "stanza": "http://togostanza.org/resource/stanza#"
+  },
+  "@id": "nando_entry",
+  "stanza:label": "NANDO class",
+  "stanza:definition": "Retreve a NANDO class",
+  "stanza:parameter": [
+    {
+      "stanza:key": "nando_id",
+      "stanza:example": "1200004",
+      "stanza:required": true
+    }
+  ],
+  "stanza:usage": "<togostanza-nando_entry nando_id='1200004'></togostanza-nando_entry>",
+  "stanza:type": "Stanza",
+  "stanza:context": "",
+  "stanza:display": "",
+  "stanza:provider": "DBCLS",
+  "stanza:license": "CC-BY 4.0",
+  "stanza:author": "Shuichi Kawashima",
+  "stanza:address": "kwsm@dbcls.rois.ac.jp",
+  "stanza:contributor": [
+  ],
+  "stanza:created": "2020-08-06",
+  "stanza:updated": "2020-08-06"
+}

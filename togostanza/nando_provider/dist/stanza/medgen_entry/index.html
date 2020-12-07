@@ -1,0 +1,56 @@
+
+
+<script src="../assets/js/stanza.js"></script>
+<script>
+  (function() {
+    const descriptor = {"templates":{"._stanza.html":"\u0000\u0005\u0016\u0007\u0000\u0002\u0000\u0000Mac OS X        \u0000\u0002\u0000\u0000\u0000\t\u0000\u0000\u00002\u0000\u0000\u0000\ufffd\u0000\u0000\u0000\u0002\u0000\u0000\u0000\ufffd\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000ATTR\u0000\u0000\u0000\u0000\u0000\u0000\u0000\ufffd\u0000\u0000\u0000\ufffd\u0000\u0000\u0000;\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0001\u0000\u0000\u0000\ufffd\u0000\u0000\u0000;\u0000\u0000\u0015com.apple.quarantine\u0000q/0081;5f6dd2b7;Skype;DB586B07-DEF1-4316-A3B9-A17883C13C13\u0000","stanza.html":"\u003cstyle\u003e\n  @import url('https://nanbyodata.jp/static/sass/main.css');\n\u003c/style\u003e\n\u003cdiv id=\"data-wrapper\"\u003e\n  \u003cdiv class=\"data_table\"\u003e\n    \u003cdiv class=\"data_list\"\u003e\n      \u003ch3\u003eMedGen:\u003c/h3\u003e\n      \u003cp\u003e\u003ca href=\"{{result.medgen}}\"\u003e{{result.medgen_id}}\u003c/a\u003e\u003c/p\u003e\n    \u003c/div\u003e\n    \u003cdiv class=\"data_list\"\u003e\n      \u003ch3\u003eConcept ID:\u003c/h3\u003e\n      \u003cp\u003e\u003ca href=\"{{result.concept}}\"\u003e{{result.concept_id}}\u003c/a\u003e\u003c/p\u003e\n    \u003c/div\u003e\n  \u003c/div\u003e\n  \u003cdetails open\u003e\n    \u003csummary\u003eDefinition\u003c/summary\u003e\n    \u003cdiv class=\"text\"\u003e\n      {{result.definition}}\n    \u003c/div\u003e\n  \u003c/details\u003e\n  \u003cdetails open\u003e\n    \u003csummary\u003eSynonyms\u003c/summary\u003e\n    \u003cdiv class=\"text\"\u003e\n    {{#each result.labels}}\n      {{this}}\u003cbr/\u003e\n    {{/each}}\n    \u003c/div\u003e\n  \u003c/details\u003e\n\u003c/div\u003e\n","stanza.html~":"\u003cstyle\u003e\n  @import url('http://localhost/DBCLS/nanbyo/NanbyoData_files/main.css');\n\u003c/style\u003e\n\u003cdiv id=\"data-wrapper\"\u003e\n  \u003cdiv class=\"data_table\"\u003e\n    \u003cdiv class=\"data_list\"\u003e\n      \u003ch3\u003eMedGen:\u003c/h3\u003e\n      \u003cp\u003e\u003ca href=\"{{result.medgen}}\"\u003e{{result.medgen_id}}\u003c/a\u003e\u003c/p\u003e\n    \u003c/div\u003e\n    \u003cdiv class=\"data_list\"\u003e\n      \u003ch3\u003eConcept ID:\u003c/h3\u003e\n      \u003cp\u003e\u003ca href=\"{{result.concept}}\"\u003e{{result.concept_id}}\u003c/a\u003e\u003c/p\u003e\n    \u003c/div\u003e\n  \u003c/div\u003e\n  \u003cdetails open\u003e\n    \u003csummary\u003eDefinition\u003c/summary\u003e\n    \u003cdiv class=\"text\"\u003e\n      {{result.definition}}\n    \u003c/div\u003e\n  \u003c/details\u003e\n  \u003cdetails open\u003e\n    \u003csummary\u003eSynonyms\u003c/summary\u003e\n    \u003cdiv class=\"text\"\u003e\n    {{#each result.labels}}\n      {{this}}\u003cbr/\u003e\n    {{/each}}\n    \u003c/div\u003e\n  \u003c/details\u003e\n\u003c/div\u003e\n"},"parameters":["nando_id"],"elementName":"togostanza-medgen_entry","development":false};
+
+    if ('Promise' in window && 'URLSearchParams' in window && 'fetch' in window) {
+      const Stanza = TogoStanza.initialize(descriptor);
+
+      Stanza(function(stanza, params) {
+
+  let formBody = [];
+
+  for (let key in params) {
+    if(params[key]) formBody.push(key + "=" + encodeURIComponent(params[key]));
+  }
+
+  let options = {
+    method: "POST",
+    mode:  "cors",
+    body: formBody.join("&"),
+    headers: {
+      "Accept": "application/json",
+      "Content-Type": "application/x-www-form-urlencoded"
+    }
+  };
+
+  console.log(options);
+
+  let apiUrl = "https://nanbyodata.jp/sparqlist/api/";
+  let apiName = "get_medgen_entry_by_nando_id";
+  let q = fetch(apiUrl + apiName, options).then(res => res.json());
+
+  q.then(function(json) {
+
+    console.log(json);
+    let data = json[0];
+    data.labels_ary = json[0].labels.join("; ");
+
+    stanza.render({
+      template: "stanza.html",
+      parameters: {
+        result: json[0]
+      }
+    });
+  });
+});
+
+    } else {
+      const element = document.querySelector(descriptor.elementName);
+
+      element.innerHTML = "<p>Your Web browser does not support the features required for the stanza to work. If you are using Internet Explorer 11, placing the following snippet before loading webcomponents-loader.js may resolve this issue:</p>\n<pre><code>&lt;script src=\"https://cdn.jsdelivr.net/combine/npm/@babel/polyfill@7.2.5/dist/polyfill.min.js,npm/@ungap/url-search-params@0.1.2/min.js,npm/whatwg-fetch@3.0.0/dist/fetch.umd.js\" crossorigin&gt;&lt;/script&gt;</code></pre>";
+    }
+  })();
+</script>

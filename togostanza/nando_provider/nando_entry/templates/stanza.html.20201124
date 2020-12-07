@@ -1,0 +1,79 @@
+<style>
+  @import url('https://nanbyodata.jp/static/sass/main.css');
+</style>
+<div id="data-wrapper">
+  <div class="data_table">
+    <div class="data_number">
+      <h3>NANDO ID:<span>{{result.nando_id}}</span></h3>
+      <h3>告示番号:<span>{{result.notification_number}}</span></h3>
+    </div>
+    <div class="data_title">
+      <h2>{{result.label_ja}}</h2>
+      <h3>{{result.label_en}}</h3>
+    </div>
+    <div class="data-list">
+      <div class="list-wrapper">
+        <h3>別疾患名(日):</h3>
+        <div class="list-contents">
+	  <p>{{result.alt_label_ja_string}}</p>
+        </div>
+      </div>
+      <div class="list-wrapper">
+        <h3>別疾患名(英):</h3>
+        <div class="list-contents">
+	  <p>{{result.alt_label_en_string}}</p>
+        </div>
+      </div>
+      <div class="list-wrapper">
+        <h3>MedGen:</h3>
+        <div class="list-contents">
+	  <p><a href="{{result.medgen_uri}}">{{result.medgen_id}}</a></p>
+        </div>
+      </div>
+      <div class="list-wrapper">
+        <h3>Monarch Initiative:</h3>
+        <div class="list-contents">
+	  <p>
+            {{#each result.mondos}}
+            <a href="https://monarchinitiative.org/disease/{{id}}">{{id}}</a>
+            {{/each}}
+	  </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="link-wrapper">
+    {{#if result.mhlw.url}}
+    <div class="data-link">
+      <span><a href="{{result.mhlw.url}}" target="_blank">概要、診断基準等</a></span>
+    </div>
+    {{/if}}
+    {{#if result.nanbyou.url}}
+    <div class="data-link">
+      <span><a href="{{result.nanbyou.url}}" target="_blank">難病情報センター</a></span>
+    </div>
+    {{/if}}
+    {{#if result.shouman.url}}
+    <div class="data-link">
+      <span><a href="{{result.shouman.url}}" target="_blank">小児慢性特定疾病情報センター</a></span>
+    </div>
+    {{/if}}
+    <div class="data-link">
+      <span><a href="{{result.source}}" target="_blank">臨床調査個人票・医療意見書</a></span>
+    </div>
+  </div>
+
+  <details open>
+    <summary>概要</summary>
+    <div class="text">
+      {{result.description}}
+    </div>
+  </details>
+  <details open>
+    <summary>疾患定義（From MedGen）</summary>
+    <div class="text">
+      {{result.medgen_definition}}
+    </div>
+  </details>
+</div>

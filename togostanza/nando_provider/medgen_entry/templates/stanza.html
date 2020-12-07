@@ -1,0 +1,29 @@
+<style>
+  @import url('https://nanbyodata.jp/static/sass/main.css');
+</style>
+<div id="data-wrapper">
+  <div class="data_table">
+    <div class="data_list">
+      <h3>MedGen:</h3>
+      <p><a href="{{result.medgen}}">{{result.medgen_id}}</a></p>
+    </div>
+    <div class="data_list">
+      <h3>Concept ID:</h3>
+      <p><a href="{{result.concept}}">{{result.concept_id}}</a></p>
+    </div>
+  </div>
+  <details open>
+    <summary>Definition</summary>
+    <div class="text">
+      {{result.definition}}
+    </div>
+  </details>
+  <details open>
+    <summary>Synonyms</summary>
+    <div class="text">
+    {{#each result.labels}}
+      {{this}}<br/>
+    {{/each}}
+    </div>
+  </details>
+</div>
