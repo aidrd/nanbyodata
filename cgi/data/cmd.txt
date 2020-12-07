@@ -1,0 +1,1 @@
+grep -e label -e hasExactSynonym -e altLabel nando.tsv | grep -v prefLabel | cut -f1,3 | sort -u | ./z2h.pl > nando_grep.tsv
