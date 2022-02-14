@@ -109,8 +109,10 @@ if(scalar @ARGV){
 		my $val;
 		my $lang;
 		open(my $IN, $argv) or die qq|$! [$argv]|;
+		warn $argv;
 		while(<$IN>){
-			chomp;
+			#chomp;
+			$_ =~ s/[\r\n]*$//g;
 			next unless(length($_));
 			$_ = &decodeUTF8($_);
 			if(/^:([0-9]+)$/){
@@ -119,7 +121,7 @@ if(scalar @ARGV){
 			}
 			next unless(defined $id);
 
-			if(/^\s+(rdfs:label|skos:altLabel|terms:description)\s+\"(.+)\"\@(ja|en)/){
+			if(/^\s+(rdfs:label|skos:altLabel|dcterms:description)\s+\"(.+)\"\@(ja|en)/){
 				$key = (split(/:/,$1))[1];
 				$val = $2;
 				$lang = $3;

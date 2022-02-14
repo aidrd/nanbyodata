@@ -2,7 +2,8 @@
 	$(document).ready(function () {
 		var tokeninput = $('<div>')
 			.attr({'id':'tokeninput'})
-		        .insertAfter($('#kv-wrap>#mj_head>#container_head>#intro-text_head>#search_head>#blank_head'))
+		        //.insertAfter($('#kv-wrap>#mj_head>#container_head>#intro-text_head>#search_head>#blank_head'))
+		        .insertAfter($('#intro-text_head>#search_head>#blank_head'))
 		;
 		tokeninput.tokenInput(function(){
 			var type = arguments[0];

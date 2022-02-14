@@ -18,6 +18,7 @@ Stanza(function(stanza, params) {
 
   let apiUrl = "https://nanbyodata.jp/sparqlist/api/";
   let apiName = "get_nando_entry_by_nando_id";
+  //let apiName = "test_fujiwara_20210415";
   let q = fetch(apiUrl + apiName, options).then(res => res.json());
 
   q.then(function(json) {

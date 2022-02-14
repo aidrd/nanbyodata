@@ -20,13 +20,14 @@
     return isWindowNavigatorLanguageJa() ? 'ja' : 'en';
   }
   var hintText = "Type in patient's signs and symptoms";
-  var number_of_hits = 'Number of hits [__NUMBER__]';
+//  var number_of_hits = 'Number of hits [__NUMBER__]';
+  var number_of_hits = 'Number of hits&nbsp;&nbsp;&nbsp;Designated Intractable Disease (DID):[__DID_NUMBER__]&nbsp;&nbsp;&nbsp;Specific Chronic Pediatric Diseases (SCPD):[__CCSD_NUMBER__]';
   if(isWindowNavigatorLanguageJa()){
       hintText = "疾患名を入力";
 //      number_of_hits = 'ヒット件数 [__NUMBER__]';
       number_of_hits = 'ヒット件数&nbsp;&nbsp;&nbsp;指定難病(指定):[__DID_NUMBER__]&nbsp;&nbsp;&nbsp;小児慢性特定疾病(小慢):[__CCSD_NUMBER__]';
   }
-  hintText = null;
+//  hintText = null;
 
 //指定難病 Designated intractable disease
 //小児慢性特定疾病 Childhood chronic specific diseases
@@ -90,8 +91,8 @@ var DEFAULT_SETTINGS = {
 				description : 'Description',
 				synonym : 'Synonym',
 				tooltip_title : ['name','description','synonym'],
-				did_abbr : '',
-				ccsd_abbr : ''
+				did_abbr : 'DID',
+				ccsd_abbr : 'SCPD'
 			}
 		},
 
@@ -110,10 +111,14 @@ var DEFAULT_SETTINGS = {
       if(item['id'].indexOf('NANDO:1')===0) abbr = language['did_abbr'];
       if(item['id'].indexOf('NANDO:2')===0) abbr = language['ccsd_abbr'];
       if(abbr.length) abbr = '['+abbr+']';
+      var abbr_class = classes['dropdownItemWord']+' '+classes['dropdownItemAbbr'];
+      if(isWindowNavigatorLanguageJa()){
+        abbr_class = '';
+      }
 
       var value = '<li class="'+classes['dropdownItemResult']+'">'+
                   '<span class="'+classes['dropdownItemWord']+' '+classes['dropdownItemInformation']+' glyphicon glyphicon-info-sign"></span>&nbsp;'+
-                  '<span class="'+classes['dropdownItemWord']+' '+classes['dropdownItemAbbr']+'">' + (this.enableHTML ? abbr : _escapeHTML(abbr)) + '</span>&nbsp;'+
+                  '<span class="'+abbr_class+'">' + (this.enableHTML ? abbr : _escapeHTML(abbr)) + '</span>&nbsp;'+
                   '<span class="'+classes['dropdownItemWord']+' token-input-token-id'+classes['dropdownItemResult']+'">' + (this.enableHTML ? id : _escapeHTML(id)) + '</span>&nbsp;'+
                   '<span class="'+classes['dropdownItemWord']+' '+classes['dropdownItemName']+'">' + (this.enableHTML ? name : _escapeHTML(name)) + '</span>';
       if(synonym instanceof Array){
@@ -176,6 +181,7 @@ var DEFAULT_CLASSES = {
     dropdownItemId: "token-input-token-id",
     dropdownItemName: "token-input-token-name",
     dropdownItemSynonym: "token-input-token-synonym",
+    dropdownItemAbbr: "token-input-token-abbr",
 
     dropdownItemResultTooltip: "popup-hierarchy-hpo-results-tooltip",
     dropdownItemResultTooltipTitle: "popup-hierarchy-hpo-results-tooltip-title",
@@ -488,12 +494,14 @@ $.TokenList = function (input, url_or_data, settings) {
             }
         })
         .insertBefore(hidden_input);
+//		console.log('init()',$(token_list).offset().top, $(token_list).outerHeight(), $(token_list).innerHeight(), $(token_list).height(), $(token_list).find('li').height());
 
     // The token holding the input box
     var input_token = $("<li />")
         .addClass(settings.classes.inputToken)
         .appendTo(token_list)
         .append(input_box);
+//		console.log('init()',$(token_list).offset().top, $(token_list).outerHeight(), $(token_list).innerHeight(), $(token_list).height(), $(input_box).outerHeight(), $(input_box).innerHeight(), $(input_box).height());
 
     // The list to store the dropdown items in
     var dropdown = $("<div>")
@@ -544,6 +552,7 @@ $.TokenList = function (input, url_or_data, settings) {
                 delete_token($(this));
             }
         });
+//				console.log('clear()',$(token_list).offset().top, $(token_list).outerHeight(), $(token_list).innerHeight(), $(token_list).height(), $(token_list).find('li').height());
     }
 
     this.add = function(item) {
@@ -566,6 +575,7 @@ $.TokenList = function (input, url_or_data, settings) {
                 }
             }
         });
+				console.log('remove()',$(token_list).offset().top, $(token_list).outerHeight(), $(token_list).innerHeight(), $(token_list).height(), $(token_list).find('li').height());
     }
 
     this.getTokens = function() {
@@ -800,6 +810,11 @@ $.TokenList = function (input, url_or_data, settings) {
     }
 
     function show_dropdown() {
+//				console.log('show_dropdown()',$(token_list).offset().top, $(token_list).outerHeight(), $(token_list).innerHeight(), $(token_list).height(), $(token_list).find('li').height());
+        if(input_box.val().length==0){
+            hide_dropdown();
+            return;
+        }
         dropdown
             .css({
                 position: "absolute",
@@ -815,6 +830,7 @@ $.TokenList = function (input, url_or_data, settings) {
     }
 
     function resize_dropdown() {
+//				console.log('resize_dropdown()',$(token_list).offset().top, $(token_list).outerHeight(), $(token_list).innerHeight(), $(token_list).height(), $(token_list).find('li').height());
         var window_height = $(window).height() - (token_list.offset().top + token_list.outerHeight(true)) - 16 + $('html').get(0).scrollTop;
         if(window_height<0) window_height = 'auto';
         dropdown

@@ -73,12 +73,20 @@ def about_nando():
 # NANDO語彙一覧
 ## GET: 
 @app.route('/ontology/nando')
-def nando():
+def nando(id_nando=""):
     return render_template('nando.html')
 
 
 #####
-# nando.ttl, nando.rdf ダウンロード
+# NANDO URI 転送
+## GET: 
+#@app.route('/ontology/NANDO_<string:id_nando>')
+#def nando_uri(id_nando=""):
+#    return redirect(url_for('REST_API_disease', id_nando=id_nando))
+
+
+#####
+# ontology files ダウンロード
 ## GET: 
 @app.route('/ontology/<path:filename>')
 def nando_file(filename):
@@ -88,30 +96,96 @@ def nando_file(filename):
 
 
 #####
+#  annotation files ダウンロード
+## GET: 
+@app.route('/annotation/<path:filename>')
+def annotation_file(filename):
+    # https://www.kite.com/python/docs/flask.send_from_directory
+    return send_from_directory('annotation',
+                               filename, as_attachment=True)
+
+
+#####
 # 疾患ページ
 ## GET:
 @app.route('/disease/NANDO:<string:id_nando>', methods=['GET'])
 def REST_API_disease(id_nando=""):
+#    if request.method == 'GET':
+#        # parse nando.ttl
+#        onto = pronto.Ontology('/opt/services/case/app/nanbyodata/ontology/nando.obo')
+#        breadcrumb_list_html = ""
+#        sup = onto[id_nando].superclasses()
+#        pre_term = next(sup)
+#        subclass_list_html = make_selector_subclasses(onto, pre_term.id, "")
+#        breadcrumb_list_html = ' (' + subclass_list_html + ') ' if subclass_list_html != "" else ""
+#        while True:
+#            try:
+#                term = next(sup)
+#                subclass_list_html = make_selector_subclasses(onto, term.id, pre_term.id)
+#                breadcrumb_list_html = ' > ' + subclass_list_html + breadcrumb_list_html
+#                pre_term = term
+#            except StopIteration:
+#                break
+#        breadcrumb_list_html = '<font size="2">難病</font>' + breadcrumb_list_html
+#        return render_template('disease.html',
+#                               id_nando=id_nando,
+#                               breadcrumb_list_html=breadcrumb_list_html
+#        )
+#    else:
+#        return render_template('index.html')
+#    return
     if request.method == 'GET':
-
         # parse nando.ttl
         onto = pronto.Ontology('/opt/services/case/app/nanbyodata/ontology/nando.obo')
         breadcrumb_list_html = ""
         sup = onto[id_nando].superclasses()
         pre_term = next(sup)
-        subclass_list_html = make_selector_subclasses(onto, pre_term.id, "")
-        breadcrumb_list_html = ' (' + subclass_list_html + ') ' if subclass_list_html != "" else ""
+        subclass_list_html = make_selector_subclasses_new(onto, pre_term.id, "")
+        breadcrumb_list_html = '<ul><li>' + subclass_list_html + '</li></ul>' if subclass_list_html != "" else ""
         while True:
             try:
                 term = next(sup)
-                subclass_list_html = make_selector_subclasses(onto, term.id, pre_term.id)
-                breadcrumb_list_html = ' > ' + subclass_list_html + breadcrumb_list_html
+                subclass_list_html = make_selector_subclasses_new(onto, term.id, pre_term.id)
+                breadcrumb_list_html = '<ul><li>' + subclass_list_html + breadcrumb_list_html + '</li></ul>'
                 pre_term = term
             except StopIteration:
                 break
-        breadcrumb_list_html = '<font size="2">難病</font>' + breadcrumb_list_html
-
+        breadcrumb_list_html = re.sub(r'^\<ul\>', '<ul class="tree">', breadcrumb_list_html)
+        breadcrumb_list_html = '<h3>難病</h3>' + breadcrumb_list_html
         return render_template('disease.html',
+                               id_nando=id_nando,
+                               breadcrumb_list_html=breadcrumb_list_html
+        )
+    else:
+        return render_template('index.html')
+
+    return
+
+
+#####
+# 疾患ページ new
+## GET:
+@app.route('/disease_new/NANDO:<string:id_nando>', methods=['GET'])
+def REST_API_disease_new(id_nando=""):
+    if request.method == 'GET':
+        # parse nando.ttl
+        onto = pronto.Ontology('/opt/services/case/app/nanbyodata/ontology/nando.obo')
+        breadcrumb_list_html = ""
+        sup = onto[id_nando].superclasses()
+        pre_term = next(sup)
+        subclass_list_html = make_selector_subclasses_new(onto, pre_term.id, "")
+        breadcrumb_list_html = '<ul><li>' + subclass_list_html + '</li></ul>' if subclass_list_html != "" else ""
+        while True:
+            try:
+                term = next(sup)
+                subclass_list_html = make_selector_subclasses_new(onto, term.id, pre_term.id)
+                breadcrumb_list_html = '<ul><li>' + subclass_list_html + breadcrumb_list_html + '</li></ul>'
+                pre_term = term
+            except StopIteration:
+                break
+        breadcrumb_list_html = re.sub(r'^\<ul\>', '<ul class="tree">', breadcrumb_list_html)
+        breadcrumb_list_html = '<h3>難病</h3>' + breadcrumb_list_html
+        return render_template('disease_new.html',
                                id_nando=id_nando,
                                breadcrumb_list_html=breadcrumb_list_html
         )
@@ -132,10 +206,32 @@ def make_selector_subclasses(onto, id_nando, pre_id_nando):
             term = next(sub)
             html_selected = " selected" if term.id == pre_id_nando else ""
             html_selector = html_selector + '<option value="https://nanbyodata.jp/disease/NANDO:' + term.id + '"' + html_selected + '>' + term.name + '</option><br>'
+            #html_selector = html_selector + '<option value="https://nanbyodata.jp/disease/' + term.id + '"' + html_selected + '>' + term.name + '</option><br>'
             flag_subclass = 1
         except StopIteration:
             break
     html_selector = html_selector + '</select>'
+    html_selector = html_selector if flag_subclass == 1 else ""
+
+    return html_selector
+
+
+def make_selector_subclasses_new(onto, id_nando, pre_id_nando):
+    html_selector = ""
+    flag_subclass = 0
+    sub = onto[id_nando].subclasses(with_self=False, distance=1)
+    html_selector = '<div class="cp_ipselect cp_sl03"><select name="' + pre_id_nando + '" style="width:150px;" onChange="location.href=value;"><br>'
+    html_selector = html_selector + '<option>下位疾患</option><br>' if pre_id_nando == "" else html_selector
+    while True:
+        try:
+            term = next(sub)
+            html_selected = " selected" if term.id == pre_id_nando else ""
+            html_selector = html_selector + '<option value="https://nanbyodata.jp/disease/NANDO:' + term.id + '"' + html_selected + '>' + term.name + '</option><br>'
+            #html_selector = html_selector + '<option value="https://nanbyodata.jp/disease/' + term.id + '"' + html_selected + '>' + term.name + '</option><br>'
+            flag_subclass = 1
+        except StopIteration:
+            break
+    html_selector = html_selector + '</select></div>'
     html_selector = html_selector if flag_subclass == 1 else ""
 
     return html_selector
