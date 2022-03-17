@@ -1,0 +1,671 @@
+<script type="module" src="https://togostanza.github.io/metastanza/pagination-table.js" ></script>
+<style>
+@import url('https://nanbyodata.jp/static/sass/main.css');
+@import url('https://nanbyodata.jp/static/sass/disease.css');
+@import url('https://nanbyodata.jp/static/sass/nando_entry.css');
+  togostanza-pagination-table {
+    --togostanza-background-color: transparent;
+  }
+</style>
+
+<div id="data-wrapper" class="disease-summary">
+  <header class="summary-header">
+    <div class="data-name">
+      <h3>NANDO ID: <span><a href="http://nanbyodata.jp/ontology/nando#{{result.nando_id}}"target="_blank" rel="noopener noreferrer">{{result.nando_id}}</a></span></h3>
+      <h2>
+        <ruby>{{result.label_ja}}<rt>せきずいせいきんいしゅくしょうにがた</h2></rt></ruby>
+      </h2>
+      <h3>{{result.label_en}}</h2>
+    </div>
+    <div class="external-links">
+      <div class="linked-item -unlinked">告示番号: <span>{{result.notification_number}}</span></div>
+      {{#if result.mhlw.url}}
+      <div class="linked-item">
+        <a href="{{result.mhlw.url}}"target="_blank" rel="noopener noreferrer">概要、診断基準等</a>
+      </div>
+      {{/if}}
+      {{#if result.source}}
+      <div class="linked-item">
+        <a href="{{result.source}}"target="_blank" rel="noopener noreferrer">臨床調査個人票・医療意見書</a>
+      </div>
+      {{/if}}
+      {{#if result.nanbyou.url}}
+      <div class="linked-item">
+        <a href="{{result.nanbyou.url}}"target="_blank" rel="noopener noreferrer">難病情報センター</a>
+      </div>
+      {{/if}}
+      {{#if result.shouman.url}}
+      <div class="linked-item">
+        <a href="{{result.shouman.url}}"target="_blank" rel="noopener noreferrer">小児慢性特定疾病情報センター</a>
+      </div>
+      {{/if}}
+    </div>
+  </header>
+  <div class="aliases">
+    {{#if result.alt_label_ja}}
+    <dl>
+      <dt>別疾患名（日）</dt>
+      {{#each result.alt_label_ja}}
+      <dd>{{this}}</dd>
+      {{/each}}
+    </dl>
+    {{/if}}
+    {{#if result.alt_label_en}}
+    <dl>
+      <dt>別疾患名（英）</dt>
+      {{#each result.alt_label_en}}
+      <dd>{{this}}</dd>
+      {{/each}}
+    </dl>
+    {{/if}}
+  </div>
+  <div class="properties">
+    {{#if result.inheritance_uris}}
+    <dl class="linked-items">
+      <dt>遺伝形式</dt>
+      {{#each result.inheritance_uris}}
+      <dd class="linked-item"><a href="{{uri}}"target="_blank" rel="noopener noreferrer">{{id}}</a></dd>
+      {{/each}}
+    </dl>
+    {{/if}}
+    {{#if result.gene_uris}}
+    <dl class="linked-items">
+      <dt>疾患原因遺伝子</dt>
+      {{#each result.gene_uris}}
+      <dd class="linked-item"><a href="{{uri}}"target="_blank" rel="noopener noreferrer">{{id}}</a></dd>
+      {{/each}}
+    </dl>
+    {{/if}}
+  </div>
+  
+  {{#if result.db_xrefs.omim}}
+  <details open>  
+    <summary>リンク一覧</summary>
+    <div class="links-list">
+      <div class="properties" id="#dev-edit-html">
+  {{else}}
+  {{#if result.db_xrefs.orphanet}}
+  <details open>  
+    <summary>リンク一覧</summary>
+    <div class="links-list">
+      <div class="properties" id="#dev-edit-html">
+  {{else}}
+  {{#if result.medgen_id}}
+  <details open>  
+    <summary>リンク一覧</summary>
+    <div class="links-list">
+      <div class="properties" id="#dev-edit-html">
+  {{else}}
+  {{#if result.mondos}}
+  <details open>  
+    <summary>リンク一覧</summary>
+    <div class="links-list">
+      <div class="properties" id="#dev-edit-html">
+  {{else}}
+  {{#if result.kegg.url}}
+  <details open>  
+    <summary>リンク一覧</summary>
+    <div class="links-list">
+      <div class="properties" id="#dev-edit-html">
+  {{else}}
+  {{#if result.urdbms.url}}
+  <details open>  
+    <summary>リンク一覧</summary>
+    <div class="links-list">
+      <div class="properties" id="#dev-edit-html">
+  {{/if}}
+  {{/if}}
+  {{/if}}
+  {{/if}}
+  {{/if}}
+  {{/if}}
+      {{#if result.db_xrefs.omim}}
+      <dl class="linked-items">
+        <dt>OMIM</dt>
+        <dd class="linked-item">
+          {{#each result.db_xrefs.omim}}
+          <a href="https://omim.org/entry/{{id}}"target="_blank" rel="noopener noreferrer">{{id}}</a>
+          {{/each}}
+        </dd>
+      </dl>
+      {{/if}}
+      {{#if result.db_xrefs.orphanet}}
+      <dl class="linked-items">
+        <dt>Orphanet</dt>
+        <dd class="linked-item">
+          {{#each result.db_xrefs.orphanet}}
+          <a href="https://www.orpha.net/consor/cgi-bin/OC_Exp.php?Expert={{id}}"target="_blank" rel="noopener noreferrer">ORPHA:{{id}}</a>
+          {{/each}}
+        </dd>
+      </dl>
+      {{/if}}
+      {{#if result.medgen_id}}
+      <dl class="linked-items">
+        <dt>MedGen</dt>
+        <dd class="linked-item">
+          {{#if result.medgen_uri}}
+          <a href="{{result.medgen_uri}}" target="_blank" rel="noopener noreferrer">{{result.medgen_id}}</a>
+          {{/if}}
+        </dd>
+      </dl>
+      {{/if}}
+      {{#if result.mondos}}
+      <dl class="linked-items">
+        <dt>Monarch Initiative</dt>
+        <dd class="linked-item">
+          {{#each result.mondos}}
+          <a href="https://monarchinitiative.org/disease/{{id}}"target="_blank" rel="noopener noreferrer">{{id}}</a>
+          {{/each}}
+        </dd>
+      </dl>
+      {{/if}}
+      {{#if result.kegg.url}}
+      <dl class="linked-items">
+        <dt>KEGG Disease</dt>
+        <dd class="linked-item">
+          <a href="{{result.kegg.url}}"target="_blank" rel="noopener noreferrer">{{result.kegg.id}}</a>
+        </dd>
+      </dl>
+      {{/if}}
+      {{#if result.urdbms.url}}
+      <dl class="linked-items">
+        <dt>UR-DBMS</dt>
+        <dd class="linked-item">
+          <a href="{{result.urdbms.url}}" target="_blank" rel="noopener noreferrer">{{result.urdbms.id}}</a>
+        </dd>
+      </dl>
+      {{/if}}
+  {{#if result.db_xrefs.omim}}
+      </div>
+    </div>
+  </details>
+  {{else}}
+  {{#if result.db_xrefs.orphanet}}
+      </div>
+    </div>
+  </details>
+  {{else}}
+  {{#if result.medgen_id}}
+      </div>
+    </div>
+  </details>
+  {{else}}
+  {{#if result.mondos}}
+      </div>
+    </div>
+  </details>
+  {{else}}
+  {{#if result.kegg.url}}
+      </div>
+    </div>
+  </details>
+  {{else}}
+  {{#if result.urdbms.url}}
+      </div>
+    </div>
+  </details>
+  {{/if}}
+  {{/if}}
+  {{/if}}
+  {{/if}}
+  {{/if}}
+  {{/if}}
+
+  {{#if result.description}}
+  <details open>
+  <summary>疾患定義</summary>
+    <div class="tab-wrap">
+  {{else}}
+  {{#if result.mondo_decs}}
+  <details open>
+  <summary>疾患定義</summary>
+    <div class="tab-wrap">
+  {{else}}
+  {{#if result.medgen_definition}}
+  <details open>
+  <summary>疾患定義</summary>
+    <div class="tab-wrap">
+  {{/if}}
+  {{/if}}
+  {{/if}}
+      {{#if result.description}}
+      <input id="description" type="radio" name="disease-definition" class="tab-switch" checked="checked" /><label class="tab-label" for="description"><small>From</small> 厚労省</label>
+      <div class="tab-content">
+        {{result.description}}
+      </div>
+      {{/if}}
+      {{#if result.mondo_decs}}
+      <input id="mondo-decs" type="radio" name="disease-definition" class="tab-switch"{{#unless result.description}}checked="checked"{{/unless}}/><label class="tab-label" for="mondo-decs"><small>From</small> Monarch Initiative</label>
+      <div class="tab-content">
+        {{#each result.mondo_decs}}
+        {{id}}
+        <a href="https://translate.google.co.jp/?hl=ja#en/ja/{{id}}"target="_blank" rel="noopener noreferrer"><font color="#0431B4">&nbsp;&gt;&gt;&nbsp;翻訳 (Google)</font></a>
+        {{/each}}
+      </div>
+      {{/if}}
+      {{#if result.medgen_definition}}
+      <input id="medgen-definition" type="radio" name="disease-definition" class="tab-switch"{{#unless result.description}}{{#unless result.mondo_decs}}checked="checked"{{/unless}}{{/unless}} /><label class="tab-label" for="medgen-definition"><small>From</small> MedGen</label>
+      <div class="tab-content">
+        {{result.medgen_definition}}
+        <a href="https://translate.google.co.jp/?hl=ja#en/ja/{{result.medgen_definition}}"target="_blank" rel="noopener noreferrer" ><font color="#0431B4">&nbsp;&gt;&gt;&nbsp;翻訳 (Google)</font></a>
+      </div>
+      {{/if}}
+  {{#if result.description}}
+    </div>
+  </details>
+  {{else}}
+  {{#if result.mondo_decs}}
+    </div>
+  </details>
+  {{else}}
+  {{#if result.medgen_definition}}
+    </div>
+  </details>
+  {{/if}}
+  {{/if}}
+  {{/if}}
+  {{#if result.phenotype_flg}}
+  <details open>
+    <summary>臨床的特徴 <small> From HPO</small></summary>
+    <div class="phenotype-view">
+      <!-- HP_0025354 -->
+      {{#if result.phenotype_HP_0025354_label}}
+      <div>
+        <ul>{{result.phenotype_HP_0025354_label}}
+          {{#each result.phenotype_HP_0025354}}
+            <li><a href="{{uri}}" target="_blank" rel="noopener noreferrer"><font color="#0431B4">{{id}}</font></a></li>
+          {{/each}}
+        </ul>
+      </div>
+      {{/if}}
+      <!-- HP_0001871 -->
+      {{#if result.phenotype_HP_0001871_label}}
+      <div>
+        <ul>{{result.phenotype_HP_0001871_label}}
+          {{#each result.phenotype_HP_0001871}}
+            <li><a href="{{uri}}" target="_blank" rel="noopener noreferrer"><font color="#0431B4">{{id}}</font></a></li>
+          {{/each}}
+        </ul>
+      </div>
+      {{/if}}
+      <!-- HP_0003549 -->
+      {{#if result.phenotype_HP_0003549_label}}
+      <div>
+        <ul>{{result.phenotype_HP_0003549_label}}
+          {{#each result.phenotype_HP_0003549}}
+            <li><a href="{{uri}}" target="_blank" rel="noopener noreferrer"><font color="#0431B4">{{id}}</font></a></li>
+          {{/each}}
+        </ul>
+      </div>
+      {{/if}}
+      <!-- HP_0000152 -->
+      {{#if result.phenotype_HP_0000152_label}}
+      <div>
+        <ul>{{result.phenotype_HP_0000152_label}}
+          {{#each result.phenotype_HP_0000152}}
+            <li><a href="{{uri}}" target="_blank" rel="noopener noreferrer"><font color="#0431B4">{{id}}</font></a></li>
+          {{/each}}
+        </ul>
+      </div>
+      {{/if}}
+      <!-- HP_0040064 -->
+      {{#if result.phenotype_HP_0040064_label}}
+      <div>
+        <ul>{{result.phenotype_HP_0040064_label}}
+          {{#each result.phenotype_HP_0040064}}
+            <li><a href="{{uri}}" target="_blank" rel="noopener noreferrer"><font color="#0431B4">{{id}}</font></a></li>
+          {{/each}}
+        </ul>
+      </div>
+      {{/if}}
+      <!-- HP_0001939 -->
+      {{#if result.phenotype_HP_0001939_label}}
+      <div>
+        <ul>{{result.phenotype_HP_0001939_label}}
+          {{#each result.phenotype_HP_0001939}}
+            <li><a href="{{uri}}" target="_blank" rel="noopener noreferrer"><font color="#0431B4">{{id}}</font></a></li>
+          {{/each}}
+        </ul>
+      </div>
+      {{/if}}
+      <!-- HP_0001197 -->
+      {{#if result.phenotype_HP_0001197_label}}
+      <div>
+        <ul>{{result.phenotype_HP_0001197_label}}
+          {{#each result.phenotype_HP_0001197}}
+            <li><a href="{{uri}}" target="_blank" rel="noopener noreferrer"><font color="#0431B4">{{id}}</font></a></li>
+          {{/each}}
+        </ul>
+      </div>
+      {{/if}}
+      <!-- HP_0000769 -->
+      {{#if result.phenotype_HP_0000769_label}}
+      <div>
+        <ul>{{result.phenotype_HP_0000769_label}}
+          {{#each result.phenotype_HP_0000769}}
+            <li><a href="{{uri}}" target="_blank" rel="noopener noreferrer"><font color="#0431B4">{{id}}</font></a></li>
+          {{/each}}
+        </ul>
+      </div>
+      {{/if}}
+      <!-- HP_0001626 -->
+      {{#if result.phenotype_HP_0001626_label}}
+      <div>
+        <ul>{{result.phenotype_HP_0001626_label}}
+          {{#each result.phenotype_HP_0001626}}
+            <li><a href="{{uri}}" target="_blank" rel="noopener noreferrer"><font color="#0431B4">{{id}}</font></a></li>
+          {{/each}}
+        </ul>
+      </div>
+      {{/if}}
+      <!-- HP_0025031 -->
+      {{#if result.phenotype_HP_0025031_label}}
+      <div>
+        <ul>{{result.phenotype_HP_0025031_label}}
+          {{#each result.phenotype_HP_0025031}}
+            <li><a href="{{uri}}" target="_blank" rel="noopener noreferrer"><font color="#0431B4">{{id}}</font></a></li>
+          {{/each}}
+        </ul>
+      </div>
+      {{/if}}
+      <!-- HP_0000598 -->
+      {{#if result.phenotype_HP_0000598_label}}
+      <div>
+        <ul>{{result.phenotype_HP_0000598_label}}
+          {{#each result.phenotype_HP_0000598}}
+            <li><a href="{{uri}}" target="_blank" rel="noopener noreferrer"><font color="#0431B4">{{id}}</font></a></li>
+          {{/each}}
+        </ul>
+      </div>
+      {{/if}}
+      <!-- HP_0000818 -->
+      {{#if result.phenotype_HP_0000818_label}}
+      <div>
+        <ul>{{result.phenotype_HP_0000818_label}}
+          {{#each result.phenotype_HP_0000818}}
+            <li><a href="{{uri}}" target="_blank" rel="noopener noreferrer"><font color="#0431B4">{{id}}</font></a></li>
+          {{/each}}
+        </ul>
+      </div>
+      {{/if}}
+      <!-- HP_0000478 -->
+      {{#if result.phenotype_HP_0000478_label}}
+      <div>
+        <ul>{{result.phenotype_HP_0000478_label}}
+          {{#each result.phenotype_HP_0000478}}
+            <li><a href="{{uri}}" target="_blank" rel="noopener noreferrer"><font color="#0431B4">{{id}}</font></a></li>
+          {{/each}}
+        </ul>
+      </div>
+      {{/if}}
+      <!-- HP_0000119 -->
+      {{#if result.phenotype_HP_0000119_label}}
+      <div>
+        <ul>{{result.phenotype_HP_0000119_label}}
+          {{#each result.phenotype_HP_0000119}}
+            <li><a href="{{uri}}" target="_blank" rel="noopener noreferrer"><font color="#0431B4">{{id}}</font></a></li>
+          {{/each}}
+        </ul>
+      </div>
+      {{/if}}
+      <!-- HP_0002715 -->
+      {{#if result.phenotype_HP_0002715_label}}
+      <div>
+        <ul>{{result.phenotype_HP_0002715_label}}
+          {{#each result.phenotype_HP_0002715}}
+            <li><a href="{{uri}}" target="_blank" rel="noopener noreferrer"><font color="#0431B4">{{id}}</font></a></li>
+          {{/each}}
+        </ul>
+      </div>
+      {{/if}}
+      <!-- HP_0001574 -->
+      {{#if result.phenotype_HP_0001574_label}}
+      <div>
+        <ul>{{result.phenotype_HP_0001574_label}}
+          {{#each result.phenotype_HP_0001574}}
+            <li><a href="{{uri}}" target="_blank" rel="noopener noreferrer"><font color="#0431B4">{{id}}</font></a></li>
+          {{/each}}
+        </ul>
+      </div>
+      {{/if}}
+      <!-- HP_0003011 -->
+      {{#if result.phenotype_HP_0003011_label}}
+      <div>
+        <ul>{{result.phenotype_HP_0003011_label}}
+          {{#each result.phenotype_HP_0003011}}
+            <li><a href="{{uri}}" target="_blank" rel="noopener noreferrer"><font color="#0431B4">{{id}}</font></a></li>
+          {{/each}}
+        </ul>
+      </div>
+      {{/if}}
+      <!-- HP_0000707 -->
+      {{#if result.phenotype_HP_0000707_label}}
+      <div>
+        <ul>{{result.phenotype_HP_0000707_label}}
+          {{#each result.phenotype_HP_0000707}}
+            <li><a href="{{uri}}" target="_blank" rel="noopener noreferrer"><font color="#0431B4">{{id}}</font></a></li>
+          {{/each}}
+        </ul>
+      </div>
+      {{/if}}
+      <!-- HP_0002086 -->
+      {{#if result.phenotype_HP_0002086_label}}
+      <div>
+        <ul>{{result.phenotype_HP_0002086_label}}
+          {{#each result.phenotype_HP_0002086}}
+            <li><a href="{{uri}}" target="_blank" rel="noopener noreferrer"><font color="#0431B4">{{id}}</font></a></li>
+          {{/each}}
+        </ul>
+      </div>
+      {{/if}}
+      <!-- HP_0000924 -->
+      {{#if result.phenotype_HP_0000924_label}}
+      <div>
+        <ul>{{result.phenotype_HP_0000924_label}}
+          {{#each result.phenotype_HP_0000924}}
+            <li><a href="{{uri}}" target="_blank" rel="noopener noreferrer"><font color="#0431B4">{{id}}</font></a></li>
+          {{/each}}
+        </ul>
+      </div>
+      {{/if}}
+      <!-- HP_0045027 -->
+      {{#if result.phenotype_HP_0045027_label}}
+      <div>
+        <ul>{{result.phenotype_HP_0045027_label}}
+          {{#each result.phenotype_HP_0045027}}
+            <li><a href="{{uri}}" target="_blank" rel="noopener noreferrer"><font color="#0431B4">{{id}}</font></a></li>
+          {{/each}}
+        </ul>
+      </div>
+      {{/if}}
+      <!-- HP_0001608 -->
+      {{#if result.phenotype_HP_0001608_label}}
+      <div>
+        <ul>{{result.phenotype_HP_0001608_label}}
+          {{#each result.phenotype_HP_0001608}}
+            <li><a href="{{uri}}" target="_blank" rel="noopener noreferrer"><font color="#0431B4">{{id}}</font></a></li>
+          {{/each}}
+        </ul>
+      </div>
+      {{/if}}
+      <!-- HP_0025142 -->
+      {{#if result.phenotype_HP_0025142_label}}
+      <div>
+        <ul>{{result.phenotype_HP_0025142_label}}
+          {{#each result.phenotype_HP_0025142}}
+            <li><a href="{{uri}}" target="_blank" rel="noopener noreferrer"><font color="#0431B4">{{id}}</font></a></li>
+          {{/each}}
+        </ul>
+      </div>
+      {{/if}}
+      <!-- HP_0001507 -->
+      {{#if result.phenotype_HP_0001507_label}}
+      <div>
+        <ul>{{result.phenotype_HP_0001507_label}}
+          {{#each result.phenotype_HP_0001507}}
+            <li><a href="{{uri}}" target="_blank" rel="noopener noreferrer"><font color="#0431B4">{{id}}</font></a></li>
+          {{/each}}
+        </ul>
+      </div>
+      {{/if}}
+      <!-- HP_0002664 -->
+      {{#if result.phenotype_HP_0002664_label}}
+      <div>
+        <ul>{{result.phenotype_HP_0002664_label}}
+          {{#each result.phenotype_HP_0002664}}
+            <li><a href="{{uri}}" target="_blank" rel="noopener noreferrer"><font color="#0431B4">{{id}}</font></a></li>
+          {{/each}}
+        </ul>
+      </div>
+      {{/if}}
+    </div>
+  </details>
+  {{/if}}
+
+  {{!-- <details open>
+    <summary>疾患階層情報</summary>
+    <div class="hierarchy-view">
+      <label>
+      <input type="checkbox" class="checkbox">
+        <ul>
+          <div class="content">
+            <span class="headline">Peripheral neuroepithelioma</span>
+            <div>
+              <span class="icon -genetic-disease-testing"></span>
+              <span class="icon -designed-rare-disease"></span>
+              <span class="icon -chronic-pediatric"></span>
+              <span class="icon -mgend"></span>
+            </div>
+          </div>
+          <li>
+            <div class="content">
+              <span class="disease-name">Askin tumor</span>
+              <div>
+                <span class="icon -genetic-disease-testing"></span>
+                <span class="icon -designed-rare-disease"></span>
+                <span class="icon -chronic-pediatric"></span>
+                <span class="icon -mgend"></span>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="content">
+              <span class="disease-name">Ewing sarcoma</span>
+              <div>
+                <span class="icon -genetic-disease-testing"></span>
+                <span class="icon -designed-rare-disease"></span>
+                <span class="icon -chronic-pediatric"></span>
+                <span class="icon -mgend"></span>
+              </div>
+            </div>    
+          </li>
+        </ul>
+      </label>
+    </div>
+    <div class="genre-view">
+      <p>
+        <span class="icon -genetic-disease-testing">遺伝学的検査データベース</span>
+        <span class="icon -designed-rare-disease">指定難病情報センター</span>
+        <span class="icon -chronic-pediatric">小児慢性特定疾病情報センター</span>
+        <span class="icon -mgend">MGeND</span>
+      </p>
+    </div>
+  </details> --}}
+
+
+  {{#if result.cell}}
+  <details open>
+    <summary>難病特異的バイオリソース<small> From Riken BRC</small></summary>
+    <div class="tab-wrap">
+  {{else}}
+  {{#if result.mus}}
+  <details open>
+    <summary>難病特異的バイオリソース<small> From Riken BRC</small></summary>
+    <div class="tab-wrap">
+  {{else}}
+  {{#if result.dna}}
+  <details open>
+    <summary>難病特異的バイオリソース<small> From Riken BRC</small></summary>
+    <div class="tab-wrap">
+  {{/if}}
+  {{/if}}
+  {{/if}}
+      {{#if result.cell}}
+      <input id="cell" type="radio" name="TAB2" class="tab-switch" checked="checked" /><label class="tab-label" for="cell">細胞</label>
+      <div class="tab-content">
+        <togostanza-pagination-table data-url="https://nanbyodata.jp/sparqlist/api/nanbyodata_get_riken_brc_cell_info_by_nando_id?nando_id={{result.nando_id}}" data-type="json"
+        page-size-option="10,20,50,100"
+        page-slider="false"
+        columns="[{&quot;id&quot;: &quot;ID&quot;,&quot;label&quot;:&quot;RIKEN_BRC 細胞番号&quot;}, {&quot;id&quot;: &quot;Homepage&quot;,&quot;label&quot;:&quot;Homepage&quot;,&quot;link&quot;:&quot;Homepage&quot;}, {&quot;id&quot;: &quot;Cell_name&quot;,&quot;label&quot;:&quot;細胞名&quot;}, {&quot;id&quot;: &quot;Description_e&quot;,&quot;label&quot;:&quot;細胞特性(英語)&quot;,&quot;escape&quot;:false},{&quot;id&quot;: &quot;Description_j&quot;,&quot;label&quot;:&quot;細胞特性(日本語)&quot;,&quot;escape&quot;:false}]"></togostanza-pagination-table>
+      </div>
+      {{/if}}
+      {{#if result.mus}}
+      <input id="mus" type="radio" name="TAB2" class="tab-switch"{{#unless result.cell}}checked="checked"{{/unless}} /><label class="tab-label" for="mus">マウス</label>
+      <div class="tab-content">
+	<togostanza-pagination-table
+	   data-url="https://pubcasefinder.dbcls.jp/sparqlist/api/nanbyodata_get_riken_brc_mouse_info_by_nando_id?nando_id&#x3D;2200865"
+	   data-type="json"
+	   custom-css-url=""
+	   width=""
+	   fixed-columns="1"
+	   padding="0px"
+	   page-size-option="10,20,50,100"
+	   page-slider="true"
+	   columns="[{&quot;id&quot;: &quot;mouse_id&quot;,&quot;label&quot;:&quot;RIKEN_BRC No.&quot;}, {&quot;id&quot;:&quot;hp&quot;,&quot;label&quot;:&quot;Homepage&quot;,&quot;link&quot;:&quot;hp&quot;}, {&quot;id&quot;:&quot;mouse_name&quot;,&quot;label&quot;:&quot;Strain name&quot;}, {&quot;id&quot;:&quot;description&quot;,&quot;label&quot;:&quot;Strain description&quot;}]"
+	   ></togostanza-pagination-table>
+      </div>
+      {{/if}}
+      {{#if result.dna}}
+      <input id="dna" type="radio" name="TAB2" class="tab-switch"{{#unless result.cell}}{{#unless result.mus}}checked="checked"{{/unless}}{{/unless}} /><label class="tab-label" for="dna">遺伝子</label>
+      <div class="tab-content">
+	<togostanza-pagination-table
+	   data-url="https://pubcasefinder.dbcls.jp/sparqlist/api/nanbyodata_get_riken_brc_dna_info_by_nando_id?nando_id&#x3D;2200865"
+	   data-type="json"
+	   custom-css-url=""
+	   width=""
+	   fixed-columns="1"
+	   padding="0px"
+	   page-size-option="10,20,50,100"
+	   page-slider="true"
+	   columns="[{&quot;id&quot;: &quot;gene_id&quot;,&quot;label&quot;:&quot;Catalog number&quot;}, {&quot;id&quot;:&quot;hp&quot;,&quot;label&quot;:&quot;Homepage&quot;,&quot;link&quot;:&quot;hp&quot;}, {&quot;id&quot;:&quot;gene_label&quot;,&quot;label&quot;:&quot;Name&quot;}, {&quot;id&quot;:&quot;ncbi_gene&quot;,&quot;label&quot;:&quot;NCBI Gene Link&quot;,&quot;link&quot;:&quot;ncbi_gene&quot;}]"
+	   ></togostanza-pagination-table>
+      </div>
+      {{/if}}
+  {{#if result.cell}}
+    </div>
+  </details>
+  {{else}}
+  {{#if result.mus}}
+    </div>
+  </details>
+  {{else}}
+  {{#if result.dna}}
+    </div>
+  </details>
+  {{/if}}
+  {{/if}}
+  {{/if}}
+
+  {{!-- {{#if result.genetesting}} --}}
+  <details open>
+    <summary>診療用遺伝学的検査情報<small> From 難病領域における検体検査の精度管理体制の整備に資する研究班</small></summary>
+    <div class="inspection-view">
+      <togostanza-pagination-table
+        data-url="https://pubcasefinder.dbcls.jp/sparqlist/api/nanbyodata_get_gene_test?nando_id={{result.nando_id}}"
+        data-type="json"
+        custom-css-url=""
+        width=""
+        fixed-columns="1"
+        padding="0px"
+        page-size-option="10,20,50,100"
+        page-slider="true"
+        columns="[{&quot;id&quot;:&quot;label&quot;,&quot;label&quot;:&quot;Test name&quot;},{&quot;id&quot;:&quot;hp&quot;,&quot;label&quot;:&quot;Homepage&quot;,&quot;link&quot;:&quot;hp&quot;},{&quot;id&quot;:&quot;gene&quot;,&quot;label&quot;:&quot;Gene&quot;},{&quot;id&quot;:&quot;contact&quot;,&quot;label&quot;:&quot;Contact&quot;,&quot;link&quot;:&quot;contact&quot;}]"
+      ></togostanza-pagination-table>
+    </div>
+  </details>
+  {{!-- {{/if}} --}}
+
+  {{!-- <details open>
+    <summary>遺伝子多型<small> From MGeND</small></summary>
+  </details> --}}
+</div>
