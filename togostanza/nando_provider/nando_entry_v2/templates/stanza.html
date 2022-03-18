@@ -13,7 +13,7 @@
     <div class="data-name">
       <h3>NANDO ID: <span><a href="http://nanbyodata.jp/ontology/nando#{{result.nando_id}}"target="_blank" rel="noopener noreferrer">{{result.nando_id}}</a></span></h3>
       <h2>
-        <ruby>{{result.label_ja}}<rt>せきずいせいきんいしゅくしょうにがた</h2></rt></ruby>
+        <ruby>{{result.label_ja}}<rt>{{result.ruby}}</h2></rt></ruby>
       </h2>
       <h3>{{result.label_en}}</h2>
     </div>
@@ -229,7 +229,7 @@
   {{/if}}
   {{/if}}
       {{#if result.description}}
-      <input id="description" type="radio" name="disease-definition" class="tab-switch" checked="checked" /><label class="tab-label" for="description"><small>From</small> 厚労省</label>
+      <input id="description" type="radio" name="disease-definition" class="tab-switch" checked="checked" /><label class="tab-label" for="description"><small>From</small> MHLW</label>
       <div class="tab-content">
         {{result.description}}
       </div>
@@ -603,7 +603,7 @@
       <input id="mus" type="radio" name="TAB2" class="tab-switch"{{#unless result.cell}}checked="checked"{{/unless}} /><label class="tab-label" for="mus">マウス</label>
       <div class="tab-content">
 	<togostanza-pagination-table
-	   data-url="https://pubcasefinder.dbcls.jp/sparqlist/api/nanbyodata_get_riken_brc_mouse_info_by_nando_id?nando_id&#x3D;2200865"
+	   data-url="https://pubcasefinder.dbcls.jp/sparqlist/api/nanbyodata_get_riken_brc_mouse_info_by_nando_id?nando_id={{result.nando_id}}"
 	   data-type="json"
 	   custom-css-url=""
 	   width=""
@@ -619,7 +619,7 @@
       <input id="dna" type="radio" name="TAB2" class="tab-switch"{{#unless result.cell}}{{#unless result.mus}}checked="checked"{{/unless}}{{/unless}} /><label class="tab-label" for="dna">遺伝子</label>
       <div class="tab-content">
 	<togostanza-pagination-table
-	   data-url="https://pubcasefinder.dbcls.jp/sparqlist/api/nanbyodata_get_riken_brc_dna_info_by_nando_id?nando_id&#x3D;2200865"
+	   data-url="https://pubcasefinder.dbcls.jp/sparqlist/api/nanbyodata_get_riken_brc_dna_info_by_nando_id?nando_id={{result.nando_id}}"
 	   data-type="json"
 	   custom-css-url=""
 	   width=""
@@ -646,24 +646,24 @@
   {{/if}}
   {{/if}}
 
-  {{!-- {{#if result.genetesting}} --}}
+  {{#if result.genetesting}}
   <details open>
     <summary>診療用遺伝学的検査情報<small> From 難病領域における検体検査の精度管理体制の整備に資する研究班</small></summary>
     <div class="inspection-view">
       <togostanza-pagination-table
-        data-url="https://pubcasefinder.dbcls.jp/sparqlist/api/nanbyodata_get_gene_test?nando_id={{result.nando_id}}"
-        data-type="json"
-        custom-css-url=""
-        width=""
-        fixed-columns="1"
-        padding="0px"
-        page-size-option="10,20,50,100"
-        page-slider="true"
-        columns="[{&quot;id&quot;:&quot;label&quot;,&quot;label&quot;:&quot;Test name&quot;},{&quot;id&quot;:&quot;hp&quot;,&quot;label&quot;:&quot;Homepage&quot;,&quot;link&quot;:&quot;hp&quot;},{&quot;id&quot;:&quot;gene&quot;,&quot;label&quot;:&quot;Gene&quot;},{&quot;id&quot;:&quot;contact&quot;,&quot;label&quot;:&quot;Contact&quot;,&quot;link&quot;:&quot;contact&quot;}]"
-      ></togostanza-pagination-table>
+	 data-url="https://pubcasefinder.dbcls.jp/sparqlist/api/nanbyodata_get_gene_test?nando_id={{result.nando_id}}"
+	 data-type="json"
+	 custom-css-url=""
+	 width=""
+	 fixed-columns="1"
+	 padding="0px"
+	 page-size-option="10,20,50,100"
+	 page-slider="true"
+	 columns="[{&quot;id&quot;: &quot;label&quot;,&quot;label&quot;:&quot;検査名&quot;},{&quot;id&quot;:&quot;hp&quot;,&quot;label&quot;:&quot;URL&quot;,&quot;link&quot;:&quot;hp&quot;},{&quot;id&quot;:&quot;gene&quot;,&quot;label&quot;:&quot;遺伝子名&quot;},{&quot;id&quot;:&quot;facility&quot;,&quot;label&quot;:&quot;検査施設&quot;}]"
+	 ></togostanza-pagination-table>
     </div>
   </details>
-  {{!-- {{/if}} --}}
+  {{/if}}
 
   {{!-- <details open>
     <summary>遺伝子多型<small> From MGeND</small></summary>
