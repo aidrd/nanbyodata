@@ -17,6 +17,9 @@
 	<!-- Disease CSS -->
 	<link rel="stylesheet" type="text/css" href="/static/sass/disease.css">
 
+	<!-- penqe style.scss -->
+	<link rel="stylesheet" type="text/css" href="/static/sass/style.scss">
+
 	<title>NanbyoData</title>
 
         <!-- TokenInput -->
@@ -29,8 +32,8 @@
 	<!-- TogoStanza -->
 	<!--script src="/static/js/webcomponents-loader.js"></script-->
 	<script src="https://cdn.jsdelivr.net/npm/@webcomponents/webcomponentsjs@1.3.0/webcomponents-loader.js" crossorigin></script>
-	<link rel="import" href="https://nanbyodata.jp/stanza/nando_entry/" />
-	<link rel="import" href="https://nanbyodata.jp/stanza/medgen_entry/" />
+	<link rel="import" href="https://nanbyodata.jp/stanza/nando_entry_v2/" />
+	<!--link rel="import" href="https://nanbyodata.jp/stanza/medgen_entry/" /-->
 
 </head>
 
@@ -116,7 +119,7 @@
 	  <!-- Contents -->
 	  <script type="module" src="https://togostanza.github.io/metastanza/pagination-table.js" async></script>
 	  <div id="content">
-	    <togostanza-nando_entry nando_id='{{ id_nando }}'></togostanza-nando_entry>
+	    <togostanza-nando_entry_v2 nando_id='{{ id_nando }}'></togostanza-nando_entry_v2>
 	  </div>
 
 	  <!--- modal　内容 -->

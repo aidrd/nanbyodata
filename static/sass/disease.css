@@ -310,6 +310,10 @@ a[target="_blank"]::after {
   font-size: 14px;
 }
 
+.cp_ipselect.cp_sl03 select option {
+  color: #13295A;
+}
+
 /*ツリー*/
 .tree,
 .tree ul {

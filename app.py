@@ -70,6 +70,14 @@ def about_nando():
 
 
 #####
+# NANDOについて
+## GET: 
+@app.route('/epidemiology')
+def epidemiology():
+    return render_template('epidemiology.html')
+
+
+#####
 # NANDO語彙一覧
 ## GET: 
 @app.route('/ontology/nando')
@@ -185,7 +193,7 @@ def REST_API_disease_new(id_nando=""):
                 break
         breadcrumb_list_html = re.sub(r'^\<ul\>', '<ul class="tree">', breadcrumb_list_html)
         breadcrumb_list_html = '<h3>難病</h3>' + breadcrumb_list_html
-        return render_template('disease_new.html',
+        return render_template('entry.html',
                                id_nando=id_nando,
                                breadcrumb_list_html=breadcrumb_list_html
         )
