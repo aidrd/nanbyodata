@@ -284,7 +284,7 @@ select ?mouse STR(?name) AS ?mouse_name ?hp STR(?id) AS ?mouse_id ?description ?
 where{
   VALUES ?nando { nando:{{nando_id}} }
   graph <http://metadb.riken.jp/db/mouse_diseaseID>{
-    ?mouse rdfs:seeAlso ?nando.}
+    ?mouse <http://purl.obolibrary.org/obo/RO_0003301> ?nando.}
   graph <http://metadb.riken.jp/db/xsearch_animal_brso>{
     ?mouse rdfs:label ?name;
            foaf:homepage ?hp;
@@ -315,7 +315,7 @@ SELECT DISTINCT ?dna STR(?label) AS ?gene_label ?hp STR(?id)AS ?gene_id ?ncbi_ge
 WHERE{
   VALUES ?nando { nando:{{nando_id}} }
   graph <http://metadb.riken.jp/db/dna_diseaseID>{
-    ?dna rdfs:seeAlso ?nando.}
+    ?dna <http://purl.obolibrary.org/obo/RO_0003301> ?nando.}
   graph <http://metadb.riken.jp/db/xsearch_dnabank_brso>{
     ?dna rdfs:label ?label;
          foaf:homepage ?hp;

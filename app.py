@@ -173,8 +173,8 @@ def REST_API_disease(id_nando=""):
 #####
 # 疾患ページ new
 ## GET:
-@app.route('/disease_new/NANDO:<string:id_nando>', methods=['GET'])
-def REST_API_disease_new(id_nando=""):
+@app.route('/disease_old/NANDO:<string:id_nando>', methods=['GET'])
+def REST_API_disease_old(id_nando=""):
     if request.method == 'GET':
         # parse nando.ttl
         onto = pronto.Ontology('/opt/services/case/app/nanbyodata/ontology/nando.obo')
@@ -193,7 +193,7 @@ def REST_API_disease_new(id_nando=""):
                 break
         breadcrumb_list_html = re.sub(r'^\<ul\>', '<ul class="tree">', breadcrumb_list_html)
         breadcrumb_list_html = '<h3>難病</h3>' + breadcrumb_list_html
-        return render_template('entry.html',
+        return render_template('disease.html.20230823',
                                id_nando=id_nando,
                                breadcrumb_list_html=breadcrumb_list_html
         )

@@ -1,8 +1,8 @@
-// TODO: dispaly: none until loading is finished
+// dispaly: none until loading is finished
 document.getElementById("content").style.display = "none";
 document.getElementById("sidebar").style.display = "none";
 
-// TODO: get NANDO ID
+// get NANDO ID
 const pathname = window.location.pathname;
 const nandoIndex = pathname.indexOf("NANDO:");
 const nandoId = pathname.slice(nandoIndex + 6);
@@ -16,10 +16,8 @@ const nandoId = pathname.slice(nandoIndex + 6);
       headers: {
         "Content-Type": "application/json",
       },
-      // body: JSON.stringify({ nando_id: 2200053 }),
     }
   ).then((res) => res.json());
-  // render
 
   // summary header
   makeHeader(entryData);
@@ -29,6 +27,9 @@ const nandoId = pathname.slice(nandoIndex + 6);
 
   // alternative name
   makeAlternativeName(entryData);
+
+  // inheritance uris
+  makeInheritanceUris(entryData);
 
   // links list
   makeLinksList(entryData);
@@ -54,7 +55,7 @@ const nandoId = pathname.slice(nandoIndex + 6);
   selectedItem();
   switchingDisplayContents("temp-summary");
 
-  // TODO: When loading finishes, display: block
+  // When loading finishes, display: block
   document.getElementById("content").style.display = "block";
   document.getElementById("sidebar").style.display = "block";
 })();
@@ -94,18 +95,22 @@ function makeExternalLinks(entryData) {
     {
       url: entryData.mhlw?.url,
       element: externalLinks.querySelector(".linked-item.mhlw"),
+      existing: !!entryData.mhlw,
     },
     {
       url: entryData.source,
       element: externalLinks.querySelector(".linked-item.source"),
+      existing: !!entryData.source,
     },
     {
       url: entryData.nanbyou?.url,
       element: externalLinks.querySelector(".linked-item.nanbyou"),
+      existing: !!entryData.nanbyou,
     },
     {
       url: entryData.shouman?.url,
       element: externalLinks.querySelector(".linked-item.shouman"),
+      existing: !!entryData.shouman,
     },
   ];
 
@@ -117,6 +122,11 @@ function makeExternalLinks(entryData) {
       element.remove();
     }
   });
+
+  const allFalse = items.every(item => item.existing === false);
+  if (allFalse) {
+    document.getElementById("temp-data-summary").style.borderBottom = "none";
+  }
 }
 
 function makeAlternativeName(entryData) {
@@ -153,10 +163,10 @@ function createLinkElement(url, text) {
 }
 
 function appendLinks(data, container, prefix = "") {
-  if (data.length) {
+  if (data && data.length) {
     data.forEach((item, index) => {
       const dd = document.createElement("dd");
-      const a = createLinkElement(item.url, prefix + item.id);
+      const a = createLinkElement(item.url || item.uri, prefix + item.id);
       dd.classList.add("linked-item");
       dd.append(a);
       container.append(dd);
@@ -170,6 +180,15 @@ function appendLinks(data, container, prefix = "") {
   }
 }
 
+function makeInheritanceUris(entryData) {
+  const inheritanceUris = document.querySelector(".inheritance-uri");
+  if(entryData.inheritance_uris) {
+    appendLinks(entryData.inheritance_uris, inheritanceUris);
+  } else {
+    inheritanceUris.remove();
+  }
+}
+
 function makeLinksList(entryData) {
   const linksListProperties = document.querySelector(".properties");
   const omim = linksListProperties.querySelector(".omim");
@@ -179,8 +198,8 @@ function makeLinksList(entryData) {
   const kegg = linksListProperties.querySelector(".kegg");
   const urdbms = linksListProperties.querySelector(".urdbms");
 
-  appendLinks(entryData.db_xrefs?.omim, omim, "id");
-  appendLinks(entryData.db_xrefs?.orphanet, orphanet, "id", "ORPHA:");
+  appendLinks(entryData.db_xrefs?.omim, omim);
+  appendLinks(entryData.db_xrefs?.orphanet, orphanet, "ORPHA:");
 
   if (entryData.medgen_id) {
     const dd = document.createElement("dd");
@@ -192,7 +211,7 @@ function makeLinksList(entryData) {
     medgen.remove();
   }
 
-  appendLinks(entryData.mondos, mondos, "id");
+  appendLinks(entryData.mondos, mondos);
 
   if (entryData.kegg) {
     const dd = document.createElement("dd");
@@ -220,10 +239,21 @@ function makeProperties(entryData) {
   const properties = causativeGene.querySelector("#temp-properties");
   const item = {
     existing: !!entryData.gene_uris,
-    url: `https://pubcasefinder.dbcls.jp/sparqlist/api/test_nanbyodata_gene?nando_id=${entryData.nando_id}`,
+    url: `https://pubcasefinder.dbcls.jp/sparqlist/api/test_230824?nando_id=${entryData.nando_id}`,
+    columns:
+      "",
   };
   if (item.existing) {
     properties.innerHTML = `
+	  <style>
+	  togostanza-pagination-table {
+	      --togostanza-thead-font-color: #363535;
+	      --togostanza-thead-background-color: #9bbcc5;
+	      --togostanza-thead-font-size: 20px;
+	      --togostanza-tbody-border-bottom: 2px solid #EEEEEE;
+	      --togostanza-tbody-font-size: 16px;
+	  }
+        </style>
         <togostanza-pagination-table data-type="json"
           data-url="${item.url}"
           data-type="json" 
@@ -231,9 +261,11 @@ function makeProperties(entryData) {
           width=""
           fixed-columns="1"
           padding="0px"
-          page-size-option="10,20,50,100"
-          page-slider="true"
-          columns="">
+          page-size-option="100"
+          page-slider="false"
+          columns="[{&quot;id&quot;:&quot;gene_symbol&quot;,&quot;label&quot;:&quot;Gene_symbol&quot;,&quot;link&quot;:&quot;omim_url&quot;,&quot;target&quot;:&quot;_blank&quot;} ,  {&quot;id&quot;:&quot;ncbi_id&quot;,&quot;label&quot;:&quot;NCBI_ID&quot;,&quot;link&quot;:&quot;ncbi_url&quot;,&quot;target&quot;:&quot;_blank&quot;} , {&quot;id&quot;:&quot;mondo_id&quot;,&quot;label&quot;:&quot;MONDO_ID&quot;,&quot;link&quot;:&quot;mondo_url&quot;,&quot;target&quot;:&quot;_blank&quot;} ,  {&quot;id&quot;:&quot;nando_idb&quot;,&quot;label&quot;:&quot;NANDO_ID&quot;,&quot;link&quot;:&quot;nando_ida&quot;,&quot;target&quot;:&quot;_blank&quot;} , {&quot;id&quot;:&quot;nando_label_e&quot;,&quot;label&quot;:&quot;NANDO Disease label&quot;}]"
+          show-axis-selector
+          togostanza-menu-placement="bottom-left">
         </togostanza-pagination-table>
       `;
   } else {
@@ -241,9 +273,10 @@ function makeProperties(entryData) {
   }
 }
 
+
 function makeDiseaseDefinition(entryData) {
-  const DiseaseDefinition = document.getElementById("temp-disease-definition");
-  const tabWrap = DiseaseDefinition.querySelector(
+  const diseaseDefinition = document.getElementById("temp-disease-definition");
+  const tabWrap = diseaseDefinition.querySelector(
     "#temp-disease-definition .tab-wrap"
   );
 
@@ -269,7 +302,7 @@ function makeDiseaseDefinition(entryData) {
   ];
 
   if (items.every((item) => !item.existing)) {
-    DiseaseDefinition.remove();
+    diseaseDefinition.remove();
   } else {
     let isFirstTab = true;
 
@@ -420,6 +453,15 @@ function makeSpecificBioResource(entryData) {
 }
 
 function makeSideNavigation() {
+  // 疾患選択のセレクトボックスのスタイルを変更
+  const selectTreeBox = document.querySelector(`select[name="${nandoId}"]`);
+  if(selectTreeBox) {
+    const parentTreeBox = selectTreeBox.parentNode;
+    selectTreeBox.style.backgroundColor = "white"
+    selectTreeBox.style.color = "#13295a"
+    parentTreeBox.style.backgroundColor = "white";
+  }
+
   const sideNavigation = document.getElementById("temp-side-navigation");
   const sideNavigationUl = sideNavigation.querySelector("ul");
   const items = [
@@ -471,7 +513,13 @@ function switchingDisplayContents(selectedItemId) {
     tempSummary.style.display = "block";
     document.getElementById("temp-aliases").style.display = "block";
     document.querySelector(".temp-wrapper").style.display = "block";
-    document.getElementById("temp-disease-definition").style.display = "block";
+    const diseaseDefinition = document.getElementById("temp-disease-definition");
+    if(diseaseDefinition) { 
+      diseaseDefinition.style.display = "block";
+    } else {
+      tempSummary.style.display = "none";
+      document.querySelector(".selected").style.display = "none";
+    }
   } else {
     const dataWrapper = document.getElementById("data-wrapper");
     const summary = document.querySelector(".summary-header");
