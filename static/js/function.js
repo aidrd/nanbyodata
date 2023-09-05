@@ -245,28 +245,36 @@ function makeProperties(entryData) {
   };
   if (item.existing) {
     properties.innerHTML = `
-	  <style>
+      <style>
 	  togostanza-pagination-table {
-	      --togostanza-thead-font-color: #363535;
-	      --togostanza-thead-background-color: #9bbcc5;
-	      --togostanza-thead-font-size: 20px;
-	      --togostanza-tbody-border-bottom: 2px solid #EEEEEE;
+	      --togostanza-thead-border-bottom: 2px solid #EEEEEE;
+	      --togostanza-thead-font-color: #1a1919;
+	      --togostanza-thead-background-color: #ffffff;
+	      --togostanza-thead-font-size: 16px;
+	      --togostanza-tbody-border-bottom: 1px solid #A9A9A9;
 	      --togostanza-tbody-font-size: 16px;
+	      --togostanza-non-active-color: #ababab;
+	      --togostanza-control-font-size: 16px;
+	      --togostanza-pagination-font-color: #afb2b6;
+	      --togostanza-pagination-background-color: #b4b1b1;
+	      --togostanza-pagination-current-font-color: #cfc9c9;
+	      --togostanza-pagination-current-background-color: #d6d6d6;
+	      --togostanza-pagination-arrow-color: #b3b3b3;
+	      --togostanza-background-color: #ffffff;
 	  }
-        </style>
-        <togostanza-pagination-table data-type="json"
-          data-url="${item.url}"
-          data-type="json" 
-          custom-css-url="https://nanbyodata.jp/static/sass/pagination-table-custom.css"
-          width=""
-          fixed-columns="1"
-          padding="0px"
-          page-size-option="100"
-          page-slider="false"
-          columns="[{&quot;id&quot;:&quot;gene_symbol&quot;,&quot;label&quot;:&quot;Gene_symbol&quot;,&quot;link&quot;:&quot;omim_url&quot;,&quot;target&quot;:&quot;_blank&quot;} ,  {&quot;id&quot;:&quot;ncbi_id&quot;,&quot;label&quot;:&quot;NCBI_ID&quot;,&quot;link&quot;:&quot;ncbi_url&quot;,&quot;target&quot;:&quot;_blank&quot;} , {&quot;id&quot;:&quot;mondo_id&quot;,&quot;label&quot;:&quot;MONDO_ID&quot;,&quot;link&quot;:&quot;mondo_url&quot;,&quot;target&quot;:&quot;_blank&quot;} ,  {&quot;id&quot;:&quot;nando_idb&quot;,&quot;label&quot;:&quot;NANDO_ID&quot;,&quot;link&quot;:&quot;nando_ida&quot;,&quot;target&quot;:&quot;_blank&quot;} , {&quot;id&quot;:&quot;nando_label_e&quot;,&quot;label&quot;:&quot;NANDO Disease label&quot;}]"
-          show-axis-selector
-          togostanza-menu-placement="bottom-left">
-        </togostanza-pagination-table>
+      </style>
+
+      <togostanza-pagination-table
+      data-url="${item.url}"
+      data-type="json"
+      custom-css-url=""
+      width=""
+      fixed-columns="1"
+      padding="0px"
+      page-size-option="100"
+      page-slider="false"
+      columns="[{&quot;id&quot;:&quot;gene_symbol&quot;,&quot;label&quot;:&quot;Gene symbol&quot;,&quot;link&quot;:&quot;omim_url&quot;,&quot;target&quot;:&quot;_blank&quot;} ,   {&quot;id&quot;:&quot;ncbi_id&quot;,&quot;label&quot;:&quot;NCBI ID&quot;,&quot;link&quot;:&quot;ncbi_url&quot;,&quot;target&quot;:&quot;_blank&quot;} ,  {&quot;id&quot;:&quot;nando_label_e&quot;,&quot;label&quot;:&quot;NANDO Disease label&quot;,&quot;link&quot;:&quot;nando_ida&quot;,&quot;target&quot;:&quot;_blank&quot;}, {&quot;id&quot;:&quot;mondo_label&quot;,&quot;label&quot;:&quot;MONDO Disease label&quot;,&quot;link&quot;:&quot;mondo_url&quot;,&quot;target&quot;:&quot;_bkank&quot;} ]"
+      ></togostanza-pagination-table>
       `;
   } else {
     causativeGene.remove();
