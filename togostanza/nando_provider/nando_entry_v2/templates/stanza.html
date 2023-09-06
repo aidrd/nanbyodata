@@ -13,7 +13,7 @@
     <div class="data-name">
       <h3>NANDO ID: <span><a href="http://nanbyodata.jp/ontology/nando#{{result.nando_id}}"target="_blank" rel="noopener noreferrer">{{result.nando_id}}</a></span></h3>
       <h2>
-        <ruby>{{result.label_ja}}<rt>{{result.ruby}}</h2></rt></ruby>
+        <ruby>{{result.label_ja}}<rt>{{result.ruby}}</rt></ruby>
       </h2>
       <h3>{{result.label_en}}</h2>
     </div>
@@ -122,21 +122,21 @@
       {{#if result.db_xrefs.omim}}
       <dl class="linked-items">
         <dt>OMIM</dt>
+        {{#each result.db_xrefs.omim}}
         <dd class="linked-item">
-          {{#each result.db_xrefs.omim}}
           <a href="https://omim.org/entry/{{id}}"target="_blank" rel="noopener noreferrer">{{id}}</a>
-          {{/each}}
         </dd>
+        {{/each}}
       </dl>
       {{/if}}
       {{#if result.db_xrefs.orphanet}}
       <dl class="linked-items">
         <dt>Orphanet</dt>
+        {{#each result.db_xrefs.orphanet}}
         <dd class="linked-item">
-          {{#each result.db_xrefs.orphanet}}
           <a href="https://www.orpha.net/consor/cgi-bin/OC_Exp.php?Expert={{id}}"target="_blank" rel="noopener noreferrer">ORPHA:{{id}}</a>
-          {{/each}}
         </dd>
+        {{/each}}
       </dl>
       {{/if}}
       {{#if result.medgen_id}}
@@ -152,11 +152,11 @@
       {{#if result.mondos}}
       <dl class="linked-items">
         <dt>Monarch Initiative</dt>
+        {{#each result.mondos}}
         <dd class="linked-item">
-          {{#each result.mondos}}
           <a href="https://monarchinitiative.org/disease/{{id}}"target="_blank" rel="noopener noreferrer">{{id}}</a>
-          {{/each}}
         </dd>
+        {{/each}}
       </dl>
       {{/if}}
       {{#if result.kegg.url}}
@@ -594,6 +594,7 @@
       <input id="cell" type="radio" name="TAB2" class="tab-switch" checked="checked" /><label class="tab-label" for="cell">細胞</label>
       <div class="tab-content">
         <togostanza-pagination-table data-url="https://nanbyodata.jp/sparqlist/api/nanbyodata_get_riken_brc_cell_info_by_nando_id?nando_id={{result.nando_id}}" data-type="json"
+        custom-css-url="https://nanbyodata.jp/static/sass/pagination-table-custom.css"
         page-size-option="10,20,50,100"
         page-slider="false"
         columns="[{&quot;id&quot;: &quot;ID&quot;,&quot;label&quot;:&quot;RIKEN_BRC 細胞番号&quot;}, {&quot;id&quot;: &quot;Homepage&quot;,&quot;label&quot;:&quot;Homepage&quot;,&quot;link&quot;:&quot;Homepage&quot;}, {&quot;id&quot;: &quot;Cell_name&quot;,&quot;label&quot;:&quot;細胞名&quot;}, {&quot;id&quot;: &quot;Description_e&quot;,&quot;label&quot;:&quot;細胞特性(英語)&quot;,&quot;escape&quot;:false},{&quot;id&quot;: &quot;Description_j&quot;,&quot;label&quot;:&quot;細胞特性(日本語)&quot;,&quot;escape&quot;:false}]"></togostanza-pagination-table>
@@ -602,17 +603,11 @@
       {{#if result.mus}}
       <input id="mus" type="radio" name="TAB2" class="tab-switch"{{#unless result.cell}}checked="checked"{{/unless}} /><label class="tab-label" for="mus">マウス</label>
       <div class="tab-content">
-	<togostanza-pagination-table
-	   data-url="https://pubcasefinder.dbcls.jp/sparqlist/api/nanbyodata_get_riken_brc_mouse_info_by_nando_id?nando_id={{result.nando_id}}"
-	   data-type="json"
-	   custom-css-url=""
-	   width=""
-	   fixed-columns="1"
-	   padding="0px"
-	   page-size-option="10,20,50,100"
-	   page-slider="true"
-	   columns="[{&quot;id&quot;: &quot;mouse_id&quot;,&quot;label&quot;:&quot;RIKEN_BRC No.&quot;}, {&quot;id&quot;:&quot;hp&quot;,&quot;label&quot;:&quot;Homepage&quot;,&quot;link&quot;:&quot;hp&quot;}, {&quot;id&quot;:&quot;mouse_name&quot;,&quot;label&quot;:&quot;Strain name&quot;}, {&quot;id&quot;:&quot;description&quot;,&quot;label&quot;:&quot;Strain description&quot;}]"
-	   ></togostanza-pagination-table>
+        <togostanza-pagination-table data-url="https://pubcasefinder.dbcls.jp/sparqlist/api/nanbyodata_get_riken_brc_mouse_info_by_nando_id?nando_id={{result.nando_id}}" data-type="json"
+        custom-css-url="https://nanbyodata.jp/static/sass/pagination-table-custom.css"
+        page-size-option="10,20,50,100"
+        page-slider="true"
+        columns="[{&quot;id&quot;: &quot;mouse_id&quot;,&quot;label&quot;:&quot;RIKEN_BRC No.&quot;}, {&quot;id&quot;:&quot;hp&quot;,&quot;label&quot;:&quot;Homepage&quot;,&quot;link&quot;:&quot;hp&quot;}, {&quot;id&quot;:&quot;mouse_name&quot;,&quot;label&quot;:&quot;Strain name&quot;}, {&quot;id&quot;:&quot;description&quot;,&quot;label&quot;:&quot;Strain description&quot;}]"></togostanza-pagination-table>
       </div>
       {{/if}}
       {{#if result.dna}}
@@ -621,14 +616,11 @@
 	<togostanza-pagination-table
 	   data-url="https://pubcasefinder.dbcls.jp/sparqlist/api/nanbyodata_get_riken_brc_dna_info_by_nando_id?nando_id={{result.nando_id}}"
 	   data-type="json"
-	   custom-css-url=""
-	   width=""
-	   fixed-columns="1"
-	   padding="0px"
+           custom-css-url="https://nanbyodata.jp/static/sass/pagination-table-custom.css"
 	   page-size-option="10,20,50,100"
 	   page-slider="true"
-	   columns="[{&quot;id&quot;: &quot;gene_id&quot;,&quot;label&quot;:&quot;Catalog number&quot;}, {&quot;id&quot;:&quot;hp&quot;,&quot;label&quot;:&quot;Homepage&quot;,&quot;link&quot;:&quot;hp&quot;}, {&quot;id&quot;:&quot;gene_label&quot;,&quot;label&quot;:&quot;Name&quot;}, {&quot;id&quot;:&quot;ncbi_gene&quot;,&quot;label&quot;:&quot;NCBI Gene Link&quot;,&quot;link&quot;:&quot;ncbi_gene&quot;}]"
-	   ></togostanza-pagination-table>
+	   columns="[{&quot;id&quot;: &quot;gene_id&quot;,&quot;label&quot;:&quot;Catalog number&quot;}, {&quot;id&quot;:&quot;hp&quot;,&quot;label&quot;:&quot;Homepage&quot;,&quot;link&quot;:&quot;hp&quot;}, {&quot;id&quot;:&quot;gene_label&quot;,&quot;label&quot;:&quot;Name&quot;}, {&quot;id&quot;:&quot;ncbi_gene&quot;,&quot;label&quot;:&quot;NCBI Gene Link&quot;,&quot;link&quot;:&quot;ncbi_gene&quot;} ,{&quot;id&quot;:&quot;gene&quot;,&quot;label&quot;:&quot;NCBI Gene symbol&quot;}]"
+	></togostanza-pagination-table>
       </div>
       {{/if}}
   {{#if result.cell}}
@@ -650,17 +642,11 @@
   <details open>
     <summary>診療用遺伝学的検査情報<small> From 難病領域における検体検査の精度管理体制の整備に資する研究班</small></summary>
     <div class="inspection-view">
-      <togostanza-pagination-table
-	 data-url="https://pubcasefinder.dbcls.jp/sparqlist/api/nanbyodata_get_gene_test?nando_id={{result.nando_id}}"
-	 data-type="json"
-	 custom-css-url=""
-	 width=""
-	 fixed-columns="1"
-	 padding="0px"
-	 page-size-option="10,20,50,100"
-	 page-slider="true"
-	 columns="[{&quot;id&quot;: &quot;label&quot;,&quot;label&quot;:&quot;検査名&quot;},{&quot;id&quot;:&quot;hp&quot;,&quot;label&quot;:&quot;URL&quot;,&quot;link&quot;:&quot;hp&quot;},{&quot;id&quot;:&quot;gene&quot;,&quot;label&quot;:&quot;遺伝子名&quot;},{&quot;id&quot;:&quot;facility&quot;,&quot;label&quot;:&quot;検査施設&quot;}]"
-	 ></togostanza-pagination-table>
+      <togostanza-pagination-table data-url="https://pubcasefinder.dbcls.jp/sparqlist/api/nanbyodata_get_gene_test?nando_id={{result.nando_id}}" data-type="json"
+      custom-css-url="https://nanbyodata.jp/static/sass/pagination-table-custom.css"
+      page-size-option="10,20,50,100"
+      page-slider="true"
+      columns="[{&quot;id&quot;: &quot;label&quot;,&quot;label&quot;:&quot;検査名&quot;},{&quot;id&quot;:&quot;hp&quot;,&quot;label&quot;:&quot;URL&quot;,&quot;link&quot;:&quot;hp&quot;},{&quot;id&quot;:&quot;gene&quot;,&quot;label&quot;:&quot;遺伝子名&quot;},{&quot;id&quot;:&quot;facility&quot;,&quot;label&quot;:&quot;検査施設&quot;}]"></togostanza-pagination-table>
     </div>
   </details>
   {{/if}}
