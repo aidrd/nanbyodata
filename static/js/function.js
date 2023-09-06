@@ -239,7 +239,7 @@ function makeProperties(entryData) {
   const properties = causativeGene.querySelector("#temp-properties");
   const item = {
     existing: !!entryData.gene_uris,
-    url: `https://pubcasefinder.dbcls.jp/sparqlist/api/test_230824?nando_id=${entryData.nando_id}`,
+    url: `https://pubcasefinder.dbcls.jp/sparqlist/api/nanbyodata_get_gene_by_nando_id=${entryData.nando_id}`,
     columns:
       "",
   };
@@ -378,7 +378,9 @@ function makePhenotypeView(entryData) {
   const phenotypeView = tempPhenotypeView.querySelector(".phenotype");
   const item = {
     existing: entryData.phenotype_flg,
-    url: `https://pubcasefinder.dbcls.jp/sparqlist/api/Test_nanbyodata_hp?nando_id=${entryData.nando_id}`,
+    url: `https://pubcasefinder.dbcls.jp/sparqlist/api/nanbyodata_get_hpo_data_by_nando_id?=${entryData.nando_id}`,
+    columns:
+    "[{&quot;id&quot;:&quot;hpo_label_ja&quot;,&quot;label&quot;:&quot;Symptom (JA)&quot;,&quot;link&quot;:&quot;omim_url&quot;,&quot;target&quot;:&quot;_blank&quot;} ,   {&quot;id&quot;:&quot;hpo_label_en&quot;,&quot;label&quot;:&quot;Symptom (EN)&quot;,&quot;link&quot;:&quot;ncbi_url&quot;,&quot;target&quot;:&quot;_blank&quot;} ,  {&quot;id&quot;:&quot;hpo_id&quot;,&quot;label&quot;:&quot;HPO ID&quot;,&quot;link&quot;:&quot;hpo_url&quot;,&quot;target&quot;:&quot;_blank&quot;}, {&quot;id&quot;:&quot;hpo_category_name_en&quot;,&quot;label&quot;:&quot;Symptom category (EN)&quot;,&quot;link&quot;:&quot;hpo_category&quot;,&quot;target&quot;:&quot;_bkank&quot;} ]"
   };
   if (item.existing) {
     phenotypeView.innerHTML = `
