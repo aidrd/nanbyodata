@@ -239,7 +239,7 @@ function makeProperties(entryData) {
   const properties = causativeGene.querySelector("#temp-properties");
   const item = {
     existing: !!entryData.gene_uris,
-    url: `https://pubcasefinder.dbcls.jp/sparqlist/api/test_230824?nando_id=${entryData.nando_id}`,
+    url: `https://pubcasefinder.dbcls.jp/sparqlist/api/nanbyodata_get_gene_by_nando_id=${entryData.nando_id}`,
     columns:
       "",
   };
