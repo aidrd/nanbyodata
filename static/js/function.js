@@ -380,21 +380,28 @@ function makePhenotypeView(entryData) {
     existing: entryData.phenotype_flg,
     url: `https://pubcasefinder.dbcls.jp/sparqlist/api/nanbyodata_get_hpo_data_by_nando_id?nando_id=${entryData.nando_id}`,
     columns:
-    "[{&quot;id&quot;:&quot;hpo_label_ja&quot;,&quot;label&quot;:&quot;Symptom (JA)&quot;,&quot;link&quot;:&quot;omim_url&quot;,&quot;target&quot;:&quot;_blank&quot;} ,   {&quot;id&quot;:&quot;hpo_label_en&quot;,&quot;label&quot;:&quot;Symptom (EN)&quot;,&quot;link&quot;:&quot;ncbi_url&quot;,&quot;target&quot;:&quot;_blank&quot;} ,  {&quot;id&quot;:&quot;hpo_id&quot;,&quot;label&quot;:&quot;HPO ID&quot;,&quot;link&quot;:&quot;hpo_url&quot;,&quot;target&quot;:&quot;_blank&quot;}, {&quot;id&quot;:&quot;hpo_category_name_en&quot;,&quot;label&quot;:&quot;Symptom category (EN)&quot;,&quot;link&quot;:&quot;hpo_category&quot;,&quot;target&quot;:&quot;_bkank&quot;} ]",
+      "",
   };
   if (item.existing) {
     phenotypeView.innerHTML = `
-          <togostanza-pagination-table data-type="json"
-            data-url="${item.url}"
-            data-type="json" 
-            custom-css-url="https://nanbyodata.jp/static/sass/pagination-table-custom.css"
-            width=""
-            fixed-columns="1"
-            padding="0px"
-            page-size-option="100"
-            page-slider="fales"
-            columns="">
-          </togostanza-pagination-table>
+      <style>
+	  togostanza-pagination-table {
+	      --togostanza-thead-font-size: 16px;
+	      --togostanza-tbody-font-size: 16px;
+	  }
+      </style>
+
+      <togostanza-pagination-table
+      data-url="${item.url}"
+      data-type="json"
+      width=""
+      fixed-columns="1"
+      padding="0px"
+      page-size-option="100"
+      page-slider="false"
+      columns="[{&quot;id&quot;:&quot;hpo_label_ja&quot;,&quot;label&quot;:&quot;Symptom (JA)&quot;,&quot;link&quot;:&quot;omim_url&quot;,&quot;target&quot;:&quot;_blank&quot;} ,   {&quot;id&quot;:&quot;hpo_label_en&quot;,&quot;label&quot;:&quot;Symptom (EN)&quot;,&quot;link&quot;:&quot;ncbi_url&quot;,&quot;target&quot;:&quot;_blank&quot;} ,  {&quot;id&quot;:&quot;hpo_id&quot;,&quot;label&quot;:&quot;HPO ID&quot;,&quot;link&quot;:&quot;hpo_url&quot;,&quot;target&quot;:&quot;_blank&quot;}, {&quot;id&quot;:&quot;hpo_category_name_en&quot;,&quot;label&quot;:&quot;Symptom category (EN)&quot;,&quot;link&quot;:&quot;hpo_category&quot;,&quot;target&quot;:&quot;_bkank&quot;} ]"
+      togostanza-custom_css_url=""
+        ></togostanza-pagination-table>
         `;
   } else {
     tempPhenotypeView.remove();
