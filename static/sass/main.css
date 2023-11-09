@@ -720,6 +720,10 @@ a:active {
   margin-bottom: 60px;
 }
 
+.about-page .container .illust-text {
+  margin-bottom: 0;
+}
+
 .about-page .container .about-table {
   border-collapse: collapse;
   margin-bottom: 40px;
