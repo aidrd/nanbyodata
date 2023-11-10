@@ -331,6 +331,9 @@ a:visited, a:hover, a:active {
   display: block;
   margin: 0 auto;
 }
+#service .container + .container {
+  margin-top: 70px;
+}
 #service .container h3 {
   text-align: center;
   display: block;
@@ -437,12 +440,6 @@ a:visited, a:hover, a:active {
   display: flex;
   gap: 20px;
 }
-.news .logdata dl.more-list {
-  display: none;
-}
-.news .logdata dl.more-list.open {
-  display: flex;
-}
 .news .logdata dt {
   width: 75px;
   font-size: 15px;
@@ -450,6 +447,12 @@ a:visited, a:hover, a:active {
 }
 .news .logdata dd {
   font-size: 14px;
+}
+.news .logdata .more-list {
+  display: none;
+}
+.news .logdata .more-list.open {
+  display: block;
 }
 .news .more {
   display: inline-block;

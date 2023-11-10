@@ -388,6 +388,10 @@ a {
     display: block;
     margin: 0 auto;
 
+    + .container{
+      margin-top: 70px;
+    }
+
     h3 {
       text-align: center;
       display: block;
@@ -514,14 +518,6 @@ a {
     dl {
       display: flex;
       gap: 20px;
-
-      &.more-list{
-        display: none;
-
-        &.open {
-          display: flex;
-        }
-      }
     }
 
     dt {
@@ -532,6 +528,14 @@ a {
 
     dd {
       font-size: 14px;
+    }
+
+    .more-list{
+      display: none;
+
+      &.open {
+        display: block;
+      }
     }
   }
 
