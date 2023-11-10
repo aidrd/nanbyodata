@@ -1,4 +1,5 @@
 @charset "UTF-8";
+@use './_variables.scss' as *;
 
 body {
   font-family: "Renner*", "Avenir", "Helvetica Neue", "Helvetica", "Arial",
@@ -263,6 +264,7 @@ h5 {
 }
 
 a {
+
   &:visited,
   &:hover,
   &:active {
@@ -508,49 +510,43 @@ a {
 }
 
 .news {
-  padding-top: 70px;
-  background: #13295a;
+  .logdata {
+    dl {
+      display: flex;
+      gap: 20px;
 
-  .container {
-    display: flex;
+      &.more-list{
+        display: none;
 
-    .updata {
-      display: block;
-      color: #fff;
-      font-size: 14px;
-      min-width: 72px;
-    }
-
-    .logdata {
-      list-style: none;
-
-      li {
-        padding-bottom: 7px;
-        display: flex;
-
-        time {
-          color: #fff;
-          display: block;
-          font-size: 15px;
-          margin-right: 20px;
-          width: 75px;
-        }
-
-        p {
-          display: block;
-          font-size: 14px;
-          color: #fff;
-
-          .policy {
-            text-decoration: none;
-            color: #13295a;
-
-            &:hover {
-              color: #495aff;
-            }
-          }
+        &.open {
+          display: flex;
         }
       }
+    }
+
+    dt {
+      width: 75px;
+      font-size: 15px;
+      font-weight: normal;
+    }
+
+    dd {
+      font-size: 14px;
+    }
+  }
+
+  .more {
+    display: inline-block;
+    border: 1px solid var(--color-green);
+    border-radius: 15px;
+    color: var(--color-green);
+    padding: 0px 10px;
+    cursor: pointer;
+    transition: .15s;
+
+    &:hover {
+      color: #fff;
+      background-color: var(--color-green);
     }
   }
 }
