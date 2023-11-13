@@ -2,9 +2,9 @@
 @use './_variables.scss' as *;
 
 body {
-  font-family: "Renner*", "Avenir", "Helvetica Neue", "Helvetica", "Arial",
-    "Hiragino Sans", "ヒラギノ角ゴシック", YuGothic, "Yu Gothic", "メイリオ",
-    Meiryo, "ＭＳ Ｐゴシック", "MS PGothic";
+  font-family: 'Renner*', 'Avenir', 'Helvetica Neue', 'Helvetica', 'Arial',
+    'Hiragino Sans', 'ヒラギノ角ゴシック', YuGothic, 'Yu Gothic', 'メイリオ',
+    Meiryo, 'ＭＳ Ｐゴシック', 'MS PGothic';
 }
 
 p {
@@ -33,7 +33,7 @@ h5 {
 }
 
 .br::before {
-  content: "\A";
+  content: '\A';
   white-space: pre;
 }
 
@@ -264,7 +264,6 @@ h5 {
 }
 
 a {
-
   &:visited,
   &:hover,
   &:active {
@@ -388,7 +387,7 @@ a {
     display: block;
     margin: 0 auto;
 
-    + .container{
+    + .container {
       margin-top: 70px;
     }
 
@@ -494,7 +493,7 @@ a {
       color: #13295a;
 
       &::before {
-        content: "";
+        content: '';
         display: inline-block;
         width: 30px;
         border-top: 2px solid #495aff;
@@ -530,7 +529,7 @@ a {
       font-size: 14px;
     }
 
-    .more-list{
+    .more-list {
       display: none;
 
       &.open {
@@ -541,16 +540,16 @@ a {
 
   .more {
     display: inline-block;
-    border: 1px solid var(--color-green);
+    border: 1px solid var(--color-primary);
     border-radius: 15px;
-    color: var(--color-green);
+    color: var(--color-primary);
     padding: 0px 10px;
     cursor: pointer;
-    transition: .15s;
+    transition: 0.15s;
 
     &:hover {
       color: #fff;
-      background-color: var(--color-green);
+      background-color: var(--color-primary);
     }
   }
 }
@@ -629,9 +628,9 @@ a {
           }
 
           &::before {
-            font-family: "Font Awesome 5 Free";
+            font-family: 'Font Awesome 5 Free';
             font-weight: 900;
-            content: "\f15c";
+            content: '\f15c';
             margin-right: 8px;
             width: 80%;
           }
@@ -664,9 +663,9 @@ a {
         letter-spacing: 1px;
 
         &::before {
-          font-family: "Font Awesome 5 Free";
+          font-family: 'Font Awesome 5 Free';
           font-weight: 900;
-          content: "\f02d";
+          content: '\f02d';
           margin-right: 8px;
           width: 80%;
           color: #495aff;
@@ -722,7 +721,7 @@ a {
       color: #13295a;
 
       &::before {
-        content: "";
+        content: '';
         display: inline-block;
         width: 30px;
         border-top: 2px solid #495aff;
@@ -769,9 +768,9 @@ a {
             }
 
             &::before {
-              font-family: "Font Awesome 5 Free";
+              font-family: 'Font Awesome 5 Free';
               font-weight: 900;
-              content: "\f15c";
+              content: '\f15c';
               margin-right: 8px;
               width: 80%;
             }
@@ -977,7 +976,7 @@ details {
   summary {
     &:before,
     &:after {
-      content: "";
+      content: '';
       margin: auto;
       position: absolute;
       top: 0;
@@ -1032,9 +1031,9 @@ details {
   }
 }
 
-a[target="_blank"]::after {
-  font-family: "Font Awesome 5 Free";
-  content: "\f35d";
+a[target='_blank']::after {
+  font-family: 'Font Awesome 5 Free';
+  content: '\f35d';
   font-size: 105%;
   font-weight: 900;
   margin: 0 3px;

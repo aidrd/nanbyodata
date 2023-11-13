@@ -1,9 +1,9 @@
 @charset "UTF-8";
 
 body {
-  font-family: "Renner*", "Avenir", "Helvetica Neue", "Helvetica", "Arial",
-    "Hiragino Sans", "ヒラギノ角ゴシック", YuGothic, "Yu Gothic", "メイリオ",
-    Meiryo, "ＭＳ Ｐゴシック", "MS PGothic";
+  font-family: 'Renner*', 'Avenir', 'Helvetica Neue', 'Helvetica', 'Arial',
+    'Hiragino Sans', 'ヒラギノ角ゴシック', YuGothic, 'Yu Gothic', 'メイリオ',
+    Meiryo, 'ＭＳ Ｐゴシック', 'MS PGothic';
   margin: 0px;
   padding: 84px 0px 0px 270px;
 }
@@ -241,9 +241,9 @@ details .data-list {
   }
 }
 
-a[target="_blank"]::after {
-  font-family: "Font Awesome 5 Free";
-  content: "\f35d";
+a[target='_blank']::after {
+  font-family: 'Font Awesome 5 Free';
+  content: '\f35d';
   font-size: 85%;
   font-weight: 900;
   margin: 0 3px;
@@ -304,7 +304,7 @@ a[target="_blank"]::after {
       width: 0;
       height: 0;
       padding: 0;
-      content: "";
+      content: '';
       border-left: 6px solid transparent;
       border-right: 6px solid transparent;
       border-top: 6px solid #fff;
@@ -347,7 +347,7 @@ a[target="_blank"]::after {
 
   &:before,
   ul:before {
-    content: "";
+    content: '';
     display: block;
     width: 0;
     position: absolute;
@@ -368,7 +368,7 @@ a[target="_blank"]::after {
     position: relative;
 
     &:before {
-      content: "";
+      content: '';
       display: block;
       width: 10px;
 
@@ -514,11 +514,11 @@ a[target="_blank"]::after {
   /* content: "\f059"; */
   /* color: #495AFF; */
 
-  content: "\f059";
+  content: '\f059';
   font-weight: 900;
   color: #495aff;
   font-style: initial;
-  font-family: "Font Awesome 5 Free";
+  font-family: 'Font Awesome 5 Free';
 }
 
 ul.token-input-list-facebook {
@@ -659,7 +659,7 @@ h5 {
 }
 
 .br::before {
-  content: "\a";
+  content: '\a';
   white-space: pre;
 }
 
@@ -1077,7 +1077,7 @@ header {
       color: #13295a;
 
       &::before {
-        content: "";
+        content: '';
         display: inline-block;
         width: 30px;
         border-top: 2px solid #495aff;
@@ -1214,9 +1214,9 @@ header {
           }
 
           &::before {
-            font-family: "Font Awesome 5 Free";
+            font-family: 'Font Awesome 5 Free';
             font-weight: 900;
-            content: "\f15c";
+            content: '\f15c';
             margin-right: 8px;
             width: 80%;
           }
@@ -1249,9 +1249,9 @@ header {
         letter-spacing: 1px;
 
         &::before {
-          font-family: "Font Awesome 5 Free";
+          font-family: 'Font Awesome 5 Free';
           font-weight: 900;
-          content: "\f02d";
+          content: '\f02d';
           margin-right: 8px;
           width: 80%;
           color: #495aff;
