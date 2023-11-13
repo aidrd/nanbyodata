@@ -49,15 +49,11 @@ const nandoId = pathname.slice(nandoIndex + 6);
   // specific bio resource
   makeSpecificBioResource(entryData);
 
-  // side navigation
-  makeSideNavigation();
+  // variant
+  makeVariant(entryData);
 
   selectedItem();
   switchingDisplayContents('temp-summary');
-
-  // When loading finishes, display: block
-  document.getElementById('content').style.display = 'block';
-  document.getElementById('sidebar').style.display = 'block';
 })();
 
 function makeHeader(entryData) {
@@ -437,6 +433,45 @@ function makeSpecificBioResource(entryData) {
   }
 }
 
+function makeVariant(entryData) {
+  const variant = document.getElementById('temp-variant');
+  const properties = variant.querySelector('#temp-properties');
+  const url = `https://pubcasefinder.dbcls.jp/sparqlist/api/nanbyodata_get_variant_by_nando_id?nando_id=${entryData.nando_id}`;
+  fetch(url)
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(`HTTPエラー! ステータスコード: ${response.status}`);
+      }
+      return response.json();
+    })
+    .then((data) => {
+      if (Array.isArray(data) && data.length === 0) {
+        variant.remove();
+      } else {
+        properties.innerHTML = `
+      <togostanza-pagination-table
+      data-url="${url}"
+      data-type="json"
+      custom-css-url="https://togostanza.github.io/togostanza-themes/contrib/nanbyodata.css"
+      fixed-columns="1"
+      page-size-option="100"
+      page-slider="false"
+      columns="[{&quot;id&quot;:&quot;tgv_id&quot;,&quot;label&quot;:&quot;TogoVar ID&quot;,&quot;link&quot;:&quot;tgv_link&quot;,&quot;target&quot;:&quot;_blank&quot;},{&quot;id&quot;:&quot;rs_id&quot;,&quot;label&quot;:&quot;dbSNP ID&quot;,&quot;link&quot;:&quot;rs_id_link&quot;,&quot;target&quot;:&quot;_blank&quot;},{&quot;id&quot;:&quot;position&quot;,&quot;label&quot;:&quot;position&quot;},{&quot;id&quot;:&quot;type&quot;,&quot;label&quot;:&quot;type&quot;},{&quot;id&quot;:&quot;Clinvar_id&quot;,&quot;label&quot;:&quot;Clinvar ID&quot;,&quot;link&quot;:&quot;Clinvar_link&quot;,&quot;target&quot;:&quot;_blank&quot;},{&quot;id&quot;:&quot;title&quot;,&quot;label&quot;:&quot;title&quot;},{&quot;id&quot;:&quot;MedGen_id&quot;,&quot;label&quot;:&quot;MedGen ID&quot;,&quot;link&quot;:&quot;MedGen_link&quot;,&quot;target&quot;:&quot;_blank&quot;},{&quot;id&quot;:&quot;mondo_id&quot;,&quot;label&quot;:&quot;Mondo ID&quot;,&quot;link&quot;:&quot;mondo&quot;,&quot;target&quot;:&quot;_blank&quot;}]"
+      ></togostanza-pagination-table>
+      `;
+      }
+    })
+    .then(() => {
+      makeSideNavigation();
+      // When loading finishes, display: block
+      document.getElementById('content').style.display = 'block';
+      document.getElementById('sidebar').style.display = 'block';
+    })
+    .catch((error) => {
+      console.error('データが取得できません:', error);
+    });
+}
+
 function makeSideNavigation() {
   // 疾患選択のセレクトボックスのスタイルを変更
   const selectTreeBox = document.querySelector(`select[name="${nandoId}"]`);
@@ -455,6 +490,7 @@ function makeSideNavigation() {
     'temp-medical-genetic-testing-info',
     'temp-phenotype-view',
     'temp-specific-bio-resource',
+    'temp-variant',
   ];
   const lis = sideNavigationUl.querySelectorAll('li');
   lis.forEach((li) => {
@@ -482,6 +518,7 @@ function switchingDisplayContents(selectedItemId) {
     '#temp-medical-genetic-testing-info',
     '#temp-phenotype-view',
     '#temp-specific-bio-resource',
+    '#temp-variant',
   ];
 
   // すべての要素を非表示にする
