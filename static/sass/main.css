@@ -1,4 +1,8 @@
 @charset "UTF-8";
+:root {
+  --color-primary: #147786;
+}
+
 body {
   font-family: "Renner*", "Avenir", "Helvetica Neue", "Helvetica", "Arial", "Hiragino Sans", "ヒラギノ角ゴシック", YuGothic, "Yu Gothic", "メイリオ", Meiryo, "ＭＳ Ｐゴシック", "MS PGothic";
 }
@@ -327,6 +331,9 @@ a:visited, a:hover, a:active {
   display: block;
   margin: 0 auto;
 }
+#service .container + .container {
+  margin-top: 70px;
+}
 #service .container h3 {
   text-align: center;
   display: block;
@@ -429,44 +436,36 @@ a:visited, a:hover, a:active {
   margin-bottom: 40px;
 }
 
-.news {
-  padding-top: 70px;
-  background: #13295a;
-}
-.news .container {
+.news .logdata dl {
   display: flex;
+  gap: 20px;
 }
-.news .container .updata {
-  display: block;
-  color: #fff;
-  font-size: 14px;
-  min-width: 72px;
-}
-.news .container .logdata {
-  list-style: none;
-}
-.news .container .logdata li {
-  padding-bottom: 7px;
-  display: flex;
-}
-.news .container .logdata li time {
-  color: #fff;
-  display: block;
-  font-size: 15px;
-  margin-right: 20px;
+.news .logdata dt {
   width: 75px;
+  font-size: 15px;
+  font-weight: normal;
 }
-.news .container .logdata li p {
-  display: block;
+.news .logdata dd {
   font-size: 14px;
+}
+.news .logdata .more-list {
+  display: none;
+}
+.news .logdata .more-list.open {
+  display: block;
+}
+.news .more {
+  display: inline-block;
+  border: 1px solid var(--color-primary);
+  border-radius: 15px;
+  color: var(--color-primary);
+  padding: 0px 10px;
+  cursor: pointer;
+  transition: 0.15s;
+}
+.news .more:hover {
   color: #fff;
-}
-.news .container .logdata li p .policy {
-  text-decoration: none;
-  color: #13295a;
-}
-.news .container .logdata li p .policy:hover {
-  color: #495aff;
+  background-color: var(--color-primary);
 }
 
 /*

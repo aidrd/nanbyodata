@@ -1,9 +1,10 @@
 @charset "UTF-8";
+@use './_variables.scss' as *;
 
 body {
-  font-family: "Renner*", "Avenir", "Helvetica Neue", "Helvetica", "Arial",
-    "Hiragino Sans", "ヒラギノ角ゴシック", YuGothic, "Yu Gothic", "メイリオ",
-    Meiryo, "ＭＳ Ｐゴシック", "MS PGothic";
+  font-family: 'Renner*', 'Avenir', 'Helvetica Neue', 'Helvetica', 'Arial',
+    'Hiragino Sans', 'ヒラギノ角ゴシック', YuGothic, 'Yu Gothic', 'メイリオ',
+    Meiryo, 'ＭＳ Ｐゴシック', 'MS PGothic';
 }
 
 p {
@@ -32,7 +33,7 @@ h5 {
 }
 
 .br::before {
-  content: "\A";
+  content: '\A';
   white-space: pre;
 }
 
@@ -386,6 +387,10 @@ a {
     display: block;
     margin: 0 auto;
 
+    + .container {
+      margin-top: 70px;
+    }
+
     h3 {
       text-align: center;
       display: block;
@@ -488,7 +493,7 @@ a {
       color: #13295a;
 
       &::before {
-        content: "";
+        content: '';
         display: inline-block;
         width: 30px;
         border-top: 2px solid #495aff;
@@ -508,49 +513,43 @@ a {
 }
 
 .news {
-  padding-top: 70px;
-  background: #13295a;
-
-  .container {
-    display: flex;
-
-    .updata {
-      display: block;
-      color: #fff;
-      font-size: 14px;
-      min-width: 72px;
+  .logdata {
+    dl {
+      display: flex;
+      gap: 20px;
     }
 
-    .logdata {
-      list-style: none;
+    dt {
+      width: 75px;
+      font-size: 15px;
+      font-weight: normal;
+    }
 
-      li {
-        padding-bottom: 7px;
-        display: flex;
+    dd {
+      font-size: 14px;
+    }
 
-        time {
-          color: #fff;
-          display: block;
-          font-size: 15px;
-          margin-right: 20px;
-          width: 75px;
-        }
+    .more-list {
+      display: none;
 
-        p {
-          display: block;
-          font-size: 14px;
-          color: #fff;
-
-          .policy {
-            text-decoration: none;
-            color: #13295a;
-
-            &:hover {
-              color: #495aff;
-            }
-          }
-        }
+      &.open {
+        display: block;
       }
+    }
+  }
+
+  .more {
+    display: inline-block;
+    border: 1px solid var(--color-primary);
+    border-radius: 15px;
+    color: var(--color-primary);
+    padding: 0px 10px;
+    cursor: pointer;
+    transition: 0.15s;
+
+    &:hover {
+      color: #fff;
+      background-color: var(--color-primary);
     }
   }
 }
@@ -629,9 +628,9 @@ a {
           }
 
           &::before {
-            font-family: "Font Awesome 5 Free";
+            font-family: 'Font Awesome 5 Free';
             font-weight: 900;
-            content: "\f15c";
+            content: '\f15c';
             margin-right: 8px;
             width: 80%;
           }
@@ -664,9 +663,9 @@ a {
         letter-spacing: 1px;
 
         &::before {
-          font-family: "Font Awesome 5 Free";
+          font-family: 'Font Awesome 5 Free';
           font-weight: 900;
-          content: "\f02d";
+          content: '\f02d';
           margin-right: 8px;
           width: 80%;
           color: #495aff;
@@ -722,7 +721,7 @@ a {
       color: #13295a;
 
       &::before {
-        content: "";
+        content: '';
         display: inline-block;
         width: 30px;
         border-top: 2px solid #495aff;
@@ -769,9 +768,9 @@ a {
             }
 
             &::before {
-              font-family: "Font Awesome 5 Free";
+              font-family: 'Font Awesome 5 Free';
               font-weight: 900;
-              content: "\f15c";
+              content: '\f15c';
               margin-right: 8px;
               width: 80%;
             }
@@ -977,7 +976,7 @@ details {
   summary {
     &:before,
     &:after {
-      content: "";
+      content: '';
       margin: auto;
       position: absolute;
       top: 0;
@@ -1032,9 +1031,9 @@ details {
   }
 }
 
-a[target="_blank"]::after {
-  font-family: "Font Awesome 5 Free";
-  content: "\f35d";
+a[target='_blank']::after {
+  font-family: 'Font Awesome 5 Free';
+  content: '\f35d';
   font-size: 105%;
   font-weight: 900;
   margin: 0 3px;
