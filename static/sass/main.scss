@@ -38,14 +38,15 @@ h5 {
 }
 
 .navbar {
-  background-color: #147786;
+  padding-top: 15px;
+  background-color: var(--color-primary);
 
   .container {
     a {
       text-decoration: none;
 
       .imgtitle {
-        width: 120px;
+        width: 220px;
         display: block;
       }
 
@@ -97,7 +98,7 @@ h5 {
   }
 
   &.scroll {
-    background-color: #147786;
+    background-color: var(--color-primary);
     top: 24px;
 
     .collapse ul li {
@@ -181,7 +182,7 @@ h5 {
       margin-right: -250px;
       padding-left: 250px;
       padding-right: 250px;
-      background: #13295a;
+      background: var(--color-primary);
     }
 
     &.jumbotron-disease {
@@ -690,7 +691,7 @@ a {
     margin-right: -250px;
     padding-left: 250px;
     padding-right: 250px;
-    background: #13295a;
+    background: var(--color-primary);
 
     h3 {
       color: #fff;
@@ -911,7 +912,7 @@ a {
 
   .data-link {
     display: inline-flex;
-    background-color: #147786;
+    background-color: var(--color-primary);
     border-radius: 3px;
     text-align: left;
     padding: 5px;
