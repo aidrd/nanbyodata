@@ -49,15 +49,11 @@ const nandoId = pathname.slice(nandoIndex + 6);
   // specific bio resource
   makeSpecificBioResource(entryData);
 
-  // side navigation
-  makeSideNavigation();
+  // variant
+  makeVariant(entryData);
 
   selectedItem();
   switchingDisplayContents('temp-summary');
-
-  // When loading finishes, display: block
-  document.getElementById('content').style.display = 'block';
-  document.getElementById('sidebar').style.display = 'block';
 })();
 
 function makeHeader(entryData) {
@@ -244,32 +240,11 @@ function makeProperties(entryData) {
   };
   if (item.existing) {
     properties.innerHTML = `
-      <style>
-	  togostanza-pagination-table {
-	      --togostanza-thead-border-bottom: 2px solid #EEEEEE;
-	      --togostanza-thead-font-color: #1a1919;
-	      --togostanza-thead-background-color: #ffffff;
-	      --togostanza-thead-font-size: 16px;
-	      --togostanza-tbody-border-bottom: 1px solid #A9A9A9;
-	      --togostanza-tbody-font-size: 16px;
-	      --togostanza-non-active-color: #ababab;
-	      --togostanza-control-font-size: 16px;
-	      --togostanza-pagination-font-color: #afb2b6;
-	      --togostanza-pagination-background-color: #b4b1b1;
-	      --togostanza-pagination-current-font-color: #cfc9c9;
-	      --togostanza-pagination-current-background-color: #d6d6d6;
-	      --togostanza-pagination-arrow-color: #b3b3b3;
-	      --togostanza-background-color: #ffffff;
-	  }
-      </style>
-
       <togostanza-pagination-table
       data-url="${item.url}"
       data-type="json"
-      custom-css-url=""
-      width=""
+      custom-css-url="https://togostanza.github.io/togostanza-themes/contrib/nanbyodata.css"
       fixed-columns="1"
-      padding="0px"
       page-size-option="100"
       page-slider="false"
       columns="[{&quot;id&quot;:&quot;gene_symbol&quot;,&quot;label&quot;:&quot;Gene symbol&quot;,&quot;link&quot;:&quot;omim_url&quot;,&quot;target&quot;:&quot;_blank&quot;} ,   {&quot;id&quot;:&quot;ncbi_id&quot;,&quot;label&quot;:&quot;NCBI ID&quot;,&quot;link&quot;:&quot;ncbi_url&quot;,&quot;target&quot;:&quot;_blank&quot;} ,  {&quot;id&quot;:&quot;nando_label_e&quot;,&quot;label&quot;:&quot;NANDO Disease label&quot;,&quot;link&quot;:&quot;nando_ida&quot;,&quot;target&quot;:&quot;_blank&quot;}, {&quot;id&quot;:&quot;mondo_label&quot;,&quot;label&quot;:&quot;MONDO Disease label&quot;,&quot;link&quot;:&quot;mondo_url&quot;,&quot;target&quot;:&quot;_bkank&quot;} ]"
@@ -360,8 +335,8 @@ function makeMedicalGeneticTestingInfo(entryData) {
         <togostanza-pagination-table data-type="json"
           data-url="${item.url}"
           columns="${item.columns}"
-          custom-css-url="https://nanbyodata.jp/static/sass/pagination-table-custom.css"
-          page-size-option="10,20,50,100"
+          custom-css-url="https://togostanza.github.io/togostanza-themes/contrib/nanbyodata.css"
+          page-size-option="100"
           page-slider="true"
           fixed-columns="1">
         </togostanza-pagination-table>
@@ -381,19 +356,11 @@ function makePhenotypeView(entryData) {
   };
   if (item.existing) {
     phenotypeView.innerHTML = `
-      <style>
-	  togostanza-pagination-table {
-	      --togostanza-thead-font-size: 16px;
-	      --togostanza-tbody-font-size: 16px;
-	  }
-      </style>
-
       <togostanza-pagination-table
       data-url="${item.url}"
+      custom-css-url="https://togostanza.github.io/togostanza-themes/contrib/nanbyodata.css"
       data-type="json"
-      width=""
       fixed-columns="1"
-      padding="0px"
       page-size-option="100"
       page-slider="false"
       columns="[{&quot;id&quot;:&quot;hpo_label_ja&quot;,&quot;label&quot;:&quot;Symptom (JA)&quot;,&quot;link&quot;:&quot;omim_url&quot;,&quot;target&quot;:&quot;_blank&quot;} ,   {&quot;id&quot;:&quot;hpo_label_en&quot;,&quot;label&quot;:&quot;Symptom (EN)&quot;,&quot;link&quot;:&quot;ncbi_url&quot;,&quot;target&quot;:&quot;_blank&quot;} ,  {&quot;id&quot;:&quot;hpo_id&quot;,&quot;label&quot;:&quot;HPO ID&quot;,&quot;link&quot;:&quot;hpo_url&quot;,&quot;target&quot;:&quot;_blank&quot;}, {&quot;id&quot;:&quot;hpo_category_name_en&quot;,&quot;label&quot;:&quot;Symptom category (EN)&quot;,&quot;link&quot;:&quot;hpo_category&quot;,&quot;target&quot;:&quot;_bkank&quot;} ]"
@@ -457,13 +424,52 @@ function makeSpecificBioResource(entryData) {
         <togostanza-pagination-table data-type="json"
           data-url="${item.url}"
           columns="${item.columns}"
-          custom-css-url="https://nanbyodata.jp/static/sass/pagination-table-custom.css"
+          custom-css-url="https://togostanza.github.io/togostanza-themes/contrib/nanbyodata.css"
           page-size-option="100"
           page-slider="fales">
         </togostanza-pagination-table>
       `;
     });
   }
+}
+
+function makeVariant(entryData) {
+  const variant = document.getElementById('temp-variant');
+  const properties = variant.querySelector('#temp-properties');
+  const url = `https://pubcasefinder.dbcls.jp/sparqlist/api/nanbyodata_get_variant_by_nando_id?nando_id=${entryData.nando_id}`;
+  fetch(url)
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(`HTTPエラー! ステータスコード: ${response.status}`);
+      }
+      return response.json();
+    })
+    .then((data) => {
+      if (Array.isArray(data) && data.length === 0) {
+        variant.remove();
+      } else {
+        properties.innerHTML = `
+      <togostanza-pagination-table
+      data-url="${url}"
+      data-type="json"
+      custom-css-url="https://togostanza.github.io/togostanza-themes/contrib/nanbyodata.css"
+      fixed-columns="1"
+      page-size-option="100"
+      page-slider="false"
+      columns="[{&quot;id&quot;:&quot;tgv_id&quot;,&quot;label&quot;:&quot;TogoVar ID&quot;,&quot;link&quot;:&quot;tgv_link&quot;,&quot;target&quot;:&quot;_blank&quot;},{&quot;id&quot;:&quot;rs_id&quot;,&quot;label&quot;:&quot;dbSNP ID&quot;,&quot;link&quot;:&quot;rs_id_link&quot;,&quot;target&quot;:&quot;_blank&quot;},{&quot;id&quot;:&quot;position&quot;,&quot;label&quot;:&quot;position&quot;},{&quot;id&quot;:&quot;type&quot;,&quot;label&quot;:&quot;type&quot;},{&quot;id&quot;:&quot;Clinvar_id&quot;,&quot;label&quot;:&quot;Clinvar ID&quot;,&quot;link&quot;:&quot;Clinvar_link&quot;,&quot;target&quot;:&quot;_blank&quot;},{&quot;id&quot;:&quot;title&quot;,&quot;label&quot;:&quot;title&quot;},{&quot;id&quot;:&quot;MedGen_id&quot;,&quot;label&quot;:&quot;MedGen ID&quot;,&quot;link&quot;:&quot;MedGen_link&quot;,&quot;target&quot;:&quot;_blank&quot;},{&quot;id&quot;:&quot;mondo_id&quot;,&quot;label&quot;:&quot;Mondo ID&quot;,&quot;link&quot;:&quot;mondo&quot;,&quot;target&quot;:&quot;_blank&quot;}]"
+      ></togostanza-pagination-table>
+      `;
+      }
+    })
+    .then(() => {
+      makeSideNavigation();
+      // When loading finishes, display: block
+      document.getElementById('content').style.display = 'block';
+      document.getElementById('sidebar').style.display = 'block';
+    })
+    .catch((error) => {
+      console.error('データが取得できません:', error);
+    });
 }
 
 function makeSideNavigation() {
@@ -484,6 +490,7 @@ function makeSideNavigation() {
     'temp-medical-genetic-testing-info',
     'temp-phenotype-view',
     'temp-specific-bio-resource',
+    'temp-variant',
   ];
   const lis = sideNavigationUl.querySelectorAll('li');
   lis.forEach((li) => {
@@ -511,6 +518,7 @@ function switchingDisplayContents(selectedItemId) {
     '#temp-medical-genetic-testing-info',
     '#temp-phenotype-view',
     '#temp-specific-bio-resource',
+    '#temp-variant',
   ];
 
   // すべての要素を非表示にする
