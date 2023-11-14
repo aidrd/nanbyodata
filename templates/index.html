@@ -9,10 +9,13 @@
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-  <link rel="stylesheet" type="text/css" href="/static/sass/main.css">
   <link rel="stylesheet" href="https://indestructibletype-fonthosting.github.io/renner.css" type="text/css"
     charset="utf-8" />
   <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
+
+  <!-- CSS -->
+  <link rel="stylesheet" type="text/css" href="/static/sass/main.css">
+  <link rel="stylesheet" type="text/css" href="/static/sass/footer.css">
 
   <!-- TokenInput -->
   <link rel="stylesheet" type="text/css" href="/static/sass/token-input-facebook.css">
@@ -179,25 +182,100 @@
     </section>
 
 
-    <!--- about -->
-    <!--
-		<section class="about" id="about">
-			<div class="container">
-				<h3>サイト概要</h3>
-				<h4>NanbyoDataについて</h4>
-				<p>
-					NanbyoDataは難病に携わる医療関係者・研究者・開発者向けに、研究やシステム構築に役立つデータを、再利用可能なクリエイティブ・コモンズ【表示4.0国際】ライセンスの元に提供します。まずは、難病オントロジー、難病ー遺伝子関連データ、難病ー症状関連データの提供を開始します。
-				</p>
-				<h4>免責事項</h4>
-				<p>
-					NanbyoDataは誠実にデータを提供しますが、データの正確性、臨床的妥当性または有用性を検証することはありません。DBCLSは、明示的にも黙示的にも、利用者が当データを用いて行う一切の行為について、何ら責任を負うものではありません。DBCLSは、本サービスの変更、中断、または終了により被った損害に関しても、何ら責任を負うものではありません。また、統合サイトのサイト・ポリシー内「<a
-						class="policy" href="http://lifesciencedb.jp/lsdb.cgi?lng=ja&gg=policy">免責事項</a>」にも準ずるものとします。
-				</p>
-			</div>
-		</section>
-		-->
+    <!--- footer --->
+    <footer id="footer">
+      <div class="footer__common">
+        <div class="footer__wrapper">
+          <div class="footer__wrapper__contents">
+            <div class="footer__info">
+              <div class="footer__organism">
+                <img src="../static/img/logo_dbcls.svg" alt="" class="footer__logo">
+                <div class='footer__organism-text'>
+                  <p class="footer__organism-sub">大学共同利用機関法人 情報・システム研究機構</p>
+                  <p class="footer__organism-sub">データサイエンス共同利用基盤施設</p>
+                  <p class="footer__organism-main">ライフサイエンス統合データベースセンター</p>
+                </div>
+              </div>
+              <div class="footer__address">
+                <h2 class="footer-title">Address</h2>
+                <ul class="address__list">
+                  <li>
+                    <p>〒277-0871</p>
+                    <p>千葉県柏市若柴178-4-4</p>
+                    <p>東京大学柏の葉キャンパス
+                      <br>駅前サテライト6階
+                    </p>
+                    <p>TEL. 04-7135-5508（代表）
+                      <br> FAX. 04-7135-5534（代表）
+                    </p>
+                  </li>
+                  <li>
+                    <p>〒411-8540</p>
+                    <p>静岡県三島市谷田1111</p>
+                    <p>国立遺伝学研究所
+                      <br>研究実験W棟412
+                    </p>
+                  </li>
+                </ul>
+              </div>
+              <div class="footer__links">
+                <h2 class="footer-title">Links</h2>
+                <ul class="links__wrapper">
+                  <li class="individual_link">
+                    <a href="http://lifesciencedb.jp/">統合ホームページ</a>
+                  </li>
+                  <li class="individual_link">
+                    <a href="https://youtube.com/togotv/live">DBCLS on YouTubeLive</a>
+                  </li>
+                  <li class="individual_link">
+                    <a href="https://ds.rois.ac.jp/">データサイエンス共同利用基盤施設</a>
+                  </li>
+                  <li class="individual_link">
+                    <a href="http://www.rois.ac.jp/">情報・システム研究機構</a>
+                  </li>
+                  <li class="individual_link">
+                    <a href="http://www.mext.go.jp/">文部科学省</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <div class="footer__partners">
+          <ul class="footer__logo-wrapper">
+            <li>
+              <a href="https://jbioinfo.jp/" target="_blank">
+                <img class="logo__jbi" src="../static/img/jbi-3.png" alt="">
+              </a>
+            </li>
+            <li>
+              <a href="https://www.ddbj.nig.ac.jp/index.html" target="_blank">
+                <img class="logo__ddbj" src="../static/img/ddbj.png" alt="">
+              </a>
+            </li>
+            <li>
+              <a href="https://biosciencedbc.jp/" target="_blank">
+                <img class="logo__nbdc" src="../static/img/nbdc.png" alt="">
+              </a>
+            </li>
+            <li>
+              <a href="https://pdbj.org/" target="_blank">
+                <img class="logo__pdbj" src="../static/img/pdbj.png" alt="">
+              </a>
+            </li>
+          </ul>
+        </div>
+        <div class="footer__lisence">
+          <p> &copy; 2018 DBCLS, Licensed under <a href="https://creativecommons.org/licenses/by/4.0/deed.ja"
+              target="_blank">Creative Commons Attribution 4.0 International license (CC-BY 4.0)</a></p>
+        </div>
+      </div>
+    </footer>
 
-    <!--- modal　内容 -->
+
+    <!--- 難病オントロジー modal -->
     <div class="modal fade" id="demoNormalModalA" tabindex="-1" role="dialog" aria-labelledby="modal"
       aria-hidden="true">
       <div class="modal-dialog modal-lg" role="document">
@@ -209,7 +287,8 @@
             <div class="modalContent">
               <img src="/static/img/modal_icon_1.png">
               <h5 class="modal-title" id="demoModalTitle">難病オントロジー（NANDO）</h5>
-              <p>NANDOの詳細情報は<a href="https://github.com/aidrd/nando" target="_blank">GitHub</a>をご参照ください。</p>
+              <p>NANDOの詳細情報は<a class="link" href="https://github.com/aidrd/nando" target="_blank">GitHub</a>をご参照ください。
+              </p>
               <table>
                 <tr>
                   <th>Version</th>
@@ -246,7 +325,7 @@
     </div>
     <!--- /#demoNormalModal --->
 
-    <!--- modal　内容 -->
+    <!--- 難病ー遺伝子関連データ modal -->
     <div class="modal fade" id="demoNormalModalB" tabindex="-1" role="dialog" aria-labelledby="modal"
       aria-hidden="true">
       <div class="modal-dialog modal-lg" role="document">
@@ -289,7 +368,7 @@
     </div>
     <!--- /#demoNormalModal --->
 
-    <!--- modal　内容 -->
+    <!--- 難病ー症状関連データ modal -->
     <div class="modal fade" id="demoNormalModalC" tabindex="-1" role="dialog" aria-labelledby="modal"
       aria-hidden="true">
       <div class="modal-dialog modal-lg" role="document">
@@ -332,7 +411,7 @@
     </div>
     <!--- /#demoNormalModal --->
 
-    <!--- modal　内容 -->
+    <!--- NanbyoData利用規約 modal -->
     <div class="modal fade" id="demoNormalModal_TOS" tabindex="-1" role="dialog" aria-labelledby="modal"
       aria-hidden="true">
       <div class="modal-dialog modal-lg" role="document">
@@ -357,12 +436,7 @@
     </div>
     <!--- /#demoNormalModal --->
 
-
   </main>
-
-
-
-
 
 
   <!-- Optional JavaScript -->
