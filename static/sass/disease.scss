@@ -99,10 +99,10 @@ body {
   width: 130px;
 
   a .imgtitle {
-    width: 120px;
+    width: 220px;
     position: fixed;
     left: 25px;
-    top: 44px;
+    top: 20px;
   }
 }
 
@@ -242,8 +242,7 @@ a[target='_blank']::after {
 }
 
 #sidebar {
-  /* top: 119px; */
-  top: 90px;
+  top: 65px;
   left: 0px;
   width: 270px;
   height: 100%;
@@ -656,8 +655,6 @@ h5 {
 }
 
 .navbar {
-  background-color: rgba(255, 255, 255, 0.8);
-  top: 24px;
 
   .container {
     a {
