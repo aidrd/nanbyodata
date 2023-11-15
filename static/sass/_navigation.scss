@@ -1,58 +1,102 @@
-/* Main Navigation */
-#mainNav {
-  padding-top: 15px;
+/* Navigation */
+.navbar {
+  display: block;
+  padding: 15px 0 10px;
   background-color: var(--color-primary);
 
-  .container {
-    a.navbsar-brand {
-      text-decoration: none;
 
-      img.imgtitle {
-        width: 220px;
-        display: block;
-      }
+  a.navbsar-brand {
+    text-decoration: none;
+
+    img.imgtitle {
+      width: 220px;
+      display: block;
     }
+  }
 
-    button.navbar-toggler {
-      padding: 5px 0;
-      width: 30px;
-      height: 30px;
-      background-color: transparent;
-      border: 1px solid #696969;
-      border-radius: 0;
+  button.navbar-toggler {
+    color: #fff;
+    border: none;
+    outline: none;
+    margin-bottom: 7px;
+
+    i {
+      font-size: 30px;
+      vertical-align: top;
+    }
+  }
+
+  ul.navbar-nav {
+    padding-top: 15px;
+
+    a.nav-link {
       color: #fff;
-      font-size: 13px;
-      outline: none;
-      appearance: none;
-      cursor: pointer;
-    }
+      font-size: 14px;
+      margin-left: 20px;
 
+      &:hover {
+        color: #7c7c7c;
+      }
 
-    ul.navbar-nav {
-      padding-top: 15px;
-
-      a.nav-link {
+      button.btn-TOS {
+        width: 100%;
+        padding: 0;
+        text-align: left;
+        background-color: transparent;
+        outline: none;
+        border: none;
         color: #fff;
-        font-size: 14px;
-        margin-left: 20px;
 
         &:hover {
           color: #7c7c7c;
         }
+      }
+    }
+  }
+}
 
-        button.btn-TOS {
-          width: 100%;
-          padding: 0;
-          text-align: left;
-          background-color: transparent;
-          outline: none;
-          border: none;
-          color: #fff;
 
-          &:hover {
-            color: #7c7c7c;
+/* Disease Navigation */
+#diseaseNav {
+  .wrapper {
+    padding: 0 20px;
+    display: flex;
+    justify-content: space-between;
+
+
+    .intro-text {
+      outline: none;
+      width: 70%;
+      height: 44px;
+
+      ul.token-input-list-facebook {
+        margin: 0 auto;
+
+        li.token-input-input-token-facebook {
+
+          #token-input-tokeninput {
+            height: 20px;
+            padding: 0;
+            margin: 0;
           }
         }
+      }
+    }
+
+    .navbar-right {
+      display: flex;
+      gap: 13px;
+
+      select.language-select {
+        font-size: 14px;
+        appearance: none;
+        border-radius: 35px;
+        padding: 5px 10px;
+        border: 2px solid white;
+        color: white;
+        background-color: #147786;
+        outline: none;
+        height: 36px;
       }
     }
   }
