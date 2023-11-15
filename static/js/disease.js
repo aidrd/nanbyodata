@@ -553,7 +553,7 @@ function switchingDisplayContents(selectedItemId) {
 }
 
 function selectedItem() {
-  const links = document.querySelectorAll('.nav-link');
+  const links = document.querySelectorAll('#temp-side-navigation .nav-link');
 
   links.forEach((link) => {
     link.addEventListener('click', (event) => {
