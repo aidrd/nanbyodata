@@ -70,7 +70,7 @@ function makeHeader(entryData) {
   document
     .getElementById('temp-nando-copy')
     .addEventListener('click', async () => {
-      const clipboardText = 'http://nanbyodata.jp/ontology/nando#' + nandoId;
+      const clipboardText = 'https://nanbyodata.jp/ontology/nando#' + nandoId;
       document.getElementById('temp-nando-copy').textContent = 'Copied!';
       await navigator.clipboard.writeText(clipboardText);
       await new Promise((resolve) => setTimeout(resolve, 1000));
