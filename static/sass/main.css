@@ -809,6 +809,14 @@ a.link[target=_blank]::after {
 }
 
 /* イラスト追加CSS終了*/
+/* Layout */
+#data-wrapper {
+  width: 80vw;
+}
+#data-wrapper header.summary-header {
+  margin-bottom: 12px;
+}
+
 /* Navigation */
 .navbar {
   display: block;
@@ -1071,4 +1079,96 @@ footer .footer__bottom .footer__lisence p:before {
   height: 16px;
   display: block;
   background: url(../img/by.svg) no-repeat;
+}
+
+/* Component */
+.linked-item {
+  margin-bottom: 3px;
+  padding: 4px 20px;
+  border: var(--color-primary) 1px solid;
+  border-radius: 3px;
+  background-color: var(--color-primary);
+  font-size: 12px;
+  font-weight: bold;
+  line-height: 1.4;
+}
+.linked-item > a {
+  color: #fff;
+  text-decoration: none;
+}
+.linked-item.-unlinked {
+  background-color: #fff;
+  color: var(--color-primary);
+}
+
+/* Disease Only */
+/* summary-header */
+.summary-header {
+  border: solid 2px #c1c6d3;
+  border-radius: 5px;
+}
+.summary-header > .data-name,
+.summary-header > .external-links {
+  padding: 10px;
+}
+.summary-header > .data-name {
+  border-bottom: 1px dashed #c1c6d3;
+  margin: 0;
+}
+.summary-header > .data-name h2,
+.summary-header > .data-name h3,
+.summary-header > .data-name p {
+  margin: 0;
+}
+.summary-header > .data-name > h3 {
+  font-size: 18px;
+  font-weight: bold;
+}
+.summary-header > .data-name > h3 a.nando-link,
+.summary-header > .data-name > h3 span.nando-copy {
+  font-size: 12px;
+  color: #90959B;
+  font-weight: normal;
+  cursor: pointer;
+  margin-left: 5px;
+}
+.summary-header > .data-name > h3 a.nando-link:hover,
+.summary-header > .data-name > h3 span.nando-copy:hover {
+  color: black;
+}
+.summary-header > .data-name > h3 a.nando-link::after,
+.summary-header > .data-name > h3 span.nando-copy::after {
+  font-family: "Font Awesome 5 Free";
+  padding-left: 3px;
+  margin: 0;
+}
+.summary-header > .data-name > h3 a.nando-link {
+  text-decoration: underline;
+}
+.summary-header > .data-name > h3 a.nando-link::after {
+  content: "\f35d";
+  font-weight: 900;
+}
+.summary-header > .data-name > h3 span.nando-copy::after {
+  content: "\f0c5";
+  font-weight: normal;
+  vertical-align: middle;
+}
+.summary-header > .data-name > h2#temp-label-ja {
+  font-weight: bold;
+  padding: 25px 0 15px;
+}
+.summary-header > .data-name > h2#temp-label-ja ruby {
+  font-size: 36px;
+}
+.summary-header > .data-name > h2#temp-label-ja ruby rt {
+  font-size: 10px;
+  font-weight: normal;
+}
+.summary-header > .data-name > h3#temp-label-en {
+  font-size: 26px;
+}
+.summary-header > .external-links {
+  display: flex;
+  gap: 2px;
 }
