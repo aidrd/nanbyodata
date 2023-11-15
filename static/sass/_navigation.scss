@@ -1,0 +1,59 @@
+/* Main Navigation */
+#mainNav {
+  padding-top: 15px;
+  background-color: var(--color-primary);
+
+  .container {
+    a.navbsar-brand {
+      text-decoration: none;
+
+      img.imgtitle {
+        width: 220px;
+        display: block;
+      }
+    }
+
+    button.navbar-toggler {
+      padding: 5px 0;
+      width: 30px;
+      height: 30px;
+      background-color: transparent;
+      border: 1px solid #696969;
+      border-radius: 0;
+      color: #fff;
+      font-size: 13px;
+      outline: none;
+      appearance: none;
+      cursor: pointer;
+    }
+
+
+    ul.navbar-nav {
+      padding-top: 15px;
+
+      a.nav-link {
+        color: #fff;
+        font-size: 14px;
+        margin-left: 20px;
+
+        &:hover {
+          color: #7c7c7c;
+        }
+
+        button.btn-TOS {
+          width: 100%;
+          padding: 0;
+          text-align: left;
+          background-color: transparent;
+          outline: none;
+          border: none;
+          color: #fff;
+
+          &:hover {
+            color: #7c7c7c;
+          }
+        }
+      }
+    }
+  }
+}

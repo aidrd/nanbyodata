@@ -1,2 +1,5 @@
-@use "./base.scss";
-@use "./footer.scss";
+@use "./variables";
+@use "./base";
+
+@use "./navigation";
+@use "./footer";
