@@ -58,8 +58,24 @@ const nandoId = pathname.slice(nandoIndex + 6);
 
 function makeHeader(entryData) {
   const refNandoId = document.getElementById('temp-nando-id');
-  refNandoId.setAttribute('href', refNandoId.getAttribute('href') + nandoId);
   refNandoId.textContent = nandoId;
+
+  const refNandoLink = document.getElementById('temp-nando-link');
+  refNandoLink.setAttribute(
+    'href',
+    refNandoLink.getAttribute('href') + nandoId
+  );
+  refNandoLink.textContent += nandoId;
+
+  document
+    .getElementById('temp-nando-copy')
+    .addEventListener('click', async () => {
+      const clipboardText = 'http://nanbyodata.jp/ontology/nando#' + nandoId;
+      document.getElementById('temp-nando-copy').textContent = 'Copied!';
+      await navigator.clipboard.writeText(clipboardText);
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+      document.getElementById('temp-nando-copy').textContent = 'Copy';
+    });
 
   const labelJa = document.getElementById('temp-label-ja');
   labelJa.innerHTML =
