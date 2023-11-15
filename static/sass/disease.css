@@ -6,6 +6,7 @@ body {
   padding: 84px 0px 0px 270px;
 }
 
+/* Disease */
 #header {
   top: 0px;
   left: 0px;
@@ -1391,4 +1392,4 @@ details {
 
 .inspection-view {
   padding-top: 10px;
-}/*# sourceMappingURL=disease.css.map */
+}
