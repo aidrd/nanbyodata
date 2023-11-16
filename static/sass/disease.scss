@@ -84,11 +84,11 @@ a[target='_blank']::after {
   width: 270px;
   height: 100%;
   text-align: left;
-  padding: 25px;
-  background-color: #13295a;
+  // padding: 25px;
+  background-color: #dadede;
 
   h3 {
-    color: #fff;
+    color: #13295a;
     font-size: 16px;
     margin-bottom: 3px;
   }
@@ -122,8 +122,8 @@ a[target='_blank']::after {
   &.cp_sl03 {
     position: relative;
     border-radius: 2px;
-    border: 1px solid #fff;
-    background: #13295a;
+    border: 1px solid #13295a;
+    background: #dadede;
 
     &::before {
       position: absolute;
@@ -135,17 +135,17 @@ a[target='_blank']::after {
       content: '';
       border-left: 6px solid transparent;
       border-right: 6px solid transparent;
-      border-top: 6px solid #fff;
+      border-top: 6px solid #13295a;
       pointer-events: none;
     }
 
     select {
       padding: 6px 32px 5px 8px;
-      color: #fff;
+      color: #13295a;
       font-size: 14px;
 
       option {
-        color: #13295a;
+        color: #dadede;
       }
     }
   }
@@ -159,7 +159,7 @@ a[target='_blank']::after {
   /* indentation */
   padding: 0;
   list-style: none;
-  color: #fff;
+  color: #13295a;
   position: relative;
 
   ul {
@@ -168,7 +168,7 @@ a[target='_blank']::after {
     /* indentation */
     padding: 0;
     list-style: none;
-    color: #fff;
+    color: #13295a;
     position: relative;
     margin-left: 0.5em;
   }
@@ -214,7 +214,7 @@ a[target='_blank']::after {
     }
 
     &:last-child:before {
-      background: #13295a;
+      background: #dadede;
 
       /* same with body background */
       height: auto;
@@ -362,28 +362,29 @@ h5 {
 }
 
 #temp-side-navigation {
-  margin-top: 50px;
+  border-top: 1px solid black;
+  padding: 25px;
 
   > ul {
     padding: 0;
     list-style-type: none;
 
     > li:last-child a {
-      border-bottom: 1px dashed white;
+      border-bottom: 1px dashed #13295a;
     }
     li {
       ul {
-        color: white;
+        color: #13295a;
         margin-left: 30px;
       }
     }
 
     a {
       display: block;
-      border-top: 1px dashed white;
+      border-top: 1px dashed #13295a;
       border-radius: 2px;
       padding: 10px;
-      color: white;
+      color: #13295a;
       text-decoration: none;
       margin-bottom: -1px;
 
@@ -415,13 +416,16 @@ h5 {
     margin: 0;
     margin-top: -1.5px;
   }
+  .breadcrumb-list {
+    padding: 25px;
+  }
 }
 
 .navigation-title {
   font-size: 16px;
   font-weight: bold;
-  color: white;
-  background-color: #041435;
+  color: #16234e;
+  opacity: 0.6;
   padding: 2px var(--padding-inline);
   margin: 0px calc(var(--padding-inline) * -1) 8px;
 }
