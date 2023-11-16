@@ -348,9 +348,6 @@ a[target='_blank']::after {
   font-family: 'Font Awesome 5 Free';
 }
 
-
-
-
 p {
   color: #696969;
   font-size: 13px;
@@ -371,32 +368,34 @@ h5 {
     padding: 0;
     list-style-type: none;
 
-    li:last-child a {
+    > li:last-child a {
       border-bottom: 1px dashed white;
+    }
+    li {
       ul {
         color: white;
         margin-left: 30px;
       }
     }
-  }
 
-  a {
-    display: block;
-    border-top: 1px dashed white;
-    border-radius: 2px;
-    padding: 10px;
-    color: white;
-    text-decoration: none;
-    margin-bottom: -1px;
+    a {
+      display: block;
+      border-top: 1px dashed white;
+      border-radius: 2px;
+      padding: 10px;
+      color: white;
+      text-decoration: none;
+      margin-bottom: -1px;
 
-    &:not(.selected):hover {
-      background: rgba(255, 255, 255, 0.5);
+      &:not(.selected):hover {
+        background: rgba(255, 255, 255, 0.5);
+      }
     }
-  }
 
-  .selected {
-    background: white;
-    color: #13295a;
+    .selected {
+      background: white;
+      color: #13295a;
+    }
   }
 }
 
@@ -1022,7 +1021,6 @@ header {
   font-family: 'Poppins', sans-serif;
 }
 
-
 .properties {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -1035,7 +1033,6 @@ header {
 .link-wrapper {
   border-bottom: none;
 }
-
 
 .aliases > dl {
   margin: 0 0 4px;
