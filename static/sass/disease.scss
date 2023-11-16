@@ -10,176 +10,12 @@ body {
 }
 
 /* Disease */
-#header {
-  top: 0px;
-  left: 0px;
-  width: 100%;
-  height: 53px;
-  background-color: #147786;
-}
-
-.intro-text {
-  outline: none;
-  margin-right: 100px;
-  margin-left: 160px;
-  width: 70%;
-
-  form input {
-    width: 300%;
-    outline: none;
-    padding: 7px 20px;
-    background: #fff;
-    border: 1px solid #dfe1e5;
-    box-shadow: none;
-    border-radius: 24px;
-    height: 44px;
-    margin: 0 auto;
-  }
-}
-
-.navbar-collapse ul li {
-  a {
-    color: #fff;
-
-    &:hover {
-      color: #7c7c7c;
-    }
-
-    &:visited {
-      color: #fff;
-    }
-
-    &:active {
-      color: #7c7c7c;
-    }
-  }
-
-  .btn-TOS {
-    background-color: transparent;
-    cursor: pointer;
-    outline: none;
-    padding: 0;
-    appearance: none;
-    border-radius: 0;
-    border: none;
-    color: #fff;
-
-    &:hover {
-      color: #7c7c7c;
-    }
-
-    &:visited {
-      color: #fff;
-    }
-
-    &:active {
-      color: #7c7c7c;
-    }
-  }
-}
-
-.navbar-light .navbar-nav .nav-link {
-  color: #fff;
-  text-align: right;
-
-  &:hover {
-    color: #7c7c7c;
-  }
-
-  &:visited {
-    color: #fff;
-  }
-
-  &:active {
-    color: #7c7c7c;
-  }
-}
-
-#logo {
-  display: block;
-  width: 130px;
-
-  a .imgtitle {
-    width: 220px;
-    position: fixed;
-    left: 25px;
-    top: 20px;
-  }
-}
-
-.bg-light {
-  background-color: #147786 !important;
-}
-
-.navbar-light .navbar-toggler {
-  border-color: transparent;
-  outline: none;
-  color: white;
-  outline: none;
-}
-
 #content {
   overflow: auto;
   top: 90px;
   padding-top: 30px;
   bottom: 0px;
   position: fixed;
-}
-
-#data-wrapper {
-  .data_table .data-list {
-    margin-top: 10px;
-
-    .list-wrapper {
-      margin-bottom: 3px;
-
-      /* height: 30px; */
-      display: flex;
-
-      h3 {
-        background-color: #13295a;
-        color: #fff;
-        padding: 9px 5px 5px 5px;
-        border-radius: 3px;
-        font-weight: 500;
-        font-size: 14px;
-        width: 150px;
-        height: auto;
-
-        /* display: inline; */
-        margin: 0 auto;
-      }
-
-      .list-contents {
-        /* display: inline-flex; */
-        background-color: #f0f2f4;
-        border-radius: 3px;
-        display: inline-block;
-        width: 100%;
-        height: 29px;
-        padding: 0;
-        height: auto;
-        margin-left: 5px;
-
-        p {
-          font-size: 14px;
-          margin: 0;
-          color: #000;
-          background-color: #f0f2f4;
-          border-radius: 3px;
-          display: inline-block;
-          width: 100%;
-          padding: 9px 5px 5px 5px;
-          height: auto;
-          margin-left: 5px;
-
-          a::after {
-            content: none;
-          }
-        }
-      }
-    }
-  }
 }
 
 details .data-list {
@@ -410,7 +246,6 @@ a[target='_blank']::after {
 }
 
 @media screen {
-  #header,
   #sidebar {
     position: fixed;
   }
@@ -513,17 +348,8 @@ a[target='_blank']::after {
   font-family: 'Font Awesome 5 Free';
 }
 
-ul.token-input-list-facebook {
-  width: 80%;
-  margin: 0 auto;
-  margin-top: 0 !important;
-  margin-bottom: 0 !important;
-}
 
-#logo {
-  display: block;
-  width: 0px;
-}
+
 
 p {
   color: #696969;
@@ -574,20 +400,6 @@ h5 {
   }
 }
 
-#data-wrapper {
-  width: 80vw;
-}
-
-#temp-data-summary {
-  a {
-    text-decoration: underline;
-  }
-
-  h2 {
-    font-weight: bold;
-  }
-}
-
 #temp-properties,
 #temp-phenotype-view {
   display: block;
@@ -595,10 +407,6 @@ h5 {
 
 #temp-disease-definition .google-translate {
   color: #0431b4;
-}
-
-.summary-header {
-  margin-top: 5px;
 }
 
 #sidebar {
@@ -636,22 +444,6 @@ h5 {
 
 .tree .cp_sl03:hover {
   background-color: rgba(255, 255, 255, 0.5);
-}
-
-.container {
-  width: 100%;
-  padding-right: 0px;
-  padding-left: 0px;
-  margin-right: auto;
-  margin-left: auto;
-
-  .imgtitle {
-    width: 300px;
-  }
-
-  h2 {
-    letter-spacing: 3px;
-  }
 }
 
 .br::before {
@@ -1089,54 +881,6 @@ header {
   }
 }
 
-.news {
-  padding-top: 70px;
-  -bottom: 30px;
-  background: linear-gradient(to bottom, #13295a 20%, #495aff);
-
-  .container {
-    display: flex;
-
-    .updata {
-      display: block;
-      color: #fff;
-      font-size: 14px;
-      min-width: 72px;
-    }
-
-    .logdata {
-      list-style: none;
-
-      li {
-        padding-bottom: 7px;
-        display: flex;
-
-        time {
-          color: #fff;
-          display: block;
-          font-size: 14px;
-          margin-right: 20px;
-        }
-
-        p {
-          display: block;
-          font-size: 14px;
-          color: #fff;
-
-          .policy {
-            text-decoration: none;
-            color: #13295a;
-
-            &:hover {
-              color: #495aff;
-            }
-          }
-        }
-      }
-    }
-  }
-}
-
 .modal-content {
   text-align: center;
   border-radius: 0;
@@ -1278,52 +1022,6 @@ header {
   font-family: 'Poppins', sans-serif;
 }
 
-a[target='_blank']::after {
-  display: none;
-}
-
-.summary-header {
-  margin-bottom: 12px;
-  border: solid 2px #c1c6d3;
-  border-radius: 5px;
-
-  > div {
-    padding: 10px;
-  }
-}
-
-.data-name > h2,
-h3,
-p {
-  margin: 0;
-}
-
-.data-name > {
-  h2 {
-    padding-top: 13px;
-  }
-
-  h3 {
-    font-size: 18px;
-    font-weight: bold;
-  }
-
-  h2 > {
-    ruby {
-      font-size: 24px;
-
-      > rt {
-        font-size: 8px;
-        font-weight: normal;
-      }
-    }
-
-    h3 {
-      font-size: 14px;
-      font-weight: normal;
-    }
-  }
-}
 
 .properties {
   display: -webkit-box;
@@ -1334,25 +1032,10 @@ p {
   gap: 3px;
 }
 
-.data-name {
-  border-bottom: 1px dashed #c1c6d3;
-  margin: 0;
-}
-
 .link-wrapper {
   border-bottom: none;
 }
 
-.external-links,
-.properties {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-}
-
-.external-links > .linked-item + .linked-item {
-  margin-left: 2px;
-}
 
 .aliases > dl {
   margin: 0 0 4px;
@@ -1383,27 +1066,6 @@ p {
   }
 }
 
-.linked-item {
-  margin-bottom: 3px;
-  padding: 4px 20px;
-  border: #147786 1px solid;
-  border-radius: 3px;
-  background-color: #147786;
-  font-size: 12px;
-  font-weight: bold;
-  line-height: 1.4;
-
-  > a {
-    color: #fff;
-    text-decoration: none;
-  }
-
-  &.-unlinked {
-    background-color: #fff;
-    color: #147786;
-  }
-}
-
 .linked-items {
   display: inline;
   font-weight: bold;
@@ -1427,10 +1089,6 @@ p {
       display: inline-block;
     }
   }
-}
-
-.external-links > div:nth-child(1) {
-  padding: 4px 10px;
 }
 
 details summary {

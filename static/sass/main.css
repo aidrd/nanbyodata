@@ -35,101 +35,6 @@ h5 {
   white-space: pre;
 }
 
-.navbar {
-  padding-top: 15px;
-  background-color: var(--color-primary);
-}
-.navbar .container a {
-  text-decoration: none;
-}
-.navbar .container a .imgtitle {
-  width: 220px;
-  display: block;
-}
-.navbar .container a .imgscroll {
-  width: 120px;
-  display: none;
-}
-.navbar .container .navbar-toggler {
-  background-color: transparent;
-  cursor: pointer;
-  outline: none;
-  padding: 0;
-  -webkit-appearance: none;
-     -moz-appearance: none;
-          appearance: none;
-  border-radius: 0;
-  border: 1px solid #696969;
-  color: #fff;
-  font-size: 13px;
-  padding: 5px 0;
-  width: 30px;
-  height: 30px;
-}
-.navbar .container .collapse ul li .btn-TOS {
-  background-color: transparent;
-  cursor: pointer;
-  outline: none;
-  padding: 0;
-  -webkit-appearance: none;
-     -moz-appearance: none;
-          appearance: none;
-  border-radius: 0;
-  border: none;
-  color: #fff;
-}
-.navbar .container .collapse ul li .btn-TOS:hover {
-  color: #7c7c7c;
-}
-.navbar .container .collapse ul li a {
-  color: #fff;
-}
-.navbar .container .collapse ul li a:hover {
-  color: #7c7c7c;
-}
-.navbar.scroll {
-  background-color: var(--color-primary);
-  top: 24px;
-}
-.navbar.scroll .collapse ul li .btn-TOS {
-  background-color: transparent;
-  cursor: pointer;
-  outline: none;
-  padding: 0;
-  -webkit-appearance: none;
-     -moz-appearance: none;
-          appearance: none;
-  border-radius: 0;
-  border: none;
-  color: #fff;
-}
-.navbar.scroll .collapse ul li .btn-TOS:hover {
-  color: #7c7c7c;
-}
-.navbar.scroll .collapse ul li a {
-  color: #fff;
-}
-.navbar.scroll .collapse ul li a:hover {
-  color: #7c7c7c;
-}
-.navbar.scroll a {
-  text-decoration: none;
-}
-.navbar.scroll a .imgtitle {
-  width: 120px;
-  display: none;
-}
-.navbar.scroll a .imgscroll {
-  width: 120px;
-  display: block;
-}
-
-.nav-link {
-  color: #000;
-  font-size: 14px;
-  margin-left: 20px;
-}
-
 #kv-wrap {
   overflow: hidden;
 }
@@ -904,6 +809,98 @@ a.link[target=_blank]::after {
 }
 
 /* イラスト追加CSS終了*/
+/* Layout */
+#data-wrapper {
+  width: 80vw;
+}
+#data-wrapper header.summary-header {
+  margin-bottom: 12px;
+}
+
+/* Navigation */
+.navbar {
+  display: block;
+  padding: 15px 0 10px;
+  background-color: var(--color-primary);
+}
+.navbar a.navbsar-brand {
+  text-decoration: none;
+}
+.navbar a.navbsar-brand img.imgtitle {
+  width: 220px;
+  display: block;
+}
+.navbar button.navbar-toggler {
+  color: #fff;
+  border: none;
+  outline: none;
+  margin-bottom: 7px;
+}
+.navbar button.navbar-toggler i {
+  font-size: 30px;
+  vertical-align: top;
+}
+.navbar ul.navbar-nav {
+  padding-top: 15px;
+}
+.navbar ul.navbar-nav a.nav-link {
+  color: #fff;
+  font-size: 14px;
+  margin-left: 20px;
+}
+.navbar ul.navbar-nav a.nav-link:hover {
+  color: #7c7c7c;
+}
+.navbar ul.navbar-nav a.nav-link button.btn-TOS {
+  width: 100%;
+  padding: 0;
+  text-align: left;
+  background-color: transparent;
+  outline: none;
+  border: none;
+  color: #fff;
+}
+.navbar ul.navbar-nav a.nav-link button.btn-TOS:hover {
+  color: #7c7c7c;
+}
+
+/* Disease Navigation */
+#diseaseNav .wrapper {
+  padding: 0 20px;
+  display: flex;
+  justify-content: space-between;
+}
+#diseaseNav .wrapper .intro-text {
+  outline: none;
+  width: 70%;
+  height: 44px;
+}
+#diseaseNav .wrapper .intro-text ul.token-input-list-facebook {
+  margin: 0 auto;
+}
+#diseaseNav .wrapper .intro-text ul.token-input-list-facebook li.token-input-input-token-facebook #token-input-tokeninput {
+  height: 20px;
+  padding: 0;
+  margin: 0;
+}
+#diseaseNav .wrapper .navbar-right {
+  display: flex;
+  gap: 13px;
+}
+#diseaseNav .wrapper .navbar-right select.language-select {
+  font-size: 14px;
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  border-radius: 35px;
+  padding: 5px 10px;
+  border: 2px solid white;
+  color: white;
+  background-color: #147786;
+  outline: none;
+  height: 36px;
+}
+
 /* Reset CSS */
 p,
 ul {
@@ -1082,4 +1079,96 @@ footer .footer__bottom .footer__lisence p:before {
   height: 16px;
   display: block;
   background: url(../img/by.svg) no-repeat;
+}
+
+/* Component */
+.linked-item {
+  margin-bottom: 3px;
+  padding: 4px 20px;
+  border: var(--color-primary) 1px solid;
+  border-radius: 3px;
+  background-color: var(--color-primary);
+  font-size: 12px;
+  font-weight: bold;
+  line-height: 1.4;
+}
+.linked-item > a {
+  color: #fff;
+  text-decoration: none;
+}
+.linked-item.-unlinked {
+  background-color: #fff;
+  color: var(--color-primary);
+}
+
+/* Disease Only */
+/* summary-header */
+.summary-header {
+  border: solid 2px #c1c6d3;
+  border-radius: 5px;
+}
+.summary-header > .data-name,
+.summary-header > .external-links {
+  padding: 10px;
+}
+.summary-header > .data-name {
+  border-bottom: 1px dashed #c1c6d3;
+  margin: 0;
+}
+.summary-header > .data-name h2,
+.summary-header > .data-name h3,
+.summary-header > .data-name p {
+  margin: 0;
+}
+.summary-header > .data-name > h3 {
+  font-size: 18px;
+  font-weight: bold;
+}
+.summary-header > .data-name > h3 a.nando-link,
+.summary-header > .data-name > h3 span.nando-copy {
+  font-size: 12px;
+  color: #90959B;
+  font-weight: normal;
+  cursor: pointer;
+  margin-left: 5px;
+}
+.summary-header > .data-name > h3 a.nando-link:hover,
+.summary-header > .data-name > h3 span.nando-copy:hover {
+  color: black;
+}
+.summary-header > .data-name > h3 a.nando-link::after,
+.summary-header > .data-name > h3 span.nando-copy::after {
+  font-family: "Font Awesome 5 Free";
+  padding-left: 3px;
+  margin: 0;
+}
+.summary-header > .data-name > h3 a.nando-link {
+  text-decoration: underline;
+}
+.summary-header > .data-name > h3 a.nando-link::after {
+  content: "\f35d";
+  font-weight: 900;
+}
+.summary-header > .data-name > h3 span.nando-copy::after {
+  content: "\f0c5";
+  font-weight: normal;
+  vertical-align: middle;
+}
+.summary-header > .data-name > h2#temp-label-ja {
+  font-weight: bold;
+  padding: 25px 0 15px;
+}
+.summary-header > .data-name > h2#temp-label-ja ruby {
+  font-size: 36px;
+}
+.summary-header > .data-name > h2#temp-label-ja ruby rt {
+  font-size: 10px;
+  font-weight: normal;
+}
+.summary-header > .data-name > h3#temp-label-en {
+  font-size: 26px;
+}
+.summary-header > .external-links {
+  display: flex;
+  gap: 2px;
 }
