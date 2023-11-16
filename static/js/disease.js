@@ -493,9 +493,9 @@ function makeSideNavigation() {
   const selectTreeBox = document.querySelector(`select[name="${nandoId}"]`);
   if (selectTreeBox) {
     const parentTreeBox = selectTreeBox.parentNode;
-    selectTreeBox.style.backgroundColor = 'white';
+    selectTreeBox.style.backgroundColor = 'rgba(22, 35, 78, 0.2)';
     selectTreeBox.style.color = '#13295a';
-    parentTreeBox.style.backgroundColor = 'white';
+    parentTreeBox.style.backgroundColor = 'rgba(22, 35, 78, 0.2)';
   }
 
   const sideNavigation = document.getElementById('temp-side-navigation');

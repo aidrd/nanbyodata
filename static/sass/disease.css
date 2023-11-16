@@ -1,7 +1,7 @@
 @charset "UTF-8";
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&family=Sriracha&display=swap");
 body {
-  font-family: "Renner*", "Avenir", "Helvetica Neue", "Helvetica", "Arial", "Hiragino Sans", "ヒラギノ角ゴシック", YuGothic, "Yu Gothic", "メイリオ", Meiryo, "ＭＳ Ｐゴシック", "MS PGothic";
+  font-family: "Poppins", sans-serif, "Renner*", "Avenir", "Helvetica Neue", "Helvetica", "Arial", "Hiragino Sans", "ヒラギノ角ゴシック", YuGothic, "Yu Gothic", "メイリオ", Meiryo, "ＭＳ Ｐゴシック", "MS PGothic";
   margin: 0px;
   padding: 84px 0px 0px 270px;
 }
@@ -77,6 +77,7 @@ a[target=_blank]::after {
 }
 #sidebar h3 {
   color: #13295a;
+  font-weight: bold;
   font-size: 16px;
   margin-bottom: 3px;
 }
@@ -84,10 +85,10 @@ a[target=_blank]::after {
 /*セレクトボタン*/
 .cp_ipselect {
   overflow: hidden;
-  text-align: center;
+  text-align: left;
 }
 .cp_ipselect select {
-  width: 100%;
+  width: 100% !important;
   padding-right: 1em;
   cursor: pointer;
   text-indent: 0.01px;
@@ -112,7 +113,7 @@ a[target=_blank]::after {
 }
 .cp_ipselect.cp_sl03::before {
   position: absolute;
-  top: 0.8em;
+  top: 0.7em;
   right: 0.6em;
   width: 0;
   height: 0;
@@ -124,7 +125,8 @@ a[target=_blank]::after {
   pointer-events: none;
 }
 .cp_ipselect.cp_sl03 select {
-  padding: 6px 32px 5px 8px;
+  font-weight: bold;
+  padding: 4px 26px 0px 5px;
   color: #13295a;
   font-size: 14px;
 }
@@ -306,7 +308,7 @@ h5 {
 }
 
 #temp-side-navigation {
-  border-top: 1px solid black;
+  border-top: 1px solid rgba(112, 112, 112, 0.4);
   padding: 25px;
 }
 #temp-side-navigation > ul {
@@ -322,6 +324,7 @@ h5 {
 }
 #temp-side-navigation > ul a {
   display: block;
+  font-weight: bold;
   border-top: 1px dashed #13295a;
   border-radius: 2px;
   padding: 10px;
@@ -333,7 +336,7 @@ h5 {
   background: rgba(255, 255, 255, 0.5);
 }
 #temp-side-navigation > ul .selected {
-  background: white;
+  background: rgba(22, 35, 78, 0.2);
   color: #13295a;
 }
 
@@ -854,10 +857,6 @@ header .intro-text p {
   position: relative;
   display: block;
   padding-left: 5px;
-}
-
-.disease-summary {
-  font-family: "Poppins", sans-serif;
 }
 
 .properties {
