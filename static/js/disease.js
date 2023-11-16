@@ -492,10 +492,7 @@ function makeSideNavigation() {
   // 疾患選択のセレクトボックスのスタイルを変更
   const selectTreeBox = document.querySelector(`select[name="${nandoId}"]`);
   if (selectTreeBox) {
-    const parentTreeBox = selectTreeBox.parentNode;
     selectTreeBox.style.backgroundColor = 'rgba(22, 35, 78, 0.2)';
-    selectTreeBox.style.color = '#13295a';
-    parentTreeBox.style.backgroundColor = 'rgba(22, 35, 78, 0.2)';
   }
 
   const sideNavigation = document.getElementById('temp-side-navigation');
