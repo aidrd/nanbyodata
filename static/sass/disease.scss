@@ -13,7 +13,6 @@ body {
 #content {
   overflow: auto;
   top: 90px;
-  padding-top: 30px;
   bottom: 0px;
   position: fixed;
 }
@@ -90,7 +89,7 @@ a[target='_blank']::after {
   h3 {
     color: #13295a;
     font-weight: bold;
-    font-size: 16px;
+    font-size: 14px;
     margin-bottom: 3px;
   }
 }
@@ -370,35 +369,84 @@ h5 {
   > ul {
     padding: 0;
     list-style-type: none;
-
-    > li:last-child a {
+    > li {
+      &:first-child {
+        border-top: 1px dashed #13295a;
+      }
       border-bottom: 1px dashed #13295a;
-    }
-    li {
-      ul {
+      > a {
+        display: block;
+        font-weight: bold;
+        border-radius: 2px;
+        padding: 10px;
         color: #13295a;
-        margin-left: 30px;
+        text-decoration: none;
+        margin-bottom: -1px;
+
+        &:not(.selected):hover {
+          background: rgba(255, 255, 255, 0.5);
+        }
       }
-    }
-
-    a {
-      display: block;
-      font-weight: bold;
-      border-top: 1px dashed #13295a;
-      border-radius: 2px;
-      padding: 10px;
-      color: #13295a;
-      text-decoration: none;
-      margin-bottom: -1px;
-
-      &:not(.selected):hover {
-        background: rgba(255, 255, 255, 0.5);
+      .selected {
+        background: rgba(22, 35, 78, 0.2);
+        color: #13295a;
       }
-    }
+      .specific-bio-resource.selected {
+        background-color: transparent;
+      }
+      .specific-bio-resource {
+        font-size: 14px;
+        cursor: pointer;
+        color: #13295a;
+        font-weight: bold;
+        padding: 10px;
+        padding-bottom: 20px;
 
-    .selected {
-      background: rgba(22, 35, 78, 0.2);
-      color: #13295a;
+        ul {
+          li {
+            position: relative;
+            margin-left: 20px;
+            padding-top: 4px;
+
+            &::before {
+              content: '';
+              display: block;
+              width: 5px;
+              height: 33px;
+              top: 0;
+              bottom: 0;
+              left: 2px;
+              border-left: 1px solid rgba(22, 35, 78, 0.3);
+              position: absolute;
+            }
+
+            &::after {
+              content: '';
+              display: block;
+              width: 1px;
+              height: 1px;
+              top: 33px;
+              bottom: 0;
+              left: 2px;
+              border-left: 15px solid rgba(22, 35, 78, 0.3);
+              position: absolute;
+            }
+
+            a {
+              display: block;
+              text-decoration: none;
+              position: relative;
+              top: 16px;
+              padding: 5px;
+              margin-left: 20px;
+              padding-left: 10px;
+            }
+            a:not(.selected):hover {
+              background: rgba(255, 255, 255, 0.5);
+            }
+          }
+        }
+      }
     }
   }
 }
@@ -421,11 +469,12 @@ h5 {
   }
   .breadcrumb-list {
     padding: 25px;
+    padding-bottom: 40px;
   }
 }
 
 .navigation-title {
-  font-size: 16px;
+  font-size: 14px;
   font-weight: bold;
   color: #16234e;
   opacity: 0.6;
@@ -588,7 +637,7 @@ h5 {
 }
 
 .nav-link {
-  color: #000;
+  color: #13295a;
   font-size: 14px;
 }
 
