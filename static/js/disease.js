@@ -34,6 +34,9 @@ const nandoId = pathname.slice(nandoIndex + 6);
   // links list
   makeLinksList(entryData);
 
+  // check summary data
+  checkSummaryData(entryData);
+
   // disease definition
   makeDiseaseDefinition(entryData);
 
@@ -146,19 +149,25 @@ function makeAlternativeName(entryData) {
   const altLabelEn = document.querySelector('.alt-label-en');
 
   if (entryData.alt_label_ja) {
+    const divElement = document.createElement('div');
+    altLabelJa.append(divElement);
     entryData.alt_label_ja.forEach((item) => {
       const ddElement = document.createElement('dd');
       ddElement.textContent = item;
-      altLabelJa.append(ddElement);
+      ddElement.classList.add('linked-item', '-unlinked');
+      divElement.append(ddElement);
     });
   } else {
     altLabelJa.remove();
   }
   if (entryData.alt_label_en) {
+    const divElement = document.createElement('div');
+    altLabelEn.append(divElement);
     entryData.alt_label_en.forEach((item) => {
       const ddElement = document.createElement('dd');
       ddElement.textContent = item;
-      altLabelEn.append(ddElement);
+      ddElement.classList.add('linked-item', '-unlinked');
+      divElement.append(ddElement);
     });
   } else {
     altLabelEn.remove();
@@ -268,6 +277,24 @@ function makeProperties(entryData) {
       `;
   } else {
     causativeGene.remove();
+  }
+}
+
+function checkSummaryData(entryData) {
+  if (
+    !entryData.alt_label_ja &&
+    !entryData.alt_label_en &&
+    !entryData.db_xrefs?.omim &&
+    !entryData.db_xrefs?.orphanet &&
+    !entryData.medgen_id &&
+    !entryData.mondos &&
+    !entryData.kegg &&
+    !entryData.urdbms
+  ) {
+    var summaryWrapper = document.querySelector('.summary-wrapper');
+    if (summaryWrapper) {
+      summaryWrapper.style = 'display: none;';
+    }
   }
 }
 

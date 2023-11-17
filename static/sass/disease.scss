@@ -482,19 +482,15 @@ h5 {
   margin: 0px calc(var(--padding-inline) * -1) 8px;
 }
 
-#temp-aliases,
-.temp-wrapper {
-  margin-top: 5px;
-}
+.summary-wrapper {
+  padding: 10px;
+  border-radius: 3px;
+  background-color: rgba(20, 119, 134, 0.2);
 
-#temp-aliases .inheritance-uris,
-.temp-wrapper .inheritance-uris {
-  display: flex;
-}
-
-#temp-aliases .properties,
-.temp-wrapper .properties {
-  margin-bottom: 20px;
+  #temp-aliases .inheritance-uris,
+  .temp-wrapper .inheritance-uris {
+    display: flex;
+  }
 }
 
 .tree .cp_sl03:hover {
@@ -1097,9 +1093,12 @@ header {
 
 .aliases > dl {
   margin: 0 0 4px;
-  padding: 2px 4px 6px;
-  background-color: rgba(20, 119, 134, 0.2);
   border-radius: 3px;
+  > div {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
 
   > {
     dt {
@@ -1112,14 +1111,6 @@ header {
       margin-inline-start: 0;
       font-size: 14px;
       display: inline;
-
-      &::after {
-        content: ', ';
-      }
-
-      &:last-child::after {
-        content: none;
-      }
     }
   }
 }
@@ -1127,8 +1118,6 @@ header {
 .linked-items {
   display: inline;
   font-weight: bold;
-  padding: 2px 4px 6px;
-  background-color: rgba(20, 119, 134, 0.2);
   border-radius: 3px;
   margin-right: 2px;
   -webkit-margin-before: 0;

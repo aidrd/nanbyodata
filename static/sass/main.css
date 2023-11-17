@@ -1090,6 +1090,7 @@ footer .footer__bottom .footer__lisence p:before {
   font-size: 12px;
   font-weight: bold;
   line-height: 1.4;
+  margin-right: 2px;
 }
 .linked-item > a {
   color: #fff;
@@ -1173,5 +1174,4 @@ footer .footer__bottom .footer__lisence p:before {
 }
 .summary-header > .external-links {
   display: flex;
-  gap: 2px;
 }/*# sourceMappingURL=main.css.map */
