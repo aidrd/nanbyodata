@@ -13,12 +13,12 @@
     text-decoration: none;
     display: flex;
     align-items: center;
-    padding: 4px 6px;
+    padding: 4px 8px;
   }
 
   &.-unlinked {
     background-color: #fff;
     color: var(--color-primary);
-    padding: 4px 6px;
+    padding: 4px 8px;
   }
 }

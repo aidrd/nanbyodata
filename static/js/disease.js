@@ -264,6 +264,26 @@ function makeProperties(entryData) {
     columns: '',
   };
   if (item.existing) {
+    fetch(item.url)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`HTTP Error status code: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then((data) => {
+        const tempSpanElement = document.querySelector(
+          '#temp-causative-gene .data-num'
+        );
+        const navSpanElement = document.querySelector(
+          '.causative-gene .data-num'
+        );
+        tempSpanElement.innerText = data.length;
+        navSpanElement.innerText = data.length;
+      })
+      .catch((error) => {
+        console.error('Failed to get data:', error);
+      });
     properties.innerHTML = `
       <togostanza-pagination-table
       data-url="${item.url}"
@@ -374,6 +394,26 @@ function makeMedicalGeneticTestingInfo(entryData) {
       '[{&quot;id&quot;: &quot;label&quot;,&quot;label&quot;:&quot;検査名&quot;},{&quot;id&quot;:&quot;hp&quot;,&quot;label&quot;:&quot;URL&quot;,&quot;link&quot;:&quot;hp&quot;},{&quot;id&quot;:&quot;gene&quot;,&quot;label&quot;:&quot;遺伝子名&quot;},{&quot;id&quot;:&quot;facility&quot;,&quot;label&quot;:&quot;検査施設&quot;}]',
   };
   if (entryData.genetesting) {
+    fetch(item.url)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`HTTP Error status code: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then((data) => {
+        const tempSpanElement = document.querySelector(
+          '#temp-medical-genetic-testing-info .data-num'
+        );
+        const navSpanElement = document.querySelector(
+          '.medical-genetic-testing-info .data-num'
+        );
+        tempSpanElement.innerText = data.length;
+        navSpanElement.innerText = data.length;
+      })
+      .catch((error) => {
+        console.error('Failed to get data:', error);
+      });
     inspectionView.innerHTML = `
         <togostanza-pagination-table data-type="json"
           data-url="${item.url}"
@@ -398,6 +438,26 @@ function makePhenotypeView(entryData) {
     columns: '',
   };
   if (item.existing) {
+    fetch(item.url)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`HTTP Error status code: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then((data) => {
+        const tempSpanElement = document.querySelector(
+          '#temp-phenotype-view .data-num'
+        );
+        const navSpanElement = document.querySelector(
+          '.phenotype-view .data-num'
+        );
+        tempSpanElement.innerText = data.length;
+        navSpanElement.innerText = data.length;
+      })
+      .catch((error) => {
+        console.error('Failed to get data:', error);
+      });
     phenotypeView.innerHTML = `
       <togostanza-pagination-table
       data-url="${item.url}"
@@ -455,15 +515,14 @@ function makeSpecificBioResource(entryData) {
         const label = input.nextElementSibling;
         label.remove();
         input.remove();
-      }
-
-      const content = tabWrap.querySelector(`.${item.id}`);
-      currentTab = tabWrap.querySelector(`#specific-brc-${item.id}`);
-      if (currentTab && isFirstTab) {
-        currentTab.checked = true;
-        isFirstTab = false;
-      }
-      content.innerHTML = `
+      } else {
+        const content = tabWrap.querySelector(`.${item.id}`);
+        currentTab = tabWrap.querySelector(`#specific-brc-${item.id}`);
+        if (currentTab && isFirstTab) {
+          currentTab.checked = true;
+          isFirstTab = false;
+        }
+        content.innerHTML = `
         <togostanza-pagination-table data-type="json"
           data-url="${item.url}"
           columns="${item.columns}"
@@ -472,6 +531,27 @@ function makeSpecificBioResource(entryData) {
           page-slider="fales">
         </togostanza-pagination-table>
       `;
+        fetch(item.url)
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error(`HTTP Error status code: ${response.status}`);
+            }
+            return response.json();
+          })
+          .then((data) => {
+            const tempSpanElement = document.querySelector(
+              `.specific-brc-${item.id} .data-num`
+            );
+            const navSpanElement = document.querySelector(
+              `.${item.id} .data-num`
+            );
+            tempSpanElement.innerText = data.length;
+            navSpanElement.innerText = data.length;
+          })
+          .catch((error) => {
+            console.error('Failed to get data:', error);
+          });
+      }
     });
   }
 }
@@ -483,7 +563,7 @@ function makeVariant(entryData) {
   fetch(url)
     .then((response) => {
       if (!response.ok) {
-        throw new Error(`HTTPエラー! ステータスコード: ${response.status}`);
+        throw new Error(`HTTP Error status code: ${response.status}`);
       }
       return response.json();
     })
@@ -502,6 +582,12 @@ function makeVariant(entryData) {
       columns="[{&quot;id&quot;:&quot;tgv_id&quot;,&quot;label&quot;:&quot;TogoVar ID&quot;,&quot;link&quot;:&quot;tgv_link&quot;,&quot;target&quot;:&quot;_blank&quot;},{&quot;id&quot;:&quot;rs_id&quot;,&quot;label&quot;:&quot;dbSNP ID&quot;,&quot;link&quot;:&quot;rs_id_link&quot;,&quot;target&quot;:&quot;_blank&quot;},{&quot;id&quot;:&quot;position&quot;,&quot;label&quot;:&quot;position&quot;},{&quot;id&quot;:&quot;type&quot;,&quot;label&quot;:&quot;type&quot;},{&quot;id&quot;:&quot;Clinvar_id&quot;,&quot;label&quot;:&quot;Clinvar ID&quot;,&quot;link&quot;:&quot;Clinvar_link&quot;,&quot;target&quot;:&quot;_blank&quot;},{&quot;id&quot;:&quot;title&quot;,&quot;label&quot;:&quot;title&quot;},{&quot;id&quot;:&quot;MedGen_id&quot;,&quot;label&quot;:&quot;MedGen ID&quot;,&quot;link&quot;:&quot;MedGen_link&quot;,&quot;target&quot;:&quot;_blank&quot;},{&quot;id&quot;:&quot;mondo_id&quot;,&quot;label&quot;:&quot;Mondo ID&quot;,&quot;link&quot;:&quot;mondo&quot;,&quot;target&quot;:&quot;_blank&quot;}]"
       ></togostanza-pagination-table>
       `;
+        const tempSpanElement = document.querySelector(
+          `#temp-variant .data-num`
+        );
+        const navSpanElement = document.querySelector(`.variant .data-num`);
+        tempSpanElement.innerText = data.length;
+        navSpanElement.innerText = data.length;
       }
     })
     .then(() => {
@@ -511,7 +597,7 @@ function makeVariant(entryData) {
       document.getElementById('sidebar').style.display = 'block';
     })
     .catch((error) => {
-      console.error('データが取得できません:', error);
+      console.error('Failed to get data:', error);
     });
 }
 

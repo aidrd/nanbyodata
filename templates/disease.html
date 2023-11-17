@@ -101,19 +101,26 @@
         <div class="navigation-title">目次</div>
         <ul>
           <li><a href="#temp-summary" class="nav-link selected">概要
-          <li><a href="#temp-causative-gene" class="nav-link">疾患原因遺伝子</a></li>
-          <li><a href="#temp-medical-genetic-testing-info" class="nav-link">診療用遺伝学的検査情報</a></li>
-          <li><a href="#temp-phenotype-view" class="nav-link">臨床的特徴</a></li>
+          <li><a href="#temp-causative-gene" class="nav-link causative-gene">疾患原因遺伝子<span class="data-num"></span></a>
+          </li>
+          <li><a href="#temp-medical-genetic-testing-info"
+              class="nav-link medical-genetic-testing-info">診療用遺伝学的検査情報<span class="data-num"></span></a>
+          </li>
+          <li><a href="#temp-phenotype-view" class="nav-link phenotype-view">臨床的特徴<span class="data-num"></span></a>
+          </li>
           <li>
             <div href="#temp-specific-bio-resource" class="specific-bio-resource">難病特異的バイオリソース
               <ul>
-                <li><a href="#temp-specific-bio-resource" class="cell nav-link">細胞</a></li>
-                <li><a href="#temp-specific-bio-resource" class="mus nav-link">マウス</a></li>
-                <li><a href="#temp-specific-bio-resource" class="dna nav-link">DNA</a></li>
+                <li><a href="#temp-specific-bio-resource" class="cell nav-link">細胞<span class="data-num"></span></a>
+                </li>
+                <li><a href="#temp-specific-bio-resource" class="mus nav-link">マウス<span class="data-num"></span></a>
+                </li>
+                <li><a href="#temp-specific-bio-resource" class="dna nav-link">DNA<span class="data-num"></span></a>
+                </li>
               </ul>
             </div>
           </li>
-          <li><a href="#temp-variant" class="nav-link">バリアント</a></li>
+          <li><a href="#temp-variant" class="nav-link variant">バリアント<span class="data-num"></span></a></li>
         </ul>
       </div>
     </div>
@@ -299,7 +306,7 @@
           </div>
 
           <div id="temp-causative-gene" open="">
-            <h4 class="temp-title">疾患原因遺伝子</h4>
+            <h4 class="temp-title">疾患原因遺伝子<span class="data-num"></span></h4>
             <div class="temp-wrapper">
               <div id="temp-properties" class="properties">
               </div>
@@ -308,14 +315,14 @@
 
           <div id="temp-medical-genetic-testing-info" open="">
             <h4 class="temp-title">
-              診療用遺伝学的検査情報<small> From 難病領域における検体検査の精度管理体制の整備に資する研究班</small>
+              診療用遺伝学的検査情報<small> From 難病領域における検体検査の精度管理体制の整備に資する研究班</small><span class="data-num"></span>
             </h4>
             <div class="inspection-view">
             </div>
           </div>
 
           <div id="temp-phenotype-view" open="">
-            <h4 class="temp-title">臨床的特徴 <small> From HPO</small></h4>
+            <h4 class="temp-title">臨床的特徴 <small> From HPO</small><span class="data-num"></span></h4>
             <div class="temp-wrapper">
               <div class="phenotype">
               </div>
@@ -328,22 +335,23 @@
             </h4>
             <div class="tab-wrap">
               <input type="radio" name="specific-brc" class="tab-switch" id="specific-brc-cell" />
-              <label class="tab-label" for="specific-brc-cell">細胞</label>
+              <label class="tab-label specific-brc-cell" for="specific-brc-cell">細胞<span
+                  class="data-num"></span></label>
               <div class="tab-content cell">
               </div>
               <input type="radio" name="specific-brc" class="tab-switch" id="specific-brc-mus" />
-              <label class="tab-label" for="specific-brc-mus">マウス</label>
+              <label class="tab-label specific-brc-mus" for="specific-brc-mus">マウス<span class="data-num"></span></label>
               <div class="tab-content mus">
               </div>
               <input type="radio" name="specific-brc" class="tab-switch" id="specific-brc-dna" />
-              <label class="tab-label" for="specific-brc-dna">DNA</label>
+              <label class="tab-label specific-brc-dna" for="specific-brc-dna">DNA<span class="data-num"></span></label>
               <div class="tab-content dna">
               </div>
             </div>
           </div>
 
           <div id="temp-variant" open="">
-            <h4 class="temp-title">バリアント</h4>
+            <h4 class="temp-title">バリアント<span class="data-num"></span></h4>
             <div class="temp-wrapper">
               <div id="temp-properties" class="properties">
               </div>
