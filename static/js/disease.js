@@ -478,7 +478,7 @@ function makeVariant(entryData) {
       }
     })
     .then(() => {
-      makeSideNavigation();
+      makeSideNavigation(entryData);
       // When loading finishes, display: block
       document.getElementById('content').style.display = 'block';
       document.getElementById('sidebar').style.display = 'block';
@@ -488,14 +488,10 @@ function makeVariant(entryData) {
     });
 }
 
-function makeSideNavigation() {
-  // 疾患選択のセレクトボックスのスタイルを変更
+function makeSideNavigation(entryData) {
   const selectTreeBox = document.querySelector(`select[name="${nandoId}"]`);
   if (selectTreeBox) {
-    const parentTreeBox = selectTreeBox.parentNode;
-    selectTreeBox.style.backgroundColor = 'white';
-    selectTreeBox.style.color = '#13295a';
-    parentTreeBox.style.backgroundColor = 'white';
+    selectTreeBox.style.backgroundColor = 'rgba(22, 35, 78, 0.2)';
   }
 
   const sideNavigation = document.getElementById('temp-side-navigation');
@@ -524,6 +520,56 @@ function makeSideNavigation() {
       liToRemove.parentNode.removeChild(liToRemove);
     }
   });
+
+  // specific bio resource
+
+  // check existing tab
+  function removeNavItemIfNotExist(entryDataProperty, className) {
+    if (!entryDataProperty) {
+      const navItem = document.querySelector(
+        '.specific-bio-resource .' + className + '.nav-link'
+      );
+      if (navItem) {
+        navItem.parentElement.remove();
+      }
+    }
+  }
+
+  removeNavItemIfNotExist(entryData.cell, 'cell');
+  removeNavItemIfNotExist(entryData.mus, 'mus');
+  removeNavItemIfNotExist(entryData.dna, 'dna');
+
+  // processing when the table of contents is pressed
+  document
+    .querySelectorAll('.specific-bio-resource a')
+    .forEach(function (aTag) {
+      aTag.addEventListener('click', function (event) {
+        event.preventDefault();
+        const classList = this.classList[0];
+        const checkBox = document.getElementById('specific-brc-' + classList);
+        if (checkBox && !checkBox.checked) {
+          checkBox.checked = true;
+        }
+      });
+    });
+
+  // processing when tabs are switched
+  document
+    .querySelectorAll('#temp-specific-bio-resource .tab-switch')
+    .forEach(function (tabSwitch) {
+      tabSwitch.addEventListener('change', function () {
+        const selectedTabId = this.id.replace('specific-brc-', '');
+        const tocItem = document.querySelector(
+          '.specific-bio-resource a.' + selectedTabId
+        );
+        document.querySelectorAll('a').forEach(function (item) {
+          item.classList.remove('selected');
+        });
+        if (tocItem) {
+          tocItem.classList.add('selected');
+        }
+      });
+    });
 }
 
 function switchingDisplayContents(selectedItemId) {
@@ -560,6 +606,27 @@ function switchingDisplayContents(selectedItemId) {
       tempSummary.style.display = 'none';
       document.querySelector('.selected').style.display = 'none';
     }
+  } else if (selectedItemId === 'temp-specific-bio-resource') {
+    const dataWrapper = document.getElementById('data-wrapper');
+    const summary = document.querySelector('.summary-header');
+    dataWrapper.insertBefore(summary, dataWrapper.firstChild);
+    document.querySelector(`#${selectedItemId}`).style.display = 'block';
+
+    const checkedSwitch = document.querySelector(
+      '#temp-specific-bio-resource .tab-switch:checked'
+    );
+    const selectedId = checkedSwitch.id.replace('specific-brc-', '');
+
+    const targetElements = document.querySelectorAll('a');
+
+    targetElements.forEach(function (element) {
+      const classes = element.classList;
+      if (classes[0] === selectedId) {
+        element.classList.add('selected');
+      } else {
+        element.classList.remove('selected');
+      }
+    });
   } else {
     const dataWrapper = document.getElementById('data-wrapper');
     const summary = document.querySelector('.summary-header');

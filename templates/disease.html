@@ -90,9 +90,11 @@
 
     <!-- Sidebar -->
     <div id="sidebar">
-      <div class="navigation-title">疾患選択</div>
-      <!-- パンくずリスト -->
-      {{ breadcrumb_list_html |safe }}
+      <div class="breadcrumb-list">
+        <div class="navigation-title">疾患選択</div>
+        <!-- パンくずリスト -->
+        {{ breadcrumb_list_html |safe }}
+      </div>
 
       <!-- Side Navigation -->
       <div id="temp-side-navigation">
@@ -102,12 +104,14 @@
           <li><a href="#temp-causative-gene" class="nav-link">疾患原因遺伝子</a></li>
           <li><a href="#temp-medical-genetic-testing-info" class="nav-link">診療用遺伝学的検査情報</a></li>
           <li><a href="#temp-phenotype-view" class="nav-link">臨床的特徴</a></li>
-          <li><a href="#temp-specific-bio-resource" class="nav-link">難病特異的バイオリソース</a>
-            <ul>
-              <li><a href="#temp-specific-bio-resource">細胞</a></li>
-              <li><a href="#temp-specific-bio-resource">マウス</a></li>
-              <li><a href="#temp-specific-bio-resource">DNA</a></li>
-            </ul>
+          <li>
+            <div href="#temp-specific-bio-resource" class="specific-bio-resource">難病特異的バイオリソース
+              <ul>
+                <li><a href="#temp-specific-bio-resource" class="cell nav-link">細胞</a></li>
+                <li><a href="#temp-specific-bio-resource" class="mus nav-link">マウス</a></li>
+                <li><a href="#temp-specific-bio-resource" class="dna nav-link">DNA</a></li>
+              </ul>
+            </div>
           </li>
           <li><a href="#temp-variant" class="nav-link">バリアント</a></li>
         </ul>
@@ -198,7 +202,7 @@
                 NANDO ID:
                 <span id="temp-nando-id"></span>
                 <a href="https://nanbyodata.jp/ontology/nando#" target="_blank" rel="noopener noreferrer"
-                id="temp-nando-link" class="nando-link">https://nanbyodata.jp/ontology/nando#</a>
+                  id="temp-nando-link" class="nando-link">https://nanbyodata.jp/ontology/nando#</a>
                 <span id="temp-nando-copy" class="nando-copy">Copy</span>
               </h3>
               <h2 id="temp-label-ja"></h2>

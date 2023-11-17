@@ -2,9 +2,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&family=Sriracha&display=swap');
 
 body {
-  font-family: 'Renner*', 'Avenir', 'Helvetica Neue', 'Helvetica', 'Arial',
-    'Hiragino Sans', 'ヒラギノ角ゴシック', YuGothic, 'Yu Gothic', 'メイリオ',
-    Meiryo, 'ＭＳ Ｐゴシック', 'MS PGothic';
+  font-family: 'Poppins', sans-serif, 'Renner*', 'Avenir', 'Helvetica Neue',
+    'Helvetica', 'Arial', 'Hiragino Sans', 'ヒラギノ角ゴシック', YuGothic,
+    'Yu Gothic', 'メイリオ', Meiryo, 'ＭＳ Ｐゴシック', 'MS PGothic';
   margin: 0px;
   padding: 84px 0px 0px 270px;
 }
@@ -13,7 +13,6 @@ body {
 #content {
   overflow: auto;
   top: 90px;
-  padding-top: 30px;
   bottom: 0px;
   position: fixed;
 }
@@ -84,12 +83,13 @@ a[target='_blank']::after {
   width: 270px;
   height: 100%;
   text-align: left;
-  padding: 25px;
-  background-color: #13295a;
+  // padding: 25px;
+  background-color: #dadede;
 
   h3 {
-    color: #fff;
-    font-size: 16px;
+    color: #13295a;
+    font-weight: bold;
+    font-size: 14px;
     margin-bottom: 3px;
   }
 }
@@ -98,10 +98,10 @@ a[target='_blank']::after {
 
 .cp_ipselect {
   overflow: hidden;
-  text-align: center;
+  text-align: left;
 
   select {
-    width: 100%;
+    width: 100% !important;
     padding-right: 1em;
     cursor: pointer;
     text-indent: 0.01px;
@@ -122,12 +122,12 @@ a[target='_blank']::after {
   &.cp_sl03 {
     position: relative;
     border-radius: 2px;
-    border: 1px solid #fff;
-    background: #13295a;
+    border: 1px solid #13295a;
+    background: #dadede;
 
     &::before {
       position: absolute;
-      top: 0.8em;
+      top: 0.7em;
       right: 0.6em;
       width: 0;
       height: 0;
@@ -135,17 +135,18 @@ a[target='_blank']::after {
       content: '';
       border-left: 6px solid transparent;
       border-right: 6px solid transparent;
-      border-top: 6px solid #fff;
+      border-top: 6px solid #13295a;
       pointer-events: none;
     }
 
     select {
-      padding: 6px 32px 5px 8px;
-      color: #fff;
+      font-weight: bold;
+      padding: 2px 26px 0px 5px;
+      color: #13295a;
       font-size: 14px;
 
       option {
-        color: #13295a;
+        color: #dadede;
       }
     }
   }
@@ -159,7 +160,7 @@ a[target='_blank']::after {
   /* indentation */
   padding: 0;
   list-style: none;
-  color: #fff;
+  color: #13295a;
   position: relative;
 
   ul {
@@ -168,7 +169,7 @@ a[target='_blank']::after {
     /* indentation */
     padding: 0;
     list-style: none;
-    color: #fff;
+    color: #13295a;
     position: relative;
     margin-left: 0.5em;
   }
@@ -214,7 +215,7 @@ a[target='_blank']::after {
     }
 
     &:last-child:before {
-      background: #13295a;
+      background: #dadede;
 
       /* same with body background */
       height: auto;
@@ -348,9 +349,6 @@ a[target='_blank']::after {
   font-family: 'Font Awesome 5 Free';
 }
 
-
-
-
 p {
   color: #696969;
   font-size: 13px;
@@ -365,38 +363,91 @@ h5 {
 }
 
 #temp-side-navigation {
-  margin-top: 50px;
+  border-top: 1px solid rgba(112, 112, 112, 0.4);
+  padding: 25px;
 
   > ul {
     padding: 0;
     list-style-type: none;
+    > li {
+      &:first-child {
+        border-top: 1px dashed #13295a;
+      }
+      border-bottom: 1px dashed #13295a;
+      > a {
+        display: block;
+        font-weight: bold;
+        border-radius: 2px;
+        padding: 10px;
+        color: #13295a;
+        text-decoration: none;
+        margin-bottom: -1px;
 
-    li:last-child a {
-      border-bottom: 1px dashed white;
-      ul {
-        color: white;
-        margin-left: 30px;
+        &:not(.selected):hover {
+          background: rgba(255, 255, 255, 0.5);
+        }
+      }
+      .selected {
+        background: rgba(22, 35, 78, 0.2);
+        color: #13295a;
+      }
+      .specific-bio-resource.selected {
+        background-color: transparent;
+      }
+      .specific-bio-resource {
+        font-size: 14px;
+        cursor: pointer;
+        color: #13295a;
+        font-weight: bold;
+        padding: 10px;
+        padding-bottom: 20px;
+
+        ul {
+          li {
+            position: relative;
+            margin-left: 20px;
+            padding-top: 4px;
+
+            &::before {
+              content: '';
+              display: block;
+              width: 5px;
+              height: 33px;
+              top: 0;
+              bottom: 0;
+              left: 2px;
+              border-left: 1px solid rgba(22, 35, 78, 0.3);
+              position: absolute;
+            }
+
+            &::after {
+              content: '';
+              display: block;
+              width: 1px;
+              height: 1px;
+              top: 33px;
+              bottom: 0;
+              left: 2px;
+              border-left: 15px solid rgba(22, 35, 78, 0.3);
+              position: absolute;
+            }
+
+            a {
+              display: block;
+              text-decoration: none;
+              position: relative;
+              top: 16px;
+              padding: 5px;
+              margin-left: 20px;
+              padding-left: 10px;
+            }
+            a:not(.selected):hover {
+              background: rgba(255, 255, 255, 0.5);
+            }
+          }
+        }
       }
     }
-  }
-
-  a {
-    display: block;
-    border-top: 1px dashed white;
-    border-radius: 2px;
-    padding: 10px;
-    color: white;
-    text-decoration: none;
-    margin-bottom: -1px;
-
-    &:not(.selected):hover {
-      background: rgba(255, 255, 255, 0.5);
-    }
-  }
-
-  .selected {
-    background: white;
-    color: #13295a;
   }
 }
 
@@ -416,13 +467,17 @@ h5 {
     margin: 0;
     margin-top: -1.5px;
   }
+  .breadcrumb-list {
+    padding: 25px;
+    padding-bottom: 40px;
+  }
 }
 
 .navigation-title {
-  font-size: 16px;
+  font-size: 14px;
   font-weight: bold;
-  color: white;
-  background-color: #041435;
+  color: #16234e;
+  opacity: 0.6;
   padding: 2px var(--padding-inline);
   margin: 0px calc(var(--padding-inline) * -1) 8px;
 }
@@ -582,7 +637,7 @@ h5 {
 }
 
 .nav-link {
-  color: #000;
+  color: #13295a;
   font-size: 14px;
 }
 
@@ -1018,11 +1073,6 @@ header {
   padding-left: 5px;
 }
 
-.disease-summary {
-  font-family: 'Poppins', sans-serif;
-}
-
-
 .properties {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -1035,7 +1085,6 @@ header {
 .link-wrapper {
   border-bottom: none;
 }
-
 
 .aliases > dl {
   margin: 0 0 4px;
