@@ -1084,7 +1084,7 @@ footer .footer__bottom .footer__lisence p:before {
 /* Component */
 .linked-item {
   margin-bottom: 3px;
-  padding: 4px 20px;
+  padding: 4px 10px;
   border: var(--color-primary) 1px solid;
   border-radius: 3px;
   background-color: var(--color-primary);
@@ -1171,4 +1171,4 @@ footer .footer__bottom .footer__lisence p:before {
 .summary-header > .external-links {
   display: flex;
   gap: 2px;
-}
+}/*# sourceMappingURL=main.css.map */
