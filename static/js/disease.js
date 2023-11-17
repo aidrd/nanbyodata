@@ -37,6 +37,11 @@ const nandoId = pathname.slice(nandoIndex + 6);
   // check summary data
   checkSummaryData(entryData);
 
+  // checkLanguage
+  // initial lang
+  changeLangHP();
+  checkLanguage();
+
   // disease definition
   makeDiseaseDefinition(entryData);
 
@@ -319,6 +324,24 @@ function checkSummaryData(entryData) {
   }
 }
 
+function checkLanguage() {
+  const selectLang = document.querySelector('.language-select');
+  selectLang.addEventListener('change', changeLangHP);
+}
+
+function changeLangHP() {
+  const selectedValue = document.querySelector('.language-select').value;
+  const phenotypeViewJa = document.querySelector('.phenotype-ja');
+  const phenotypeViewEn = document.querySelector('.phenotype-en');
+  if (selectedValue === 'ja') {
+    phenotypeViewJa.style.display = 'block';
+    phenotypeViewEn.style.display = 'none';
+  } else {
+    phenotypeViewJa.style.display = 'none';
+    phenotypeViewEn.style.display = 'block';
+  }
+}
+
 function makeDiseaseDefinition(entryData) {
   const diseaseDefinition = document.getElementById('temp-disease-definition');
   const tabWrap = diseaseDefinition.querySelector(
@@ -432,7 +455,8 @@ function makeMedicalGeneticTestingInfo(entryData) {
 
 function makePhenotypeView(entryData) {
   const tempPhenotypeView = document.getElementById('temp-phenotype-view');
-  const phenotypeView = tempPhenotypeView.querySelector('.phenotype');
+  const phenotypeViewJa = tempPhenotypeView.querySelector('.phenotype-ja');
+  const phenotypeViewEn = tempPhenotypeView.querySelector('.phenotype-en');
   const item = {
     existing: entryData.phenotype_flg,
     url: `https://pubcasefinder.dbcls.jp/sparqlist/api/nanbyodata_get_hpo_data_by_nando_id?nando_id=${entryData.nando_id}`,
@@ -459,7 +483,7 @@ function makePhenotypeView(entryData) {
       .catch((error) => {
         console.error('Failed to get data:', error);
       });
-    phenotypeView.innerHTML = `
+    phenotypeViewJa.innerHTML = `
       <togostanza-pagination-table
       data-url="${item.url}"
       custom-css-url="https://togostanza.github.io/togostanza-themes/contrib/nanbyodata.css"
@@ -472,19 +496,19 @@ function makePhenotypeView(entryData) {
         ></togostanza-pagination-table>
         `;
 
-    // eng
-    // phenotypeView.innerHTML = `
-    //   <togostanza-pagination-table
-    //   data-url="${item.url}"
-    //   custom-css-url="https://togostanza.github.io/togostanza-themes/contrib/nanbyodata.css"
-    //   data-type="json"
-    //   fixed-columns="1"
-    //   page-size-option="100"
-    //   page-slider="false"
-    //   columns="[{&quot;id&quot;:&quot;hpo_label_en&quot;,&quot;label&quot;:&quot;Symptom&quot;},{&quot;id&quot;:&quot;hpo_id&quot;,&quot;label&quot;:&quot;HPO ID&quot;,&quot;link&quot;:&quot;hpo_url&quot;,&quot;target&quot;:&quot;_blank&quot;},{&quot;id&quot;:&quot;hpo_category_name_en&quot;,&quot;label&quot;:&quot;Symptom category&quot;,&quot;link&quot;:&quot;hpo_category&quot;,&quot;target&quot;:&quot;_blank&quot;}]"
-    //   togostanza-custom_css_url=""
-    //     ></togostanza-pagination-table>
-    //     `;
+    // TODO: lang eng
+    phenotypeViewEn.innerHTML = `
+      <togostanza-pagination-table
+      data-url="${item.url}"
+      custom-css-url="https://togostanza.github.io/togostanza-themes/contrib/nanbyodata.css"
+      data-type="json"
+      fixed-columns="1"
+      page-size-option="100"
+      page-slider="false"
+      columns="[{&quot;id&quot;:&quot;hpo_label_en&quot;,&quot;label&quot;:&quot;Symptom&quot;},{&quot;id&quot;:&quot;hpo_id&quot;,&quot;label&quot;:&quot;HPO ID&quot;,&quot;link&quot;:&quot;hpo_url&quot;,&quot;target&quot;:&quot;_blank&quot;},{&quot;id&quot;:&quot;hpo_category_name_en&quot;,&quot;label&quot;:&quot;Symptom category&quot;,&quot;link&quot;:&quot;hpo_category&quot;,&quot;target&quot;:&quot;_blank&quot;}]"
+      togostanza-custom_css_url=""
+        ></togostanza-pagination-table>
+        `;
   } else {
     tempPhenotypeView.remove();
   }
