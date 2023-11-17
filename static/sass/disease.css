@@ -340,6 +340,8 @@ h5 {
   font-size: 12px;
   position: absolute;
   right: 8px;
+  min-width: 18px;
+  text-align: center;
 }
 #temp-side-navigation > ul > li .selected {
   background: rgba(22, 35, 78, 0.2);
@@ -908,7 +910,7 @@ header .intro-text p {
   display: block;
   padding-left: 15px;
   margin-bottom: 15px;
-  margin-top: 6px;
+  margin-top: 24px;
 }
 .temp-title::before {
   content: "";
@@ -928,6 +930,8 @@ header .intro-text p {
   position: absolute;
   margin-top: 3px;
   margin-left: 5px;
+  min-width: 22px;
+  text-align: center;
 }
 
 .properties {
@@ -1018,6 +1022,8 @@ details summary {
   border-radius: 50%;
   font-size: 10px;
   margin-left: 5px;
+  min-width: 15px;
+  text-align: center;
 }
 
 .tab-content {

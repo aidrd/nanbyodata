@@ -1097,12 +1097,12 @@ footer .footer__bottom .footer__lisence p:before {
   text-decoration: none;
   display: flex;
   align-items: center;
-  padding: 4px 6px;
+  padding: 4px 8px;
 }
 .linked-item.-unlinked {
   background-color: #fff;
   color: var(--color-primary);
-  padding: 4px 6px;
+  padding: 4px 8px;
 }
 
 /* Disease Only */

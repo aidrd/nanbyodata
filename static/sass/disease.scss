@@ -395,6 +395,8 @@ h5 {
         font-size: 12px;
         position: absolute;
         right: 8px;
+        min-width: 18px;
+        text-align: center;
       }
       .selected {
         background: rgba(22, 35, 78, 0.2);
@@ -1075,7 +1077,7 @@ header {
   display: block;
   padding-left: 15px;
   margin-bottom: 15px;
-  margin-top: 6px;
+  margin-top: 24px;
   &::before {
     content: '';
     width: 6px;
@@ -1094,6 +1096,8 @@ header {
     position: absolute;
     margin-top: 3px;
     margin-left: 5px;
+    min-width: 22px;
+    text-align: center;
   }
 }
 
@@ -1208,6 +1212,8 @@ details summary {
     border-radius: 50%;
     font-size: 10px;
     margin-left: 5px;
+    min-width: 15px;
+    text-align: center;
   }
 }
 
