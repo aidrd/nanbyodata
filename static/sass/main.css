@@ -1084,7 +1084,6 @@ footer .footer__bottom .footer__lisence p:before {
 /* Component */
 .linked-item {
   margin-bottom: 3px;
-  padding: 4px 10px;
   border: var(--color-primary) 1px solid;
   border-radius: 3px;
   background-color: var(--color-primary);
@@ -1095,10 +1094,14 @@ footer .footer__bottom .footer__lisence p:before {
 .linked-item > a {
   color: #fff;
   text-decoration: none;
+  display: flex;
+  align-items: center;
+  padding: 4px 6px;
 }
 .linked-item.-unlinked {
   background-color: #fff;
   color: var(--color-primary);
+  padding: 4px 6px;
 }
 
 /* Disease Only */
