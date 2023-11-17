@@ -417,19 +417,14 @@ h5 {
   margin: 0px calc(var(--padding-inline) * -1) 8px;
 }
 
-#temp-aliases,
-.temp-wrapper {
-  margin-top: 5px;
+.summary-wrapper {
+  padding: 10px;
+  border-radius: 3px;
+  background-color: rgba(20, 119, 134, 0.2);
 }
-
-#temp-aliases .inheritance-uris,
-.temp-wrapper .inheritance-uris {
+.summary-wrapper #temp-aliases .inheritance-uris,
+.summary-wrapper .temp-wrapper .inheritance-uris {
   display: flex;
-}
-
-#temp-aliases .properties,
-.temp-wrapper .properties {
-  margin-bottom: 20px;
 }
 
 .tree .cp_sl03:hover {
@@ -894,9 +889,8 @@ header .intro-text p {
 
 .temp-title {
   border-radius: 3px;
-  background-color: #13295a;
-  color: white;
-  font-size: 14px;
+  color: #13295a;
+  font-size: 24px;
   height: 28px;
   white-space: nowrap;
   font-weight: 600;
@@ -904,7 +898,17 @@ header .intro-text p {
   outline: none;
   position: relative;
   display: block;
-  padding-left: 5px;
+  padding-left: 15px;
+  margin-bottom: 15px;
+}
+.temp-title::before {
+  content: "";
+  width: 6px;
+  background-color: #13295a;
+  height: 28px;
+  left: 1px;
+  position: absolute;
+  display: block;
 }
 
 .properties {
@@ -919,9 +923,12 @@ header .intro-text p {
 
 .aliases > dl {
   margin: 0 0 4px;
-  padding: 2px 4px 6px;
-  background-color: rgba(20, 119, 134, 0.2);
   border-radius: 3px;
+}
+.aliases > dl > div {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
 }
 .aliases > dl > dt {
   font-size: 10px;
@@ -932,18 +939,10 @@ header .intro-text p {
   font-size: 14px;
   display: inline;
 }
-.aliases > dl > dd::after {
-  content: ", ";
-}
-.aliases > dl > dd:last-child::after {
-  content: none;
-}
 
 .linked-items {
   display: inline;
   font-weight: bold;
-  padding: 2px 4px 6px;
-  background-color: rgba(20, 119, 134, 0.2);
   border-radius: 3px;
   margin-right: 2px;
   margin-block-start: 0;

@@ -1084,21 +1084,25 @@ footer .footer__bottom .footer__lisence p:before {
 /* Component */
 .linked-item {
   margin-bottom: 3px;
-  padding: 4px 20px;
   border: var(--color-primary) 1px solid;
   border-radius: 3px;
   background-color: var(--color-primary);
   font-size: 12px;
   font-weight: bold;
   line-height: 1.4;
+  margin-right: 2px;
 }
 .linked-item > a {
   color: #fff;
   text-decoration: none;
+  display: flex;
+  align-items: center;
+  padding: 4px 6px;
 }
 .linked-item.-unlinked {
   background-color: #fff;
   color: var(--color-primary);
+  padding: 4px 6px;
 }
 
 /* Disease Only */
@@ -1127,7 +1131,7 @@ footer .footer__bottom .footer__lisence p:before {
 .summary-header > .data-name > h3 a.nando-link,
 .summary-header > .data-name > h3 span.nando-copy {
   font-size: 12px;
-  color: #90959B;
+  color: #90959b;
   font-weight: normal;
   cursor: pointer;
   margin-left: 5px;
@@ -1156,7 +1160,7 @@ footer .footer__bottom .footer__lisence p:before {
 }
 .summary-header > .data-name > h2#temp-label-ja {
   font-weight: bold;
-  padding: 25px 0 15px;
+  padding-top: 25px;
 }
 .summary-header > .data-name > h2#temp-label-ja ruby {
   font-size: 36px;
@@ -1170,5 +1174,4 @@ footer .footer__bottom .footer__lisence p:before {
 }
 .summary-header > .external-links {
   display: flex;
-  gap: 2px;
-}
+}/*# sourceMappingURL=main.css.map */
