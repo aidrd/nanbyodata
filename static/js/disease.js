@@ -592,9 +592,14 @@ async function makeVariant(entryData) {
     if (Array.isArray(data) && data.length === 0) {
       variant.remove();
     } else {
+      // to avoid hitting api twice Use createObjectURL
+      const blob = new Blob([JSON.stringify(data)], {
+        type: 'application/json',
+      });
+      const objectUrl = URL.createObjectURL(blob);
       properties.innerHTML = `
           <togostanza-pagination-table
-              data-url="${url}"
+              data-url="${objectUrl}"
               data-type="json"
               custom-css-url="https://togostanza.github.io/togostanza-themes/contrib/nanbyodata.css"
               fixed-columns="1"
