@@ -83,7 +83,7 @@ h5 {
       padding-right: 250px;
       padding-top: 57px;
       padding-bottom: 50px;
-      background: #13295a;
+      background: var(--color-secondary);
     }
 
     .intro-text {
@@ -99,7 +99,7 @@ h5 {
 
       h2 {
         display: block;
-        color: #13295a;
+        color: var(--color-secondary);
         font-size: 20px;
       }
 
@@ -133,17 +133,17 @@ h5 {
       .keyword {
         margin-top: 20px;
         background-color: #c8c8c8;
-        color: #13295a;
+        color: var(--color-secondary);
         padding: 5px 10px;
         display: inline;
         font-size: 14px;
         border-radius: 3px;
 
         a {
-          color: #13295a;
+          color: var(--color-secondary);
 
           &:link {
-            color: #13295a;
+            color: var(--color-secondary);
           }
         }
       }
@@ -152,11 +152,10 @@ h5 {
 }
 
 a {
-
   &:visited,
   &:hover,
   &:active {
-    color: #13295a;
+    color: var(--color-secondary);
   }
 }
 
@@ -219,7 +218,7 @@ a {
         }
 
         p {
-          color: #13295a;
+          color: var(--color-secondary);
           font-size: 30px;
           font-weight: bold;
           margin-top: -14px;
@@ -230,7 +229,7 @@ a {
           animation-duration: 0.3s;
           animation-timing-function: linear;
           animation-fill-mode: forwards;
-          background-color: #13295a;
+          background-color: var(--color-secondary);
 
           .img {
             .imgnormal {
@@ -257,13 +256,13 @@ a {
 
 @keyframes hover {
   from {
-    background-color: #13295a;
+    background-color: var(--color-secondary);
     border-radius: 20px;
     opacity: 0;
   }
 
   to {
-    background-color: #13295a;
+    background-color: var(--color-secondary);
     border-radius: 0px;
     opacity: 1;
   }
@@ -276,14 +275,14 @@ a {
     display: block;
     margin: 0 auto;
 
-    +.container {
+    + .container {
       margin-top: 70px;
     }
 
     h3 {
       text-align: center;
       display: block;
-      color: #13295a;
+      color: var(--color-secondary);
       font-size: 20px;
     }
 
@@ -323,7 +322,7 @@ a {
       .card-title {
         text-align: center;
         font-size: 17px;
-        color: #13295a;
+        color: var(--color-secondary);
         letter-spacing: 1px;
       }
 
@@ -379,7 +378,7 @@ a {
       display: inline-block;
       position: relative;
       font-size: 16px;
-      color: #13295a;
+      color: var(--color-secondary);
 
       &::before {
         content: '';
@@ -548,7 +547,7 @@ a {
 
       h5 {
         font-size: 30px;
-        color: #13295a;
+        color: var(--color-secondary);
         letter-spacing: 1px;
 
         &::before {
@@ -607,7 +606,7 @@ a {
       display: inline-block;
       position: relative;
       font-size: 16px;
-      color: #13295a;
+      color: var(--color-secondary);
 
       &::before {
         content: '';
@@ -713,7 +712,7 @@ a {
         span {
           font-size: 14px;
           font-weight: 600;
-          color: #13295a;
+          color: var(--color-secondary);
         }
       }
     }
@@ -721,7 +720,7 @@ a {
     .data_title {
       text-align: left;
       width: 100%;
-      border-bottom: 1px solid #13295a;
+      border-bottom: 1px solid var(--color-secondary);
 
       h2 {
         color: #000000;
@@ -757,7 +756,7 @@ a {
         display: flex;
 
         h3 {
-          background-color: #13295a;
+          background-color: var(--color-secondary);
           color: #fff;
           padding: 5px;
           border-radius: 3px;
@@ -831,8 +830,8 @@ details {
   margin-bottom: 20px;
 
   summary {
-    border-bottom: 1px solid #13295a;
-    color: #13295a;
+    border-bottom: 1px solid var(--color-secondary);
+    color: var(--color-secondary);
     font-size: 14px;
     font-weight: 600;
     padding: 5px 0;
@@ -858,7 +857,6 @@ details {
 
 #data-wrapper details {
   summary {
-
     &:before,
     &:after {
       content: '';
@@ -873,7 +871,7 @@ details {
       width: 16px;
       height: 16px;
       border-radius: 3px;
-      background-color: #13295a;
+      background-color: var(--color-secondary);
     }
 
     &:after {
@@ -907,7 +905,7 @@ details {
 
     h3 {
       letter-spacing: 1px;
-      color: #13295a;
+      color: var(--color-secondary);
       font-size: 15px;
       text-align: left;
       font-weight: 600;
@@ -960,7 +958,7 @@ a.link[target='_blank']::after {
   .illust-title {
     text-align: center;
     font-size: 17px;
-    color: #13295a;
+    color: var(--color-secondary);
     letter-spacing: 1px;
   }
 

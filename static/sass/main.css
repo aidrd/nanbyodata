@@ -1,6 +1,7 @@
 @charset "UTF-8";
 :root {
   --color-primary: #147786;
+  --color-secondary: #13295a;
 }
 
 body {
@@ -78,7 +79,7 @@ h5 {
   padding-right: 250px;
   padding-top: 57px;
   padding-bottom: 50px;
-  background: #13295a;
+  background: var(--color-secondary);
 }
 #kv-wrap header .intro-text {
   text-align: center;
@@ -92,7 +93,7 @@ h5 {
 }
 #kv-wrap header .intro-text h2 {
   display: block;
-  color: #13295a;
+  color: var(--color-secondary);
   font-size: 20px;
 }
 #kv-wrap header .intro-text p {
@@ -121,21 +122,21 @@ h5 {
 #kv-wrap header .intro-text .keyword {
   margin-top: 20px;
   background-color: #c8c8c8;
-  color: #13295a;
+  color: var(--color-secondary);
   padding: 5px 10px;
   display: inline;
   font-size: 14px;
   border-radius: 3px;
 }
 #kv-wrap header .intro-text .keyword a {
-  color: #13295a;
+  color: var(--color-secondary);
 }
 #kv-wrap header .intro-text .keyword a:link {
-  color: #13295a;
+  color: var(--color-secondary);
 }
 
 a:visited, a:hover, a:active {
-  color: #13295a;
+  color: var(--color-secondary);
 }
 
 #primary {
@@ -192,7 +193,7 @@ a:visited, a:hover, a:active {
   letter-spacing: 1px;
 }
 #primary .container .subnav .btn-primary p {
-  color: #13295a;
+  color: var(--color-secondary);
   font-size: 30px;
   font-weight: bold;
   margin-top: -14px;
@@ -202,7 +203,7 @@ a:visited, a:hover, a:active {
   animation-duration: 0.3s;
   animation-timing-function: linear;
   animation-fill-mode: forwards;
-  background-color: #13295a;
+  background-color: var(--color-secondary);
 }
 #primary .container .subnav .btn-primary:hover .img .imgnormal {
   display: none;
@@ -219,12 +220,12 @@ a:visited, a:hover, a:active {
 
 @keyframes hover {
   from {
-    background-color: #13295a;
+    background-color: var(--color-secondary);
     border-radius: 20px;
     opacity: 0;
   }
   to {
-    background-color: #13295a;
+    background-color: var(--color-secondary);
     border-radius: 0px;
     opacity: 1;
   }
@@ -242,7 +243,7 @@ a:visited, a:hover, a:active {
 #service .container h3 {
   text-align: center;
   display: block;
-  color: #13295a;
+  color: var(--color-secondary);
   font-size: 20px;
 }
 #service .container p {
@@ -276,7 +277,7 @@ a:visited, a:hover, a:active {
 #service .container .card-body .card-title {
   text-align: center;
   font-size: 17px;
-  color: #13295a;
+  color: var(--color-secondary);
   letter-spacing: 1px;
 }
 #service .container .card-body .card-text {
@@ -323,7 +324,7 @@ a:visited, a:hover, a:active {
   display: inline-block;
   position: relative;
   font-size: 16px;
-  color: #13295a;
+  color: var(--color-secondary);
 }
 .about .container h4::before {
   content: "";
@@ -458,7 +459,7 @@ a:visited, a:hover, a:active {
 }
 .modal-content .modal-body .modalContent_TOS h5 {
   font-size: 30px;
-  color: #13295a;
+  color: var(--color-secondary);
   letter-spacing: 1px;
 }
 .modal-content .modal-body .modalContent_TOS h5::before {
@@ -509,7 +510,7 @@ a:visited, a:hover, a:active {
   display: inline-block;
   position: relative;
   font-size: 16px;
-  color: #13295a;
+  color: var(--color-secondary);
 }
 .about-page .container h4::before {
   content: "";
@@ -597,12 +598,12 @@ a:visited, a:hover, a:active {
 #data-wrapper .data_table .data_number h3 span {
   font-size: 14px;
   font-weight: 600;
-  color: #13295a;
+  color: var(--color-secondary);
 }
 #data-wrapper .data_table .data_title {
   text-align: left;
   width: 100%;
-  border-bottom: 1px solid #13295a;
+  border-bottom: 1px solid var(--color-secondary);
 }
 #data-wrapper .data_table .data_title h2 {
   color: #000000;
@@ -632,7 +633,7 @@ a:visited, a:hover, a:active {
   display: flex;
 }
 #data-wrapper .data_table .data-list .list-wrapper h3 {
-  background-color: #13295a;
+  background-color: var(--color-secondary);
   color: #fff;
   padding: 5px;
   border-radius: 3px;
@@ -694,8 +695,8 @@ details {
   margin-bottom: 20px;
 }
 details summary {
-  border-bottom: 1px solid #13295a;
-  color: #13295a;
+  border-bottom: 1px solid var(--color-secondary);
+  color: var(--color-secondary);
   font-size: 14px;
   font-weight: 600;
   padding: 5px 0;
@@ -725,7 +726,7 @@ details summary::-webkit-details-marker {
   width: 16px;
   height: 16px;
   border-radius: 3px;
-  background-color: #13295a;
+  background-color: var(--color-secondary);
 }
 #data-wrapper details summary:after {
   left: 6px;
@@ -753,7 +754,7 @@ details summary::-webkit-details-marker {
 }
 #data-wrapper details .text h3 {
   letter-spacing: 1px;
-  color: #13295a;
+  color: var(--color-secondary);
   font-size: 15px;
   text-align: left;
   font-weight: 600;
@@ -801,7 +802,7 @@ a.link[target=_blank]::after {
 .illust-body .illust-title {
   text-align: center;
   font-size: 17px;
-  color: #13295a;
+  color: var(--color-secondary);
   letter-spacing: 1px;
 }
 .illust-body .illust-text {
