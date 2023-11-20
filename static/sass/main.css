@@ -834,7 +834,6 @@ a.link[target=_blank]::after {
   color: #fff;
   border: none;
   outline: none;
-  margin-bottom: 7px;
 }
 .navbar button.navbar-toggler i {
   font-size: 30px;
@@ -876,6 +875,29 @@ a.link[target=_blank]::after {
   background-color: transparent;
   outline: none;
   height: 36px;
+  flex-grow: inherit;
+}
+
+.flex {
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+}
+.flex #navbarResponsive {
+  align-items: center;
+}
+
+#mainNav .container {
+  align-items: self-start;
+}
+#mainNav .flex-wrapper {
+  display: flex;
+  flex-direction: row-reverse;
+}
+@media screen and (max-width: 991.98px) {
+  #mainNav .flex-wrapper {
+    display: block;
+  }
 }
 
 /* Disease Navigation */
@@ -900,6 +922,9 @@ a.link[target=_blank]::after {
 #diseaseNav .wrapper .navbar-right {
   display: flex;
   gap: 13px;
+}
+#diseaseNav .wrapper .navbar-right button.navbar-toggler {
+  margin-bottom: 7px;
 }
 
 /* Reset CSS */
