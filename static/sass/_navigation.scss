@@ -53,6 +53,19 @@
       }
     }
   }
+
+  select.language-select {
+    text-align: center;
+    font-size: 14px;
+    appearance: none;
+    border-radius: 35px;
+    padding: 5px 10px;
+    border: 2px solid white;
+    color: white;
+    background-color: transparent;
+    outline: none;
+    height: 36px;
+  }
 }
 
 
@@ -86,18 +99,6 @@
     .navbar-right {
       display: flex;
       gap: 13px;
-
-      select.language-select {
-        font-size: 14px;
-        appearance: none;
-        border-radius: 35px;
-        padding: 5px 10px;
-        border: 2px solid white;
-        color: white;
-        background-color: #147786;
-        outline: none;
-        height: 36px;
-      }
     }
   }
 }

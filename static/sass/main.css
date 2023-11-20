@@ -863,6 +863,20 @@ a.link[target=_blank]::after {
 .navbar ul.navbar-nav a.nav-link button.btn-TOS:hover {
   color: #7c7c7c;
 }
+.navbar select.language-select {
+  text-align: center;
+  font-size: 14px;
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  border-radius: 35px;
+  padding: 5px 10px;
+  border: 2px solid white;
+  color: white;
+  background-color: transparent;
+  outline: none;
+  height: 36px;
+}
 
 /* Disease Navigation */
 #diseaseNav .wrapper {
@@ -886,19 +900,6 @@ a.link[target=_blank]::after {
 #diseaseNav .wrapper .navbar-right {
   display: flex;
   gap: 13px;
-}
-#diseaseNav .wrapper .navbar-right select.language-select {
-  font-size: 14px;
-  -webkit-appearance: none;
-     -moz-appearance: none;
-          appearance: none;
-  border-radius: 35px;
-  padding: 5px 10px;
-  border: 2px solid white;
-  color: white;
-  background-color: #147786;
-  outline: none;
-  height: 36px;
 }
 
 /* Reset CSS */
@@ -1135,6 +1136,8 @@ footer .footer__bottom .footer__lisence p:before {
   font-weight: normal;
   cursor: pointer;
   margin-left: 5px;
+  position: relative;
+  top: -2px;
 }
 .summary-header > .data-name > h3 a.nando-link:hover,
 .summary-header > .data-name > h3 span.nando-copy:hover {
@@ -1148,6 +1151,8 @@ footer .footer__bottom .footer__lisence p:before {
 }
 .summary-header > .data-name > h3 a.nando-link {
   text-decoration: underline;
+  position: relative;
+  top: -2px;
 }
 .summary-header > .data-name > h3 a.nando-link::after {
   content: "\f35d";
@@ -1174,4 +1179,4 @@ footer .footer__bottom .footer__lisence p:before {
 }
 .summary-header > .external-links {
   display: flex;
-}/*# sourceMappingURL=main.css.map */
+}

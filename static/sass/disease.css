@@ -447,107 +447,6 @@ h5 {
   white-space: pre;
 }
 
-.navbar .container a {
-  text-decoration: none;
-}
-.navbar .container a .imgtitle {
-  width: 120px;
-  display: block;
-}
-.navbar .container a .imgscroll {
-  width: 120px;
-  display: none;
-}
-.navbar .container .navbar-toggler {
-  background-color: transparent;
-  cursor: pointer;
-  outline: none;
-  padding: 0;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  border-radius: 0;
-  border: 1px solid #696969;
-  color: #696969;
-  font-size: 13px;
-  padding: 5px 0;
-  width: 30px;
-  height: 30px;
-}
-.navbar .container .collapse ul li .btn-TOS {
-  background-color: transparent;
-  cursor: pointer;
-  outline: none;
-  padding: 0;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  border-radius: 0;
-  border: none;
-  color: #696969;
-}
-.navbar .container .collapse ul li .btn-TOS:hover {
-  color: #495aff;
-}
-.navbar .container .collapse ul li a {
-  color: #696969;
-}
-.navbar .container .collapse ul li a:hover {
-  color: #495aff;
-}
-.navbar .navbar-right {
-  display: flex;
-}
-.navbar .language-select {
-  margin-left: 15px;
-  font-size: 14px;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  border-radius: 35px;
-  padding: 5px 10px;
-  border: 2px solid white;
-  color: white;
-  background-color: #147786;
-  outline: none;
-}
-.navbar.scroll {
-  background-color: #13295a;
-  top: 0;
-}
-.navbar.scroll .collapse ul li .btn-TOS {
-  background-color: transparent;
-  cursor: pointer;
-  outline: none;
-  padding: 0;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  border-radius: 0;
-  border: none;
-  color: #dcdcdc;
-}
-.navbar.scroll .collapse ul li .btn-TOS:hover {
-  color: #696969;
-}
-.navbar.scroll .collapse ul li a {
-  color: #dcdcdc;
-}
-.navbar.scroll .collapse ul li a:hover {
-  color: #696969;
-}
-.navbar.scroll a {
-  text-decoration: none;
-}
-.navbar.scroll a .imgtitle {
-  width: 120px;
-  display: none;
-}
-.navbar.scroll a .imgscroll {
-  width: 120px;
-  display: block;
-}
-
 .inspection-view {
   padding-top: 0px !important;
 }
@@ -1181,4 +1080,4 @@ details {
 
 .inspection-view {
   padding-top: 10px;
-}/*# sourceMappingURL=disease.css.map */
+}
