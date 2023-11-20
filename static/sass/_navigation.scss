@@ -67,7 +67,7 @@
   }
 }
 
-.flex{
+.flex {
   display: flex;
   flex-direction: row-reverse;
   align-items: center;
@@ -77,27 +77,27 @@
   }
 }
 
-#mainNav{
+#mainNav {
   .container {
     align-items: self-start;
-
   }
-
 
   .flex-wrapper {
     display: flex;
     flex-direction: row-reverse;
   }
-  @media screen and (max-width: 991.98px){
-    .flex-wrapper{
+  @media screen and (max-width: 991.98px) {
+    .flex-wrapper {
       display: block;
     }
 
     #navbarResponsive {
-
+      position: absolute;
+      left: 0px;
+      background: var(--color-primary);
+      width: 100%;
     }
   }
-
 }
 
 /* Disease Navigation */

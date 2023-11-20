@@ -898,6 +898,12 @@ a.link[target=_blank]::after {
   #mainNav .flex-wrapper {
     display: block;
   }
+  #mainNav #navbarResponsive {
+    position: absolute;
+    left: 0px;
+    background: var(--color-primary);
+    width: 100%;
+  }
 }
 
 /* Disease Navigation */
