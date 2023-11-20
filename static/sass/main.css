@@ -839,8 +839,20 @@ a.link[target=_blank]::after {
   font-size: 30px;
   vertical-align: top;
 }
-.navbar ul.navbar-nav {
-  padding-top: 15px;
+.navbar select.language-select {
+  text-align: center;
+  font-size: 14px;
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  border-radius: 35px;
+  padding: 5px 10px;
+  border: 2px solid white;
+  color: white;
+  background-color: transparent;
+  outline: none;
+  height: 36px;
+  flex-grow: inherit;
 }
 .navbar ul.navbar-nav a.nav-link {
   color: #fff;
@@ -862,47 +874,41 @@ a.link[target=_blank]::after {
 .navbar ul.navbar-nav a.nav-link button.btn-TOS:hover {
   color: #7c7c7c;
 }
-.navbar select.language-select {
-  text-align: center;
-  font-size: 14px;
-  -webkit-appearance: none;
-     -moz-appearance: none;
-          appearance: none;
-  border-radius: 35px;
-  padding: 5px 10px;
-  border: 2px solid white;
-  color: white;
-  background-color: transparent;
-  outline: none;
-  height: 36px;
-  flex-grow: inherit;
-}
 
-.flex {
-  display: flex;
-  flex-direction: row-reverse;
-  align-items: center;
-}
-.flex #navbarResponsive {
-  align-items: center;
-}
-
+/* Main Navigation */
 #mainNav .container {
-  align-items: self-start;
+  flex-wrap: nowrap;
 }
-#mainNav .flex-wrapper {
+#mainNav .container .flex-wrapper {
   display: flex;
   flex-direction: row-reverse;
+  align-items: center;
+  gap: 28px;
 }
 @media screen and (max-width: 991.98px) {
-  #mainNav .flex-wrapper {
+  #mainNav .container .flex-wrapper {
     display: block;
   }
-  #mainNav #navbarResponsive {
+}
+#mainNav .container .flex-wrapper .flex {
+  display: flex;
+  flex-direction: row-reverse;
+  gap: 13px;
+}
+@media screen and (max-width: 991.98px) {
+  #mainNav .container .flex-wrapper #navbarResponsive {
     position: absolute;
     left: 0px;
     background: var(--color-primary);
     width: 100%;
+  }
+}
+#mainNav .container .flex-wrapper #navbarResponsive ul.navbar-nav {
+  padding-top: 0;
+}
+@media screen and (max-width: 991.98px) {
+  #mainNav .container .flex-wrapper #navbarResponsive ul.navbar-nav {
+    padding-top: 15px;
   }
 }
 
