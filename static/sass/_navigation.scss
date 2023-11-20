@@ -4,7 +4,6 @@
   padding: 15px 0 10px;
   background-color: var(--color-primary);
 
-
   a.navbsar-brand {
     text-decoration: none;
 
@@ -68,14 +67,12 @@
   }
 }
 
-
 /* Disease Navigation */
 #diseaseNav {
   .wrapper {
     padding: 0 20px;
     display: flex;
     justify-content: space-between;
-
 
     .intro-text {
       outline: none;
@@ -86,7 +83,6 @@
         margin: 0 auto;
 
         li.token-input-input-token-facebook {
-
           #token-input-tokeninput {
             height: 20px;
             padding: 0;

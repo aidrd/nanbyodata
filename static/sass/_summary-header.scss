@@ -3,12 +3,12 @@
   border: solid 2px #c1c6d3;
   border-radius: 5px;
 
-  >.data-name,
-  >.external-links {
+  > .data-name,
+  > .external-links {
     padding: 10px;
   }
 
-  >.data-name {
+  > .data-name {
     border-bottom: 1px dashed #c1c6d3;
     margin: 0;
 
@@ -18,7 +18,7 @@
       margin: 0;
     }
 
-    >h3 {
+    > h3 {
       font-size: 18px;
       font-weight: bold;
 
@@ -37,7 +37,7 @@
         }
 
         &::after {
-          font-family: 'Font Awesome 5 Free';
+          font-family: "Font Awesome 5 Free";
           padding-left: 3px;
           margin: 0;
         }
@@ -45,25 +45,23 @@
 
       a.nando-link {
         text-decoration: underline;
-        position: relative;
-        top: -2px;
 
         &::after {
-          content: '\f35d';
+          content: "\f35d";
           font-weight: 900;
         }
       }
 
       span.nando-copy {
         &::after {
-          content: '\f0c5';
+          content: "\f0c5";
           font-weight: normal;
           vertical-align: middle;
         }
       }
     }
 
-    >h2#temp-label-ja {
+    > h2#temp-label-ja {
       font-weight: bold;
       padding-top: 25px;
 
@@ -77,12 +75,12 @@
       }
     }
 
-    >h3#temp-label-en {
+    > h3#temp-label-en {
       font-size: 26px;
     }
   }
 
-  >.external-links {
+  > .external-links {
     display: flex;
   }
 }
