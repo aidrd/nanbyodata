@@ -21,6 +21,76 @@
 
 <body>
   <main>
+    <style>
+      togostanza-pagination-table {
+        --togostanza-series-0-color: #94d0da;
+        --togostanza-series-1-color: #249eb3;
+        --togostanza-series-2-color: #dcf1f9;
+        --togostanza-series-3-color: #0f89ac;
+        --togostanza-series-4-color: #0f5b6d;
+        --togostanza-series-5-color: #093b47;
+        --togostanza-background-color: #FFFFFF;
+        --togostanza-font-family: 'Roboto Condensed', sans-serif;
+        --togostanza-axis-color: #444444;
+        --togostanza-axis-width: 1;
+        --togostanza-grid-color: #f5f5f5;
+        --togostanza-grid-dash-length: 0;
+        --togostanza-grid-dash-opacity: 1;
+        --togostanza-grid-width: 0;
+        --togostanza-tick-color: #444444;
+        --togostanza-tick-length: 1.5;
+        --togostanza-tick-width: 0.5;
+        --togostanza-label-font-color: #444444;
+        --togostanza-label-font-size: 10;
+        --togostanza-border-color: #444444;
+        --togostanza-border-width: 0.5;
+        --togostanza-title-font-color: #444444;
+        --togostanza-title-font-size: 12;
+        --togostanza-title-font-weight: 400;
+        --togostanza-line-width: 1;
+        --togostanza-opacity: 0.8;
+        --togostanza-node-size: 100;
+        --togostanza-edge-color: #EEEEEE;
+        --togostanza-text-font-color: #444444;
+        --togostanza-text-font-size: 12px;
+        --togostanza-text-font-weight: 400;
+        --togostanza-table-border: 0px solid #CCCCCC;
+        --togostanza-table-shadow: 1px 1px 3px 1px #EEEEEE;
+        --togostanza-thead-border-bottom: 1px solid #444444;
+        --togostanza-thead-font-color: #94928d;
+        --togostanza-thead-background-color: #FFFFFF;
+        --togostanza-thead-font-size: 12px;
+        --togostanza-thead-font-weight: 400;
+        --togostanza-tbody-border-bottom: 1px solid #dee2e6;
+        --togostanza-tbody-font-color: #444444;
+        --togostanza-tbody-font-size: 14px;
+        --togostanza-tbody-font-weight: 400;
+        --togostanza-tbody-odd-background-color: #FFFFFF;
+        --togostanza-tbody-even-background-color: #FFFFFF;
+        --togostanza-control-border: 1px solid #aaa;
+        --togostanza-control-active-color: #249eb3;
+        --togostanza-non-active-color: #94928d;
+        --togostanza-control-font-color: #444444;
+        --togostanza-control-font-size: 14px;
+        --togostanza-control-border-radius: 3px;
+        --togostanza-pagination-font-color: #444444;
+        --togostanza-pagination-font-size: 14px;
+        --togostanza-pagination-background-color: #FFFFFF;
+        --togostanza-pagination-border: 1px solid rgba(0, 0, 0, 0.1);
+        --togostanza-pagination-border-radius: 3px;
+        --togostanza-pagination-padding: 2px 8px;
+        --togostanza-pagination-current-font-color: #FFFFFF;
+        --togostanza-pagination-current-background-color: #249eb3;
+        --togostanza-pagination-current-border: 1px solid #aaa;
+        --togostanza-pagination-arrow-color: #333333;
+        --togostanza-vertical-pagination-placement: column;
+        --togostanza-horizonal-pagination-placement: center;
+        --column-count: 1;
+        --table-background-color: rgba(255, 255, 255, 0);
+        --row-padding: 5px;
+        --key-width-percentage: 30%;
+      }
+    </style>
 
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
@@ -74,8 +144,8 @@
           <script type="module" src="https://togostanza.github.io/metastanza/pagination-table.js" async></script>
           <togostanza-pagination-table
             data-url="https://pubcasefinder.dbcls.jp/sparqlist/api/NanbyoData_the_number_of_patients_list"
-            data-type="json" custom-css-url="" width="" fixed-columns="1" padding="0px" page-size-option="100"
-            page-slider="true"
+            data-type="json" custom-css-url="https://togostanza.github.io/togostanza-themes/contrib/nanbyodata.css"
+            width="" fixed-columns="1" padding="0px" page-size-option="100" page-slider="true"
             columns="[{&quot;id&quot;: &quot;nando&quot;,&quot;label&quot;:&quot;NANDO ID&quot;}, {&quot;id&quot;:&quot;label&quot;,&quot;label&quot;:&quot;疾患名&quot;}, {&quot;id&quot;:&quot;num_of_2015&quot;,&quot;label&quot;:&quot;2015年&quot;}, {&quot;id&quot;:&quot;num_of_2016&quot;,&quot;label&quot;:&quot;2016年&quot;}, {&quot;id&quot;:&quot;num_of_2017&quot;,&quot;label&quot;:&quot;2017年&quot;}, {&quot;id&quot;:&quot;num_of_2018&quot;,&quot;label&quot;:&quot;2018年&quot;}, {&quot;id&quot;:&quot;num_of_2019&quot;,&quot;label&quot;:&quot;2019年&quot;}, {&quot;id&quot;:&quot;num_of_2020&quot;,&quot;label&quot;:&quot;2020年&quot;}]"></togostanza-pagination-table>
         </p>
       </div>
