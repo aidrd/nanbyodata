@@ -37,10 +37,8 @@ const nandoId = pathname.slice(nandoIndex + 6);
   // check summary data
   checkSummaryData(entryData);
 
-  // checkLanguage
-  // initial lang
-  changeLangHP();
-  checkLanguage();
+  // check initial lang
+  checkInitialLanguage();
 
   // disease definition
   makeDiseaseDefinition(entryData);
@@ -52,6 +50,7 @@ const nandoId = pathname.slice(nandoIndex + 6);
   makeMedicalGeneticTestingInfo(entryData);
 
   // phenotype view
+  changeLangHP();
   makePhenotypeView(entryData);
 
   // specific bio resource
@@ -324,7 +323,7 @@ function checkSummaryData(entryData) {
   }
 }
 
-function checkLanguage() {
+function checkInitialLanguage() {
   const selectLang = document.querySelector('.language-select');
   selectLang.addEventListener('change', changeLangHP);
 }
@@ -483,6 +482,7 @@ function makePhenotypeView(entryData) {
       .catch((error) => {
         console.error('Failed to get data:', error);
       });
+    // lang ja
     phenotypeViewJa.innerHTML = `
       <togostanza-pagination-table
       data-url="${item.url}"
@@ -496,7 +496,7 @@ function makePhenotypeView(entryData) {
         ></togostanza-pagination-table>
         `;
 
-    // TODO: lang eng
+    // lang eng
     phenotypeViewEn.innerHTML = `
       <togostanza-pagination-table
       data-url="${item.url}"
