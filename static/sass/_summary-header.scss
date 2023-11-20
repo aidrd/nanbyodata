@@ -37,7 +37,7 @@
         }
 
         &::after {
-          font-family: "Font Awesome 5 Free";
+          font-family: 'Font Awesome 5 Free';
           padding-left: 3px;
           margin: 0;
         }
@@ -47,14 +47,14 @@
         text-decoration: underline;
 
         &::after {
-          content: "\f35d";
+          content: '\f35d';
           font-weight: 900;
         }
       }
 
       span.nando-copy {
         &::after {
-          content: "\f0c5";
+          content: '\f0c5';
           font-weight: normal;
           vertical-align: middle;
         }
