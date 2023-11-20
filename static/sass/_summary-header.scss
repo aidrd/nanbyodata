@@ -29,6 +29,8 @@
         font-weight: normal;
         cursor: pointer;
         margin-left: 5px;
+        position: relative;
+        top: -2px;
 
         &:hover {
           color: black;

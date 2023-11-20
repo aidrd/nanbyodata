@@ -4,7 +4,6 @@
   padding: 15px 0 10px;
   background-color: var(--color-primary);
 
-
   a.navbsar-brand {
     text-decoration: none;
 
@@ -53,8 +52,20 @@
       }
     }
   }
-}
 
+  select.language-select {
+    text-align: center;
+    font-size: 14px;
+    appearance: none;
+    border-radius: 35px;
+    padding: 5px 10px;
+    border: 2px solid white;
+    color: white;
+    background-color: transparent;
+    outline: none;
+    height: 36px;
+  }
+}
 
 /* Disease Navigation */
 #diseaseNav {
@@ -62,7 +73,6 @@
     padding: 0 20px;
     display: flex;
     justify-content: space-between;
-
 
     .intro-text {
       outline: none;
@@ -73,7 +83,6 @@
         margin: 0 auto;
 
         li.token-input-input-token-facebook {
-
           #token-input-tokeninput {
             height: 20px;
             padding: 0;
@@ -86,18 +95,6 @@
     .navbar-right {
       display: flex;
       gap: 13px;
-
-      select.language-select {
-        font-size: 14px;
-        appearance: none;
-        border-radius: 35px;
-        padding: 5px 10px;
-        border: 2px solid white;
-        color: white;
-        background-color: #147786;
-        outline: none;
-        height: 36px;
-      }
     }
   }
 }
