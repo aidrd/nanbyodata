@@ -821,7 +821,7 @@ a.link[target=_blank]::after {
 /* Navigation */
 .navbar {
   display: block;
-  padding: 15px 0 10px;
+  padding: 15px 0;
   background-color: var(--color-primary);
 }
 .navbar a.navbar-brand {
@@ -837,6 +837,8 @@ a.link[target=_blank]::after {
   outline: none;
 }
 .navbar button.navbar-toggler i {
+  position: relative;
+  top: 1px;
   font-size: 30px;
   vertical-align: top;
 }
@@ -915,14 +917,13 @@ a.link[target=_blank]::after {
 
 /* Disease Navigation */
 #diseaseNav .wrapper {
-  padding: 0 20px;
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 #diseaseNav .wrapper .intro-text {
   outline: none;
   width: 70%;
-  height: 44px;
 }
 #diseaseNav .wrapper .intro-text ul.token-input-list-facebook {
   margin: 0 auto;
@@ -934,10 +935,8 @@ a.link[target=_blank]::after {
 }
 #diseaseNav .wrapper .navbar-right {
   display: flex;
+  align-items: center;
   gap: 13px;
-}
-#diseaseNav .wrapper .navbar-right button.navbar-toggler {
-  margin-bottom: 7px;
 }
 
 /* Reset CSS */

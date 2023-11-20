@@ -1,7 +1,7 @@
 /* Navigation */
 .navbar {
   display: block;
-  padding: 15px 0 10px;
+  padding: 15px 0;
   background-color: var(--color-primary);
 
   a.navbar-brand {
@@ -19,6 +19,8 @@
     outline: none;
 
     i {
+      position: relative;
+      top: 1px;
       font-size: 30px;
       vertical-align: top;
     }
@@ -109,14 +111,13 @@
 /* Disease Navigation */
 #diseaseNav {
   .wrapper {
-    padding: 0 20px;
     display: flex;
     justify-content: space-between;
+    align-items: center;
 
     .intro-text {
       outline: none;
       width: 70%;
-      height: 44px;
 
       ul.token-input-list-facebook {
         margin: 0 auto;
@@ -133,11 +134,8 @@
 
     .navbar-right {
       display: flex;
+      align-items: center;
       gap: 13px;
-
-      button.navbar-toggler {
-        margin-bottom: 7px;
-      }
     }
   }
 }
