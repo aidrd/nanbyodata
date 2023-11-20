@@ -316,7 +316,7 @@ function checkSummaryData(entryData) {
     !entryData.kegg &&
     !entryData.urdbms
   ) {
-    var summaryWrapper = document.querySelector('.summary-wrapper');
+    const summaryWrapper = document.querySelector('.summary-wrapper');
     if (summaryWrapper) {
       summaryWrapper.style = 'display: none;';
     }
@@ -595,49 +595,48 @@ function makeSpecificBioResource(entryData) {
   }
 }
 
-function makeVariant(entryData) {
-  const variant = document.getElementById('temp-variant');
-  const properties = variant.querySelector('#temp-properties');
-  const url = `https://pubcasefinder.dbcls.jp/sparqlist/api/nanbyodata_get_variant_by_nando_id?nando_id=${entryData.nando_id}`;
-  fetch(url)
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error(`HTTP Error status code: ${response.status}`);
-      }
-      return response.json();
-    })
-    .then((data) => {
-      if (Array.isArray(data) && data.length === 0) {
-        variant.remove();
-      } else {
-        properties.innerHTML = `
-      <togostanza-pagination-table
-      data-url="${url}"
-      data-type="json"
-      custom-css-url="https://togostanza.github.io/togostanza-themes/contrib/nanbyodata.css"
-      fixed-columns="1"
-      page-size-option="100"
-      page-slider="false"
-      columns="[{&quot;id&quot;:&quot;tgv_id&quot;,&quot;label&quot;:&quot;TogoVar ID&quot;,&quot;link&quot;:&quot;tgv_link&quot;,&quot;target&quot;:&quot;_blank&quot;},{&quot;id&quot;:&quot;rs_id&quot;,&quot;label&quot;:&quot;dbSNP ID&quot;,&quot;link&quot;:&quot;rs_id_link&quot;,&quot;target&quot;:&quot;_blank&quot;},{&quot;id&quot;:&quot;position&quot;,&quot;label&quot;:&quot;position&quot;},{&quot;id&quot;:&quot;type&quot;,&quot;label&quot;:&quot;type&quot;},{&quot;id&quot;:&quot;Clinvar_id&quot;,&quot;label&quot;:&quot;Clinvar ID&quot;,&quot;link&quot;:&quot;Clinvar_link&quot;,&quot;target&quot;:&quot;_blank&quot;},{&quot;id&quot;:&quot;title&quot;,&quot;label&quot;:&quot;title&quot;},{&quot;id&quot;:&quot;MedGen_id&quot;,&quot;label&quot;:&quot;MedGen ID&quot;,&quot;link&quot;:&quot;MedGen_link&quot;,&quot;target&quot;:&quot;_blank&quot;},{&quot;id&quot;:&quot;mondo_id&quot;,&quot;label&quot;:&quot;Mondo ID&quot;,&quot;link&quot;:&quot;mondo&quot;,&quot;target&quot;:&quot;_blank&quot;}]"
-      ></togostanza-pagination-table>
-      `;
-        const tempSpanElement = document.querySelector(
-          `#temp-variant .data-num`
-        );
-        const navSpanElement = document.querySelector(`.variant .data-num`);
-        tempSpanElement.innerText = data.length;
-        navSpanElement.innerText = data.length;
-      }
-    })
-    .then(() => {
-      makeSideNavigation(entryData);
-      // When loading finishes, display: block
-      document.getElementById('content').style.display = 'block';
-      document.getElementById('sidebar').style.display = 'block';
-    })
-    .catch((error) => {
-      console.error('Failed to get data:', error);
-    });
+async function makeVariant(entryData) {
+  try {
+    const url = `https://pubcasefinder.dbcls.jp/sparqlist/api/nanbyodata_get_variant_by_nando_id?nando_id=${entryData.nando_id}`;
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error(`HTTP Error status code: ${response.status}`);
+    }
+    const data = await response.json();
+
+    if (Array.isArray(data) && data.length === 0) {
+      document.getElementById('temp-variant').remove();
+    } else {
+      const properties = document
+        .getElementById('temp-variant')
+        .querySelector('#temp-properties');
+      properties.innerHTML = `
+          <togostanza-pagination-table
+              data-url="${url}"
+              data-type="json"
+              custom-css-url="https://togostanza.github.io/togostanza-themes/contrib/nanbyodata.css"
+              fixed-columns="1"
+              page-size-option="100"
+              page-slider="false"
+              columns="[{&quot;id&quot;:&quot;tgv_id&quot;,&quot;label&quot;:&quot;TogoVar ID&quot;,&quot;link&quot;:&quot;tgv_link&quot;,&quot;target&quot;:&quot;_blank&quot;},{&quot;id&quot;:&quot;rs_id&quot;,&quot;label&quot;:&quot;dbSNP ID&quot;,&quot;link&quot;:&quot;rs_id_link&quot;,&quot;target&quot;:&quot;_blank&quot;},{&quot;id&quot;:&quot;position&quot;,&quot;label&quot;:&quot;position&quot;},{&quot;id&quot;:&quot;type&quot;,&quot;label&quot;:&quot;type&quot;},{&quot;id&quot;:&quot;Clinvar_id&quot;,&quot;label&quot;:&quot;Clinvar ID&quot;,&quot;link&quot;:&quot;Clinvar_link&quot;,&quot;target&quot;:&quot;_blank&quot;},{&quot;id&quot;:&quot;title&quot;,&quot;label&quot;:&quot;title&quot;},{&quot;id&quot;:&quot;MedGen_id&quot;,&quot;label&quot;:&quot;MedGen ID&quot;,&quot;link&quot;:&quot;MedGen_link&quot;,&quot;target&quot;:&quot;_blank&quot;},{&quot;id&quot;:&quot;mondo_id&quot;,&quot;label&quot;:&quot;Mondo ID&quot;,&quot;link&quot;:&quot;mondo&quot;,&quot;target&quot;:&quot;_blank&quot;}]"
+          ></togostanza-pagination-table>
+          `;
+
+      const tempSpanElement = document.querySelector(`#temp-variant .data-num`);
+      const navSpanElement = document.querySelector('.variant .data-num');
+      tempSpanElement.innerText = data.length;
+      navSpanElement.innerText = data.length;
+    }
+
+    makeSideNavigation(entryData);
+
+    // When loading finishes
+    document.querySelector('.loading-spinner').style.display = 'none';
+    document.getElementById('content').style.display = 'block';
+    document.getElementById('sidebar').style.display = 'block';
+  } catch (error) {
+    console.error('Failed to get data:', error);
+  }
 }
 
 function makeSideNavigation(entryData) {
