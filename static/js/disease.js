@@ -581,6 +581,8 @@ function makeSpecificBioResource(entryData) {
 async function makeVariant(entryData) {
   try {
     const url = `https://pubcasefinder.dbcls.jp/sparqlist/api/nanbyodata_get_variant_by_nando_id?nando_id=${entryData.nando_id}`;
+    const variant = document.getElementById('temp-variant');
+    const properties = variant.querySelector('#temp-properties');
     const response = await fetch(url);
     if (!response.ok) {
       throw new Error(`HTTP Error status code: ${response.status}`);
@@ -588,11 +590,8 @@ async function makeVariant(entryData) {
     const data = await response.json();
 
     if (Array.isArray(data) && data.length === 0) {
-      document.getElementById('temp-variant').remove();
+      variant.remove();
     } else {
-      const properties = document
-        .getElementById('temp-variant')
-        .querySelector('#temp-properties');
       properties.innerHTML = `
           <togostanza-pagination-table
               data-url="${url}"
