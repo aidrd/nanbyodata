@@ -1,5 +1,5 @@
 @charset "UTF-8";
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&family=Sriracha&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700&family=Sriracha&display=swap');
 
 body {
   font-family: 'Poppins', sans-serif, 'Renner*', 'Avenir', 'Helvetica Neue',
@@ -15,6 +15,25 @@ body {
   top: 90px;
   bottom: 0px;
   position: fixed;
+}
+
+.loading-spinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 40px;
+  height: 40px;
+  margin: 10px auto;
+  border: 4px #ddd solid;
+  border-top: 4px var(--color-primary) solid;
+  border-radius: 50%;
+  animation: sp-anime 1s infinite linear;
+}
+
+@keyframes sp-anime {
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 details .data-list {
@@ -501,6 +520,9 @@ h5 {
   #temp-aliases .inheritance-uris,
   .temp-wrapper .inheritance-uris {
     display: flex;
+    > dl > dt {
+      font-weight: bold;
+    }
   }
 }
 
@@ -999,7 +1021,7 @@ header {
 
   > {
     dt {
-      font-size: 10px;
+      font-size: 12px;
       font-weight: bold;
     }
 
@@ -1024,7 +1046,8 @@ header {
 
   > {
     dt {
-      font-size: 10px;
+      font-size: 12px;
+      font-weight: 500;
     }
 
     dd {

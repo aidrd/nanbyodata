@@ -1,5 +1,5 @@
 @charset "UTF-8";
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&family=Sriracha&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700&family=Sriracha&display=swap");
 body {
   font-family: "Poppins", sans-serif, "Renner*", "Avenir", "Helvetica Neue", "Helvetica", "Arial", "Hiragino Sans", "ヒラギノ角ゴシック", YuGothic, "Yu Gothic", "メイリオ", Meiryo, "ＭＳ Ｐゴシック", "MS PGothic";
   margin: 0px;
@@ -14,6 +14,24 @@ body {
   position: fixed;
 }
 
+.loading-spinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 40px;
+  height: 40px;
+  margin: 10px auto;
+  border: 4px #ddd solid;
+  border-top: 4px var(--color-primary) solid;
+  border-radius: 50%;
+  animation: sp-anime 1s infinite linear;
+}
+
+@keyframes sp-anime {
+  100% {
+    transform: rotate(360deg);
+  }
+}
 details .data-list {
   margin-top: 10px;
 }
@@ -437,6 +455,10 @@ h5 {
 .summary-wrapper .temp-wrapper .inheritance-uris {
   display: flex;
 }
+.summary-wrapper #temp-aliases .inheritance-uris > dl > dt,
+.summary-wrapper .temp-wrapper .inheritance-uris > dl > dt {
+  font-weight: bold;
+}
 
 .tree .cp_sl03:hover {
   background-color: rgba(255, 255, 255, 0.5);
@@ -853,7 +875,7 @@ header .intro-text p {
   flex-wrap: wrap;
 }
 .aliases > dl > dt {
-  font-size: 10px;
+  font-size: 12px;
   font-weight: bold;
 }
 .aliases > dl > dd {
@@ -871,7 +893,8 @@ header .intro-text p {
   margin-block-end: 0;
 }
 .linked-items > dt {
-  font-size: 10px;
+  font-size: 12px;
+  font-weight: 500;
 }
 .linked-items > dd {
   margin-inline-start: 0;
