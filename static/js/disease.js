@@ -8,59 +8,42 @@ const nandoIndex = pathname.indexOf('NANDO:');
 const nandoId = pathname.slice(nandoIndex + 6);
 
 (async () => {
-  const entryData = await fetch(
-    'https://nanbyodata.jp/sparqlist/api/get_nando_entry_by_nando_id?nando_id=' +
-      nandoId,
-    {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    }
-  ).then((res) => res.json());
+  try {
+    const entryDataPromise = fetch(
+      'https://nanbyodata.jp/sparqlist/api/get_nando_entry_by_nando_id?nando_id=' +
+        nandoId,
+      {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
+    ).then((res) => res.json());
 
-  // summary header
-  makeHeader(entryData);
+    const entryData = await entryDataPromise;
 
-  // external links
-  makeExternalLinks(entryData);
+    await Promise.all([
+      makeHeader(entryData),
+      makeExternalLinks(entryData),
+      makeAlternativeName(entryData),
+      makeInheritanceUris(entryData),
+      makeLinksList(entryData),
+      checkSummaryData(entryData),
+      checkInitialLanguage(),
+      makeDiseaseDefinition(entryData),
+      makeProperties(entryData),
+      makeMedicalGeneticTestingInfo(entryData),
+      changeLangHP(),
+      makePhenotypeView(entryData),
+      makeSpecificBioResource(entryData),
+      makeVariant(entryData),
+    ]);
 
-  // alternative name
-  makeAlternativeName(entryData);
-
-  // inheritance uris
-  makeInheritanceUris(entryData);
-
-  // links list
-  makeLinksList(entryData);
-
-  // check summary data
-  checkSummaryData(entryData);
-
-  // check initial lang
-  checkInitialLanguage();
-
-  // disease definition
-  makeDiseaseDefinition(entryData);
-
-  // properties
-  makeProperties(entryData);
-
-  // medical genetic testing info
-  makeMedicalGeneticTestingInfo(entryData);
-
-  // phenotype view
-  changeLangHP();
-  makePhenotypeView(entryData);
-
-  // specific bio resource
-  makeSpecificBioResource(entryData);
-
-  // variant
-  makeVariant(entryData);
-
-  selectedItem();
-  switchingDisplayContents('temp-summary');
+    selectedItem();
+    switchingDisplayContents('temp-summary');
+  } catch (error) {
+    console.error('error:', error);
+  }
 })();
 
 function makeHeader(entryData) {
