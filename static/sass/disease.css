@@ -947,6 +947,9 @@ details summary {
   min-width: 15px;
   text-align: center;
 }
+.tab-label small {
+  margin-right: 4px;
+}
 
 .tab-content {
   width: 100%;
