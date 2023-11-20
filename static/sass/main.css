@@ -823,10 +823,10 @@ a.link[target=_blank]::after {
   padding: 15px 0 10px;
   background-color: var(--color-primary);
 }
-.navbar a.navbsar-brand {
+.navbar a.navbar-brand {
   text-decoration: none;
 }
-.navbar a.navbsar-brand img.imgtitle {
+.navbar a.navbar-brand img.imgtitle {
   width: 220px;
   display: block;
 }
