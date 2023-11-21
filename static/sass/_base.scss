@@ -113,6 +113,10 @@ h5 {
         margin-bottom: 15px;
       }
 
+      .token-input-list-facebook {
+        padding: 0 20px;
+      }
+
       search {
         width: 70%;
         outline: none;
@@ -284,6 +288,7 @@ a {
       display: block;
       color: var(--color-secondary);
       font-size: 20px;
+      margin-bottom: 1rem;
     }
 
     p {
@@ -401,6 +406,10 @@ a {
 }
 
 .news {
+  .news-wrapper {
+    padding: 0 20px;
+  }
+
   .logdata {
     dl {
       display: flex;

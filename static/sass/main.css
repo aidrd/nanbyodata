@@ -104,6 +104,9 @@ h5 {
 #kv-wrap header .intro-text form {
   margin-bottom: 15px;
 }
+#kv-wrap header .intro-text .token-input-list-facebook {
+  padding: 0 20px;
+}
 #kv-wrap header .intro-text search {
   width: 70%;
   outline: none;
@@ -245,6 +248,7 @@ a:visited, a:hover, a:active {
   display: block;
   color: var(--color-secondary);
   font-size: 20px;
+  margin-bottom: 1rem;
 }
 #service .container p {
   text-align: center;
@@ -342,6 +346,9 @@ a:visited, a:hover, a:active {
   margin-bottom: 40px;
 }
 
+.news .news-wrapper {
+  padding: 0 20px;
+}
 .news .logdata dl {
   display: flex;
   gap: 20px;
@@ -821,7 +828,7 @@ a.link[target=_blank]::after {
 /* Navigation */
 .navbar {
   display: block;
-  padding: 15px 0;
+  padding: 15px 25px;
   background-color: var(--color-primary);
 }
 .navbar a.navbar-brand {
@@ -1211,6 +1218,7 @@ footer .footer__bottom .footer__lisence p:before {
 }
 .summary-header > .data-name > h3#temp-label-en {
   font-size: 26px;
+  margin-top: 5px;
 }
 .summary-header > .external-links {
   display: flex;
