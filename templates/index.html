@@ -2,372 +2,457 @@
 <html lang="ja">
 
 <head>
-	<!-- Required meta tags -->
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-	<!-- Bootstrap CSS -->
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-		integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-	<link rel="stylesheet" type="text/css" href="/static/sass/main.css">
-	<link rel="stylesheet" href="https://indestructibletype-fonthosting.github.io/renner.css" type="text/css"
-		charset="utf-8" />
-	<link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://indestructibletype-fonthosting.github.io/renner.css" type="text/css"
+    charset="utf-8" />
+  <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
 
-        <!-- TokenInput -->
-        <link rel="stylesheet" type="text/css" href="/static/sass/token-input-facebook.css">
-        <link rel="stylesheet" type="text/css" href="/static/sass/tokeninput.css">
-        <script type="text/javascript" src="/static/js/jquery-3.6.0.min.js"></script>
-        <script type="text/javascript" src="/static/js/jquery.tokeninput.js"></script>
-        <script type="text/javascript" src="/static/js/tokeninput.js"></script>
+  <!-- CSS -->
+  <link rel="stylesheet" type="text/css" href="/static/sass/main.css">
 
-	<title>NanbyoData</title>
+  <!-- TokenInput -->
+  <link rel="stylesheet" type="text/css" href="/static/sass/token-input-facebook.css">
+  <link rel="stylesheet" type="text/css" href="/static/sass/tokeninput.css">
+  <script type="text/javascript" src="/static/js/jquery-3.6.0.min.js"></script>
+  <script type="text/javascript" src="/static/js/jquery.tokeninput.js"></script>
+  <script type="text/javascript" src="/static/js/tokeninput.js"></script>
+
+  <!-- js -->
+  <script type="text/javascript" src="/static/js/index.js" defer></script>
+  <title>NanbyoData</title>
 </head>
 
 <body>
-	<script
-	   type="text/javascript"
-	   src="https://dbcls.rois.ac.jp/DBCLS-common-header-footer/v2/script/common-header-and-footer.js"
-	   style="display: block"
-	   id="common-header-and-footer__script"
-           data-width="976"
-        ></script>
+  <main>
 
-	<main>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+      <div class="container">
+        <a class="navbar-brand js-scroll-trigger" href="/">
+          <img class="imgtitle" src="/static/img/NanbyoData_black_w.svg">
+        </a>
+        <div class="flex-wrapper">
+          <div class="flex">
+            <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
+              data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
+              aria-label="Toggle navigation">
+              <i class="fas fa-bars"></i>
+            </button>
+            <select class="language-select">
+              <option value="ja" selected>日本語</option>
+              <option value="en">English</option>
+            </select>
+          </div>
+          <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav">
+              <li class="nav-item">
+                <a class="nav-link" href="/about_nando">ABOUT</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/epidemiology">EPIDEMIOLOGY</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/#third">DOWNLOAD</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#"><button type="button" class="btn-TOS" data-toggle="modal"
+                    data-target="#demoNormalModal_TOS">TERMS</button></a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" title="Comments & suggestions are welcome!"
+                  href="https://dbcls.rois.ac.jp/contact.html">CONTACT</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </nav>
 
-		<!-- Navigation -->
-		<nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
-			<div class="container">
-				<a class="navbsar-brand js-scroll-trigger" href="https://nanbyodata.jp">
-					<!--0925img追記-->
-					<img class="imgtitle" src="/static/img/NanbyoData_black_w.svg">
-					<img class="imgtitle imgscroll" src="/static/img/NanbyoData_black_w.svg">
-					<!--0925img追記終了-->
-				</a>
-				<button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
-					data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
-					aria-label="Toggle navigation">
-					<i class="fas fa-bars"></i>
-				</button>
-				<div class="collapse navbar-collapse" id="navbarResponsive">
-					<ul class="navbar-nav text-uppercase ml-auto">
-						<li class="nav-item">
-							<a class="nav-link js-scroll-trigger" href="/about_nando">ABOUT</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link js-scroll-trigger" href="/epidemiology">EPIDEMIOLOGY</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link js-scroll-trigger" href="/#third">DOWNLOAD</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link js-scroll-trigger" href="#"><button type="button" class="btn-TOS"
-									data-toggle="modal" data-target="#demoNormalModal_TOS">TERMS</button></a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link js-scroll-trigger" title="Comments & suggestions are welcome!"
-								href="https://dbcls.rois.ac.jp/contact.html">CONTACT</a>
-						</li>
-					</ul>
-				</div>
-			</div>
-		</nav>
-
-		<!-- Header -->
-		<div id="kv-wrap">
-			<header class="masthead jumbotron">
-				<div class="container">
-					<div class="intro-text">
-						<h1 class="display-4"><img class="imgtitle" src="/static/img/NanbyoData_color_w.svg"></h1>
-						<p>ex)</p>
-						<div class="keyword"><a href="https://nanbyodata.jp/disease/NANDO:2200053">ユーイング肉腫</a></div>
-						<div class="keyword"><a href="https://nanbyodata.jp/disease/NANDO:1200473">非典型溶血性尿毒症症候群</a></div>
-						<div class="keyword"><a href="https://nanbyodata.jp/disease/NANDO:2200865">Becker muscular dystrophy</a></div>
-
-						<!--<h2>難病データ</h2>					
-					<p>NanbyoDataは難病に携わる医療関係者・研究者・開発者向けに、<span class="br">研究や</span>システム構築に役立つデータを、<span
-							class="br">再利用可能な</span>ライセンスの元に提供するサイトです。</p>-->
-					</div>
-					<div id="second"></div>
-				</div>
-			</header>
-		</div>
+    <!-- Header -->
+    <div id="kv-wrap">
+      <header class="masthead jumbotron">
+        <div class="container">
+          <div class="intro-text">
+            <h1 class="display-4"></h1>
+            <p>ex)</p>
+            <div class="keyword"><a href="/disease/NANDO:2200053">ユーイング肉腫</a></div>
+            <div class="keyword"><a href="/disease/NANDO:1200473">非典型溶血性尿毒症症候群</a></div>
+            <div class="keyword"><a href="/disease/NANDO:2200865">Becker muscular dystrophy</a>
+            </div>
+          </div>
+          <div id="second"></div>
+        </div>
+      </header>
+    </div>
 
 
 
-		<section id="service">
+    <section id="service">
+      <div class="container news">
+        <h3>お知らせ</h3>
+        <div class="news-wrapper">
+          <div class="logdata">
+            <dl>
+              <dt><time datetime="2022-04-27">2022.04.27</time></dt>
+              <dd>難病ポータルサイトNanbyoData Version 2.0.0 をリリースしました．新たに，バイオリソース情報としてマウス・遺伝子項目を追加し，また診療用遺伝学的検査情報を追加しました．</dd>
+            </dl>
+            <dl>
+              <dt><time datetime="2021-07-23">2021.07.23</time></dt>
+              <dd>難病ポータルサイトNanbyoDataの正式版（Version 1.0.0）をリリースしました．</dd>
+            </dl>
+            <dl>
+              <dt><time datetime="2021-07-23">2021.07.23</time></dt>
+              <dd>難病オントロジーNANDOの正式版（Version 1.0.0）をリリースしました．</dd>
+            </dl>
+            <dl>
+              <dt><time datetime="2020-10-05">2020.10.05</time></dt>
+              <dd>難病検索機能をリリースしました．</dd>
+            </dl>
+            <dl>
+              <dt><time datetime="2020-04-24">2020.04.24</time></dt>
+              <dd>難病オントロジー（NANDO; Nanbyo Disease Ontology）のBetaバージョンを公開しました．</dd>
+            </dl>
 
-		  <div class="container">
-		    <h3>NanbyoData について</h3>
-		    <p>NanbyoDataは難病に関わる全て人に有用な難病情報をあらゆる観点から集積・一元的に提供します。<span class="br">
-                       <!-- NanbyoDataの対象は日本の難病関連制度である指定難病・小児慢性特定疾病の対象疾患に関して詳細な分類までを網羅しています。-->
-		      </p>
-		    <div class="illustWrapper">
-		      <div class="illustcard" style="width: 18rem;">
-			<div class="illust-body">
-			  <img src="/static/img/illust_1.png" class="icon2">
-			  <h5 class="illust-title">難病情報を多様な観点から集積</h5>
-			  <p class="illust-text">
-			    基礎研究から臨床情報や疾患の実情まで多様な側面から日本語で書かれた情報を掲載
-			    </p>
-			  </div>
-			</div>
-		      <div class="illustcard" style="width: 18rem;">
-			<div class="illust-body">
-			  <img src="/static/img/illust_2.png" class="icon2">
-			  <h5 class="illust-title">難病情報を世界中から集積</h5>
-			  <p class="illust-text">
-			    世界中の医学データベースや情報サイトから難病に関する最新情報を掲載
-			    </p>
-			  </div>
-			</div>
-		      <div class="illustcard" style="width: 18rem;">
-			<div class="illust-body">
-			  <img src="/static/img/illust_3.png" class="icon2">
-			  <h5 class="illust-title">難病情報をアップデート(予定)</h5>
-			  <p class="illust-text">
-			    これまでの難病研究・調査や大規模医療データベースによる独自の疫学情報など、日本人を対象とした難病情報を掲載
-			    </p>
-			  </div>
-			</div>
-		      </div>
-		    </div>
+            <!-- Toggle display -->
+            <div class="more-list">
+              <dl>
+                <dt><time datetime="2019-09-10">2019.09.10</time></dt>
+                <dd>本サイト（Betaバージョン）を公開しました．</dd>
+              </dl>
+            </div>
+          </div>
 
+          <div class="more">more</div>
+        </div>
+      </div>
 
-			<div class="container">
-			  <div id="third"></div>
-				<h3>オープンデータ</h3>
-				<p>本サイトで提供されているデータは、クリエイティブ・コモンズ【表示4.0国際】ライセンスに従うかぎり、<span
-						class="br">商用利用</span>を含め、自由に複製または改変してご利用いただくことが可能です。
-				</p>
-				<div class="cardWrapper">
-					<div class="card" style="width: 18rem;">
-						<img src="/static/img/img_data_1.png" class="card-img-top" alt="...">
-						<div class="card-body">
-							<img src="/static/img/icon_2_1.svg" class="icon2">
-							<h5 class="card-title">難病オントロジー</h5>
-							<p class="card-text">難病オントロジー（Nanbyo Disease Ontology, NANDO）は、難病に関する語彙、難病同士の関係、難病と他疾患リソースとの関連などを体系化したものです。難病オントロジーに基づき難病関連データを記述することにより、コンピュータを用いた処理やデータ共有が容易になります。
-							</p>
-							<!--- modal　ボタン -->
-							<button type="button" class="btn btn-primary" data-toggle="modal"
-								data-target="#demoNormalModalA">Download</button>
+      <div class="container">
+        <div id="third"></div>
+        <h3>オープンデータ</h3>
+        <p>本サイトで提供されているデータは、クリエイティブ・コモンズ【表示4.0国際】ライセンスに従うかぎり、<span class="br">商用利用</span>を含め、自由に複製または改変してご利用いただくことが可能です。
+        </p>
+        <div class="cardWrapper">
+          <div class="card" style="width: 18rem;">
+            <img src="/static/img/img_data_1.png" class="card-img-top" alt="...">
+            <div class="card-body">
+              <img src="/static/img/icon_2_1.svg" class="icon2">
+              <h5 class="card-title">難病オントロジー</h5>
+              <p class="card-text">難病オントロジー（Nanbyo Disease Ontology,
+                NANDO）は、難病に関する語彙、難病同士の関係、難病と他疾患リソースとの関連などを体系化したものです。難病オントロジーに基づき難病関連データを記述することにより、コンピュータを用いた処理やデータ共有が容易になります。
+              </p>
+              <!--- modal　ボタン -->
+              <button type="button" class="btn btn-primary" data-toggle="modal"
+                data-target="#demoNormalModalA">Download</button>
 
-						</div>
-						<!--- /.card --->
-					</div>
-					<div class="card" style="width: 18rem;">
-						<img src="/static/img/img_data_2.png" class="card-img-top" alt="...">
-						<div class="card-body">
-							<img src="/static/img/icon_2_2.svg" class="icon2">
-							<h5 class="card-title">難病ー遺伝子関連データ</h5>
-							<p class="card-text">各難病について、疾患原因として報告されている遺伝子を関連付けたデータを提供します。</p>
-							<!--- modal　ボタン -->
-							<button type="button" class="btn btn-primary" data-toggle="modal"
-								data-target="#demoNormalModalB">Download</button>
-						</div>
-						<!--- /.card --->
-					</div>
+            </div>
+            <!--- /.card --->
+          </div>
+          <div class="card" style="width: 18rem;">
+            <img src="/static/img/img_data_2.png" class="card-img-top" alt="...">
+            <div class="card-body">
+              <img src="/static/img/icon_2_2.svg" class="icon2">
+              <h5 class="card-title">難病ー遺伝子関連データ</h5>
+              <p class="card-text">各難病について、疾患原因として報告されている遺伝子を関連付けたデータを提供します。</p>
+              <!--- modal　ボタン -->
+              <button type="button" class="btn btn-primary" data-toggle="modal"
+                data-target="#demoNormalModalB">Download</button>
+            </div>
+            <!--- /.card --->
+          </div>
 
-					<div class="card" style="width: 18rem;">
-						<img src="/static/img/img_data_3.png" class="card-img-top" alt="...">
-						<div class="card-body">
-							<img src="/static/img/icon_2_3.svg" class="icon2">
-							<h5 class="card-title">難病ー症状関連データ</h5>
-							<p class="card-text">各難病について、報告されている症状をHuman Phenotype Ontology（HPO）を用いて関連付けたデータを提供します。</p>
-							<!--- modal　ボタン -->
-							<button type="button" class="btn btn-primary" data-toggle="modal"
-								data-target="#demoNormalModalC">Download</button>
-						</div>
-						<!--- /.card --->
-					</div>
-				</div>
-			</div>
-			<!--- /.container --->
-		</section>
-
-
-		<!--- about -->
-		<!--
-		<section class="about" id="about">
-			<div class="container">
-				<h3>サイト概要</h3>
-				<h4>NanbyoDataについて</h4>
-				<p>
-					NanbyoDataは難病に携わる医療関係者・研究者・開発者向けに、研究やシステム構築に役立つデータを、再利用可能なクリエイティブ・コモンズ【表示4.0国際】ライセンスの元に提供します。まずは、難病オントロジー、難病ー遺伝子関連データ、難病ー症状関連データの提供を開始します。
-				</p>
-				<h4>免責事項</h4>
-				<p>
-					NanbyoDataは誠実にデータを提供しますが、データの正確性、臨床的妥当性または有用性を検証することはありません。DBCLSは、明示的にも黙示的にも、利用者が当データを用いて行う一切の行為について、何ら責任を負うものではありません。DBCLSは、本サービスの変更、中断、または終了により被った損害に関しても、何ら責任を負うものではありません。また、統合サイトのサイト・ポリシー内「<a
-						class="policy" href="http://lifesciencedb.jp/lsdb.cgi?lng=ja&gg=policy">免責事項</a>」にも準ずるものとします。
-				</p>
-			</div>
-		</section>
-		-->
-
-		<!--- news -->
-		<section class="news">
-			<div class="container">
-				<h3 class="updata">お知らせ</h3>
-				<ul class="logdata">
-					<li>
-						<time>2022.04.27</time>
-						<p>難病ポータルサイトNanbyoData Version 2.0.0 をリリースしました．新たに，バイオリソース情報としてマウス・遺伝子項目を追加し，また診療用遺伝学的検査情報を追加しました．</p>
-					</li>
-					<li>
-						<time>2021.07.23</time>
-						<p>難病ポータルサイトNanbyoDataの正式版（Version 1.0.0）をリリースしました．</p>
-					</li>
-					<li>
-						<time>2021.07.23</time>
-						<p>難病オントロジーNANDOの正式版（Version 1.0.0）をリリースしました．</p>
-					</li>
-					<li>
-						<time>2020.10.05</time>
-						<p>難病検索機能をリリースしました．</p>
-					</li>
-					<li>
-						<time>2020.04.24</time>
-						<p>難病オントロジー（NANDO; Nanbyo Disease Ontology）のBetaバージョンを公開しました．</p>
-					</li>
-					<li>
-						<time>2019.09.10</time>
-						<p>本サイト（Betaバージョン）を公開しました．</p>
-					</li>
-				</ul>
-			</div>
-		</section>
-
-		<!--- modal　内容 -->
-		<div class="modal fade" id="demoNormalModalA" tabindex="-1" role="dialog" aria-labelledby="modal"
-			aria-hidden="true">
-			<div class="modal-dialog modal-lg" role="document">
-				<div class="modal-content">
-					<div class="modal-body">
-						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-						</button>
-						<div class="modalContent">
-							<img src="/static/img/modal_icon_1.png">
-							<h5 class="modal-title" id="demoModalTitle">難病オントロジー（NANDO）</h5>
-							<p>NANDOの詳細情報は<a href="https://github.com/aidrd/nando" target="_blank">GitHub</a>をご参照ください。</p>
-							<table>
-								<tr><th>Version</th><th>File</th><th>Size</th><th>Date</th></tr>
-								<tr><td>1.0.1</td><td><a href="https://nanbyodata.jp/ontology/nando.ttl">Turtle</a></td><td>2.7MB</td><td>2021-08-05</td></tr>
-								<tr><td>1.0.1</td><td><a href="https://nanbyodata.jp/ontology/nando.rdf">RDF/XML</a></td><td>3.6MB</td><td>2021-08-05</td></tr>
-								<tr><td>1.0.1</td><td><a href="https://nanbyodata.jp/ontology/nando.xlsx">Excel(.xlsx)</a></td><td>265KB</td><td>2021-08-05</td></tr>
-							</table>
-						</div>
-						<div class="btn-close">
-							<button type="button" class="btn btn-secondary" data-dismiss="modal">CLOSE</button>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<!--- /#demoNormalModal --->
-
-		<!--- modal　内容 -->
-		<div class="modal fade" id="demoNormalModalB" tabindex="-1" role="dialog" aria-labelledby="modal"
-			aria-hidden="true">
-			<div class="modal-dialog modal-lg" role="document">
-				<div class="modal-content">
-					<div class="modal-body">
-						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-						</button>
-						<div class="modalContent">
-							<img src="/static/img/modal_icon_2.png">
-							<h5 class="modal-title" id="demoModalTitle">難病ー遺伝子関連データ</h5>
-							<p>それぞれの難病に関連する疾患原因遺伝子（HGNC Gene Symbol）を収納</p>
-							<table>
-								<tr><th>Version</th><th>File</th><th>Size</th><th>Date</th></tr>
-								<tr><td>1.0.1</td><td><a href="https://nanbyodata.jp/annotation/nanbyo-gene-associations.json">JSON</a></td><td>75KB</td><td>2021-08-05</td></tr>
-								<tr><td>1.0.1</td><td><a href="https://nanbyodata.jp/annotation/nanbyo-gene-associations.tsv">TSV</a></td><td>69KB</td><td>2021-08-05</td></tr>
-							</table>
-						</div>
-						<div class="btn-close">
-							<button type="button" class="btn btn-secondary" data-dismiss="modal">CLOSE</button>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<!--- /#demoNormalModal --->
-
-		<!--- modal　内容 -->
-		<div class="modal fade" id="demoNormalModalC" tabindex="-1" role="dialog" aria-labelledby="modal"
-			aria-hidden="true">
-			<div class="modal-dialog modal-lg" role="document">
-				<div class="modal-content">
-					<div class="modal-body">
-						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-						</button>
-						<div class="modalContent">
-							<img src="/static/img/modal_icon_3.png">
-							<h5 class="modal-title" id="demoModalTitle">難病ー症状関連データ</h5>
-							<p>それぞれの難病に関連する症状（Human Phenotype Ontology）を収納</p>
-							<table>
-								<tr><th>Version</th><th>File</th><th>Size</th><th>Date</th></tr>
-								<tr><td>1.0.1</td><td><a href="https://nanbyodata.jp/annotation/nanbyo-phenotype-associations.json">JSON</a></td><td>942KB</td><td>2021-08-05</td></tr>
-								<tr><td>1.0.1</td><td><a href="https://nanbyodata.jp/annotation/nanbyo-phenotype-associations.tsv">TSV</a></td><td>1.3MB</td><td>2021-08-05</td></tr>
-							</table>
-						</div>
-						<div class="btn-close">
-							<button type="button" class="btn btn-secondary" data-dismiss="modal">CLOSE</button>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<!--- /#demoNormalModal --->
-
-		<!--- modal　内容 -->
-		<div class="modal fade" id="demoNormalModal_TOS" tabindex="-1" role="dialog" aria-labelledby="modal"
-			aria-hidden="true">
-			<div class="modal-dialog modal-lg" role="document">
-				<div class="modal-content">
-					<div class="modal-body">
-						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-						</button>
-						<div class="modalContent_TOS">
-							<h5 class="modal-title modal-title" id="demoModalTitle">NanbyoData利用規約</h5>
-							<p>
-								NanbyoDataは誠実にデータを提供しますが、データの正確性、臨床的妥当性または有用性を検証することはありません。DBCLSは、明示的にも黙示的にも、利用者が当データを用いて行う一切の行為について、何ら責任を負うものではありません。DBCLSは、本サービスの変更、中断、または終了により被った損害に関しても、何ら責任を負うものではありません。また、ライフサイエンス統合データベースセンターのサイト・ポリシー内「<a
-									class="policy"
-									href="https://dbcls.rois.ac.jp/policy.html">免責事項</a>」にも準ずるものとします。
-							</p>
-						</div>
-						<div class="btn-close">
-							<button type="button" class="btn btn-secondary" data-dismiss="modal">CLOSE</button>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<!--- /#demoNormalModal --->
+          <div class="card" style="width: 18rem;">
+            <img src="/static/img/img_data_3.png" class="card-img-top" alt="...">
+            <div class="card-body">
+              <img src="/static/img/icon_2_3.svg" class="icon2">
+              <h5 class="card-title">難病ー症状関連データ</h5>
+              <p class="card-text">各難病について、報告されている症状をHuman Phenotype Ontology（HPO）を用いて関連付けたデータを提供します。</p>
+              <!--- modal　ボタン -->
+              <button type="button" class="btn btn-primary" data-toggle="modal"
+                data-target="#demoNormalModalC">Download</button>
+            </div>
+            <!--- /.card --->
+          </div>
+        </div>
+      </div>
+      <!--- /.container --->
+    </section>
 
 
-	</main>
+    <!--- footer --->
+    <footer id="footer">
+      <div class="footer__common">
+        <div class="footer__wrapper">
+          <div class="footer__wrapper__contents">
+            <div class="footer__info">
+              <div class="footer__organism">
+                <img src="../static/img/logo_dbcls.svg" alt="" class="footer__logo">
+                <div class='footer__organism-text'>
+                  <p class="footer__organism-sub">大学共同利用機関法人 情報・システム研究機構</p>
+                  <p class="footer__organism-sub">データサイエンス共同利用基盤施設</p>
+                  <p class="footer__organism-main">ライフサイエンス統合データベースセンター</p>
+                </div>
+              </div>
+              <div class="footer__address">
+                <h2 class="footer-title">Address</h2>
+                <ul class="address__list">
+                  <li>
+                    <p>〒277-0871</p>
+                    <p>千葉県柏市若柴178-4-4</p>
+                    <p>東京大学柏の葉キャンパス
+                      <br>駅前サテライト6階
+                    </p>
+                    <p>TEL. 04-7135-5508（代表）
+                      <br> FAX. 04-7135-5534（代表）
+                    </p>
+                  </li>
+                  <li>
+                    <p>〒411-8540</p>
+                    <p>静岡県三島市谷田1111</p>
+                    <p>国立遺伝学研究所
+                      <br>研究実験W棟412
+                    </p>
+                  </li>
+                </ul>
+              </div>
+              <div class="footer__links">
+                <h2 class="footer-title">Links</h2>
+                <ul class="links__wrapper">
+                  <li class="individual_link">
+                    <a href="http://lifesciencedb.jp/">統合ホームページ</a>
+                  </li>
+                  <li class="individual_link">
+                    <a href="https://youtube.com/togotv/live">DBCLS on YouTubeLive</a>
+                  </li>
+                  <li class="individual_link">
+                    <a href="https://ds.rois.ac.jp/">データサイエンス共同利用基盤施設</a>
+                  </li>
+                  <li class="individual_link">
+                    <a href="http://www.rois.ac.jp/">情報・システム研究機構</a>
+                  </li>
+                  <li class="individual_link">
+                    <a href="http://www.mext.go.jp/">文部科学省</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <div class="footer__partners">
+          <ul class="footer__logo-wrapper">
+            <li>
+              <a href="https://jbioinfo.jp/" target="_blank">
+                <img class="logo__jbi" src="../static/img/jbi-3.png" alt="">
+              </a>
+            </li>
+            <li>
+              <a href="https://www.ddbj.nig.ac.jp/index.html" target="_blank">
+                <img class="logo__ddbj" src="../static/img/ddbj.png" alt="">
+              </a>
+            </li>
+            <li>
+              <a href="https://biosciencedbc.jp/" target="_blank">
+                <img class="logo__nbdc" src="../static/img/nbdc.png" alt="">
+              </a>
+            </li>
+            <li>
+              <a href="https://pdbj.org/" target="_blank">
+                <img class="logo__pdbj" src="../static/img/pdbj.png" alt="">
+              </a>
+            </li>
+          </ul>
+        </div>
+        <div class="footer__lisence">
+          <p> &copy; 2018 DBCLS, Licensed under <a href="https://creativecommons.org/licenses/by/4.0/deed.ja"
+              target="_blank">Creative Commons Attribution 4.0 International license (CC-BY 4.0)</a></p>
+        </div>
+      </div>
+    </footer>
 
 
+    <!--- 難病オントロジー modal -->
+    <div class="modal fade" id="demoNormalModalA" tabindex="-1" role="dialog" aria-labelledby="modal"
+      aria-hidden="true">
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-body">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <div class="modalContent">
+              <img src="/static/img/modal_icon_1.png">
+              <h5 class="modal-title" id="demoModalTitle">難病オントロジー（NANDO）</h5>
+              <p>NANDOの詳細情報は<a class="link" href="https://github.com/aidrd/nando" target="_blank">GitHub</a>をご参照ください。
+              </p>
+              <table>
+                <tr>
+                  <th>Version</th>
+                  <th>File</th>
+                  <th>Size</th>
+                  <th>Date</th>
+                </tr>
+                <tr>
+                  <td>1.0.1</td>
+                  <td><a href="https://nanbyodata.jp/ontology/nando.ttl">Turtle</a></td>
+                  <td>2.7MB</td>
+                  <td>2021-08-05</td>
+                </tr>
+                <tr>
+                  <td>1.0.1</td>
+                  <td><a href="https://nanbyodata.jp/ontology/nando.rdf">RDF/XML</a></td>
+                  <td>3.6MB</td>
+                  <td>2021-08-05</td>
+                </tr>
+                <tr>
+                  <td>1.0.1</td>
+                  <td><a href="https://nanbyodata.jp/ontology/nando.xlsx">Excel(.xlsx)</a></td>
+                  <td>265KB</td>
+                  <td>2021-08-05</td>
+                </tr>
+              </table>
+            </div>
+            <div class="btn-close">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">CLOSE</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--- /#demoNormalModal --->
+
+    <!--- 難病ー遺伝子関連データ modal -->
+    <div class="modal fade" id="demoNormalModalB" tabindex="-1" role="dialog" aria-labelledby="modal"
+      aria-hidden="true">
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-body">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <div class="modalContent">
+              <img src="/static/img/modal_icon_2.png">
+              <h5 class="modal-title" id="demoModalTitle">難病ー遺伝子関連データ</h5>
+              <p>それぞれの難病に関連する疾患原因遺伝子（HGNC Gene Symbol）を収納</p>
+              <table>
+                <tr>
+                  <th>Version</th>
+                  <th>File</th>
+                  <th>Size</th>
+                  <th>Date</th>
+                </tr>
+                <tr>
+                  <td>1.0.1</td>
+                  <td><a href="https://nanbyodata.jp/annotation/nanbyo-gene-associations.json">JSON</a></td>
+                  <td>75KB</td>
+                  <td>2021-08-05</td>
+                </tr>
+                <tr>
+                  <td>1.0.1</td>
+                  <td><a href="https://nanbyodata.jp/annotation/nanbyo-gene-associations.tsv">TSV</a></td>
+                  <td>69KB</td>
+                  <td>2021-08-05</td>
+                </tr>
+              </table>
+            </div>
+            <div class="btn-close">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">CLOSE</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--- /#demoNormalModal --->
+
+    <!--- 難病ー症状関連データ modal -->
+    <div class="modal fade" id="demoNormalModalC" tabindex="-1" role="dialog" aria-labelledby="modal"
+      aria-hidden="true">
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-body">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <div class="modalContent">
+              <img src="/static/img/modal_icon_3.png">
+              <h5 class="modal-title" id="demoModalTitle">難病ー症状関連データ</h5>
+              <p>それぞれの難病に関連する症状（Human Phenotype Ontology）を収納</p>
+              <table>
+                <tr>
+                  <th>Version</th>
+                  <th>File</th>
+                  <th>Size</th>
+                  <th>Date</th>
+                </tr>
+                <tr>
+                  <td>1.0.1</td>
+                  <td><a href="https://nanbyodata.jp/annotation/nanbyo-phenotype-associations.json">JSON</a></td>
+                  <td>942KB</td>
+                  <td>2021-08-05</td>
+                </tr>
+                <tr>
+                  <td>1.0.1</td>
+                  <td><a href="https://nanbyodata.jp/annotation/nanbyo-phenotype-associations.tsv">TSV</a></td>
+                  <td>1.3MB</td>
+                  <td>2021-08-05</td>
+                </tr>
+              </table>
+            </div>
+            <div class="btn-close">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">CLOSE</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--- /#demoNormalModal --->
+
+    <!--- NanbyoData利用規約 modal -->
+    <div class="modal fade" id="demoNormalModal_TOS" tabindex="-1" role="dialog" aria-labelledby="modal"
+      aria-hidden="true">
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-body">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <div class="modalContent_TOS">
+              <h5 class="modal-title modal-title" id="demoModalTitle">NanbyoData利用規約</h5>
+              <p>
+                NanbyoDataは誠実にデータを提供しますが、データの正確性、臨床的妥当性または有用性を検証することはありません。DBCLSは、明示的にも黙示的にも、利用者が当データを用いて行う一切の行為について、何ら責任を負うものではありません。DBCLSは、本サービスの変更、中断、または終了により被った損害に関しても、何ら責任を負うものではありません。また、ライフサイエンス統合データベースセンターのサイト・ポリシー内「<a
+                  class="policy" href="https://dbcls.rois.ac.jp/policy.html">免責事項</a>」にも準ずるものとします。
+              </p>
+            </div>
+            <div class="btn-close">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">CLOSE</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--- /#demoNormalModal --->
+
+  </main>
 
 
-
-
-	<!-- Optional JavaScript -->
-	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
-	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-		integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
-		</script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-		integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
-		</script>
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-		integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
-		</script>
-	<script type="text/javascript" src="js/main.js"></script>
+  <!-- Optional JavaScript -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
+    </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
+    </script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+    </script>
+  <script type="text/javascript" src="js/main.js"></script>
 </body>
 
 </html>

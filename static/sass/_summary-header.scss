@@ -1,0 +1,87 @@
+/* summary-header */
+.summary-header {
+  border: solid 2px #c1c6d3;
+  border-radius: 5px;
+
+  > .data-name,
+  > .external-links {
+    padding: 10px;
+  }
+
+  > .data-name {
+    border-bottom: 1px dashed #c1c6d3;
+    margin: 0;
+
+    h2,
+    h3,
+    p {
+      margin: 0;
+    }
+
+    > h3 {
+      font-size: 18px;
+      font-weight: bold;
+
+      a.nando-link,
+      span.nando-copy {
+        font-size: 12px;
+        color: #90959b;
+        font-weight: normal;
+        cursor: pointer;
+        margin-left: 5px;
+        position: relative;
+        top: -2px;
+
+        &:hover {
+          color: black;
+        }
+
+        &::after {
+          font-family: 'Font Awesome 5 Free';
+          padding-left: 3px;
+          margin: 0;
+        }
+      }
+
+      a.nando-link {
+        text-decoration: underline;
+
+        &::after {
+          content: '\f35d';
+          font-weight: 900;
+        }
+      }
+
+      span.nando-copy {
+        &::after {
+          content: '\f0c5';
+          font-weight: normal;
+          vertical-align: middle;
+        }
+      }
+    }
+
+    > h2#temp-label-ja {
+      font-weight: bold;
+      padding-top: 25px;
+
+      ruby {
+        font-size: 36px;
+
+        rt {
+          font-size: 10px;
+          font-weight: normal;
+        }
+      }
+    }
+
+    > h3#temp-label-en {
+      font-size: 26px;
+      margin-top: 5px;
+    }
+  }
+
+  > .external-links {
+    display: flex;
+  }
+}

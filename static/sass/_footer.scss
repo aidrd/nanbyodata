@@ -1,0 +1,225 @@
+/* Reset CSS */
+p,
+ul {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+ul {
+  list-style: none;
+}
+
+/* Footer */
+footer {
+  margin-top: 100px;
+  min-width: max-content;
+
+  .footer__wrapper {
+    padding-top: 40px;
+    padding-bottom: 18px;
+    width: 1024px;
+    margin: 0 auto;
+
+    .footer__wrapper__contents {
+      h2.footer-title {
+        font-weight: 800;
+        font-size: 14px;
+        margin-bottom: 10px;
+      }
+
+      .footer__sitenav {
+        display: flex;
+        flex-wrap: wrap;
+
+        ul.nav__wrapper {
+          width: 890px;
+          padding-left: 80px;
+          display: flex;
+          justify-content: space-between;
+          list-style: none;
+
+          li {
+            font-size: 12px;
+            font-weight: bold;
+            padding-bottom: 10px;
+
+            ul {
+              padding-top: 3px;
+
+              li {
+                font-weight: normal;
+                padding: 2px 0;
+              }
+            }
+
+            &.line-series {
+              margin-top: -5px;
+
+              ul li {
+                font-weight: bold;
+                padding-bottom: 8px;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    a {
+      text-decoration: none;
+      color: #444;
+
+      &:hover {
+        color: #004098;
+        border-bottom: solid 1px #004098;
+      }
+    }
+  }
+
+  .footer__sitemap {
+    background-color: #fff;
+    border-top: solid 0.5px #9E9E9E;
+    color: #444;
+    width: 100%;
+  }
+
+  .footer__common {
+    background-color: #f9f8f5;
+    width: 100%;
+    color: #444;
+
+    .footer__info {
+      padding-right: 65px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+
+      .footer__organism {
+        padding-top: 9px;
+
+        .footer__logo {
+          width: 150px;
+          height: auto;
+          display: block;
+          margin: 0 auto;
+        }
+
+        .footer__organism-text {
+          text-align: center;
+          margin-top: 11px;
+          margin-bottom: 20px;
+
+          .footer__organism-sub {
+            font-size: 12px;
+            line-height: 1.5em;
+            text-align: center;
+          }
+
+          .footer__organism-main {
+            font-size: 15px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+          }
+        }
+      }
+
+      .footer__address {
+        width: 357px;
+        margin-top: 15px;
+
+        .address__list {
+          display: flex;
+          justify-content: space-between;
+
+          li {
+            font-size: 12px;
+            line-height: 1.5em;
+
+            p {
+              line-height: 1.5em;
+            }
+          }
+        }
+      }
+
+      .footer__links {
+        padding-top: 15px;
+
+        &.en {
+          width: 192px;
+        }
+
+        ul.links__wrapper li.individual_link a {
+          font-size: 12px;
+          padding: 2px 0;
+          font-weight: normal;
+          color: #444;
+
+          &:hover {
+            color: #004098;
+            border-bottom: solid 1px #004098;
+          }
+        }
+      }
+    }
+  }
+
+  .footer__bottom {
+    background-color: #f9f8f5;
+    width: 100%;
+    color: #444;
+    padding-bottom: 20px;
+
+    .footer__partners {
+      .footer__logo-wrapper {
+        width: 550px;
+        padding-top: 30px;
+        padding-bottom: 10px;
+        margin: 0 auto;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+
+        li {
+          padding-bottom: 10px;
+
+          img {
+
+            &.logo__jbi,
+            &.logo__ddbj,
+            &.logo__nbdc,
+            &.logo__pdbj {
+              width: 115px;
+              height: auto;
+            }
+
+            &.logo__ddbj {
+              margin-left: 0;
+            }
+
+            &.logo__nbdc {
+              margin-top: 0;
+            }
+          }
+        }
+      }
+    }
+
+    .footer__lisence {
+      p {
+        font-size: 10px;
+        display: flex;
+        justify-content: center;
+
+        &:before {
+          content: "";
+          width: 81px;
+          height: 16px;
+          display: block;
+          background: url(../img/by.svg) no-repeat;
+        }
+      }
+    }
+  }
+}
