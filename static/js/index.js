@@ -1,8 +1,9 @@
 // News open/close function
-const moreButtonEl = document.querySelector('#service > .news > .more');
-const moreListEl = document.querySelector(
-  '#service > .news > .logdata > .more-list'
+const newsWrapperEl = document.querySelector(
+  '#service > .news > .news-wrapper'
 );
+const moreButtonEl = newsWrapperEl.querySelector('.more');
+const moreListEl = newsWrapperEl.querySelector('.logdata > .more-list');
 moreButtonEl.addEventListener('click', () => {
   const isOpen = moreButtonEl.classList.toggle('open');
   moreButtonEl.textContent = isOpen ? 'close' : 'more';
