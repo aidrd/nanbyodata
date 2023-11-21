@@ -1,0 +1,141 @@
+/* Navigation */
+.navbar {
+  display: block;
+  padding: 15px 25px;
+  background-color: var(--color-primary);
+
+  a.navbar-brand {
+    text-decoration: none;
+
+    img.imgtitle {
+      width: 220px;
+      display: block;
+    }
+  }
+
+  button.navbar-toggler {
+    color: #fff;
+    border: none;
+    outline: none;
+
+    i {
+      position: relative;
+      top: 1px;
+      font-size: 30px;
+      vertical-align: top;
+    }
+  }
+
+  select.language-select {
+    text-align: center;
+    font-size: 14px;
+    appearance: none;
+    border-radius: 35px;
+    padding: 5px 10px;
+    border: 2px solid white;
+    color: white;
+    background-color: transparent;
+    outline: none;
+    height: 36px;
+    flex-grow: inherit;
+  }
+
+  ul.navbar-nav {
+    a.nav-link {
+      color: #fff;
+      font-size: 14px;
+      margin-left: 20px;
+
+      &:hover {
+        color: #7c7c7c;
+      }
+
+      button.btn-TOS {
+        width: 100%;
+        padding: 0;
+        text-align: left;
+        background-color: transparent;
+        outline: none;
+        border: none;
+        color: #fff;
+
+        &:hover {
+          color: #7c7c7c;
+        }
+      }
+    }
+  }
+}
+
+/* Main Navigation */
+#mainNav {
+  .container {
+    flex-wrap: nowrap;
+
+    .flex-wrapper {
+      display: flex;
+      flex-direction: row-reverse;
+      align-items: center;
+      gap: 28px;
+
+      @media screen and (max-width: 991.98px) {
+        display: block;
+      }
+
+      .flex {
+        display: flex;
+        flex-direction: row-reverse;
+        gap: 13px;
+      }
+
+      #navbarResponsive {
+        @media screen and (max-width: 991.98px) {
+          position: absolute;
+          left: 0px;
+          background: var(--color-primary);
+          width: 100%;
+        }
+
+        ul.navbar-nav {
+          padding-top: 0;
+
+          @media screen and (max-width: 991.98px) {
+            padding-top: 15px;
+          }
+        }
+      }
+    }
+  }
+}
+
+/* Disease Navigation */
+#diseaseNav {
+  .wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .intro-text {
+      outline: none;
+      width: 70%;
+
+      ul.token-input-list-facebook {
+        margin: 0 auto;
+
+        li.token-input-input-token-facebook {
+          #token-input-tokeninput {
+            height: 20px;
+            padding: 0;
+            margin: 0;
+          }
+        }
+      }
+    }
+
+    .navbar-right {
+      display: flex;
+      align-items: center;
+      gap: 13px;
+    }
+  }
+}

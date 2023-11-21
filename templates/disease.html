@@ -15,15 +15,9 @@
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
-  <link rel="stylesheet" type="text/css" href="/static/sass/style.css" />
   <link rel="stylesheet" href="https://indestructibletype-fonthosting.github.io/renner.css" type="text/css"
     charset="utf-8" />
   <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet" />
-
-  <!-- Disease CSS -->
-  <link rel="stylesheet" type="text/css" href="/static/sass/disease.css" />
-
-  <title>NanbyoData</title>
 
   <!-- TokenInput -->
   <link rel="stylesheet" type="text/css" href="/static/sass/token-input-facebook.css" />
@@ -35,90 +29,177 @@
   <script src="https://cdn.jsdelivr.net/npm/@webcomponents/webcomponentsjs@1.3.0/webcomponents-loader.js"
     crossorigin></script>
   <link rel="import" href="https://nanbyodata.jp/stanza/nando_entry_v2/" />
+
+  <!-- Disease CSS -->
+  <link rel="stylesheet" type="text/css" href="/static/sass/main.css" />
+  <link rel="stylesheet" type="text/css" href="/static/sass/disease.css" />
+
+  <title>NanbyoData</title>
+
+
 </head>
 
 <body>
-  <script type="text/javascript"
-    src="https://dbcls.rois.ac.jp/DBCLS-common-header-footer/v2/script/common-header-and-footer.js"
-    style="display: block" id="common-header-and-footer__script" data-width="976"></script>
-
   <main>
 
     <!-- Navigation -->
-    <nav class="navbar navbar-light bg-light fixed-top">
-      <div id="logo">
-        <a class="navbar-brand" href="https://nanbyodata.jp/">
-          <img class="imgtitle imgscroll" src="/static/img/NanbyoData_black_w.svg" /></a>
-      </div>
-
-      <div class="intro-text" id="intro-text_head">
-        <div class="search" id="search_head">
-          <div id="blank_head"></div>
+    <nav class="navbar fixed-top" id="diseaseNav">
+      <div class="wrapper">
+        <a class="navbar-brand" href="/">
+          <img class="imgtitle" src="/static/img/NanbyoData_black_w.svg">
+        </a>
+        <div class="intro-text" id="intro-text_head">
+          <div class="search" id="search_head">
+            <div id="blank_head"></div>
+          </div>
+        </div>
+        <div class="navbar-right">
+          <select class="language-select">
+            <option value="ja" selected>日本語</option>
+            <option value="en">English</option>
+          </select>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsingNavbar1">
+            <i class="fas fa-bars"></i>
+          </button>
         </div>
       </div>
-      <div class="navbar-right">
-        <select class="language-select">
-          <option value="ja" selected>日本語</option>
-          <option value="en">English</option>
-        </select>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsingNavbar1">
-          ☰
-        </button>
-      </div>
       <div class="navbar-collapse collapse" id="collapsingNavbar1">
-        <ul class="nav navbar-nav">
+        <ul class="navbar-nav">
           <li class="nav-item">
             <a class="nav-link" href="/about_nando">ABOUT</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/epidemiology">EPIDEMIOLOGY</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="/#third">DOWNLOAD</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#"><button type="button" class="btn-TOS" data-toggle="modal"
-                data-target="#demoNormalModal_TOS">
-                TERMS
-              </button></a>
+                data-target="#demoNormalModal_TOS">TERMS</button></a>
           </li>
           <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" title="Comments & suggestions are welcome!"
-              href="mailto:pubcasefinder@dbcls.rois.ac.jp">CONTACT</a>
+            <a class="nav-link" title="Comments & suggestions are welcome!"
+              href="https://dbcls.rois.ac.jp/contact.html">CONTACT</a>
           </li>
         </ul>
       </div>
     </nav>
 
+    <!-- Loading Spinner -->
+    <div class="loading-spinner"></div>
+
     <!-- Sidebar -->
     <div id="sidebar">
-      <div class="navigation-title">疾患選択</div>
-      <!-- パンくずリスト -->
-      {{ breadcrumb_list_html |safe }}
+      <div class="breadcrumb-list">
+        <div class="navigation-title">疾患選択</div>
+        <!-- パンくずリスト -->
+        {{ breadcrumb_list_html |safe }}
+      </div>
 
       <!-- Side Navigation -->
       <div id="temp-side-navigation">
         <div class="navigation-title">目次</div>
         <ul>
           <li><a href="#temp-summary" class="nav-link selected">概要
-          <li><a href="#temp-causative-gene" class="nav-link">疾患原因遺伝子</a></li>
-          <li><a href="#temp-medical-genetic-testing-info" class="nav-link">診療用遺伝学的検査情報</a></li>
-          <li><a href="#temp-phenotype-view" class="nav-link">臨床的特徴</a></li>
-          <li><a href="#temp-specific-bio-resource" class="nav-link">難病特異的バイオリソース</a></li>
+          <li><a href="#temp-causative-gene" class="nav-link causative-gene">疾患原因遺伝子<span class="data-num"></span></a>
+          </li>
+          <li><a href="#temp-medical-genetic-testing-info"
+              class="nav-link medical-genetic-testing-info">診療用遺伝学的検査情報<span class="data-num"></span></a>
+          </li>
+          <li><a href="#temp-phenotype-view" class="nav-link phenotype-view">臨床的特徴<span class="data-num"></span></a>
+          </li>
+          <li>
+            <div href="#temp-specific-bio-resource" class="specific-bio-resource">難病特異的バイオリソース
+              <ul>
+                <li><a href="#temp-specific-bio-resource" class="cell nav-link">細胞<span class="data-num"></span></a>
+                </li>
+                <li><a href="#temp-specific-bio-resource" class="mus nav-link">マウス<span class="data-num"></span></a>
+                </li>
+                <li><a href="#temp-specific-bio-resource" class="dna nav-link">DNA<span class="data-num"></span></a>
+                </li>
+              </ul>
+            </div>
+          </li>
+          <li><a href="#temp-variant" class="nav-link variant">バリアント<span class="data-num"></span></a></li>
         </ul>
       </div>
     </div>
 
     <!-- Contents -->
     <script type="module" src="https://togostanza.github.io/metastanza/pagination-table.js" async></script>
+
     <div id="content">
       <!-- togostanza-nando_entry_v2 -->
       <main>
-        <script type="module" src="https://togostanza.github.io/metastanza/pagination-table.js"></script>
         <style>
-          @import url("https://nanbyodata.jp/static/sass/main.css");
-          @import url("https://nanbyodata.jp/static/sass/disease.css");
-          @import url("https://nanbyodata.jp/static/sass/nando_entry.css");
-
           togostanza-pagination-table {
-            --togostanza-background-color: transparent;
+            --togostanza-series-0-color: #94d0da;
+            --togostanza-series-1-color: #249eb3;
+            --togostanza-series-2-color: #dcf1f9;
+            --togostanza-series-3-color: #0f89ac;
+            --togostanza-series-4-color: #0f5b6d;
+            --togostanza-series-5-color: #093b47;
+            --togostanza-background-color: #FFFFFF;
+            --togostanza-font-family: 'Roboto Condensed', sans-serif;
+            --togostanza-axis-color: #444444;
+            --togostanza-axis-width: 1;
+            --togostanza-grid-color: #f5f5f5;
+            --togostanza-grid-dash-length: 0;
+            --togostanza-grid-dash-opacity: 1;
+            --togostanza-grid-width: 0;
+            --togostanza-tick-color: #444444;
+            --togostanza-tick-length: 1.5;
+            --togostanza-tick-width: 0.5;
+            --togostanza-label-font-color: #444444;
+            --togostanza-label-font-size: 10;
+            --togostanza-border-color: #444444;
+            --togostanza-border-width: 0.5;
+            --togostanza-title-font-color: #444444;
+            --togostanza-title-font-size: 12;
+            --togostanza-title-font-weight: 400;
+            --togostanza-line-width: 1;
+            --togostanza-opacity: 0.8;
+            --togostanza-node-size: 100;
+            --togostanza-edge-color: #EEEEEE;
+            --togostanza-text-font-color: #444444;
+            --togostanza-text-font-size: 12px;
+            --togostanza-text-font-weight: 400;
+            --togostanza-table-border: 0px solid #CCCCCC;
+            --togostanza-table-shadow: 1px 1px 3px 1px #EEEEEE;
+            --togostanza-thead-border-bottom: 1px solid #444444;
+            --togostanza-thead-font-color: #94928d;
+            --togostanza-thead-background-color: #FFFFFF;
+            --togostanza-thead-font-size: 12px;
+            --togostanza-thead-font-weight: 400;
+            --togostanza-tbody-border-bottom: 1px solid #dee2e6;
+            --togostanza-tbody-font-color: #444444;
+            --togostanza-tbody-font-size: 14px;
+            --togostanza-tbody-font-weight: 400;
+            --togostanza-tbody-odd-background-color: #FFFFFF;
+            --togostanza-tbody-even-background-color: #FFFFFF;
+            --togostanza-control-border: 1px solid #aaa;
+            --togostanza-control-active-color: #249eb3;
+            --togostanza-non-active-color: #94928d;
+            --togostanza-control-font-color: #444444;
+            --togostanza-control-font-size: 14px;
+            --togostanza-control-border-radius: 3px;
+            --togostanza-pagination-font-color: #444444;
+            --togostanza-pagination-font-size: 14px;
+            --togostanza-pagination-background-color: #FFFFFF;
+            --togostanza-pagination-border: 1px solid rgba(0, 0, 0, 0.1);
+            --togostanza-pagination-border-radius: 3px;
+            --togostanza-pagination-padding: 2px 8px;
+            --togostanza-pagination-current-font-color: #FFFFFF;
+            --togostanza-pagination-current-background-color: #249eb3;
+            --togostanza-pagination-current-border: 1px solid #aaa;
+            --togostanza-pagination-arrow-color: #333333;
+            --togostanza-vertical-pagination-placement: column;
+            --togostanza-horizonal-pagination-placement: center;
+            --column-count: 1;
+            --table-background-color: rgba(255, 255, 255, 0);
+            --row-padding: 5px;
+            --key-width-percentage: 30%;
           }
         </style>
 
@@ -127,11 +208,12 @@
             <div id="temp-data-summary" class="data-name">
               <h3>
                 NANDO ID:
-                <span><a href="http://nanbyodata.jp/ontology/nando#" target="_blank" rel="noopener noreferrer"
-                    id="temp-nando-id"></a></span>
+                <span id="temp-nando-id"></span>
+                <a href="https://nanbyodata.jp/ontology/nando#" target="_blank" rel="noopener noreferrer"
+                  id="temp-nando-link" class="nando-link">https://nanbyodata.jp/ontology/nando#</a>
+                <span id="temp-nando-copy" class="nando-copy">Copy</span>
               </h3>
-              <h2 id="temp-label-ja">
-              </h2>
+              <h2 id="temp-label-ja"></h2>
               <h3 id="temp-label-en"></h3>
             </div>
             <div id="temp-external-links" class="external-links">
@@ -162,45 +244,47 @@
           </header>
           <div id="temp-summary" open="">
             <h4 class="temp-title">概要</h4>
-            <div id="temp-aliases">
-              <div class="aliases">
-                <dl class="alt-label-ja">
-                  <dt>別疾患名（日）</dt>
-                </dl>
-                <dl class="alt-label-en">
-                  <dt>別疾患名（英）</dt>
-                </dl>
+            <div class="summary-wrapper">
+              <div id="temp-aliases">
+                <div class="aliases">
+                  <dl class="alt-label-ja">
+                    <dt>別疾患名（日）</dt>
+                  </dl>
+                  <dl class="alt-label-en">
+                    <dt>別疾患名（英）</dt>
+                  </dl>
+                </div>
               </div>
-            </div>
 
-            <div class="temp-wrapper">
-              <div class="inheritance-uris">
-                <dl class="linked-items inheritance-uri">
-                  <dt>遺伝形式</dt>
-                </dl>
+              <div class="temp-wrapper">
+                <div class="inheritance-uris">
+                  <dl class="linked-items inheritance-uri">
+                    <dt>遺伝形式</dt>
+                  </dl>
+                </div>
               </div>
-            </div>
 
-            <div class="temp-wrapper">
-              <div class="properties" id="#dev-edit-html">
-                <dl class="linked-items omim">
-                  <dt>OMIM</dt>
-                </dl>
-                <dl class="linked-items orphanet">
-                  <dt>Orphanet</dt>
-                </dl>
-                <dl class="linked-items medgen">
-                  <dt>MedGen</dt>
-                </dl>
-                <dl class="linked-items mondos">
-                  <dt>Monarch Initiative</dt>
-                </dl>
-                <dl class="linked-items kegg">
-                  <dt>KEGG Disease</dt>
-                </dl>
-                <dl class="linked-items urdbms">
-                  <dt>UR-DBMS</dt>
-                </dl>
+              <div class="temp-wrapper">
+                <div class="properties" id="#dev-edit-html">
+                  <dl class="linked-items omim">
+                    <dt>OMIM</dt>
+                  </dl>
+                  <dl class="linked-items orphanet">
+                    <dt>Orphanet</dt>
+                  </dl>
+                  <dl class="linked-items medgen">
+                    <dt>MedGen</dt>
+                  </dl>
+                  <dl class="linked-items mondos">
+                    <dt>Monarch Initiative</dt>
+                  </dl>
+                  <dl class="linked-items kegg">
+                    <dt>KEGG Disease</dt>
+                  </dl>
+                  <dl class="linked-items urdbms">
+                    <dt>UR-DBMS</dt>
+                  </dl>
+                </div>
               </div>
             </div>
 
@@ -223,7 +307,7 @@
           </div>
 
           <div id="temp-causative-gene" open="">
-            <h4 class="temp-title">疾患原因遺伝子</h4>
+            <h4 class="temp-title">疾患原因遺伝子<span class="data-num"></span></h4>
             <div class="temp-wrapper">
               <div id="temp-properties" class="properties">
               </div>
@@ -232,16 +316,18 @@
 
           <div id="temp-medical-genetic-testing-info" open="">
             <h4 class="temp-title">
-              診療用遺伝学的検査情報<small> From 難病領域における検体検査の精度管理体制の整備に資する研究班</small>
+              診療用遺伝学的検査情報<small> From 難病領域における検体検査の精度管理体制の整備に資する研究班</small><span class="data-num"></span>
             </h4>
             <div class="inspection-view">
             </div>
           </div>
 
           <div id="temp-phenotype-view" open="">
-            <h4 class="temp-title">臨床的特徴 <small> From HPO</small></h4>
+            <h4 class="temp-title">臨床的特徴 <small> From HPO</small><span class="data-num"></span></h4>
             <div class="temp-wrapper">
-              <div class="phenotype">
+              <div class="phenotype-ja">
+              </div>
+              <div class="phenotype-en">
               </div>
             </div>
           </div>
@@ -252,16 +338,25 @@
             </h4>
             <div class="tab-wrap">
               <input type="radio" name="specific-brc" class="tab-switch" id="specific-brc-cell" />
-              <label class="tab-label" for="specific-brc-cell">細胞</label>
+              <label class="tab-label specific-brc-cell" for="specific-brc-cell">細胞<span
+                  class="data-num"></span></label>
               <div class="tab-content cell">
               </div>
               <input type="radio" name="specific-brc" class="tab-switch" id="specific-brc-mus" />
-              <label class="tab-label" for="specific-brc-mus">マウス</label>
+              <label class="tab-label specific-brc-mus" for="specific-brc-mus">マウス<span class="data-num"></span></label>
               <div class="tab-content mus">
               </div>
               <input type="radio" name="specific-brc" class="tab-switch" id="specific-brc-dna" />
-              <label class="tab-label" for="specific-brc-dna">DNA</label>
+              <label class="tab-label specific-brc-dna" for="specific-brc-dna">DNA<span class="data-num"></span></label>
               <div class="tab-content dna">
+              </div>
+            </div>
+          </div>
+
+          <div id="temp-variant" open="">
+            <h4 class="temp-title">バリアント<span class="data-num"></span></h4>
+            <div class="temp-wrapper">
+              <div id="temp-properties" class="properties">
               </div>
             </div>
           </div>
@@ -309,7 +404,7 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
     integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
     crossorigin="anonymous"></script>
-  <script src="/static/js/function.js"></script>
+  <script src="/static/js/disease.js"></script>
 </body>
 
 </html>
