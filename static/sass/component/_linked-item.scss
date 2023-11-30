@@ -1,0 +1,24 @@
+.linked-item {
+  margin-bottom: 3px;
+  border: var(--color-primary) 1px solid;
+  border-radius: 3px;
+  background-color: var(--color-primary);
+  font-size: 12px;
+  font-weight: bold;
+  line-height: 1.4;
+  margin-right: 2px;
+
+  > a {
+    color: #fff;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    padding: 4px 8px;
+  }
+
+  &.-unlinked {
+    background-color: #fff;
+    color: var(--color-primary);
+    padding: 4px 8px;
+  }
+}
