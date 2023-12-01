@@ -863,6 +863,7 @@ a.link[target=_blank]::after {
   outline: none;
   height: 36px;
   flex-grow: inherit;
+  cursor: pointer;
 }
 .navbar ul.navbar-nav a.nav-link {
   color: #fff;
