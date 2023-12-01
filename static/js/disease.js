@@ -40,7 +40,7 @@ const nandoId = pathname.slice(nandoIndex + 6);
     ]);
 
     selectedItem();
-    switchingDisplayContents('temp-summary');
+    switchingDisplayContents('temp-summary', entryData);
   } catch (error) {
     console.error('error:', error);
   }
@@ -289,6 +289,18 @@ function makeProperties(entryData) {
 }
 
 function checkSummaryData(entryData) {
+  const items = [
+    '.causative-gene',
+    '.medical-genetic-testing-info',
+    '.phenotype-view',
+    '.specific-bio-resource',
+    '.variant',
+  ];
+  const summaryWrapper = document.querySelector('.summary-wrapper');
+  const summaryNav = document.querySelector('.nav-link.summary');
+  const navBorderTop = document.querySelector(
+    '#temp-side-navigation > ul > li:first-child'
+  );
   if (
     !entryData.alt_label_ja &&
     !entryData.alt_label_en &&
@@ -299,9 +311,19 @@ function checkSummaryData(entryData) {
     !entryData.kegg &&
     !entryData.urdbms
   ) {
-    const summaryWrapper = document.querySelector('.summary-wrapper');
     if (summaryWrapper) {
       summaryWrapper.style = 'display: none;';
+      summaryNav.style = 'display: none;';
+      navBorderTop.style = 'border-top: none;';
+      for (const item of items) {
+        const cleanedItem = item.replace(/^\./, '');
+        const modifiedItem = 'temp-' + cleanedItem;
+        const element = document.querySelector(item);
+        if (element) {
+          switchingDisplayContents(modifiedItem, entryData);
+          break;
+        }
+      }
     }
   }
 }
@@ -646,7 +668,7 @@ function makeSideNavigation(entryData) {
   lis.forEach((li) => {
     li.addEventListener('click', () => {
       const id = li.querySelector('a').getAttribute('href').replace('#', '');
-      switchingDisplayContents(id);
+      switchingDisplayContents(id, entryData);
     });
   });
   items.forEach((id) => {
@@ -710,7 +732,7 @@ function makeSideNavigation(entryData) {
     });
 }
 
-function switchingDisplayContents(selectedItemId) {
+function switchingDisplayContents(selectedItemId, entryData) {
   const items = [
     '#temp-summary',
     '#temp-disease-definition',
@@ -733,16 +755,17 @@ function switchingDisplayContents(selectedItemId) {
   if (selectedItemId === 'temp-summary') {
     const tempSummary = document.getElementById('temp-summary');
     tempSummary.style.display = 'block';
-    document.getElementById('temp-aliases').style.display = 'block';
-    document.querySelector('.temp-wrapper').style.display = 'block';
+    const tempAliases = document.getElementById('temp-aliases');
+    const tempDiseaseDefinition = document.querySelector('.temp-wrapper');
+    if (tempAliases) tempAliases.style.display = 'block';
+    if (tempDiseaseDefinition) tempDiseaseDefinition.style.display = 'block';
     const diseaseDefinition = document.getElementById(
       'temp-disease-definition'
     );
     if (diseaseDefinition) {
       diseaseDefinition.style.display = 'block';
     } else {
-      tempSummary.style.display = 'none';
-      document.querySelector('.selected').style.display = 'none';
+      checkSummaryData(entryData);
     }
   } else if (selectedItemId === 'temp-specific-bio-resource') {
     const dataWrapper = document.getElementById('data-wrapper');
