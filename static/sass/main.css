@@ -931,12 +931,20 @@ a.link[target=_blank]::after {
   justify-content: space-between;
   align-items: center;
 }
+#diseaseNav .wrapper .inner-wrapper {
+  display: flex;
+  gap: 50px;
+  align-items: center;
+}
+#diseaseNav .wrapper img.imgtitle {
+  width: 180px;
+}
 #diseaseNav .wrapper .intro-text {
   outline: none;
-  width: 70%;
+  width: 700px;
 }
 #diseaseNav .wrapper .intro-text ul.token-input-list-facebook {
-  margin: 0 auto;
+  margin: 0;
 }
 #diseaseNav .wrapper .intro-text ul.token-input-list-facebook li.token-input-input-token-facebook #token-input-tokeninput {
   height: 20px;
