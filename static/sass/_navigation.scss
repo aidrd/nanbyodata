@@ -85,8 +85,10 @@
 
       .flex {
         display: flex;
-        flex-direction: row-reverse;
         gap: 13px;
+        select.language-select {
+          margin-top: 2px;
+        }
       }
 
       #navbarResponsive {

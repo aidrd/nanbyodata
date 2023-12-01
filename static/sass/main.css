@@ -903,8 +903,10 @@ a.link[target=_blank]::after {
 }
 #mainNav .container .flex-wrapper .flex {
   display: flex;
-  flex-direction: row-reverse;
   gap: 13px;
+}
+#mainNav .container .flex-wrapper .flex select.language-select {
+  margin-top: 2px;
 }
 @media screen and (max-width: 991.98px) {
   #mainNav .container .flex-wrapper #navbarResponsive {
