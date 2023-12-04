@@ -5,7 +5,7 @@
 }
 
 body {
-  font-family: "Renner*", "Avenir", "Helvetica Neue", "Helvetica", "Arial", "Hiragino Sans", "ヒラギノ角ゴシック", YuGothic, "Yu Gothic", "メイリオ", Meiryo, "ＭＳ Ｐゴシック", "MS PGothic";
+  font-family: "Poppins", sans-serif, "Renner*", "Avenir", "Helvetica Neue", "Helvetica", "Arial", "Hiragino Sans", "ヒラギノ角ゴシック", YuGothic, "Yu Gothic", "メイリオ", Meiryo, "ＭＳ Ｐゴシック", "MS PGothic";
 }
 
 p {
@@ -865,6 +865,11 @@ a.link[target=_blank]::after {
   height: 36px;
   flex-grow: inherit;
   cursor: pointer;
+}
+.navbar select.language-select option {
+  color: #13295a;
+  background: #dadede;
+  font-weight: bold;
 }
 .navbar ul.navbar-nav a.nav-link {
   color: #fff;
