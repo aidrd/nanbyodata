@@ -298,6 +298,7 @@ function checkSummaryData(entryData) {
   ];
   const summaryWrapper = document.querySelector('.summary-wrapper');
   const summaryNav = document.querySelector('.nav-link.summary');
+  const diseaseDefinition = document.getElementById('temp-disease-definition');
   const navBorderTop = document.querySelector(
     '#temp-side-navigation > ul > li:first-child'
   );
@@ -323,6 +324,10 @@ function checkSummaryData(entryData) {
           switchingDisplayContents(modifiedItem, entryData);
           break;
         }
+      }
+      if (diseaseDefinition) {
+        summaryNav.style = 'display: block;';
+        navBorderTop.style = 'border-top: block;';
       }
     }
   }
