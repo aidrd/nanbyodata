@@ -40,7 +40,7 @@ const nandoId = pathname.slice(nandoIndex + 6);
     ]);
 
     selectedItem();
-    switchingDisplayContents('temp-summary');
+    switchingDisplayContents('temp-summary', entryData);
   } catch (error) {
     console.error('error:', error);
   }
@@ -60,7 +60,7 @@ function makeHeader(entryData) {
   document
     .getElementById('temp-nando-copy')
     .addEventListener('click', async () => {
-      const clipboardText = 'https://nanbyodata.jp/ontology/nando#' + nandoId;
+      const clipboardText = 'https://nanbyodata.jp/ontology/NANDO_' + nandoId;
       document.getElementById('temp-nando-copy').textContent = 'Copied!';
       await navigator.clipboard.writeText(clipboardText);
       await new Promise((resolve) => setTimeout(resolve, 1000));
@@ -279,7 +279,7 @@ function makeProperties(entryData) {
       fixed-columns="1"
       page-size-option="100"
       page-slider="false"
-      columns="[{&quot;id&quot;:&quot;gene_symbol&quot;,&quot;label&quot;:&quot;Gene symbol&quot;,&quot;link&quot;:&quot;omim_url&quot;,&quot;target&quot;:&quot;_blank&quot;},{&quot;id&quot;:&quot;ncbi_id&quot;,&quot;label&quot;:&quot;NCBI ID&quot;,&quot;link&quot;:&quot;ncbi_url&quot;,&quot;target&quot;:&quot;_blank&quot;},{&quot;id&quot;:&quot;nando_label_e&quot;,&quot;label&quot;:&quot;NANDO disease label&quot;,&quot;link&quot;:&quot;nando_ida&quot;,&quot;target&quot;:&quot;_blank&quot;},{&quot;id&quot;:&quot;mondo_label&quot;,&quot;label&quot;:&quot;Mondo disease label&quot;,&quot;link&quot;:&quot;mondo_url&quot;,&quot;target&quot;:&quot;_blank&quot;}]
+      columns="[{&quot;id&quot;:&quot;gene_symbol&quot;,&quot;label&quot;:&quot;Gene symbol&quot;,&quot;link&quot;:&quot;omim_url&quot;,&quot;target&quot;:&quot;_blank&quot;},{&quot;id&quot;:&quot;ncbi_id&quot;,&quot;label&quot;:&quot;NCBI gene ID&quot;,&quot;link&quot;:&quot;ncbi_url&quot;,&quot;target&quot;:&quot;_blank&quot;},{&quot;id&quot;:&quot;nando_label_e&quot;,&quot;label&quot;:&quot;NANDO disease label&quot;,&quot;link&quot;:&quot;nando_ida&quot;,&quot;target&quot;:&quot;_blank&quot;},{&quot;id&quot;:&quot;mondo_label&quot;,&quot;label&quot;:&quot;Mondo disease label&quot;,&quot;link&quot;:&quot;mondo_url&quot;,&quot;target&quot;:&quot;_blank&quot;}]
       "
       ></togostanza-pagination-table>
       `;
@@ -289,6 +289,19 @@ function makeProperties(entryData) {
 }
 
 function checkSummaryData(entryData) {
+  const items = [
+    '.causative-gene',
+    '.medical-genetic-testing-info',
+    '.phenotype-view',
+    '.specific-bio-resource',
+    '.variant',
+  ];
+  const summaryWrapper = document.querySelector('.summary-wrapper');
+  const summaryNav = document.querySelector('.nav-link.summary');
+  const diseaseDefinition = document.getElementById('temp-disease-definition');
+  const navBorderTop = document.querySelector(
+    '#temp-side-navigation > ul > li:first-child'
+  );
   if (
     !entryData.alt_label_ja &&
     !entryData.alt_label_en &&
@@ -299,9 +312,23 @@ function checkSummaryData(entryData) {
     !entryData.kegg &&
     !entryData.urdbms
   ) {
-    const summaryWrapper = document.querySelector('.summary-wrapper');
     if (summaryWrapper) {
       summaryWrapper.style = 'display: none;';
+      summaryNav.style = 'display: none;';
+      navBorderTop.style = 'border-top: none;';
+      for (const item of items) {
+        const cleanedItem = item.replace(/^\./, '');
+        const modifiedItem = 'temp-' + cleanedItem;
+        const element = document.querySelector(item);
+        if (element) {
+          switchingDisplayContents(modifiedItem, entryData);
+          break;
+        }
+      }
+      if (diseaseDefinition) {
+        summaryNav.style = 'display: block;';
+        navBorderTop.style = 'border-top: block;';
+      }
     }
   }
 }
@@ -397,7 +424,7 @@ function makeMedicalGeneticTestingInfo(entryData) {
     existing: !!entryData.genetesting,
     url: `https://pubcasefinder.dbcls.jp/sparqlist/api/nanbyodata_get_gene_test?nando_id=${entryData.nando_id}`,
     columns:
-      '[{&quot;id&quot;:&quot;label&quot;,&quot;label&quot;:&quot;Test name&quot;},{&quot;id&quot;:&quot;hp&quot;,&quot;label&quot;:&quot;URL&quot;,&quot;link&quot;:&quot;hp&quot;,&quot;target&quot;:&quot;_blank&quot;},{&quot;id&quot;:&quot;gene&quot;,&quot;label&quot;:&quot;Gene name&quot;},{&quot;id&quot;:&quot;facility&quot;,&quot;label&quot;:&quot;Test facility&quot;}]',
+      '[{&quot;id&quot;:&quot;label&quot;,&quot;label&quot;:&quot;Test name&quot;},{&quot;id&quot;:&quot;hp&quot;,&quot;label&quot;:&quot;More information&quot;,&quot;link&quot;:&quot;hp&quot;,&quot;target&quot;:&quot;_blank&quot;},{&quot;id&quot;:&quot;gene&quot;,&quot;label&quot;:&quot;Gene name&quot;},{&quot;id&quot;:&quot;facility&quot;,&quot;label&quot;:&quot;Test facility&quot;}]',
   };
   if (entryData.genetesting) {
     fetch(item.url)
@@ -474,7 +501,7 @@ function makePhenotypeView(entryData) {
       fixed-columns="1"
       page-size-option="100"
       page-slider="false"
-      columns="[{&quot;id&quot;:&quot;hpo_label_ja&quot;,&quot;label&quot;:&quot;Symptom(JA)&quot;},{&quot;id&quot;:&quot;hpo_label_en&quot;,&quot;label&quot;:&quot;symptom(EN)&quot;},{&quot;id&quot;:&quot;hpo_id&quot;,&quot;label&quot;:&quot;HPO ID&quot;,&quot;link&quot;:&quot;hpo_url&quot;,&quot;target&quot;:&quot;_blank&quot;},{&quot;id&quot;:&quot;hpo_category_name_en&quot;,&quot;label&quot;:&quot;Symptom category&quot;,&quot;link&quot;:&quot;hpo_category&quot;,&quot;target&quot;:&quot;_blank&quot;}]"
+      columns="[{&quot;id&quot;:&quot;hpo_label_ja&quot;,&quot;label&quot;:&quot;Symptom (JA)&quot;},{&quot;id&quot;:&quot;hpo_label_en&quot;,&quot;label&quot;:&quot;Symptom (EN)&quot;},{&quot;id&quot;:&quot;hpo_id&quot;,&quot;label&quot;:&quot;HPO ID&quot;,&quot;link&quot;:&quot;hpo_url&quot;,&quot;target&quot;:&quot;_blank&quot;},{&quot;id&quot;:&quot;hpo_category_name_en&quot;,&quot;label&quot;:&quot;Symptom category&quot;,&quot;link&quot;:&quot;hpo_category&quot;,&quot;target&quot;:&quot;_blank&quot;}]"
       togostanza-custom_css_url=""
         ></togostanza-pagination-table>
         `;
@@ -508,7 +535,7 @@ function makeSpecificBioResource(entryData) {
       id: 'cell',
       url: `https://nanbyodata.jp/sparqlist/api/nanbyodata_get_riken_brc_cell_info_by_nando_id?nando_id=${entryData.nando_id}`,
       columns:
-        '[{&quot;id&quot;:&quot;ID&quot;,&quot;label&quot;:&quot;Cell No&quot;},{&quot;id&quot;:&quot;Cell_name&quot;,&quot;label&quot;:&quot;Cell name&quot;},{&quot;id&quot;:&quot;Homepage&quot;,&quot;label&quot;:&quot;Homepage&quot;,&quot;link&quot;:&quot;Homepage&quot;,&quot;target&quot;:&quot;_blank&quot;},{&quot;id&quot;:&quot;Description_e&quot;,&quot;label&quot;:&quot;Description(EN)&quot;},{&quot;id&quot;:&quot;Description_j&quot;,&quot;label&quot;:&quot;Description(JA)&quot;}]',
+        '[{&quot;id&quot;:&quot;ID&quot;,&quot;label&quot;:&quot;Cell No.&quot;},{&quot;id&quot;:&quot;Cell_name&quot;,&quot;label&quot;:&quot;Cell name&quot;},{&quot;id&quot;:&quot;Homepage&quot;,&quot;label&quot;:&quot;Homepage&quot;,&quot;link&quot;:&quot;Homepage&quot;,&quot;target&quot;:&quot;_blank&quot;},{&quot;id&quot;:&quot;Description_e&quot;,&quot;label&quot;:&quot;Description (EN)&quot;},{&quot;id&quot;:&quot;Description_j&quot;,&quot;label&quot;:&quot;Description (JA)&quot;}]',
     },
     {
       existing: !!entryData.mus,
@@ -522,7 +549,7 @@ function makeSpecificBioResource(entryData) {
       id: 'dna',
       url: `https://pubcasefinder.dbcls.jp/sparqlist/api/nanbyodata_get_riken_brc_dna_info_by_nando_id?nando_id=${entryData.nando_id}`,
       columns:
-        '[{&quot;id&quot;:&quot;gene_id&quot;,&quot;label&quot;:&quot;Catalog number&quot;},{&quot;id&quot;:&quot;hp&quot;,&quot;label&quot;:&quot;Homepage&quot;,&quot;link&quot;:&quot;hp&quot;,&quot;target&quot;:&quot;_blank&quot;},{&quot;id&quot;:&quot;gene_label&quot;,&quot;label&quot;:&quot;Name&quot;},{&quot;id&quot;:&quot;ncbi_gene&quot;,&quot;label&quot;:&quot;NCBI Gene Link&quot;,&quot;link&quot;:&quot;ncbi_gene&quot;,&quot;target&quot;:&quot;_blank&quot;}]',
+        '[{&quot;id&quot;:&quot;gene_id&quot;,&quot;label&quot;:&quot;Catalog number&quot;},{&quot;id&quot;:&quot;hp&quot;,&quot;label&quot;:&quot;Homepage&quot;,&quot;link&quot;:&quot;hp&quot;,&quot;target&quot;:&quot;_blank&quot;},{&quot;id&quot;:&quot;gene_label&quot;,&quot;label&quot;:&quot;Name&quot;},{&quot;id&quot;:&quot;ncbi_gene&quot;,&quot;label&quot;:&quot;NCBI gene link&quot;,&quot;link&quot;:&quot;ncbi_gene&quot;,&quot;target&quot;:&quot;_blank&quot;}]',
     },
   ];
 
@@ -605,7 +632,7 @@ async function makeVariant(entryData) {
               fixed-columns="1"
               page-size-option="100"
               page-slider="false"
-              columns="[{&quot;id&quot;:&quot;tgv_id&quot;,&quot;label&quot;:&quot;TogoVar ID&quot;,&quot;link&quot;:&quot;tgv_link&quot;,&quot;target&quot;:&quot;_blank&quot;},{&quot;id&quot;:&quot;rs_id&quot;,&quot;label&quot;:&quot;dbSNP ID&quot;,&quot;link&quot;:&quot;rs_id_link&quot;,&quot;target&quot;:&quot;_blank&quot;},{&quot;id&quot;:&quot;position&quot;,&quot;label&quot;:&quot;position&quot;},{&quot;id&quot;:&quot;type&quot;,&quot;label&quot;:&quot;type&quot;},{&quot;id&quot;:&quot;Clinvar_id&quot;,&quot;label&quot;:&quot;Clinvar ID&quot;,&quot;link&quot;:&quot;Clinvar_link&quot;,&quot;target&quot;:&quot;_blank&quot;},{&quot;id&quot;:&quot;title&quot;,&quot;label&quot;:&quot;title&quot;},{&quot;id&quot;:&quot;MedGen_id&quot;,&quot;label&quot;:&quot;MedGen ID&quot;,&quot;link&quot;:&quot;MedGen_link&quot;,&quot;target&quot;:&quot;_blank&quot;},{&quot;id&quot;:&quot;mondo_id&quot;,&quot;label&quot;:&quot;Mondo ID&quot;,&quot;link&quot;:&quot;mondo&quot;,&quot;target&quot;:&quot;_blank&quot;}]"
+              columns="[{&quot;id&quot;:&quot;Clinvar_id&quot;,&quot;label&quot;:&quot;Clinvar_ID&quot;,&quot;link&quot;:&quot;Clinvar_link&quot;,&quot;target&quot;:&quot;_bkank&quot;}, {&quot;id&quot;:&quot;title&quot;,&quot;label&quot;:&quot;HGVS&quot;}, {&quot;id&quot;:&quot;Interpretation&quot;,&quot;label&quot;:&quot;Interpretation&quot;}, {&quot;id&quot;:&quot;type&quot;,&quot;label&quot;:&quot;Variant type&quot;}, {&quot;id&quot;:&quot;position&quot;,&quot;label&quot;:&quot;Chr:Position&quot;}, {&quot;id&quot;:&quot;tgv_id&quot;,&quot;label&quot;:&quot;TogoVar_ID&quot;,&quot;link&quot;:&quot;tgv_link&quot;,&quot;target&quot;:&quot;_blank&quot;} , {&quot;id&quot;:&quot;MedGen_id&quot;,&quot;label&quot;:&quot;MedGen_ID&quot;,&quot;link&quot;:&quot;MedGen_link&quot;,&quot;target&quot;:&quot;_bkank&quot;}, {&quot;id&quot;:&quot;mondo_id&quot;,&quot;label&quot;:&quot;MONDO_ID&quot;,&quot;link&quot;:&quot;mondo&quot;,&quot;target&quot;:&quot;_bkank&quot;}]"
           ></togostanza-pagination-table>
           `;
 
@@ -646,7 +673,7 @@ function makeSideNavigation(entryData) {
   lis.forEach((li) => {
     li.addEventListener('click', () => {
       const id = li.querySelector('a').getAttribute('href').replace('#', '');
-      switchingDisplayContents(id);
+      switchingDisplayContents(id, entryData);
     });
   });
   items.forEach((id) => {
@@ -710,7 +737,7 @@ function makeSideNavigation(entryData) {
     });
 }
 
-function switchingDisplayContents(selectedItemId) {
+function switchingDisplayContents(selectedItemId, entryData) {
   const items = [
     '#temp-summary',
     '#temp-disease-definition',
@@ -733,16 +760,17 @@ function switchingDisplayContents(selectedItemId) {
   if (selectedItemId === 'temp-summary') {
     const tempSummary = document.getElementById('temp-summary');
     tempSummary.style.display = 'block';
-    document.getElementById('temp-aliases').style.display = 'block';
-    document.querySelector('.temp-wrapper').style.display = 'block';
+    const tempAliases = document.getElementById('temp-aliases');
+    const tempDiseaseDefinition = document.querySelector('.temp-wrapper');
+    if (tempAliases) tempAliases.style.display = 'block';
+    if (tempDiseaseDefinition) tempDiseaseDefinition.style.display = 'block';
     const diseaseDefinition = document.getElementById(
       'temp-disease-definition'
     );
     if (diseaseDefinition) {
       diseaseDefinition.style.display = 'block';
     } else {
-      tempSummary.style.display = 'none';
-      document.querySelector('.selected').style.display = 'none';
+      checkSummaryData(entryData);
     }
   } else if (selectedItemId === 'temp-specific-bio-resource') {
     const dataWrapper = document.getElementById('data-wrapper');
