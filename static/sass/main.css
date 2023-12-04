@@ -833,6 +833,7 @@ a.link[target=_blank]::after {
 }
 .navbar a.navbar-brand {
   text-decoration: none;
+  margin: 0;
 }
 .navbar a.navbar-brand img.imgtitle {
   width: 220px;
@@ -863,11 +864,12 @@ a.link[target=_blank]::after {
   outline: none;
   height: 36px;
   flex-grow: inherit;
+  cursor: pointer;
 }
 .navbar ul.navbar-nav a.nav-link {
   color: #fff;
   font-size: 14px;
-  margin-left: 20px;
+  margin-left: 12px;
 }
 .navbar ul.navbar-nav a.nav-link:hover {
   color: #7c7c7c;
@@ -888,6 +890,7 @@ a.link[target=_blank]::after {
 /* Main Navigation */
 #mainNav .container {
   flex-wrap: nowrap;
+  align-items: flex-start;
 }
 #mainNav .container .flex-wrapper {
   display: flex;
@@ -902,16 +905,10 @@ a.link[target=_blank]::after {
 }
 #mainNav .container .flex-wrapper .flex {
   display: flex;
-  flex-direction: row-reverse;
   gap: 13px;
 }
-@media screen and (max-width: 991.98px) {
-  #mainNav .container .flex-wrapper #navbarResponsive {
-    position: absolute;
-    left: 0px;
-    background: var(--color-primary);
-    width: 100%;
-  }
+#mainNav .container .flex-wrapper .flex select.language-select {
+  margin-top: 2px;
 }
 #mainNav .container .flex-wrapper #navbarResponsive ul.navbar-nav {
   padding-top: 0;
@@ -925,25 +922,35 @@ a.link[target=_blank]::after {
 /* Disease Navigation */
 #diseaseNav .wrapper {
   display: flex;
+  align-items: flex-start;
   justify-content: space-between;
+}
+#diseaseNav .wrapper .navbar-left {
+  display: flex;
+  gap: 60px;
   align-items: center;
 }
-#diseaseNav .wrapper .intro-text {
-  outline: none;
-  width: 70%;
+#diseaseNav .wrapper .navbar-left img.imgtitle {
+  width: 180px;
 }
-#diseaseNav .wrapper .intro-text ul.token-input-list-facebook {
-  margin: 0 auto;
+#diseaseNav .wrapper .navbar-left .intro-text {
+  width: 700px;
 }
-#diseaseNav .wrapper .intro-text ul.token-input-list-facebook li.token-input-input-token-facebook #token-input-tokeninput {
-  height: 20px;
-  padding: 0;
+#diseaseNav .wrapper .navbar-left .intro-text ul.token-input-list-facebook {
   margin: 0;
+  width: 100%;
 }
-#diseaseNav .wrapper .navbar-right {
+#diseaseNav .wrapper .navbar-left .intro-text ul.token-input-list-facebook li.token-input-input-token-facebook #token-input-tokeninput {
+  height: 20px;
+}
+#diseaseNav .wrapper .navbar-right .rigth-wrapper {
   display: flex;
+  flex-wrap: nowrap;
   align-items: center;
   gap: 13px;
+}
+#diseaseNav .wrapper .navbar-right ul.navbar-nav {
+  padding-top: 15px;
 }
 
 /* Reset CSS */
@@ -961,8 +968,7 @@ ul {
 /* Footer */
 footer {
   margin-top: 100px;
-  min-width: -moz-max-content;
-  min-width: max-content;
+  overflow: hidden;
 }
 footer .footer__wrapper {
   padding-top: 40px;
