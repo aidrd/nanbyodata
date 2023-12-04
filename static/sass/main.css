@@ -869,7 +869,7 @@ a.link[target=_blank]::after {
 .navbar ul.navbar-nav a.nav-link {
   color: #fff;
   font-size: 14px;
-  margin-left: 20px;
+  margin-left: 12px;
 }
 .navbar ul.navbar-nav a.nav-link:hover {
   color: #7c7c7c;
@@ -922,37 +922,34 @@ a.link[target=_blank]::after {
 /* Disease Navigation */
 #diseaseNav .wrapper {
   display: flex;
+  align-items: flex-start;
   justify-content: space-between;
-  align-items: center;
 }
-#diseaseNav .wrapper .inner-wrapper {
+#diseaseNav .wrapper .navbar-left {
   display: flex;
   gap: 60px;
   align-items: center;
 }
-#diseaseNav .wrapper img.imgtitle {
+#diseaseNav .wrapper .navbar-left img.imgtitle {
   width: 180px;
 }
-#diseaseNav .wrapper .intro-text {
+#diseaseNav .wrapper .navbar-left .intro-text {
   width: 700px;
 }
-#diseaseNav .wrapper .intro-text ul.token-input-list-facebook {
+#diseaseNav .wrapper .navbar-left .intro-text ul.token-input-list-facebook {
   margin: 0;
   width: 100%;
 }
-#diseaseNav .wrapper .intro-text ul.token-input-list-facebook li.token-input-input-token-facebook #token-input-tokeninput {
+#diseaseNav .wrapper .navbar-left .intro-text ul.token-input-list-facebook li.token-input-input-token-facebook #token-input-tokeninput {
   height: 20px;
 }
-#diseaseNav .wrapper .navbar-right {
+#diseaseNav .wrapper .navbar-right .rigth-wrapper {
   display: flex;
+  flex-wrap: nowrap;
   align-items: center;
   gap: 13px;
 }
-#diseaseNav .nav-wrapper {
-  display: flex;
-  justify-content: flex-end;
-}
-#diseaseNav .nav-wrapper ul.navbar-nav {
+#diseaseNav .wrapper .navbar-right ul.navbar-nav {
   padding-top: 15px;
 }
 

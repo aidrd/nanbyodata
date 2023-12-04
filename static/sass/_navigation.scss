@@ -43,11 +43,10 @@
   }
 
   ul.navbar-nav {
-
     a.nav-link {
       color: #fff;
       font-size: 14px;
-      margin-left: 20px;
+      margin-left: 12px;
 
       &:hover {
         color: #7c7c7c;
@@ -111,14 +110,13 @@
 #diseaseNav {
   .wrapper {
     display: flex;
+    align-items: flex-start;
     justify-content: space-between;
-    align-items: center;
 
-    .inner-wrapper {
+    .navbar-left {
       display: flex;
       gap: 60px;
       align-items: center;
-    }
 
       img.imgtitle {
         width: 180px;
@@ -138,20 +136,19 @@
           }
         }
       }
+    }
 
     .navbar-right {
-      display: flex;
-      align-items: center;
-      gap: 13px;
-    }
-  }
+      .rigth-wrapper {
+        display: flex;
+        flex-wrap: nowrap;
+        align-items: center;
+        gap: 13px;
+      }
 
-  .nav-wrapper {
-    display: flex;
-    justify-content: flex-end;
-
-    ul.navbar-nav{
-      padding-top: 15px;
+      ul.navbar-nav {
+        padding-top: 15px;
+      }
     }
   }
 }
