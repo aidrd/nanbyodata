@@ -833,6 +833,7 @@ a.link[target=_blank]::after {
 }
 .navbar a.navbar-brand {
   text-decoration: none;
+  margin: 0;
 }
 .navbar a.navbar-brand img.imgtitle {
   width: 220px;
@@ -865,6 +866,11 @@ a.link[target=_blank]::after {
   flex-grow: inherit;
   cursor: pointer;
 }
+.navbar ul.navbar-nav {
+  display: flex;
+  width: -moz-fit-content;
+  width: fit-content;
+}
 .navbar ul.navbar-nav a.nav-link {
   color: #fff;
   font-size: 14px;
@@ -889,6 +895,7 @@ a.link[target=_blank]::after {
 /* Main Navigation */
 #mainNav .container {
   flex-wrap: nowrap;
+  align-items: flex-start;
 }
 #mainNav .container .flex-wrapper {
   display: flex;
@@ -908,14 +915,6 @@ a.link[target=_blank]::after {
 #mainNav .container .flex-wrapper .flex select.language-select {
   margin-top: 2px;
 }
-@media screen and (max-width: 991.98px) {
-  #mainNav .container .flex-wrapper #navbarResponsive {
-    position: absolute;
-    left: 0px;
-    background: var(--color-primary);
-    width: 100%;
-  }
-}
 #mainNav .container .flex-wrapper #navbarResponsive ul.navbar-nav {
   padding-top: 0;
 }
@@ -930,10 +929,11 @@ a.link[target=_blank]::after {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 60px;
 }
 #diseaseNav .wrapper .inner-wrapper {
   display: flex;
-  gap: 50px;
+  gap: 60px;
   align-items: center;
 }
 #diseaseNav .wrapper img.imgtitle {
@@ -945,6 +945,7 @@ a.link[target=_blank]::after {
 }
 #diseaseNav .wrapper .intro-text ul.token-input-list-facebook {
   margin: 0;
+  width: 100%;
 }
 #diseaseNav .wrapper .intro-text ul.token-input-list-facebook li.token-input-input-token-facebook #token-input-tokeninput {
   height: 20px;
@@ -955,6 +956,14 @@ a.link[target=_blank]::after {
   display: flex;
   align-items: center;
   gap: 13px;
+}
+#diseaseNav .nav-wrapper {
+  display: flex;
+  justify-content: flex-end;
+}
+#diseaseNav .nav-wrapper ul.navbar-nav {
+  display: flex;
+  padding-top: 15px;
 }
 
 /* Reset CSS */

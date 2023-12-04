@@ -6,6 +6,7 @@
 
   a.navbar-brand {
     text-decoration: none;
+    margin: 0;
 
     img.imgtitle {
       width: 220px;
@@ -42,6 +43,9 @@
   }
 
   ul.navbar-nav {
+    display: flex;
+    width: fit-content;
+
     a.nav-link {
       color: #fff;
       font-size: 14px;
@@ -72,6 +76,7 @@
 #mainNav {
   .container {
     flex-wrap: nowrap;
+    align-items: flex-start;
 
     .flex-wrapper {
       display: flex;
@@ -92,13 +97,6 @@
       }
 
       #navbarResponsive {
-        @media screen and (max-width: 991.98px) {
-          position: absolute;
-          left: 0px;
-          background: var(--color-primary);
-          width: 100%;
-        }
-
         ul.navbar-nav {
           padding-top: 0;
 
@@ -117,10 +115,11 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 60px;
 
     .inner-wrapper {
       display: flex;
-      gap: 50px;
+      gap: 60px;
       align-items: center;
     }
 
@@ -134,6 +133,7 @@
 
         ul.token-input-list-facebook {
           margin: 0;
+          width: 100%;
 
           li.token-input-input-token-facebook {
             #token-input-tokeninput {
@@ -145,12 +145,20 @@
         }
       }
 
-
-
     .navbar-right {
       display: flex;
       align-items: center;
       gap: 13px;
+    }
+  }
+
+  .nav-wrapper {
+    display: flex;
+    justify-content: flex-end;
+
+    ul.navbar-nav{
+      display: flex;
+      padding-top: 15px;
     }
   }
 }
