@@ -60,7 +60,7 @@ function makeHeader(entryData) {
   document
     .getElementById('temp-nando-copy')
     .addEventListener('click', async () => {
-      const clipboardText = 'https://nanbyodata.jp/ontology/nando_' + nandoId;
+      const clipboardText = 'https://nanbyodata.jp/ontology/NANDO_' + nandoId;
       document.getElementById('temp-nando-copy').textContent = 'Copied!';
       await navigator.clipboard.writeText(clipboardText);
       await new Promise((resolve) => setTimeout(resolve, 1000));
@@ -627,7 +627,7 @@ async function makeVariant(entryData) {
               fixed-columns="1"
               page-size-option="100"
               page-slider="false"
-              columns="[{&quot;id&quot;:&quot;tgv_id&quot;,&quot;label&quot;:&quot;TogoVar ID&quot;,&quot;link&quot;:&quot;tgv_link&quot;,&quot;target&quot;:&quot;_blank&quot;} ,   {&quot;id&quot;:&quot;position&quot;,&quot;label&quot;:&quot;Chr:Position&quot;}, {&quot;id&quot;:&quot;type&quot;,&quot;label&quot;:&quot;Variant type&quot;}, {&quot;id&quot;:&quot;Clinvar_id&quot;,&quot;label&quot;:&quot;ClinVar ID&quot;,&quot;link&quot;:&quot;Clinvar_link&quot;,&quot;target&quot;:&quot;_bkank&quot;}, {&quot;id&quot;:&quot;title&quot;,&quot;label&quot;:&quot;HGVS&quot;}, {&quot;id&quot;:&quot;MedGen_id&quot;,&quot;label&quot;:&quot;MedGen ID&quot;,&quot;link&quot;:&quot;MedGen_link&quot;,&quot;target&quot;:&quot;_bkank&quot;}, {&quot;id&quot;:&quot;mondo_id&quot;,&quot;label&quot;:&quot;Mondo ID&quot;,&quot;link&quot;:&quot;mondo&quot;,&quot;target&quot;:&quot;_bkank&quot;} ]"
+              columns="[{&quot;id&quot;:&quot;Clinvar_id&quot;,&quot;label&quot;:&quot;Clinvar_ID&quot;,&quot;link&quot;:&quot;Clinvar_link&quot;,&quot;target&quot;:&quot;_bkank&quot;}, {&quot;id&quot;:&quot;title&quot;,&quot;label&quot;:&quot;HGVS&quot;}, {&quot;id&quot;:&quot;Interpretation&quot;,&quot;label&quot;:&quot;Interpretation&quot;}, {&quot;id&quot;:&quot;type&quot;,&quot;label&quot;:&quot;Variant type&quot;}, {&quot;id&quot;:&quot;position&quot;,&quot;label&quot;:&quot;Chr:Position&quot;}, {&quot;id&quot;:&quot;tgv_id&quot;,&quot;label&quot;:&quot;TogoVar_ID&quot;,&quot;link&quot;:&quot;tgv_link&quot;,&quot;target&quot;:&quot;_blank&quot;} , {&quot;id&quot;:&quot;MedGen_id&quot;,&quot;label&quot;:&quot;MedGen_ID&quot;,&quot;link&quot;:&quot;MedGen_link&quot;,&quot;target&quot;:&quot;_bkank&quot;}, {&quot;id&quot;:&quot;mondo_id&quot;,&quot;label&quot;:&quot;MONDO_ID&quot;,&quot;link&quot;:&quot;mondo&quot;,&quot;target&quot;:&quot;_bkank&quot;}]"
           ></togostanza-pagination-table>
           `;
 
