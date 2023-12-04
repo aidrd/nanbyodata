@@ -40,6 +40,11 @@
     height: 36px;
     flex-grow: inherit;
     cursor: pointer;
+    option {
+      color: #13295a;
+      background: #dadede;
+      font-weight: bold;
+    }
   }
 
   ul.navbar-nav {
