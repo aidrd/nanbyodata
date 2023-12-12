@@ -56,7 +56,7 @@ WHERE {
 
 ## Endpoint
 
-https://grch38.togovar.org/sparql
+https://pubcasefinder-rdf.dbcls.jp/sparql
 
 ## `medgen` retrieve information from medgen
 
@@ -80,7 +80,7 @@ prefix pubmedid: <http://identifiers.org/pubmed/>
 prefix pubmed: <http://rdf.ncbi.nlm.nih.gov/pubmed/>
 
 SELECT DISTINCT ?medgen ?concept ?concept_id ?concept_name ?definition (GROUP_CONCAT(?label, ":") AS ?labels) ?mondo
-FROM <http://togovar.biosciencedbc.jp/medgen>
+FROM <https://pubcasefinder.dbcls.jp/rdf/ontology/medgen>
 WHERE {
   {{#if mondo_uri_list}}
 	VALUES ?mondo_uri { {{mondo_uri_list}} }
@@ -500,7 +500,7 @@ WHERE {
               }
             } else if (db_xref_uri.match(/omim/)) {
               if (!omim_ids.includes(db_xref_uri)) {
-                data.db_xrefs.omim.push({url: db_xref_uri.replace('omim','mim'), id: db_xref_uri.split("/").slice(-1)[0]});
+                data.db_xrefs.omim.push({url: db_xref_uri, id: db_xref_uri.split("/").slice(-1)[0]});
                 omim_ids.push(db_xref_uri);
               }
             }
@@ -510,7 +510,7 @@ WHERE {
               data.db_xrefs.orphanet.push({url: db_xref_uri, id: db_xref_uri.split("/").slice(-1)[0].replace('Orphanet_','')});
               orpha_ids.push(db_xref_uri);
             } else if (db_xref_uri.match(/omim/)) {
-              data.db_xrefs.omim.push({url: db_xref_uri.replace('omim','mim'), id: db_xref_uri.split("/").slice(-1)[0]});
+              data.db_xrefs.omim.push({url: db_xref_uri, id: db_xref_uri.split("/").slice(-1)[0]});
               omim_ids.push(db_xref_uri);
             }
           }

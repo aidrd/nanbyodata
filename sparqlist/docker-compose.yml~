@@ -1,0 +1,12 @@
+version: '3'
+services:
+  sparqlist:
+    container_name: nanbyodata-sparqlist
+    image: dbcls/sparqlist
+    volumes:
+      - ${REPOSITORY}:/app/repository
+    ports:
+      - ${SPARQLIST_PORT}:3000
+    environment:
+      ADMIN_PASSWORD: case2020
+    restart: always

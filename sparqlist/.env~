@@ -1,0 +1,3 @@
+REPOSITORY=/opt/services/case/app/nanbyodata/sparqlist/repository
+SPARQLIST_PORT=3000
+ADMIN_PASSWORD=case20201222

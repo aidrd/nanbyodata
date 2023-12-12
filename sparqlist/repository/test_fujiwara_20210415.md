@@ -1,4 +1,4 @@
-# Retrieve NANDO class by the given NANDO ID
+# TEST FUJIWARA 20210415
 
 ## Parameters
 
@@ -56,7 +56,7 @@ WHERE {
 
 ## Endpoint
 
-https://grch38.togovar.org/sparql
+https://togovar.biosciencedbc.jp/sparql
 
 ## `medgen` retrieve information from medgen
 
@@ -79,7 +79,7 @@ prefix dct: <http://purl.org/dc/terms/>
 prefix pubmedid: <http://identifiers.org/pubmed/>
 prefix pubmed: <http://rdf.ncbi.nlm.nih.gov/pubmed/>
 
-SELECT DISTINCT ?medgen ?concept ?concept_id ?concept_name ?definition (GROUP_CONCAT(?label, ":") AS ?labels) ?mondo
+SELECT DISTINCT ?medgen ?concept ?concept_id ?concept_name ?definition (GROUP_CONCAT(?label, ":") AS ?labels) 
 FROM <http://togovar.biosciencedbc.jp/medgen>
 WHERE {
   {{#if mondo_uri_list}}
@@ -89,14 +89,14 @@ WHERE {
   ?concept a mo:ConceptID .
   ?concept dct:identifier ?concept_id .
   ?concept rdfs:label ?concept_name .
+  ?concept rdfs:seeAlso ?mondo_uri .
   ?concept skos:definition ?definition .
   ?concept mo:mgconso ?mgconso .
-  ?mgconso dct:source mo:MONDO ;
-           rdfs:seeAlso ?mondo .
   ?mgconso rdfs:label ?label .
-  FILTER REGEX(?mondo,?mondo_uri)
-}
-GROUP BY ?medgen ?concept ?definition ?concept_id ?concept_name ?mondo
+  ?mgconso dct:source ?source
+  FILTER(?source = mo:GTR)
+} 
+GROUP BY ?medgen ?concept ?definition ?concept_id ?concept_name
 LIMIT 100
 
 ```
@@ -137,24 +137,18 @@ https://pubcasefinder-rdf.dbcls.jp/sparql
 ```sparql
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX sio: <http://semanticscience.org/resource/>
+PREFIX mondo: <http://purl.obolibrary.org/obo/>
 PREFIX ncit: <http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#>
 PREFIX obo: <http://purl.obolibrary.org/obo/>
-PREFIX sio: <http://semanticscience.org/resource/>
-PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 
 SELECT distinct ?gene ?hgnc_gene_symbol WHERE{
-  {
-    SELECT DISTINCT ?disease WHERE {
-      VALUES ?mondo_uri { {{mondo_uri_list}} }
-      ?mondo_sub_tier rdfs:subClassOf* ?mondo_uri ;
-      skos:exactMatch ?exactMatch_disease .
-      FILTER(CONTAINS(STR(?exactMatch_disease), "omim") || CONTAINS(STR(?exactMatch_disease), "Orphanet"))
-      BIND (IRI(replace(STR(?exactMatch_disease), 'http://identifiers.org/omim/', 'http://identifiers.org/mim/')) AS ?disease) .
-    }
-  }
-  ?as sio:SIO_000628 ?disease ;
+  {{#if mondo_uri_list}}
+	VALUES ?mondo_uri { {{mondo_uri_list}} }
+  {{/if}}
+
+  ?as sio:SIO_000628 [rdfs:seeAlso ?mondo_uri] ;
       sio:SIO_000628 ?gene .
-  ?disease rdf:type ncit:C7057 .
   ?gene sio:SIO_000205 [rdfs:label ?hgnc_gene_symbol] .
   ?gene rdf:type ncit:C16612 .
 }
@@ -255,74 +249,12 @@ PREFIX brso: <http://purl.jp/bio/10/brso/>
 PREFIX dc: <http://purl.org/dc/elements/1.1/>
 PREFIX nando: <http://nanbyodata.jp/ontology/nando#>
 SELECT DISTINCT ?donor ?ontology
-FROM <http://metadb.riken.jp/db/xsearch_cell_brso>
+FROM <http://metadb.riken.jp/db/cellRDF_brso20201125>
 WHERE {
  ?cell brso:donor ?donor.
  ?donor obo:RO_0000091 ?disease.
  OPTIONAL {?disease rdfs:seeAlso ?ontology}
  FILTER (CONTAINS(STR(?ontology), "{{nando_id}}"))
-}
-```
-
-## Endpoint
-
-https://knowledge.brc.riken.jp/sparql
-
-## `mouse` retrieve the number of mouse in Riken BRC associated with the nando id
-
-```sparql
-PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-PREFIX owl: <http://www.w3.org/2002/07/owl#>
-PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-PREFIX dct:  <http://purl.org/dc/terms/>
-PREFIX foaf: <http://xmlns.com/foaf/0.1/>
-PREFIX brso: <http://purl.jp/bio/10/brso/>
-PREFIX dc: <http://purl.org/dc/elements/1.1/>
-PREFIX nando: <http://nanbyodata.jp/ontology/NANDO_>
-
-select ?mouse STR(?name) AS ?mouse_name ?hp STR(?id) AS ?mouse_id ?description ?nando
-where{
-  VALUES ?nando { nando:{{nando_id}} }
-  graph <http://metadb.riken.jp/db/mouse_diseaseID>{
-    ?mouse <http://purl.obolibrary.org/obo/RO_0003301> ?nando.}
-  graph <http://metadb.riken.jp/db/xsearch_animal_brso>{
-    ?mouse rdfs:label ?name;
-           foaf:homepage ?hp;
-           dct:identifier ?id.
-      OPTIONAL {?mouse dc:description ?description.}
-      FILTER (lang(?description) = "ja")
-      }
-}
-```
-
-## Endpoint
-
-https://knowledge.brc.riken.jp/sparql
-
-## `dna` retrieve the number of dna in Riken BRC associated with the nando id
-
-```sparql
-PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-PREFIX owl: <http://www.w3.org/2002/07/owl#>
-PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-PREFIX dct:  <http://purl.org/dc/terms/>
-PREFIX foaf: <http://xmlns.com/foaf/0.1/>
-PREFIX brso: <http://purl.jp/bio/10/brso/>
-PREFIX dc: <http://purl.org/dc/elements/1.1/>
-PREFIX nando: <http://nanbyodata.jp/ontology/NANDO_>
-
-SELECT DISTINCT ?dna STR(?label) AS ?gene_label ?hp STR(?id)AS ?gene_id ?ncbi_gene ?nando
-WHERE{
-  VALUES ?nando { nando:{{nando_id}} }
-  graph <http://metadb.riken.jp/db/dna_diseaseID>{
-    ?dna <http://purl.obolibrary.org/obo/RO_0003301> ?nando.}
-  graph <http://metadb.riken.jp/db/xsearch_dnabank_brso>{
-    ?dna rdfs:label ?label;
-         foaf:homepage ?hp;
-         dct:identifier ?id;
-         brso:genomic_feature ?B.
-    ?B   brso:has_genomic_segment ?B1.
-    ?B1  rdfs:seeAlso ?ncbi_gene.}
 }
 ```
 
@@ -345,7 +277,7 @@ PREFIX oboInOwl: <http://www.geneontology.org/formats/oboInOwl#>
 PREFIX mondo: <http://purl.obolibrary.org/obo/mondo#>
 PREFIX nando: <http://nanbyodata.jp/ontology/NANDO_>
 
-SELECT DISTINCT ?nando ?nando_id ?label_ja ?label_hira ?label_en ?alt_label_ja ?alt_label_en ?notification_number 
+SELECT DISTINCT ?nando ?nando_id ?label_ja ?label_en ?alt_label_ja ?alt_label_en ?notification_number 
                 ?source ?description ?mondo ?mondo_id ?mondo_description ?site ?db_xref
 WHERE {
   ?nando a owl:Class ;
@@ -353,10 +285,6 @@ WHERE {
   OPTIONAL {
     ?nando rdfs:label ?label_ja
     FILTER(LANG(?label_ja) = 'ja')
-  }
-  OPTIONAL {
-    ?nando rdfs:label ?label_hira
-    FILTER(LANG(?label_hira) = 'ja-hira')
   }
   OPTIONAL {
     ?nando rdfs:label ?label_en
@@ -396,15 +324,13 @@ WHERE {
 
 ```javascript
 ({
-  json({result, medgen, gene, inheritance, phenotype, cell, mouse, dna, genetesting}) {
+  json({result, medgen, gene, inheritance, phenotype, cell, genetesting}) {
     let rows = result.results.bindings;
     let medgen_rows = medgen.results.bindings;
     let gene_rows = gene.results.bindings;
     let inheritance_rows = inheritance.results.bindings;
     let phenotype_rows = phenotype.results.bindings;
     let cell_rows = cell.results.bindings;
-    let mouse_rows = mouse.results.bindings;
-    let dna_rows = dna.results.bindings;
     let genetesting_rows = genetesting.results.bindings;
     let data = {};
     let mondo_ids = [];
@@ -424,9 +350,6 @@ WHERE {
       };
       if (rows[i].label_ja) {   
         data.label_ja = rows[i].label_ja.value;
-      };
-      if (rows[i].label_hira) {
-        data.ruby = rows[i].label_hira.value;
       };
       if (rows[i].alt_label_en) {
         if (data.alt_label_en) {
@@ -500,7 +423,7 @@ WHERE {
               }
             } else if (db_xref_uri.match(/omim/)) {
               if (!omim_ids.includes(db_xref_uri)) {
-                data.db_xrefs.omim.push({url: db_xref_uri.replace('omim','mim'), id: db_xref_uri.split("/").slice(-1)[0]});
+                data.db_xrefs.omim.push({url: db_xref_uri, id: db_xref_uri.split("/").slice(-1)[0]});
                 omim_ids.push(db_xref_uri);
               }
             }
@@ -510,7 +433,7 @@ WHERE {
               data.db_xrefs.orphanet.push({url: db_xref_uri, id: db_xref_uri.split("/").slice(-1)[0].replace('Orphanet_','')});
               orpha_ids.push(db_xref_uri);
             } else if (db_xref_uri.match(/omim/)) {
-              data.db_xrefs.omim.push({url: db_xref_uri.replace('omim','mim'), id: db_xref_uri.split("/").slice(-1)[0]});
+              data.db_xrefs.omim.push({url: db_xref_uri, id: db_xref_uri.split("/").slice(-1)[0]});
               omim_ids.push(db_xref_uri);
             }
           }
@@ -876,20 +799,6 @@ WHERE {
       for (let i = 0; i < cell_rows.length; i++ ) {
         cell_donor = cell_rows[i].donor.value
         data.cell = cell_donor
-      }
-    }    
-
-    if (mouse_rows.length > 0) {
-      for (let i = 0; i < mouse_rows.length; i++ ) {
-        mouse_mouse = mouse_rows[i].mouse.value
-        data.mus = mouse_mouse
-      }
-    }    
-
-    if (dna_rows.length > 0) {
-      for (let i = 0; i < dna_rows.length; i++ ) {
-        dna_dna = dna_rows[i].dna.value
-        data.dna = dna_dna
       }
     }    
 
