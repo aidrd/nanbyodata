@@ -58,7 +58,17 @@ db_pw   = app.config['DBPW']
 ## GET: display top page
 @app.route('/')
 def index():
-    return render_template('index.html')
+    lang_value = get_locale()
+    return render_template('index.html', select_language=lang_value)
+
+## Get selected language
+@app.route('/get_selected_value', methods=['POST'])
+def get_selected_value():
+    selected_value = request.json.get('selected_value')
+    session['lang'] = selected_value
+
+    return jsonify({'result': 'success'})
+
 
 
 #####
@@ -66,7 +76,8 @@ def index():
 ## GET: 
 @app.route('/about_nando')
 def about_nando():
-    return render_template('about_nando.html')
+    lang_value = get_locale()
+    return render_template('about_nando.html', select_language=lang_value)
 
 
 #####
@@ -74,7 +85,8 @@ def about_nando():
 ## GET: 
 @app.route('/epidemiology')
 def epidemiology():
-    return render_template('epidemiology.html')
+    lang_value = get_locale()
+    return render_template('epidemiology.html', select_language=lang_value)
 
 
 #####
@@ -143,6 +155,7 @@ def REST_API_disease(id_nando=""):
 #        return render_template('index.html')
 #    return
     if request.method == 'GET':
+        lang_value = get_locale()
         # parse nando.ttl
         onto = pronto.Ontology('/opt/services/case/app/nanbyodata/ontology/nando.obo')
         breadcrumb_list_html = ""
@@ -162,7 +175,8 @@ def REST_API_disease(id_nando=""):
         breadcrumb_list_html = '<h3>難病</h3>' + breadcrumb_list_html
         return render_template('disease.html',
                                id_nando=id_nando,
-                               breadcrumb_list_html=breadcrumb_list_html
+                               breadcrumb_list_html=breadcrumb_list_html,
+                               select_language=lang_value
         )
     else:
         return render_template('index.html')
