@@ -8,7 +8,7 @@ function updateLangValue() {
 
   xhr.onload = function () {
     if (xhr.status === 200) {
-      var response = JSON.parse(xhr.responseText);
+      const response = JSON.parse(xhr.responseText);
       console.log(response.result);
       location.reload();
     }
