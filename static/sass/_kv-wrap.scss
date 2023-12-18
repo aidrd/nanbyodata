@@ -1,0 +1,53 @@
+#kv-wrap {
+  overflow: hidden;
+
+  header{
+    &.jumbotron {
+      position: relative;
+      top: 24px;
+      border-radius: 0;
+      border-bottom-right-radius: 2000px 250px;
+      border-bottom-left-radius: 2000px 250px;
+      margin-left: -250px;
+      margin-right: -250px;
+      padding-left: 250px;
+      padding-right: 250px;
+      background: var(--color-primary);
+    }
+
+    ul.token-input-list-facebook {
+      padding: 5px 20px;
+      margin: 0 auto;
+      margin-top: 10px;
+      margin-bottom: 19px;
+    }
+
+    .intro-text {
+      text-align: center;
+      margin-top: 20px;
+      z-index: 1039;
+      margin-bottom: 20px;
+
+      p {
+        display: contents;
+        letter-spacing: 2px;
+        font-size: 13px;
+        color: #fff;
+      }
+
+      .keyword {
+        margin-top: 20px;
+        background-color: #c8c8c8;
+        color: var(--color-secondary);
+        padding: 5px 10px;
+        display: inline;
+        font-size: 14px;
+        border-radius: 3px;
+
+        a {
+          color: var(--color-secondary);
+        }
+      }
+    }
+  }
+}
