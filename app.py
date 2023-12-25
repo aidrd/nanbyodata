@@ -68,6 +68,12 @@ def index():
 def about_nando():
     return render_template('about_nando.html')
 
+#####
+# DATASETSについて
+## GET: 
+@app.route('/datasets')
+def datasets():
+    return render_template('datasets.html')
 
 #####
 # NANDOについて
