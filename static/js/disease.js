@@ -40,7 +40,14 @@ const nandoId = pathname.slice(nandoIndex + 6);
     ]);
 
     selectedItem();
-    switchingDisplayContents('temp-summary', entryData);
+
+    if (window.location.hash) {
+      const hash = window.location.hash;
+      const hashId = hash.replace('#', '');
+      switchingDisplayContents(hashId, entryData);
+    } else {
+      switchingDisplayContents('temp-summary', entryData);
+    }
   } catch (error) {
     console.error('error:', error);
   }
@@ -709,7 +716,6 @@ function makeSideNavigation(entryData) {
     .querySelectorAll('.specific-bio-resource a')
     .forEach(function (aTag) {
       aTag.addEventListener('click', function (event) {
-        event.preventDefault();
         const classList = this.classList[0];
         const checkBox = document.getElementById('specific-brc-' + classList);
         if (checkBox && !checkBox.checked) {
@@ -794,6 +800,16 @@ function switchingDisplayContents(selectedItemId, entryData) {
       }
     });
   } else {
+    const targetElements = document.querySelectorAll('a');
+
+    targetElements.forEach(function (element) {
+      const classes = element.classList;
+      if ('temp-' + classes[1] === selectedItemId) {
+        element.classList.add('selected');
+      } else {
+        element.classList.remove('selected');
+      }
+    });
     const dataWrapper = document.getElementById('data-wrapper');
     const summary = document.querySelector('.summary-header');
     dataWrapper.insertBefore(summary, dataWrapper.firstChild);
@@ -806,8 +822,6 @@ function selectedItem() {
 
   links.forEach((link) => {
     link.addEventListener('click', (event) => {
-      event.preventDefault();
-
       links.forEach((link) => {
         link.classList.remove('selected');
       });
