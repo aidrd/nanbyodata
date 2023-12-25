@@ -694,6 +694,11 @@ function makeSideNavigation(entryData) {
   });
 
   // specific bio resource
+  const specificBioResource = document.querySelector('.specific-bio-resource');
+
+  specificBioResource.addEventListener('click', function () {
+    window.location.hash = 'temp-specific-bio-resource';
+  });
 
   // check existing tab
   function removeNavItemIfNotExist(entryDataProperty, className) {
