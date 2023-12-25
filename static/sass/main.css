@@ -482,10 +482,10 @@ a:visited, a:hover, a:active {
   margin-bottom: 30px;
 }
 
-.about-page {
+.page-layout {
   overflow: hidden;
 }
-.about-page .about-title {
+.page-layout .title {
   border-radius: 0;
   border-bottom-right-radius: 2000px 250px;
   border-bottom-left-radius: 2000px 250px;
@@ -495,7 +495,7 @@ a:visited, a:hover, a:active {
   padding-right: 250px;
   background: var(--color-primary);
 }
-.about-page .about-title h3 {
+.page-layout .title h3 {
   color: #fff;
   text-align: center;
   display: block;
@@ -503,23 +503,23 @@ a:visited, a:hover, a:active {
   text-align: center;
   padding-top: 100px;
 }
-.about-page .about-title .h3-text {
+.page-layout .title .h3-text {
   text-align: center;
   letter-spacing: 1px;
   color: #fff;
   font-size: 13px;
   padding-bottom: 30px;
 }
-.about-page .container {
+.page-layout .container {
   margin-top: 55px;
 }
-.about-page .container h4 {
+.page-layout .container h4 {
   display: inline-block;
   position: relative;
   font-size: 16px;
   color: var(--color-secondary);
 }
-.about-page .container h4::before {
+.page-layout .container h4::before {
   content: "";
   display: inline-block;
   width: 30px;
@@ -529,56 +529,56 @@ a:visited, a:hover, a:active {
   left: 0;
   margin-top: -15px;
 }
-.about-page .container p {
+.page-layout .container p {
   text-align: left;
   letter-spacing: 1px;
   margin-bottom: 60px;
 }
-.about-page .container p:last-of-type {
+.page-layout .container p:last-of-type {
   margin-bottom: 0;
 }
-.about-page .container .illust-text {
+.page-layout .container .illust-text {
   margin-bottom: 0;
 }
-.about-page .container .about-table {
+.page-layout .container .about-table {
   border-collapse: collapse;
   margin-bottom: 40px;
 }
-.about-page .container .about-table table {
+.page-layout .container .about-table table {
   margin: 0 auto;
   width: 100%;
 }
-.about-page .container .about-table table th {
+.page-layout .container .about-table table th {
   color: #000;
 }
-.about-page .container .about-table table td {
+.page-layout .container .about-table table td {
   border-bottom: 1px dashed #dcdcdc;
   text-align: left;
   font-size: 15px;
 }
-.about-page .container .about-table table td a {
+.page-layout .container .about-table table td a {
   text-decoration: none;
   color: #495aff;
 }
-.about-page .container .about-table table td a:hover {
+.page-layout .container .about-table table td a:hover {
   color: #c0c0c0;
 }
-.about-page .container .about-table table td a::before {
+.page-layout .container .about-table table td a::before {
   font-family: "Font Awesome 5 Free";
   font-weight: 900;
   content: "\f15c";
   margin-right: 8px;
   width: 80%;
 }
-.about-page .container .about-table table th {
+.page-layout .container .about-table table th {
   border-top: 1px solid #c0c0c0;
   border-bottom: 1px solid #c0c0c0;
 }
-.about-page .container .about-table table tr:last-child td {
+.page-layout .container .about-table table tr:last-child td {
   border-bottom: 1px solid #c0c0c0;
 }
-.about-page .container .about-table table td,
-.about-page .container .about-table table th {
+.page-layout .container .about-table table td,
+.page-layout .container .about-table table th {
   padding: 10px;
 }
 
@@ -1159,6 +1159,32 @@ footer .footer__bottom .footer__lisence p:before {
   background-color: #fff;
   color: var(--color-primary);
   padding: 4px 8px;
+}
+
+.table-contents .table thead th {
+  padding: 10px;
+  border-top: none;
+  border-bottom: 1px solid #444;
+  color: #94928d;
+  font-size: 12px;
+  white-space: nowrap;
+  font-weight: 400;
+}
+.table-contents .table tbody tr td {
+  padding: 10px;
+  font-size: 14px;
+  color: #444;
+  border-bottom: 1px solid #dee2e6;
+  white-space: nowrap;
+}
+.table-contents .table tbody tr:last-child td {
+  border-bottom: 1px solid #444;
+}
+.table-contents .table a {
+  text-decoration: underline;
+}
+.table-contents .table a:visited {
+  color: #444;
 }
 
 /* Disease Only */
