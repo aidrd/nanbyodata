@@ -1,10 +1,11 @@
-@use "./variables";
+/* Foundation */
+@use "./foundation/variables";
+@use "./foundation/reset";
+
 @use "./base";
 
 /* Layout */
 @use "./layout/layout";
-
-
 
 /* Component */
 @use "./component/linked-item";
