@@ -7,10 +7,7 @@ body {
 }
 
 #content {
-  overflow: auto;
-  top: 90px;
-  bottom: 0px;
-  position: fixed;
+  overflow: hidden;
 }
 
 .loading-spinner {
@@ -814,7 +811,7 @@ header .intro-text p {
   display: block;
   padding-left: 15px;
   margin-bottom: 15px;
-  margin-top: 24px;
+  margin-top: 12px;
 }
 .temp-title::before {
   content: "";
@@ -968,6 +965,11 @@ details {
 }
 #data-wrapper > .properties {
   padding: 0 0 20px;
+}
+#data-wrapper > div {
+  display: block;
+  padding-top: 70px;
+  margin-top: -70px;
 }
 #data-wrapper details summary {
   color: #fff;
