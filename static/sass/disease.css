@@ -493,10 +493,6 @@ header .intro-text {
   margin-top: 150px;
   z-index: 1039;
 }
-header .intro-text h1 {
-  display: block;
-  font-size: 70px;
-}
 header .intro-text h2 {
   display: block;
   color: var(--color-secondary);

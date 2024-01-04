@@ -5,6 +5,12 @@
   --color-secondary: #13295a;
 }
 
+h1 {
+  margin: 0;
+  padding: 0;
+  font-size: 0;
+}
+
 ul {
   list-style: none;
 }
@@ -924,11 +930,12 @@ div.token-input-dropdown-number-of-hits-facebook {
 /* Navigation */
 .navbar {
   display: block;
-  padding: 15px 25px;
+  padding: 15px 45px;
   background-color: var(--color-primary);
 }
 .navbar a.navbar-brand {
   text-decoration: none;
+  padding: 0;
   margin: 0;
 }
 .navbar a.navbar-brand img.imgtitle {
@@ -991,7 +998,7 @@ div.token-input-dropdown-number-of-hits-facebook {
 /* Main Navigation */
 #mainNav .container {
   flex-wrap: nowrap;
-  align-items: flex-start;
+  align-items: center;
 }
 #mainNav .container .flex-wrapper {
   display: flex;
@@ -1023,12 +1030,12 @@ div.token-input-dropdown-number-of-hits-facebook {
 /* Disease Navigation */
 #diseaseNav .wrapper {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: space-between;
 }
 #diseaseNav .wrapper .navbar-left {
   display: flex;
-  gap: 60px;
+  gap: 45px;
   align-items: center;
 }
 #diseaseNav .wrapper .navbar-left .intro-text {

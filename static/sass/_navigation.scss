@@ -1,11 +1,12 @@
 /* Navigation */
 .navbar {
   display: block;
-  padding: 15px 25px;
+  padding: 15px 45px;
   background-color: var(--color-primary);
 
   a.navbar-brand {
     text-decoration: none;
+    padding: 0;
     margin: 0;
 
     img.imgtitle {
@@ -78,7 +79,7 @@
 #mainNav {
   .container {
     flex-wrap: nowrap;
-    align-items: flex-start;
+    align-items: center;
 
     .flex-wrapper {
       display: flex;
@@ -115,12 +116,12 @@
 #diseaseNav {
   .wrapper {
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     justify-content: space-between;
 
     .navbar-left {
       display: flex;
-      gap: 60px;
+      gap: 45px;
       align-items: center;
 
       .intro-text {
