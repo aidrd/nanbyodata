@@ -1,3 +1,7 @@
+import { navToggle } from './navigation.js';
+
+navToggle();
+
 // dispaly: none until loading is finished
 document.getElementById('content').style.display = 'none';
 document.getElementById('sidebar').style.display = 'none';
@@ -394,7 +398,8 @@ function makeDiseaseDefinition(entryData) {
       const content = tabWrap.querySelector(`.${item.class}`);
 
       content.textContent = item.desc;
-      currentTab = tabWrap.querySelector(`#disease-${item.class}`);
+      const currentTab = tabWrap.querySelector(`#disease-${item.class}`);
+
       if (currentTab && isFirstTab) {
         currentTab.checked = true;
         isFirstTab = false;
@@ -566,7 +571,7 @@ function makeSpecificBioResource(entryData) {
         input.remove();
       } else {
         const content = tabWrap.querySelector(`.${item.id}`);
-        currentTab = tabWrap.querySelector(`#specific-brc-${item.id}`);
+        const currentTab = tabWrap.querySelector(`#specific-brc-${item.id}`);
         if (currentTab && isFirstTab) {
           currentTab.checked = true;
           isFirstTab = false;
