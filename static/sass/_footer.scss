@@ -1,17 +1,13 @@
-/* Reset CSS */
-p,
-ul {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-ul {
-  list-style: none;
-}
-
 /* Footer */
 footer {
+  /* Reset CSS */
+  p,
+  ul {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
   margin-top: 100px;
   overflow: hidden;
 

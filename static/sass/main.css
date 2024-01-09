@@ -1,7 +1,18 @@
 @charset "UTF-8";
+/* Foundation */
 :root {
   --color-primary: #147786;
   --color-secondary: #13295a;
+}
+
+h1 {
+  margin: 0;
+  padding: 0;
+  font-size: 0;
+}
+
+ul {
+  list-style: none;
 }
 
 body {
@@ -34,108 +45,6 @@ h5 {
 .br::before {
   content: "\a";
   white-space: pre;
-}
-
-#kv-wrap {
-  overflow: hidden;
-}
-#kv-wrap header {
-  top: 24px;
-}
-#kv-wrap header.masthead {
-  position: relative;
-}
-#kv-wrap header.masthead .main_top {
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 60%;
-  max-width: 825px;
-}
-#kv-wrap header.masthead .main_bottom {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 40%;
-  max-width: 550px;
-}
-#kv-wrap header.jumbotron {
-  border-radius: 0;
-  border-bottom-right-radius: 2000px 250px;
-  border-bottom-left-radius: 2000px 250px;
-  margin-left: -250px;
-  margin-right: -250px;
-  padding-left: 250px;
-  padding-right: 250px;
-  background: var(--color-primary);
-}
-#kv-wrap header.jumbotron-disease {
-  border-radius: 0;
-  border-bottom-right-radius: 2000px 250px;
-  border-bottom-left-radius: 2000px 250px;
-  margin-left: -250px;
-  margin-right: -250px;
-  padding-left: 250px;
-  padding-right: 250px;
-  padding-top: 57px;
-  padding-bottom: 50px;
-  background: var(--color-secondary);
-}
-#kv-wrap header .intro-text {
-  text-align: center;
-  margin-top: 20px;
-  z-index: 1039;
-  margin-bottom: 20px;
-}
-#kv-wrap header .intro-text h1 {
-  display: block;
-  font-size: 70px;
-}
-#kv-wrap header .intro-text h2 {
-  display: block;
-  color: var(--color-secondary);
-  font-size: 20px;
-}
-#kv-wrap header .intro-text p {
-  display: block;
-  letter-spacing: 2px;
-  font-size: 13px;
-}
-#kv-wrap header .intro-text form {
-  margin-bottom: 15px;
-}
-#kv-wrap header .intro-text .token-input-list-facebook {
-  padding: 0 20px;
-}
-#kv-wrap header .intro-text search {
-  width: 70%;
-  outline: none;
-  padding: 7px 20px;
-  background: #fff;
-  border: 1px solid #dfe1e5;
-  box-shadow: none;
-  border-radius: 24px;
-  height: 44px;
-  margin: 0 auto;
-}
-#kv-wrap header .intro-text p {
-  color: #fff;
-  display: contents;
-}
-#kv-wrap header .intro-text .keyword {
-  margin-top: 20px;
-  background-color: #c8c8c8;
-  color: var(--color-secondary);
-  padding: 5px 10px;
-  display: inline;
-  font-size: 14px;
-  border-radius: 3px;
-}
-#kv-wrap header .intro-text .keyword a {
-  color: var(--color-secondary);
-}
-#kv-wrap header .intro-text .keyword a:link {
-  color: var(--color-secondary);
 }
 
 a:visited, a:hover, a:active {
@@ -233,87 +142,6 @@ a:visited, a:hover, a:active {
     opacity: 1;
   }
 }
-#service {
-  margin-top: 70px;
-}
-#service .container {
-  display: block;
-  margin: 0 auto;
-}
-#service .container + .container {
-  margin-top: 70px;
-}
-#service .container h3 {
-  text-align: center;
-  display: block;
-  color: var(--color-secondary);
-  font-size: 20px;
-  margin-bottom: 1rem;
-}
-#service .container p {
-  text-align: center;
-  letter-spacing: 1px;
-  margin-bottom: 20px;
-}
-#service .container .cardWrapper {
-  display: flex;
-  margin-bottom: 50px;
-  justify-content: center;
-}
-#service .container .card {
-  width: 290px;
-  height: auto;
-  border-radius: 0;
-  margin: 0 20px;
-  border: none;
-  box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
-}
-#service .container .card-body {
-  padding: 2rem;
-}
-#service .container .card-body .icon2 {
-  width: 60px;
-  padding-bottom: 20px;
-  /* height: 30%; */
-  display: block;
-  margin: 0 auto;
-}
-#service .container .card-body .card-title {
-  text-align: center;
-  font-size: 17px;
-  color: var(--color-secondary);
-  letter-spacing: 1px;
-}
-#service .container .card-body .card-text {
-  text-align: left;
-}
-#service .container .card-body .btn-primary {
-  background-color: transparent;
-  cursor: pointer;
-  outline: none;
-  padding: 0;
-  -webkit-appearance: none;
-     -moz-appearance: none;
-          appearance: none;
-  border-radius: 0;
-  width: 100%;
-  border: 1px solid #495aff;
-  color: #495aff;
-  font-size: 13px;
-  padding: 5px 0;
-  margin-bottom: 20px;
-}
-#service .container .card-body .btn-primary:focus {
-  box-shadow: none;
-}
-#service .container .card-body .btn-primary:hover, #service .container .card-body .btn-primary:active {
-  color: #ffffff;
-  background-color: #495aff;
-}
-#service .container .card-img-top {
-  border-radius: 0;
-}
-
 .about {
   padding: 70px 0;
   background-color: #edf3ff;
@@ -825,18 +653,293 @@ a.link[target=_blank]::after {
   margin-bottom: 12px;
 }
 
+/* Component */
+.linked-item {
+  margin-bottom: 3px;
+  border: var(--color-primary) 1px solid;
+  border-radius: 3px;
+  background-color: var(--color-primary);
+  font-size: 12px;
+  font-weight: bold;
+  line-height: 1.4;
+  margin-right: 2px;
+}
+.linked-item > a {
+  color: #fff;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  padding: 4px 8px;
+}
+.linked-item.-unlinked {
+  background-color: #fff;
+  color: var(--color-primary);
+  padding: 4px 8px;
+}
+
+ul.token-input-list-facebook {
+  overflow: hidden;
+  cursor: text;
+  font-size: 12px;
+  font-family: Verdana;
+  background-color: #fff;
+  list-style-type: none;
+  clear: left;
+  outline: none;
+  border: 1px solid #dfe1e5;
+  box-shadow: none;
+  border-radius: 30px;
+  max-width: 580px;
+}
+
+ul.token-input-list-facebook li input {
+  font-size: 16px;
+  border: 0;
+  width: 100px;
+  padding: 3px 8px;
+  background-color: white;
+  margin: 2px 0;
+  -webkit-appearance: caret;
+}
+
+li.token-input-token-facebook {
+  overflow: hidden;
+  height: auto !important;
+  height: 15px;
+  margin: 3px;
+  padding: 1px 3px;
+  background-color: #eff2f7;
+  color: #000;
+  cursor: default;
+  border: 1px solid #ccd5e4;
+  font-size: 11px;
+  border-radius: 5px;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  float: left;
+  white-space: nowrap;
+}
+
+li.token-input-token-facebook p {
+  display: inline;
+  padding: 0;
+  margin: 0;
+}
+
+li.token-input-token-facebook span {
+  color: #a6b3cf;
+  margin-left: 5px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+li.token-input-selected-token-facebook {
+  background-color: #5670a6;
+  border: 1px solid #3b5998;
+  color: #fff;
+}
+
+li.token-input-input-token-facebook {
+  float: left;
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+
+div.token-input-dropdown-facebook {
+  position: absolute;
+  width: 400px;
+  background-color: #fff;
+  overflow: hidden;
+  border-left: 1px solid #ccc;
+  border-right: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+  cursor: default;
+  font-size: 11px;
+  font-family: Verdana;
+  z-index: 1031;
+}
+
+div.token-input-dropdown-facebook p {
+  margin: 0;
+  padding: 5px;
+  font-weight: bold;
+  color: #777;
+}
+
+div.token-input-dropdown-facebook ul {
+  margin: 0;
+  padding: 0;
+}
+
+div.token-input-dropdown-facebook ul li {
+  background-color: #fff;
+  padding: 3px;
+  margin: 0;
+  list-style-type: none;
+}
+
+div.token-input-dropdown-facebook ul li.token-input-dropdown-item-facebook {
+  background-color: #fff;
+}
+
+div.token-input-dropdown-facebook ul li.token-input-dropdown-item2-facebook {
+  background-color: #fff;
+}
+
+div.token-input-dropdown-facebook ul li em {
+  font-weight: bold;
+  font-style: normal;
+}
+
+div.token-input-dropdown-facebook ul li.token-input-selected-dropdown-item-facebook {
+  background-color: #3b5998;
+  color: #fff;
+}
+
+@font-face {
+  font-family: "Glyphicons Halflings";
+  src: url("../fonts/bootstrap/glyphicons-halflings-regular.eot");
+  src: url("../fonts/bootstrap/glyphicons-halflings-regular.eot%3F") format("embedded-opentype"), url("../fonts/bootstrap/glyphicons-halflings-regular.woff2") format("woff2"), url("../fonts/bootstrap/glyphicons-halflings-regular.woff") format("woff"), url("../fonts/bootstrap/glyphicons-halflings-regular.ttf") format("truetype"), url("../fonts/bootstrap/glyphicons-halflings-regular.svg") format("svg");
+}
+.glyphicon {
+  position: relative;
+  top: 1px;
+  display: inline-block;
+  font-family: "Glyphicons Halflings";
+  font-style: normal;
+  font-weight: normal;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.glyphicon-info-sign:before {
+  content: "\e086";
+}
+
+#tokeninput {
+  width: 80%;
+  margin: 0px auto;
+}
+
+li.token-input-token-result-facebook {
+  font-size: 16px;
+}
+
+li.token-input-token-result-facebook span.token-input-token-word-facebook.token-input-token-information-facebook {
+  top: 4px;
+  font-size: 20px;
+}
+
+li.token-input-token-result-facebook span.token-input-token-word-facebook.token-input-token-id-facebook {
+  font-size: 14px;
+}
+
+li.token-input-token-result-facebook span.token-input-token-word-facebook.token-input-token-name-facebook {
+  color: #3777B5 !important;
+}
+
+li.token-input-token-result-facebook.token-input-selected-dropdown-item-facebook span.token-input-token-word-facebook.token-input-token-name-facebook {
+  /*	color: inherit !important;	/* マウスオーバー時の色をとりあえず、デフォルトにしておく */
+  /*	color: #D0E8FF !important;*/
+  /*	color: #f5c6ce !important;*/
+  color: #f5d7dc !important;
+}
+
+li.token-input-token-result-facebook span.token-input-token-word-facebook.token-input-token-information-facebook {
+  /*	cursor: pointer !important;*/
+}
+
+li.token-input-token-result-facebook span.token-input-token-word-facebook.token-input-token-synonym-facebook {
+  /*	color: #3777B5 !important;*/
+}
+
+div.token-input-dropdown-facebook {
+  overflow: auto;
+}
+
+div.token-input-dropdown-number-of-hits-facebook {
+  color: #707070;
+  font-weight: bold;
+  padding: 4px;
+}
+
+.popup-hierarchy-hpo-results-tooltip-title-facebook {
+  display: none;
+  color: #fff;
+  background-color: #bfbfbf;
+  font-weight: bold;
+  padding: 4px;
+}
+
+.popup-hierarchy-hpo-content-table-facebook {
+  display: table;
+  border-collapse: separate;
+  border-spacing: 2px;
+  margin: 0 auto;
+}
+
+.popup-hierarchy-hpo-content-tr-facebook {
+  display: table-row;
+}
+
+.popup-hierarchy-hpo-content-th-facebook {
+  display: table-cell;
+  text-align: left;
+  vertical-align: top;
+  font-weight: bold;
+  white-space: nowrap;
+  width: 1%;
+}
+
+.popup-hierarchy-hpo-content-td-facebook {
+  display: table-cell;
+  text-align: left;
+  vertical-align: top;
+}
+
+.popup-hierarchy-hpo-content-td-colon-facebook {
+  display: table-cell;
+  text-align: center;
+  vertical-align: top;
+  white-space: nowrap;
+  width: 1%;
+}
+
+.popup-hierarchy-hpo-results-tooltip-facebook .popup-hierarchy-hpo-content-table-facebook {
+  background-color: #ffffff;
+  color: #4B5270;
+  border: 0px solid #2A3356;
+  border-radius: 6px;
+  padding: 10px;
+  box-shadow: 0 24px 38px 3px rgba(0, 0, 0, 0.14), 0 9px 46px 8px rgba(0, 0, 0, 0.12), 0 11px 15px -7px rgba(0, 0, 0, 0.2);
+  width: 100%;
+}
+
+.popup-hierarchy-hpo-results-tooltip-facebook .popup-hierarchy-hpo-content-table-facebook .popup-hierarchy-hpo-content-td-facebook {
+  color: #848484;
+}
+
+.popup-hierarchy-hpo-results-tooltip-facebook .popup-hierarchy-hpo-content-table-facebook .popup-hierarchy-hpo-content-td-name-facebook,
+.popup-hierarchy-hpo-results-tooltip-facebook .popup-hierarchy-hpo-content-table-facebook .popup-hierarchy-hpo-content-td-english-facebook {
+  color: #3777B5;
+}
+
+/*スクロールバー全体*/
 /* Navigation */
 .navbar {
   display: block;
-  padding: 15px 25px;
+  padding: 15px 45px;
   background-color: var(--color-primary);
 }
 .navbar a.navbar-brand {
   text-decoration: none;
+  padding: 0;
   margin: 0;
 }
 .navbar a.navbar-brand img.imgtitle {
-  width: 220px;
+  width: 180px;
   display: block;
 }
 .navbar button.navbar-toggler {
@@ -895,7 +998,7 @@ a.link[target=_blank]::after {
 /* Main Navigation */
 #mainNav .container {
   flex-wrap: nowrap;
-  align-items: flex-start;
+  align-items: center;
 }
 #mainNav .container .flex-wrapper {
   display: flex;
@@ -927,22 +1030,21 @@ a.link[target=_blank]::after {
 /* Disease Navigation */
 #diseaseNav .wrapper {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: space-between;
 }
 #diseaseNav .wrapper .navbar-left {
   display: flex;
-  gap: 60px;
+  gap: 45px;
   align-items: center;
-}
-#diseaseNav .wrapper .navbar-left img.imgtitle {
-  width: 180px;
 }
 #diseaseNav .wrapper .navbar-left .intro-text {
   width: 700px;
 }
 #diseaseNav .wrapper .navbar-left .intro-text ul.token-input-list-facebook {
   margin: 0;
+  padding: 8px 20px;
+  max-width: 690px;
   width: 100%;
 }
 #diseaseNav .wrapper .navbar-left .intro-text ul.token-input-list-facebook li.token-input-input-token-facebook #token-input-tokeninput {
@@ -958,22 +1060,99 @@ a.link[target=_blank]::after {
   padding-top: 15px;
 }
 
-/* Reset CSS */
-p,
-ul {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+#service {
+  margin-top: 70px;
 }
-
-ul {
-  list-style: none;
+#service .container {
+  display: block;
+  margin: 0 auto;
+}
+#service .container #third {
+  padding-top: 120px;
+  margin-top: -50px;
+}
+#service .container h3 {
+  text-align: center;
+  display: block;
+  color: var(--color-secondary);
+  font-size: 20px;
+  margin-bottom: 1rem;
+}
+#service .container p {
+  text-align: center;
+  letter-spacing: 1px;
+  margin-bottom: 20px;
+}
+#service .container .cardWrapper {
+  display: flex;
+  margin-bottom: 50px;
+  justify-content: center;
+}
+#service .container .card {
+  width: 290px;
+  height: auto;
+  border-radius: 0;
+  margin: 0 20px;
+  border: none;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
+}
+#service .container .card-body {
+  padding: 2rem;
+}
+#service .container .card-body .icon2 {
+  width: 60px;
+  padding-bottom: 20px;
+  /* height: 30%; */
+  display: block;
+  margin: 0 auto;
+}
+#service .container .card-body .card-title {
+  text-align: center;
+  font-size: 17px;
+  color: var(--color-secondary);
+  letter-spacing: 1px;
+}
+#service .container .card-body .card-text {
+  text-align: left;
+}
+#service .container .card-body .btn-primary {
+  background-color: transparent;
+  cursor: pointer;
+  outline: none;
+  padding: 0;
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  border-radius: 0;
+  width: 100%;
+  border: 1px solid #495aff;
+  color: #495aff;
+  font-size: 13px;
+  padding: 5px 0;
+  margin-bottom: 20px;
+}
+#service .container .card-body .btn-primary:focus {
+  box-shadow: none;
+}
+#service .container .card-body .btn-primary:hover, #service .container .card-body .btn-primary:active {
+  color: #ffffff;
+  background-color: #495aff;
+}
+#service .container .card-img-top {
+  border-radius: 0;
 }
 
 /* Footer */
 footer {
+  /* Reset CSS */
   margin-top: 100px;
   overflow: hidden;
+}
+footer p,
+footer ul {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 footer .footer__wrapper {
   padding-top: 40px;
@@ -1137,28 +1316,51 @@ footer .footer__bottom .footer__lisence p:before {
   background: url(../img/by.svg) no-repeat;
 }
 
-/* Component */
-.linked-item {
-  margin-bottom: 3px;
-  border: var(--color-primary) 1px solid;
-  border-radius: 3px;
-  background-color: var(--color-primary);
-  font-size: 12px;
-  font-weight: bold;
-  line-height: 1.4;
-  margin-right: 2px;
+/* Top Only */
+#kv-wrap {
+  overflow: hidden;
 }
-.linked-item > a {
+#kv-wrap header.jumbotron {
+  position: relative;
+  top: 24px;
+  border-radius: 0;
+  border-bottom-right-radius: 2000px 250px;
+  border-bottom-left-radius: 2000px 250px;
+  margin-left: -250px;
+  margin-right: -250px;
+  padding-left: 250px;
+  padding-right: 250px;
+  background: var(--color-primary);
+}
+#kv-wrap header ul.token-input-list-facebook {
+  padding: 5px 20px;
+  margin: 0 auto;
+  margin-top: 10px;
+  margin-bottom: 19px;
+}
+#kv-wrap header .intro-text {
+  text-align: center;
+  margin-top: 20px;
+  z-index: 1039;
+  margin-bottom: 20px;
+}
+#kv-wrap header .intro-text p {
+  display: contents;
+  letter-spacing: 2px;
+  font-size: 13px;
   color: #fff;
-  text-decoration: none;
-  display: flex;
-  align-items: center;
-  padding: 4px 8px;
 }
-.linked-item.-unlinked {
-  background-color: #fff;
-  color: var(--color-primary);
-  padding: 4px 8px;
+#kv-wrap header .intro-text .keyword {
+  margin-top: 20px;
+  background-color: #c8c8c8;
+  color: var(--color-secondary);
+  padding: 5px 10px;
+  display: inline;
+  font-size: 14px;
+  border-radius: 3px;
+}
+#kv-wrap header .intro-text .keyword a {
+  color: var(--color-secondary);
 }
 
 /* Disease Only */

@@ -1,15 +1,16 @@
 /* Navigation */
 .navbar {
   display: block;
-  padding: 15px 25px;
+  padding: 15px 45px;
   background-color: var(--color-primary);
 
   a.navbar-brand {
     text-decoration: none;
+    padding: 0;
     margin: 0;
 
     img.imgtitle {
-      width: 220px;
+      width: 180px;
       display: block;
     }
   }
@@ -78,7 +79,7 @@
 #mainNav {
   .container {
     flex-wrap: nowrap;
-    align-items: flex-start;
+    align-items: center;
 
     .flex-wrapper {
       display: flex;
@@ -115,23 +116,21 @@
 #diseaseNav {
   .wrapper {
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     justify-content: space-between;
 
     .navbar-left {
       display: flex;
-      gap: 60px;
+      gap: 45px;
       align-items: center;
-
-      img.imgtitle {
-        width: 180px;
-      }
 
       .intro-text {
         width: 700px;
 
         ul.token-input-list-facebook {
           margin: 0;
+          padding: 8px 20px;
+          max-width: 690px;
           width: 100%;
 
           li.token-input-input-token-facebook {
