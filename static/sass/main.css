@@ -998,7 +998,11 @@ div.token-input-dropdown-number-of-hits-facebook {
 /* Main Navigation */
 #mainNav .container {
   flex-wrap: nowrap;
-  align-items: center;
+  align-items: flex-start;
+}
+#mainNav .container img.imgtitle {
+  position: relative;
+  top: 4px;
 }
 #mainNav .container .flex-wrapper {
   display: flex;
@@ -1030,7 +1034,7 @@ div.token-input-dropdown-number-of-hits-facebook {
 /* Disease Navigation */
 #diseaseNav .wrapper {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
 }
 #diseaseNav .wrapper .navbar-left {
@@ -1051,6 +1055,8 @@ div.token-input-dropdown-number-of-hits-facebook {
   height: 24px;
 }
 #diseaseNav .wrapper .navbar-right .rigth-wrapper {
+  position: relative;
+  top: 4px;
   display: flex;
   flex-wrap: nowrap;
   align-items: center;

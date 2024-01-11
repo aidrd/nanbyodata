@@ -1,6 +1,8 @@
 import { navToggle } from './navigation.js';
+import { focusInput } from './focusInput.js';
 
 navToggle();
+focusInput();
 
 // It is not used below and may not be a problem to delete.  It is left commented out just in case.
 
