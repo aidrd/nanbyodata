@@ -39,7 +39,7 @@ const nandoId = pathname.slice(nandoIndex + 6);
       'nanbyodata_get_riken_brc_mouse_info_by_nando_id'
     );
     const dnaData = await fetchData(
-      'nanbyodata_get_riken_brc_cell_info_by_nando_id'
+      'nanbyodata_get_riken_brc_dna_info_by_nando_id'
     );
     const variantData = await fetchData('nanbyodata_get_variant_by_nando_id');
 
@@ -263,27 +263,20 @@ function makeLinksList(entryData) {
   }
 }
 
-async function makeProperties() {
-  try {
-    const url = `https://nanbyodata.jp/sparqlist/api/nanbyodata_get_gene_by_nando_id?nando_id=${nandoId}`;
+function makeProperties(geneData) {
+  const causativeGene = document.getElementById('temp-causative-gene');
+  const properties = causativeGene.querySelector('#temp-properties');
+  const data = geneData;
 
-    const causativeGene = document.getElementById('temp-causative-gene');
-    const properties = causativeGene.querySelector('#temp-properties');
-    const response = await fetch(url);
-    if (!response.ok) {
-      throw new Error(`HTTP Error status code: ${response.status}`);
-    }
-    const data = await response.json();
-
-    if (Array.isArray(data) && data.length === 0) {
-      causativeGene.remove();
-    } else {
-      // to avoid hitting api twice Use createObjectURL
-      const blob = new Blob([JSON.stringify(data)], {
-        type: 'application/json',
-      });
-      const objectUrl = URL.createObjectURL(blob);
-      properties.innerHTML = `
+  if (Array.isArray(data) && data.length === 0) {
+    causativeGene.remove();
+  } else {
+    // to avoid hitting api twice Use createObjectURL
+    const blob = new Blob([JSON.stringify(data)], {
+      type: 'application/json',
+    });
+    const objectUrl = URL.createObjectURL(blob);
+    properties.innerHTML = `
       <togostanza-pagination-table
       data-url="${objectUrl}"
       data-type="json"
@@ -296,17 +289,12 @@ async function makeProperties() {
       ></togostanza-pagination-table>
       `;
 
-      const tempSpanElement = document.querySelector(
-        '#temp-causative-gene .data-num'
-      );
-      const navSpanElement = document.querySelector(
-        '.causative-gene .data-num'
-      );
-      tempSpanElement.innerText = data.length;
-      navSpanElement.innerText = data.length;
-    }
-  } catch (error) {
-    console.error('Failed to get data:', error);
+    const tempSpanElement = document.querySelector(
+      '#temp-causative-gene .data-num'
+    );
+    const navSpanElement = document.querySelector('.causative-gene .data-num');
+    tempSpanElement.innerText = data.length;
+    navSpanElement.innerText = data.length;
   }
 }
 
@@ -436,30 +424,23 @@ function makeDiseaseDefinition(entryData) {
   }
 }
 
-async function makeMedicalGeneticTestingInfo() {
-  try {
-    const url = `https://nanbyodata.jp/sparqlist/api/nanbyodata_get_gene_test?nando_id=${nandoId}`;
+function makeMedicalGeneticTestingInfo(geneTestData) {
+  const medicalGeneticTestingInfo = document.getElementById(
+    'temp-medical-genetic-testing-info'
+  );
+  const inspectionView =
+    medicalGeneticTestingInfo.querySelector('.inspection-view');
+  const data = geneTestData;
 
-    const medicalGeneticTestingInfo = document.getElementById(
-      'temp-medical-genetic-testing-info'
-    );
-    const inspectionView =
-      medicalGeneticTestingInfo.querySelector('.inspection-view');
-    const response = await fetch(url);
-    if (!response.ok) {
-      throw new Error(`HTTP Error status code: ${response.status}`);
-    }
-    const data = await response.json();
-
-    if (Array.isArray(data) && data.length === 0) {
-      medicalGeneticTestingInfo.remove();
-    } else {
-      // to avoid hitting api twice Use createObjectURL
-      const blob = new Blob([JSON.stringify(data)], {
-        type: 'application/json',
-      });
-      const objectUrl = URL.createObjectURL(blob);
-      inspectionView.innerHTML = `
+  if (Array.isArray(data) && data.length === 0) {
+    medicalGeneticTestingInfo.remove();
+  } else {
+    // to avoid hitting api twice Use createObjectURL
+    const blob = new Blob([JSON.stringify(data)], {
+      type: 'application/json',
+    });
+    const objectUrl = URL.createObjectURL(blob);
+    inspectionView.innerHTML = `
       <togostanza-pagination-table
       data-url="${objectUrl}"
       data-type="json"
@@ -472,44 +453,34 @@ async function makeMedicalGeneticTestingInfo() {
       ></togostanza-pagination-table>
       `;
 
-      const tempSpanElement = document.querySelector(
-        '#temp-medical-genetic-testing-info .data-num'
-      );
-      const navSpanElement = document.querySelector(
-        '.medical-genetic-testing-info .data-num'
-      );
-      tempSpanElement.innerText = data.length;
-      navSpanElement.innerText = data.length;
-    }
-  } catch (error) {
-    console.error('Failed to get data:', error);
+    const tempSpanElement = document.querySelector(
+      '#temp-medical-genetic-testing-info .data-num'
+    );
+    const navSpanElement = document.querySelector(
+      '.medical-genetic-testing-info .data-num'
+    );
+    tempSpanElement.innerText = data.length;
+    navSpanElement.innerText = data.length;
   }
 }
 
-async function makePhenotypeView() {
-  try {
-    const url = `https://nanbyodata.jp/sparqlist/api/nanbyodata_get_hpo_data_by_nando_id?nando_id=${nandoId}`;
+function makePhenotypeView(hpoData) {
+  const tempPhenotypeView = document.getElementById('temp-phenotype-view');
+  const phenotypeViewJa = tempPhenotypeView.querySelector('.phenotype-ja');
+  const phenotypeViewEn = tempPhenotypeView.querySelector('.phenotype-en');
+  const data = hpoData;
 
-    const tempPhenotypeView = document.getElementById('temp-phenotype-view');
-    const phenotypeViewJa = tempPhenotypeView.querySelector('.phenotype-ja');
-    const phenotypeViewEn = tempPhenotypeView.querySelector('.phenotype-en');
-    const response = await fetch(url);
-    if (!response.ok) {
-      throw new Error(`HTTP Error status code: ${response.status}`);
-    }
-    const data = await response.json();
+  if (Array.isArray(data) && data.length === 0) {
+    tempPhenotypeView.remove();
+  } else {
+    // to avoid hitting api twice Use createObjectURL
+    const blob = new Blob([JSON.stringify(data)], {
+      type: 'application/json',
+    });
+    const objectUrl = URL.createObjectURL(blob);
 
-    if (Array.isArray(data) && data.length === 0) {
-      tempPhenotypeView.remove();
-    } else {
-      // to avoid hitting api twice Use createObjectURL
-      const blob = new Blob([JSON.stringify(data)], {
-        type: 'application/json',
-      });
-      const objectUrl = URL.createObjectURL(blob);
-
-      // lang ja
-      phenotypeViewJa.innerHTML = `
+    // lang ja
+    phenotypeViewJa.innerHTML = `
       <togostanza-pagination-table
       data-url="${objectUrl}"
       custom-css-url="https://togostanza.github.io/togostanza-themes/contrib/nanbyodata.css"
@@ -522,8 +493,8 @@ async function makePhenotypeView() {
         ></togostanza-pagination-table>
         `;
 
-      // lang eng
-      phenotypeViewEn.innerHTML = `
+    // lang eng
+    phenotypeViewEn.innerHTML = `
       <togostanza-pagination-table
       data-url="${objectUrl}"
       custom-css-url="https://togostanza.github.io/togostanza-themes/contrib/nanbyodata.css"
@@ -536,21 +507,16 @@ async function makePhenotypeView() {
         ></togostanza-pagination-table>
         `;
 
-      const tempSpanElement = document.querySelector(
-        '#temp-phenotype-view .data-num'
-      );
-      const navSpanElement = document.querySelector(
-        '.phenotype-view .data-num'
-      );
-      tempSpanElement.innerText = data.length;
-      navSpanElement.innerText = data.length;
-    }
-  } catch (error) {
-    console.error('Failed to get data:', error);
+    const tempSpanElement = document.querySelector(
+      '#temp-phenotype-view .data-num'
+    );
+    const navSpanElement = document.querySelector('.phenotype-view .data-num');
+    tempSpanElement.innerText = data.length;
+    navSpanElement.innerText = data.length;
   }
 }
 
-async function makeSpecificBioResource() {
+function makeSpecificBioResource(cellData, mouseData, dnaData) {
   const specificBioResource = document.getElementById(
     'temp-specific-bio-resource'
   );
@@ -560,47 +526,48 @@ async function makeSpecificBioResource() {
   let isMusData = false;
   let isDnaData = false;
 
-  const cellResponse = await fetch(
-    `https://nanbyodata.jp/sparqlist/api/nanbyodata_get_riken_brc_cell_info_by_nando_id?nando_id=${nandoId}`
-  );
-  if (!cellResponse.ok) {
-    throw new Error(`HTTP Error status code: ${cellResponse.status}`);
-  }
-  const cellData = await cellResponse.json();
-
-  if (Array.isArray(cellData) && cellData.length === 0) {
-    isCellData = false;
-  } else {
+  let cellObject = null;
+  if (Array.isArray(cellData) && cellData.length > 0) {
     isCellData = true;
+    const blob = new Blob([JSON.stringify(cellData)], {
+      type: 'application/json',
+    });
+    cellObject = URL.createObjectURL(blob);
   }
 
-  const musResponse = await fetch(
-    `https://nanbyodata.jp/sparqlist/api/nanbyodata_get_riken_brc_mouse_info_by_nando_id?nando_id=${nandoId}`
-  );
-  if (!musResponse.ok) {
-    throw new Error(`HTTP Error status code: ${musResponse.status}`);
-  }
-  const musData = await musResponse.json();
-
-  if (Array.isArray(musData) && musData.length === 0) {
-    isMusData = false;
-  } else {
+  let mouseObject = null;
+  if (Array.isArray(mouseData) && mouseData.length > 0) {
     isMusData = true;
+    const blob = new Blob([JSON.stringify(mouseData)], {
+      type: 'application/json',
+    });
+    mouseObject = URL.createObjectURL(blob);
   }
 
-  const dnaResponse = await fetch(
-    `https://nanbyodata.jp/sparqlist/api/nanbyodata_get_riken_brc_dna_info_by_nando_id?nando_id=${nandoId}`
-  );
-  if (!dnaResponse.ok) {
-    throw new Error(`HTTP Error status code: ${dnaResponse.status}`);
-  }
-  const dnaData = await dnaResponse.json();
-
-  if (Array.isArray(dnaData) && dnaData.length === 0) {
-    isDnaData = false;
-  } else {
+  let dnaObject = null;
+  if (Array.isArray(dnaData) && dnaData.length > 0) {
     isDnaData = true;
+    const blob = new Blob([JSON.stringify(dnaData)], {
+      type: 'application/json',
+    });
+    dnaObject = URL.createObjectURL(blob);
   }
+
+  // check existing tab
+  function removeNavItemIfNotExist(entryDataProperty, className) {
+    if (!entryDataProperty) {
+      const navItem = document.querySelector(
+        '.specific-bio-resource .' + className + '.nav-link'
+      );
+      if (navItem) {
+        navItem.parentElement.remove();
+      }
+    }
+  }
+
+  removeNavItemIfNotExist(isCellData, 'cell');
+  removeNavItemIfNotExist(isMusData, 'mus');
+  removeNavItemIfNotExist(isDnaData, 'dna');
 
   const items = [
     {
@@ -609,6 +576,8 @@ async function makeSpecificBioResource() {
       url: `https://nanbyodata.jp/sparqlist/api/nanbyodata_get_riken_brc_cell_info_by_nando_id?nando_id=${nandoId}`,
       columns:
         '[{&quot;id&quot;:&quot;ID&quot;,&quot;label&quot;:&quot;Cell No.&quot;},{&quot;id&quot;:&quot;Cell_name&quot;,&quot;label&quot;:&quot;Cell name&quot;},{&quot;id&quot;:&quot;Homepage&quot;,&quot;label&quot;:&quot;Homepage&quot;,&quot;link&quot;:&quot;Homepage&quot;,&quot;target&quot;:&quot;_blank&quot;},{&quot;id&quot;:&quot;Description_e&quot;,&quot;label&quot;:&quot;Description (EN)&quot;},{&quot;id&quot;:&quot;Description_j&quot;,&quot;label&quot;:&quot;Description (JA)&quot;}]',
+      data: cellData,
+      object: cellObject,
     },
     {
       existing: isMusData,
@@ -616,6 +585,8 @@ async function makeSpecificBioResource() {
       url: `https://nanbyodata.jp/sparqlist/api/nanbyodata_get_riken_brc_mouse_info_by_nando_id?nando_id=${nandoId}`,
       columns:
         '[{&quot;id&quot;:&quot;mouse_id&quot;,&quot;label&quot;:&quot;RIKEN_BRC No.&quot;},{&quot;id&quot;:&quot;hp&quot;,&quot;label&quot;:&quot;Homepage&quot;,&quot;link&quot;:&quot;Homepage&quot;,&quot;target&quot;:&quot;_blank&quot;},{&quot;id&quot;:&quot;mouse_name&quot;,&quot;label&quot;:&quot;Strain name&quot;},{&quot;id&quot;:&quot;description&quot;,&quot;label&quot;:&quot;Strain description&quot;}]',
+      data: mouseData,
+      object: mouseObject,
     },
     {
       existing: isDnaData,
@@ -623,6 +594,8 @@ async function makeSpecificBioResource() {
       url: `https://nanbyodata.jp/sparqlist/api/nanbyodata_get_riken_brc_dna_info_by_nando_id?nando_id=${nandoId}`,
       columns:
         '[{&quot;id&quot;:&quot;gene_id&quot;,&quot;label&quot;:&quot;Catalog number&quot;},{&quot;id&quot;:&quot;hp&quot;,&quot;label&quot;:&quot;Homepage&quot;,&quot;link&quot;:&quot;hp&quot;,&quot;target&quot;:&quot;_blank&quot;},{&quot;id&quot;:&quot;gene_label&quot;,&quot;label&quot;:&quot;Name&quot;},{&quot;id&quot;:&quot;ncbi_gene&quot;,&quot;label&quot;:&quot;NCBI gene link&quot;,&quot;link&quot;:&quot;ncbi_gene&quot;,&quot;target&quot;:&quot;_blank&quot;}]',
+      data: dnaData,
+      object: dnaObject,
     },
   ];
 
@@ -646,58 +619,38 @@ async function makeSpecificBioResource() {
         }
         content.innerHTML = `
         <togostanza-pagination-table data-type="json"
-          data-url="${item.url}"
+          data-url="${item.object}"
           columns="${item.columns}"
           custom-css-url="https://togostanza.github.io/togostanza-themes/contrib/nanbyodata.css"
           page-size-option="100"
           page-slider="fales">
         </togostanza-pagination-table>
       `;
-        fetch(item.url)
-          .then((response) => {
-            if (!response.ok) {
-              throw new Error(`HTTP Error status code: ${response.status}`);
-            }
-            return response.json();
-          })
-          .then((data) => {
-            const tempSpanElement = document.querySelector(
-              `.specific-brc-${item.id} .data-num`
-            );
-            const navSpanElement = document.querySelector(
-              `.${item.id} .data-num`
-            );
-            tempSpanElement.innerText = data.length;
-            navSpanElement.innerText = data.length;
-          })
-          .catch((error) => {
-            console.error('Failed to get data:', error);
-          });
+        const tempSpanElement = document.querySelector(
+          `.specific-brc-${item.id} .data-num`
+        );
+        const navSpanElement = document.querySelector(`.${item.id} .data-num`);
+        tempSpanElement.innerText = item.data.length;
+        navSpanElement.innerText = item.data.length;
       }
     });
   }
 }
 
-async function makeVariant(entryData) {
-  try {
-    const url = `https://nanbyodata.jp/sparqlist/api/nanbyodata_get_variant_by_nando_id?nando_id=${nandoId}`;
-    const variant = document.getElementById('temp-variant');
-    const properties = variant.querySelector('#temp-properties');
-    const response = await fetch(url);
-    if (!response.ok) {
-      throw new Error(`HTTP Error status code: ${response.status}`);
-    }
-    const data = await response.json();
+function makeVariant(entryData, variantData) {
+  const variant = document.getElementById('temp-variant');
+  const properties = variant.querySelector('#temp-properties');
+  const data = variantData;
 
-    if (Array.isArray(data) && data.length === 0) {
-      variant.remove();
-    } else {
-      // to avoid hitting api twice Use createObjectURL
-      const blob = new Blob([JSON.stringify(data)], {
-        type: 'application/json',
-      });
-      const objectUrl = URL.createObjectURL(blob);
-      properties.innerHTML = `
+  if (Array.isArray(data) && data.length === 0) {
+    variant.remove();
+  } else {
+    // to avoid hitting api twice Use createObjectURL
+    const blob = new Blob([JSON.stringify(data)], {
+      type: 'application/json',
+    });
+    const objectUrl = URL.createObjectURL(blob);
+    properties.innerHTML = `
           <togostanza-pagination-table
               data-url="${objectUrl}"
               data-type="json"
@@ -709,20 +662,17 @@ async function makeVariant(entryData) {
           ></togostanza-pagination-table>
           `;
 
-      const tempSpanElement = document.querySelector(`#temp-variant .data-num`);
-      const navSpanElement = document.querySelector('.variant .data-num');
-      tempSpanElement.innerText = data.length;
-      navSpanElement.innerText = data.length;
-    }
-
-    // When loading finishes
-    document.querySelector('.loading-spinner').style.display = 'none';
-    document.getElementById('content').style.display = 'block';
-    document.getElementById('sidebar').style.display = 'block';
-    makeSideNavigation(entryData);
-  } catch (error) {
-    console.error('Failed to get data:', error);
+    const tempSpanElement = document.querySelector(`#temp-variant .data-num`);
+    const navSpanElement = document.querySelector('.variant .data-num');
+    tempSpanElement.innerText = data.length;
+    navSpanElement.innerText = data.length;
   }
+
+  // When loading finishes
+  document.querySelector('.loading-spinner').style.display = 'none';
+  document.getElementById('content').style.display = 'block';
+  document.getElementById('sidebar').style.display = 'block';
+  makeSideNavigation(entryData);
 }
 
 function makeSideNavigation(entryData) {
@@ -757,24 +707,6 @@ function makeSideNavigation(entryData) {
       liToRemove.parentNode.removeChild(liToRemove);
     }
   });
-
-  // specific bio resource
-
-  // check existing tab
-  function removeNavItemIfNotExist(entryDataProperty, className) {
-    if (!entryDataProperty) {
-      const navItem = document.querySelector(
-        '.specific-bio-resource .' + className + '.nav-link'
-      );
-      if (navItem) {
-        navItem.parentElement.remove();
-      }
-    }
-  }
-
-  removeNavItemIfNotExist(entryData.cell, 'cell');
-  removeNavItemIfNotExist(entryData.mus, 'mus');
-  removeNavItemIfNotExist(entryData.dna, 'dna');
 
   // processing when the table of contents is pressed
   document
