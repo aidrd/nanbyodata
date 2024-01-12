@@ -247,7 +247,7 @@ function makeProperties(entryData) {
   const properties = causativeGene.querySelector('#temp-properties');
   const item = {
     existing: !!entryData.gene_uris,
-    url: `https://nanbyodata.jp/sparqlist/api/nanbyodata_get_gene_by_nando_id?nando_id=${entryData.nando_id}`,
+    url: `https://nanbyodata.jp/sparqlist/api/nanbyodata_get_gene_by_nando_id?nando_id=${nandoId}`,
     columns: '',
   };
   if (item.existing) {
@@ -422,7 +422,7 @@ function makeMedicalGeneticTestingInfo(entryData) {
     medicalGeneticTestingInfo.querySelector('.inspection-view');
   const item = {
     existing: !!entryData.genetesting,
-    url: `https://nanbyodata.jp/sparqlist/api/nanbyodata_get_gene_test?nando_id=${entryData.nando_id}`,
+    url: `https://nanbyodata.jp/sparqlist/api/nanbyodata_get_gene_test?nando_id=${nandoId}`,
     columns:
       '[{&quot;id&quot;:&quot;label&quot;,&quot;label&quot;:&quot;Test name&quot;},{&quot;id&quot;:&quot;hp&quot;,&quot;label&quot;:&quot;More information&quot;,&quot;link&quot;:&quot;hp&quot;,&quot;target&quot;:&quot;_blank&quot;},{&quot;id&quot;:&quot;gene&quot;,&quot;label&quot;:&quot;Gene name&quot;},{&quot;id&quot;:&quot;facility&quot;,&quot;label&quot;:&quot;Test facility&quot;}]',
   };
@@ -468,7 +468,7 @@ function makePhenotypeView(entryData) {
   const phenotypeViewEn = tempPhenotypeView.querySelector('.phenotype-en');
   const item = {
     existing: entryData.phenotype_flg,
-    url: `https://nanbyodata.jp/sparqlist/api/nanbyodata_get_hpo_data_by_nando_id?nando_id=${entryData.nando_id}`,
+    url: `https://nanbyodata.jp/sparqlist/api/nanbyodata_get_hpo_data_by_nando_id?nando_id=${nandoId}`,
     columns: '',
   };
   if (item.existing) {
@@ -533,21 +533,21 @@ function makeSpecificBioResource(entryData) {
     {
       existing: !!entryData.cell,
       id: 'cell',
-      url: `https://nanbyodata.jp/sparqlist/api/nanbyodata_get_riken_brc_cell_info_by_nando_id?nando_id=${entryData.nando_id}`,
+      url: `https://nanbyodata.jp/sparqlist/api/nanbyodata_get_riken_brc_cell_info_by_nando_id?nando_id=${nandoId}`,
       columns:
         '[{&quot;id&quot;:&quot;ID&quot;,&quot;label&quot;:&quot;Cell No.&quot;},{&quot;id&quot;:&quot;Cell_name&quot;,&quot;label&quot;:&quot;Cell name&quot;},{&quot;id&quot;:&quot;Homepage&quot;,&quot;label&quot;:&quot;Homepage&quot;,&quot;link&quot;:&quot;Homepage&quot;,&quot;target&quot;:&quot;_blank&quot;},{&quot;id&quot;:&quot;Description_e&quot;,&quot;label&quot;:&quot;Description (EN)&quot;},{&quot;id&quot;:&quot;Description_j&quot;,&quot;label&quot;:&quot;Description (JA)&quot;}]',
     },
     {
       existing: !!entryData.mus,
       id: 'mus',
-      url: `https://nanbyodata.jp/sparqlist/api/nanbyodata_get_riken_brc_mouse_info_by_nando_id?nando_id=${entryData.nando_id}`,
+      url: `https://nanbyodata.jp/sparqlist/api/nanbyodata_get_riken_brc_mouse_info_by_nando_id?nando_id=${nandoId}`,
       columns:
         '[{&quot;id&quot;:&quot;mouse_id&quot;,&quot;label&quot;:&quot;RIKEN_BRC No.&quot;},{&quot;id&quot;:&quot;hp&quot;,&quot;label&quot;:&quot;Homepage&quot;,&quot;link&quot;:&quot;Homepage&quot;,&quot;target&quot;:&quot;_blank&quot;},{&quot;id&quot;:&quot;mouse_name&quot;,&quot;label&quot;:&quot;Strain name&quot;},{&quot;id&quot;:&quot;description&quot;,&quot;label&quot;:&quot;Strain description&quot;}]',
     },
     {
       existing: !!entryData.dna,
       id: 'dna',
-      url: `https://nanbyodata.jp/sparqlist/api/nanbyodata_get_riken_brc_dna_info_by_nando_id?nando_id=${entryData.nando_id}`,
+      url: `https://nanbyodata.jp/sparqlist/api/nanbyodata_get_riken_brc_dna_info_by_nando_id?nando_id=${nandoId}`,
       columns:
         '[{&quot;id&quot;:&quot;gene_id&quot;,&quot;label&quot;:&quot;Catalog number&quot;},{&quot;id&quot;:&quot;hp&quot;,&quot;label&quot;:&quot;Homepage&quot;,&quot;link&quot;:&quot;hp&quot;,&quot;target&quot;:&quot;_blank&quot;},{&quot;id&quot;:&quot;gene_label&quot;,&quot;label&quot;:&quot;Name&quot;},{&quot;id&quot;:&quot;ncbi_gene&quot;,&quot;label&quot;:&quot;NCBI gene link&quot;,&quot;link&quot;:&quot;ncbi_gene&quot;,&quot;target&quot;:&quot;_blank&quot;}]',
     },
@@ -607,7 +607,7 @@ function makeSpecificBioResource(entryData) {
 
 async function makeVariant(entryData) {
   try {
-    const url = `https://nanbyodata.jp/sparqlist/api/nanbyodata_get_variant_by_nando_id?nando_id=${entryData.nando_id}`;
+    const url = `https://nanbyodata.jp/sparqlist/api/nanbyodata_get_variant_by_nando_id?nando_id=${nandoId}`;
     const variant = document.getElementById('temp-variant');
     const properties = variant.querySelector('#temp-properties');
     const response = await fetch(url);
