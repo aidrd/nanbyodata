@@ -465,40 +465,32 @@ async function makeMedicalGeneticTestingInfo() {
   }
 }
 
-function makePhenotypeView(entryData) {
-  const tempPhenotypeView = document.getElementById('temp-phenotype-view');
-  const phenotypeViewJa = tempPhenotypeView.querySelector('.phenotype-ja');
-  const phenotypeViewEn = tempPhenotypeView.querySelector('.phenotype-en');
-  const item = {
-    existing: entryData.phenotype_flg,
-    url: `https://nanbyodata.jp/sparqlist/api/nanbyodata_get_hpo_data_by_nando_id?nando_id=${nandoId}`,
-    columns: '',
-  };
-  if (item.existing) {
-    fetch(item.url)
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error(`HTTP Error status code: ${response.status}`);
-        }
-        return response.json();
-      })
-      .then((data) => {
-        const tempSpanElement = document.querySelector(
-          '#temp-phenotype-view .data-num'
-        );
-        const navSpanElement = document.querySelector(
-          '.phenotype-view .data-num'
-        );
-        tempSpanElement.innerText = data.length;
-        navSpanElement.innerText = data.length;
-      })
-      .catch((error) => {
-        console.error('Failed to get data:', error);
+async function makePhenotypeView() {
+  try {
+    const url = `https://nanbyodata.jp/sparqlist/api/nanbyodata_get_hpo_data_by_nando_id?nando_id=${nandoId}`;
+
+    const tempPhenotypeView = document.getElementById('temp-phenotype-view');
+    const phenotypeViewJa = tempPhenotypeView.querySelector('.phenotype-ja');
+    const phenotypeViewEn = tempPhenotypeView.querySelector('.phenotype-en');
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error(`HTTP Error status code: ${response.status}`);
+    }
+    const data = await response.json();
+
+    if (Array.isArray(data) && data.length === 0) {
+      tempPhenotypeView.remove();
+    } else {
+      // to avoid hitting api twice Use createObjectURL
+      const blob = new Blob([JSON.stringify(data)], {
+        type: 'application/json',
       });
-    // lang ja
-    phenotypeViewJa.innerHTML = `
+      const objectUrl = URL.createObjectURL(blob);
+
+      // lang ja
+      phenotypeViewJa.innerHTML = `
       <togostanza-pagination-table
-      data-url="${item.url}"
+      data-url="${objectUrl}"
       custom-css-url="https://togostanza.github.io/togostanza-themes/contrib/nanbyodata.css"
       data-type="json"
       fixed-columns="1"
@@ -509,10 +501,10 @@ function makePhenotypeView(entryData) {
         ></togostanza-pagination-table>
         `;
 
-    // lang eng
-    phenotypeViewEn.innerHTML = `
+      // lang eng
+      phenotypeViewEn.innerHTML = `
       <togostanza-pagination-table
-      data-url="${item.url}"
+      data-url="${objectUrl}"
       custom-css-url="https://togostanza.github.io/togostanza-themes/contrib/nanbyodata.css"
       data-type="json"
       fixed-columns="1"
@@ -522,8 +514,18 @@ function makePhenotypeView(entryData) {
       togostanza-custom_css_url=""
         ></togostanza-pagination-table>
         `;
-  } else {
-    tempPhenotypeView.remove();
+
+      const tempSpanElement = document.querySelector(
+        '#temp-phenotype-view .data-num'
+      );
+      const navSpanElement = document.querySelector(
+        '.phenotype-view .data-num'
+      );
+      tempSpanElement.innerText = data.length;
+      navSpanElement.innerText = data.length;
+    }
+  } catch (error) {
+    console.error('Failed to get data:', error);
   }
 }
 
