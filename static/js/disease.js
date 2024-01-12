@@ -22,6 +22,27 @@ const nandoId = pathname.slice(nandoIndex + 6);
 
     const entryData = await entryDataPromise;
 
+    async function fetchData(apiEndpoint) {
+      const url = `https://nanbyodata.jp/sparqlist/api/${apiEndpoint}?nando_id=${nandoId}`;
+      const response = await fetch(url);
+      return response.json();
+    }
+
+    // 各種データを取得
+    const geneData = await fetchData('nanbyodata_get_gene_by_nando_id');
+    const geneTestData = await fetchData('nanbyodata_get_gene_test');
+    const hpoData = await fetchData('nanbyodata_get_hpo_data_by_nando_id');
+    const cellData = await fetchData(
+      'nanbyodata_get_riken_brc_cell_info_by_nando_id'
+    );
+    const mouseData = await fetchData(
+      'nanbyodata_get_riken_brc_mouse_info_by_nando_id'
+    );
+    const dnaData = await fetchData(
+      'nanbyodata_get_riken_brc_cell_info_by_nando_id'
+    );
+    const variantData = await fetchData('nanbyodata_get_variant_by_nando_id');
+
     await Promise.all([
       makeHeader(entryData),
       makeExternalLinks(entryData),
@@ -31,12 +52,12 @@ const nandoId = pathname.slice(nandoIndex + 6);
       checkSummaryData(entryData),
       checkInitialLanguage(),
       makeDiseaseDefinition(entryData),
-      makeProperties(),
-      makeMedicalGeneticTestingInfo(),
+      makeProperties(geneData),
+      makeMedicalGeneticTestingInfo(geneTestData),
       changeLangHP(),
-      makePhenotypeView(entryData),
-      makeSpecificBioResource(entryData),
-      makeVariant(entryData),
+      makePhenotypeView(hpoData),
+      makeSpecificBioResource(cellData, mouseData, dnaData),
+      makeVariant(entryData, variantData),
     ]);
 
     selectedItem();
@@ -529,28 +550,75 @@ async function makePhenotypeView() {
   }
 }
 
-function makeSpecificBioResource(entryData) {
+async function makeSpecificBioResource() {
   const specificBioResource = document.getElementById(
     'temp-specific-bio-resource'
   );
   const tabWrap = specificBioResource.querySelector('.tab-wrap');
+
+  let isCellData = false;
+  let isMusData = false;
+  let isDnaData = false;
+
+  const cellResponse = await fetch(
+    `https://nanbyodata.jp/sparqlist/api/nanbyodata_get_riken_brc_cell_info_by_nando_id?nando_id=${nandoId}`
+  );
+  if (!cellResponse.ok) {
+    throw new Error(`HTTP Error status code: ${cellResponse.status}`);
+  }
+  const cellData = await cellResponse.json();
+
+  if (Array.isArray(cellData) && cellData.length === 0) {
+    isCellData = false;
+  } else {
+    isCellData = true;
+  }
+
+  const musResponse = await fetch(
+    `https://nanbyodata.jp/sparqlist/api/nanbyodata_get_riken_brc_mouse_info_by_nando_id?nando_id=${nandoId}`
+  );
+  if (!musResponse.ok) {
+    throw new Error(`HTTP Error status code: ${musResponse.status}`);
+  }
+  const musData = await musResponse.json();
+
+  if (Array.isArray(musData) && musData.length === 0) {
+    isMusData = false;
+  } else {
+    isMusData = true;
+  }
+
+  const dnaResponse = await fetch(
+    `https://nanbyodata.jp/sparqlist/api/nanbyodata_get_riken_brc_dna_info_by_nando_id?nando_id=${nandoId}`
+  );
+  if (!dnaResponse.ok) {
+    throw new Error(`HTTP Error status code: ${dnaResponse.status}`);
+  }
+  const dnaData = await dnaResponse.json();
+
+  if (Array.isArray(dnaData) && dnaData.length === 0) {
+    isDnaData = false;
+  } else {
+    isDnaData = true;
+  }
+
   const items = [
     {
-      existing: !!entryData.cell,
+      existing: isCellData,
       id: 'cell',
       url: `https://nanbyodata.jp/sparqlist/api/nanbyodata_get_riken_brc_cell_info_by_nando_id?nando_id=${nandoId}`,
       columns:
         '[{&quot;id&quot;:&quot;ID&quot;,&quot;label&quot;:&quot;Cell No.&quot;},{&quot;id&quot;:&quot;Cell_name&quot;,&quot;label&quot;:&quot;Cell name&quot;},{&quot;id&quot;:&quot;Homepage&quot;,&quot;label&quot;:&quot;Homepage&quot;,&quot;link&quot;:&quot;Homepage&quot;,&quot;target&quot;:&quot;_blank&quot;},{&quot;id&quot;:&quot;Description_e&quot;,&quot;label&quot;:&quot;Description (EN)&quot;},{&quot;id&quot;:&quot;Description_j&quot;,&quot;label&quot;:&quot;Description (JA)&quot;}]',
     },
     {
-      existing: !!entryData.mus,
+      existing: isMusData,
       id: 'mus',
       url: `https://nanbyodata.jp/sparqlist/api/nanbyodata_get_riken_brc_mouse_info_by_nando_id?nando_id=${nandoId}`,
       columns:
         '[{&quot;id&quot;:&quot;mouse_id&quot;,&quot;label&quot;:&quot;RIKEN_BRC No.&quot;},{&quot;id&quot;:&quot;hp&quot;,&quot;label&quot;:&quot;Homepage&quot;,&quot;link&quot;:&quot;Homepage&quot;,&quot;target&quot;:&quot;_blank&quot;},{&quot;id&quot;:&quot;mouse_name&quot;,&quot;label&quot;:&quot;Strain name&quot;},{&quot;id&quot;:&quot;description&quot;,&quot;label&quot;:&quot;Strain description&quot;}]',
     },
     {
-      existing: !!entryData.dna,
+      existing: isDnaData,
       id: 'dna',
       url: `https://nanbyodata.jp/sparqlist/api/nanbyodata_get_riken_brc_dna_info_by_nando_id?nando_id=${nandoId}`,
       columns:
@@ -647,12 +715,11 @@ async function makeVariant(entryData) {
       navSpanElement.innerText = data.length;
     }
 
-    makeSideNavigation(entryData);
-
     // When loading finishes
     document.querySelector('.loading-spinner').style.display = 'none';
     document.getElementById('content').style.display = 'block';
     document.getElementById('sidebar').style.display = 'block';
+    makeSideNavigation(entryData);
   } catch (error) {
     console.error('Failed to get data:', error);
   }
