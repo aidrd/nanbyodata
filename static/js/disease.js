@@ -31,8 +31,8 @@ const nandoId = pathname.slice(nandoIndex + 6);
       checkSummaryData(entryData),
       checkInitialLanguage(),
       makeDiseaseDefinition(entryData),
-      makeProperties(entryData),
-      makeMedicalGeneticTestingInfo(entryData),
+      makeProperties(),
+      makeMedicalGeneticTestingInfo(),
       changeLangHP(),
       makePhenotypeView(entryData),
       makeSpecificBioResource(entryData),
@@ -242,7 +242,7 @@ function makeLinksList(entryData) {
   }
 }
 
-async function makeProperties(entryData) {
+async function makeProperties() {
   try {
     const url = `https://nanbyodata.jp/sparqlist/api/nanbyodata_get_gene_by_nando_id?nando_id=${nandoId}`;
 
@@ -415,51 +415,53 @@ function makeDiseaseDefinition(entryData) {
   }
 }
 
-function makeMedicalGeneticTestingInfo(entryData) {
-  const medicalGeneticTestingInfo = document.getElementById(
-    'temp-medical-genetic-testing-info'
-  );
-  const inspectionView =
-    medicalGeneticTestingInfo.querySelector('.inspection-view');
-  const item = {
-    existing: !!entryData.genetesting,
-    url: `https://nanbyodata.jp/sparqlist/api/nanbyodata_get_gene_test?nando_id=${nandoId}`,
-    columns:
-      '[{&quot;id&quot;:&quot;label&quot;,&quot;label&quot;:&quot;Test name&quot;},{&quot;id&quot;:&quot;hp&quot;,&quot;label&quot;:&quot;More information&quot;,&quot;link&quot;:&quot;hp&quot;,&quot;target&quot;:&quot;_blank&quot;},{&quot;id&quot;:&quot;gene&quot;,&quot;label&quot;:&quot;Gene name&quot;},{&quot;id&quot;:&quot;facility&quot;,&quot;label&quot;:&quot;Test facility&quot;}]',
-  };
-  if (entryData.genetesting) {
-    fetch(item.url)
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error(`HTTP Error status code: ${response.status}`);
-        }
-        return response.json();
-      })
-      .then((data) => {
-        const tempSpanElement = document.querySelector(
-          '#temp-medical-genetic-testing-info .data-num'
-        );
-        const navSpanElement = document.querySelector(
-          '.medical-genetic-testing-info .data-num'
-        );
-        tempSpanElement.innerText = data.length;
-        navSpanElement.innerText = data.length;
-      })
-      .catch((error) => {
-        console.error('Failed to get data:', error);
+async function makeMedicalGeneticTestingInfo() {
+  try {
+    const url = `https://nanbyodata.jp/sparqlist/api/nanbyodata_get_gene_test?nando_id=${nandoId}`;
+
+    const medicalGeneticTestingInfo = document.getElementById(
+      'temp-medical-genetic-testing-info'
+    );
+    const inspectionView =
+      medicalGeneticTestingInfo.querySelector('.inspection-view');
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error(`HTTP Error status code: ${response.status}`);
+    }
+    const data = await response.json();
+
+    if (Array.isArray(data) && data.length === 0) {
+      medicalGeneticTestingInfo.remove();
+    } else {
+      // to avoid hitting api twice Use createObjectURL
+      const blob = new Blob([JSON.stringify(data)], {
+        type: 'application/json',
       });
-    inspectionView.innerHTML = `
-        <togostanza-pagination-table data-type="json"
-          data-url="${item.url}"
-          columns="${item.columns}"
-          custom-css-url="https://togostanza.github.io/togostanza-themes/contrib/nanbyodata.css"
-          page-size-option="100"
-          page-slider="true"
-          fixed-columns="1">
-        </togostanza-pagination-table>
+      const objectUrl = URL.createObjectURL(blob);
+      inspectionView.innerHTML = `
+      <togostanza-pagination-table
+      data-url="${objectUrl}"
+      data-type="json"
+      custom-css-url="https://togostanza.github.io/togostanza-themes/contrib/nanbyodata.css"
+      fixed-columns="1"
+      page-size-option="100"
+      page-slider="false"
+      columns="[{&quot;id&quot;:&quot;label&quot;,&quot;label&quot;:&quot;Test name&quot;},{&quot;id&quot;:&quot;hp&quot;,&quot;label&quot;:&quot;More information&quot;,&quot;link&quot;:&quot;hp&quot;,&quot;target&quot;:&quot;_blank&quot;},{&quot;id&quot;:&quot;gene&quot;,&quot;label&quot;:&quot;Gene name&quot;},{&quot;id&quot;:&quot;facility&quot;,&quot;label&quot;:&quot;Test facility&quot;}]
+      "
+      ></togostanza-pagination-table>
       `;
-  } else {
-    medicalGeneticTestingInfo.remove();
+
+      const tempSpanElement = document.querySelector(
+        '#temp-medical-genetic-testing-info .data-num'
+      );
+      const navSpanElement = document.querySelector(
+        '.medical-genetic-testing-info .data-num'
+      );
+      tempSpanElement.innerText = data.length;
+      navSpanElement.innerText = data.length;
+    }
+  } catch (error) {
+    console.error('Failed to get data:', error);
   }
 }
 
