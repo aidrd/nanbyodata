@@ -242,38 +242,29 @@ function makeLinksList(entryData) {
   }
 }
 
-function makeProperties(entryData) {
-  const causativeGene = document.getElementById('temp-causative-gene');
-  const properties = causativeGene.querySelector('#temp-properties');
-  const item = {
-    existing: !!entryData.gene_uris,
-    url: `https://nanbyodata.jp/sparqlist/api/nanbyodata_get_gene_by_nando_id?nando_id=${nandoId}`,
-    columns: '',
-  };
-  if (item.existing) {
-    fetch(item.url)
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error(`HTTP Error status code: ${response.status}`);
-        }
-        return response.json();
-      })
-      .then((data) => {
-        const tempSpanElement = document.querySelector(
-          '#temp-causative-gene .data-num'
-        );
-        const navSpanElement = document.querySelector(
-          '.causative-gene .data-num'
-        );
-        tempSpanElement.innerText = data.length;
-        navSpanElement.innerText = data.length;
-      })
-      .catch((error) => {
-        console.error('Failed to get data:', error);
+async function makeProperties(entryData) {
+  try {
+    const url = `https://nanbyodata.jp/sparqlist/api/nanbyodata_get_gene_by_nando_id?nando_id=${nandoId}`;
+
+    const causativeGene = document.getElementById('temp-causative-gene');
+    const properties = causativeGene.querySelector('#temp-properties');
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error(`HTTP Error status code: ${response.status}`);
+    }
+    const data = await response.json();
+
+    if (Array.isArray(data) && data.length === 0) {
+      causativeGene.remove();
+    } else {
+      // to avoid hitting api twice Use createObjectURL
+      const blob = new Blob([JSON.stringify(data)], {
+        type: 'application/json',
       });
-    properties.innerHTML = `
+      const objectUrl = URL.createObjectURL(blob);
+      properties.innerHTML = `
       <togostanza-pagination-table
-      data-url="${item.url}"
+      data-url="${objectUrl}"
       data-type="json"
       custom-css-url="https://togostanza.github.io/togostanza-themes/contrib/nanbyodata.css"
       fixed-columns="1"
@@ -283,8 +274,18 @@ function makeProperties(entryData) {
       "
       ></togostanza-pagination-table>
       `;
-  } else {
-    causativeGene.remove();
+
+      const tempSpanElement = document.querySelector(
+        '#temp-causative-gene .data-num'
+      );
+      const navSpanElement = document.querySelector(
+        '.causative-gene .data-num'
+      );
+      tempSpanElement.innerText = data.length;
+      navSpanElement.innerText = data.length;
+    }
+  } catch (error) {
+    console.error('Failed to get data:', error);
   }
 }
 
