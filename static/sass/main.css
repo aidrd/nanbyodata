@@ -1389,15 +1389,14 @@ footer .footer__bottom .footer__lisence p:before {
 }
 #kv-wrap header .intro-text .keyword {
   margin-top: 20px;
-  background-color: #c8c8c8;
-  color: var(--color-secondary);
+  background-color: #5ba0aa;
   padding: 5px 10px;
   display: inline;
   font-size: 14px;
   border-radius: 3px;
 }
 #kv-wrap header .intro-text .keyword a {
-  color: var(--color-secondary);
+  color: #fff;
 }
 
 /* Disease Only */
