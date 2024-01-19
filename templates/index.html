@@ -109,42 +109,31 @@
 
         <div class="news-wrapper">
           <div class="logdata">
-            <dl>
-              <dt><time datetime="2022-04-27">2023.12.01</time></dt>
-              <dd>難病ポータルサイトNanbyoData Version 3.0.0 をリリースしました．新たにバリアント情報を追加し、UIを一新しました。</dd>
-            </dl>
-            <dl>
-              <dt><time datetime="2022-04-27">2022.04.27</time></dt>
-              <dd>難病ポータルサイトNanbyoData Version 2.0.0 をリリースしました．新たに，バイオリソース情報としてマウス・遺伝子項目を追加し，また診療用遺伝学的検査情報を追加しました．</dd>
-            </dl>
-            <dl>
-              <dt><time datetime="2021-07-23">2021.07.23</time></dt>
-              <dd>難病ポータルサイトNanbyoDataの正式版（Version 1.0.0）をリリースしました．</dd>
-            </dl>
-            <dl>
-              <dt><time datetime="2021-07-23">2021.07.23</time></dt>
-              <dd>難病オントロジーNANDOの正式版（Version 1.0.0）をリリースしました．</dd>
-            </dl>
-            <dl>
-              <dt><time datetime="2020-10-05">2020.10.05</time></dt>
-              <dd>難病検索機能をリリースしました．</dd>
-            </dl>
-
-            <!-- Toggle display -->
-            <div class="more-list">
-              <dl>
-                <dt><time datetime="2020-04-24">2020.04.24</time></dt>
-                <dd>難病オントロジー（NANDO; Nanbyo Disease Ontology）のBetaバージョンを公開しました．</dd>
+            {% for file_path, info in news_info.items() %}
+            {% if loop.index <= 5 %} <dl>
+              <dt><time datetime="{{ info.date }}">{{ info.date }}</time></dt>
+              <dd><a href="{{info.path}}">{{ info.title }}</a></dd>
               </dl>
-              <dl>
-                <dt><time datetime="2019-09-10">2019.09.10</time></dt>
-                <dd>本サイト（Betaバージョン）を公開しました．</dd>
-              </dl>
-            </div>
+              {% else %}
+              {% if loop.index == 6 %}
+              <div class="more-list">
+                {% endif %}
+                <dl>
+                  <dt><time datetime="{{ info.date }}">{{ info.date }}</time></dt>
+                  <dd><a href="{{info.path}}">{{ info.title }}</a></dd>
+                </dl>
+                {% if loop.last %}
+              </div>
+              {% endif %}
+              {% endif %}
+              {% endfor %}
           </div>
-
           <div class="more">more</div>
         </div>
+
+
+
+
       </div>
 
       <div class="container">
