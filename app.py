@@ -249,37 +249,26 @@ def make_selector_subclasses_new(onto, id_nando, pre_id_nando):
 # Newsページ
 def load_news_content(filename):
     locale = get_locale() 
-    path = os.path.join("news", locale, filename)
+    path = os.path.join("posts", locale, filename)
     with open(path, "r", encoding="utf-8") as file:
         content = file.read()
     return content
 
-def parse_md_file(content):
-    title_match = re.search(r'title: \'(.*?)\'', content)
-    date_match = re.search(r'date: \'(.*?)\'', content)
-
-    if title_match and date_match:
-        title = title_match.group(1)
-        date = date_match.group(1)
-
-        content = re.sub(r'title: \'.*?\'', '', content)
-        content = re.sub(r'date: \'.*?\'', '', content)
-
-        return title, date, content.strip()
-
-    return None, None, None
-
 def get_news_info():
     locale = get_locale()
-    path = os.path.join("news", locale)
+    path = os.path.join("posts", locale)
     md_files = [f for f in os.listdir(path) if f.endswith(".md")]
 
     news_data = {}
 
     for md_file in md_files:
         md_content = load_news_content(md_file)
-        title, date, _ = parse_md_file(md_content)
-        md_file_path = os.path.splitext(os.path.join("news", md_file))[0]
+        md_file_path = os.path.splitext(os.path.join("posts", md_file))[0]
+
+        html_content = markdown2.markdown(md_content, extras=["metadata", "tables"])
+        metadata = html_content.metadata
+        title = metadata['title']
+        date = metadata['date']
         news_data[md_file] = {"date": date, "title": title, "path": md_file_path}
 
     sorted_news_data = sorted(news_data.items(), key=lambda x: x[1]["date"], reverse=True)
@@ -287,12 +276,12 @@ def get_news_info():
 
     return sorted_news_data_dict
 
-@app.route('/news/<filename>')
+@app.route('/posts/<filename>')
 def page(filename):
     md_content = load_news_content(filename + '.md')
-    title, date, html_content = parse_md_file(md_content)
+    html_content = markdown2.markdown(md_content, extras=["metadata", "tables", "task_list"])
+    metadata = html_content.metadata
+    title = metadata['title']
+    date = metadata['date']
 
-    return render_template('news.html', title=title, date=date, content=markdown2.markdown(html_content))
-
-if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=8000)
+    return render_template('news.html', title=title, date=date, content=html_content)
