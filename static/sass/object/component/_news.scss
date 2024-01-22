@@ -1,0 +1,45 @@
+.news {
+  .news-wrapper {
+    padding: 0 20px;
+  }
+
+  .logdata {
+    dl {
+      display: flex;
+      gap: 20px;
+    }
+
+    dt {
+      width: 75px;
+      font-size: 15px;
+      font-weight: normal;
+    }
+
+    dd {
+      font-size: 14px;
+    }
+
+    .more-list {
+      display: none;
+
+      &.open {
+        display: block;
+      }
+    }
+  }
+
+  .more {
+    display: inline-block;
+    border: 1px solid var(--color-primary);
+    border-radius: 15px;
+    color: var(--color-primary);
+    padding: 0px 10px;
+    cursor: pointer;
+    transition: 0.15s;
+
+    &:hover {
+      color: #fff;
+      background-color: var(--color-primary);
+    }
+  }
+}

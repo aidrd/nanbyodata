@@ -1,0 +1,108 @@
+/* Footer */
+footer {
+  padding: 40px 0 20px;
+  background-color: #f9f8f5;
+
+  li,
+  p,
+  a,
+  a:visited {
+    color: var(--color-font);
+    font-size: 12px;
+  }
+
+  a {
+    &:hover {
+      color: #004098;
+      text-decoration-color: #004098;
+      text-underline-offset: 4px;
+    }
+  }
+
+  .container {
+    .footer__info {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 60px;
+      min-width: fit-content;
+
+      .footer__organism {
+        .footer__logo {
+          width: 150px;
+          display: block;
+          margin: 0 auto;
+        }
+
+        .footer__organism-text {
+          text-align: center;
+          margin-top: 11px;
+
+          .footer__organism-main {
+            font-size: 15px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+          }
+        }
+      }
+
+      h2.footer-title {
+        font-weight: 800;
+        font-size: 14px;
+        margin-bottom: 10px;
+      }
+
+      .footer__address {
+        width: 310px;
+
+        .address__list {
+          display: flex;
+          justify-content: space-between;
+        }
+      }
+
+      .footer__links {
+        li.individual_link {
+          + li {
+            margin-top: 5px;
+          }
+        }
+      }
+    }
+
+    .footer__bottom {
+      .footer__partners {
+        width: 550px;
+        margin: 0 auto 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        li {
+          img {
+            width: 115px;
+          }
+        }
+      }
+
+      .footer__lisence {
+        p {
+          font-size: 10px;
+          display: flex;
+          justify-content: center;
+          gap: 5px;
+
+          &:before {
+            content: '';
+            width: 81px;
+            height: 16px;
+            background: url(../img/by.svg) no-repeat;
+          }
+
+          a {
+            font-size: inherit;
+          }
+        }
+      }
+    }
+  }
+}

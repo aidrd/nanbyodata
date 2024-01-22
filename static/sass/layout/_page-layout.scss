@@ -1,0 +1,52 @@
+.page-layout {
+  overflow: hidden;
+
+  header.page-title, header.search-area {
+    border-bottom-right-radius: 2000px 250px;
+    border-bottom-left-radius: 2000px 250px;
+    padding: 100px 250px 40px;
+    margin: 0 -250px;
+    background: var(--color-primary);
+    color: #fff;
+    text-align: center;
+  }
+
+  .container {
+    margin: 55px auto 100px;
+
+    .section-title{
+      text-align: center;
+      color: var(--color-secondary);
+      font-size: 20px;
+      margin-bottom: 1rem;
+    }
+
+    p.section-description {
+      text-align: center;
+      letter-spacing: 1px;
+      margin-bottom: 20px;
+    }
+
+    .content-title {
+      position: relative;
+      font-size: 16px;
+      color: var(--color-secondary);
+
+      &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 30px;
+        border-top: 2px solid #495aff;
+        margin-top: -15px;
+      }
+    }
+
+    .content-block {
+      + .content-block {
+        margin-top: 60px;
+      }
+    }
+  }
+}

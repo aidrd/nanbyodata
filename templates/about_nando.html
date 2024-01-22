@@ -24,9 +24,11 @@
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
       <div class="container">
-        <a class="navbar-brand js-scroll-trigger" href="/">
-          <img class="imgtitle" src="/static/img/NanbyoData_black_w.svg">
-        </a>
+        <h1>
+          <a class="navbar-brand js-scroll-trigger" href="/">
+            <img class="imgtitle" src="/static/img/NanbyoData_black_w.svg" alt="NanbyoDataロゴ">
+          </a>
+        </h1>
         <div class="flex-wrapper">
           <div class="flex">
             <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
@@ -48,7 +50,7 @@
                 <a class="nav-link" href="/epidemiology">EPIDEMIOLOGY</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="/#third">DOWNLOAD</a>
+                <a class="nav-link" href="/#download">DOWNLOAD</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="#"><button type="button" class="btn-TOS" data-toggle="modal"
@@ -64,174 +66,166 @@
       </div>
     </nav>
 
-
-    <div id="second"></div>
-
-    <!--ここから-->
-    <!--- about page -->
-    <section class="about-page">
-      <div class="about-title">
-        <h3>About</h3>
-        <div class="h3-text">
-        </div>
-      </div>
-      <div class="container">
-        <h4>NanbyoData について</h4>
-        <p>NanbyoDataは難病に関わる全て人に有用な難病情報をあらゆる観点から集積・一元的に提供します。<span class="br">
-            <!-- NanbyoDataの対象は日本の難病関連制度である指定難病・小児慢性特定疾病の対象疾患に関して詳細な分類までを網羅しています。-->
-        </p>
-        <div class="illustWrapper">
-          <div class="illustcard" style="width: 18rem;">
-            <div class="illust-body">
-              <img src="/static/img/illust_1.png" class="icon2">
-              <h5 class="illust-title">難病情報を多様な観点から集積</h5>
+    <!--- About page -->
+    <div class="page-layout">
+      <header class="page-title">
+        <h2>About</h2>
+      </header>
+      <section class="container">
+        <div class="content-block">
+          <h3 class="content-title">NanbyoData について</h3>
+          <p>NanbyoDataは難病に関わる全て人に有用な難病情報をあらゆる観点から集積・一元的に提供します。</p>
+          <div class="illust-wrapper">
+            <div class="illust-card">
+              <img src="/static/img/illust_1.png" class="illust-img">
+              <h4 class="illust-title">難病情報を多様な観点から集積</h4>
               <p class="illust-text">
                 基礎研究から臨床情報や疾患の実情まで多様な側面から日本語で書かれた情報を掲載
               </p>
             </div>
-          </div>
-          <div class="illustcard" style="width: 18rem;">
-            <div class="illust-body">
-              <img src="/static/img/illust_2.png" class="icon2">
-              <h5 class="illust-title">難病情報を世界中から集積</h5>
+            <div class="illust-card">
+              <img src="/static/img/illust_2.png" class="illust-img">
+              <h4 class="illust-title">難病情報を世界中から集積</h4>
               <p class="illust-text">
                 世界中の医学データベースや情報サイトから難病に関する最新情報を掲載
               </p>
             </div>
-          </div>
-          <div class="illustcard" style="width: 18rem;">
-            <div class="illust-body">
-              <img src="/static/img/illust_3.png" class="icon2">
-              <h5 class="illust-title">難病情報をアップデート(予定)</h5>
+            <div class="illust-card">
+              <img src="/static/img/illust_3.png" class="illust-img">
+              <h4 class="illust-title">難病情報をアップデート(予定)</h4>
               <p class="illust-text">
                 これまでの難病研究・調査や大規模医療データベースによる独自の疫学情報など、日本人を対象とした難病情報を掲載
               </p>
             </div>
           </div>
         </div>
-        <h4>NANDO について</h4>
-        <p>難病は「指定難病」制度と小児患者に限定した「小児慢性特定疾病」制度が存在し、それぞれ333疾患、762疾患が含まれていますが（2021年7月時点）、<a
-            href="https://github.com/aidrd/nando">難病オントロジー（Nanbyo Disease Ontology;
-            NANDO）</a>は日本の難病制度の対象疾患について、その疾患概念や疾患同士の関係性を体系化した初めてのオントロジーです。NanbyoDataはNANDOを介して国内外の難病関連データを集め提供しています。NANDOの語彙一覧および階層構造は以下から参照可能です。<br>
-          <a href="http://nanbyodata.jp/ontology/nando">・語彙一覧</a><br>
-        </p>
-        <h4>免責事項</h4>
-        <p>
-          NanbyoData及びNANDOは誠実にデータを提供しますが、データの正確性、臨床的妥当性または有用性を検証することはありません。DBCLSは、明示的にも黙示的にも、利用者が当データを用いて行う一切の行為について、何ら責任を負うものではありません。DBCLSは、本サービスの変更、中断、または終了により被った損害に関しても、何ら責任を負うものではありません。また、ライフサイエンス統合データベースセンターのサイト・ポリシー内「<a
-            class="policy" href="https://dbcls.rois.ac.jp/policy.html">免責事項</a>」にも準ずるものとします。
-        </p>
-        <h4>ライセンス</h4>
-        <p>
-          NANDO及びNanbyoDataで提供されるデータは、クリエイティブ・コモンズ【表示4.0国際】ライセンスに従うかぎり、商用利用を含め、自由に複製または改変してご利用いただくことが可能です。<br>
-          <a href="https://creativecommons.org/licenses/by/4.0/deed.ja">CC-BY 4.0</a> | <a
-            href="http://dbcls.rois.ac.jp/">DBCLS</a>
-        </p>
-        <h4>出典</h4>
-        <p>
-          <a
-            href="https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/0000084783.html">厚生労働省「概要、診断基準等」</a>（2020年7月14日に利用）<br>
-          <a
-            href="https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/0000084783.html">厚生労働省「臨床調査個人票」</a>（2020年7月14日に利用）<br>
-          <a href="https://www.shouman.jp/disease/search/group/">小児慢性特定疾病情報センター「概要」</a>（2020年7月14日に利用）<br>
-          <a href="https://www.shouman.jp/disease/search/group/">小児慢性特定疾病情報センター「意見書」</a>（2020年7月14日に利用）
-        </p>
-        <h4>謝辞</h4>
-        <p>
-          本オントロジーの構築に際して<a href="https://ddrare.nibiohn.go.jp/">DDrare</a>および<a
-            href="https://metadb.riken.jp/metadb/ontology/RDVJ">RDVJ</a>を参照した．
-          本オントロジーの構築に<a href="http://biohackathon.org/">BioHackathon</a>の成果を利用した．
-        </p>
-      </div>
-    </section>
+        <div class="content-block">
+          <h3 class="content-title">NANDO について</h3>
+          <p>難病は「指定難病」制度と小児患者に限定した「小児慢性特定疾病」制度が存在し、それぞれ333疾患、762疾患が含まれていますが（2021年7月時点）、<a
+              href="https://github.com/aidrd/nando">難病オントロジー（Nanbyo Disease Ontology;
+              NANDO）</a>は日本の難病制度の対象疾患について、その疾患概念や疾患同士の関係性を体系化した初めてのオントロジーです。NanbyoDataはNANDOを介して国内外の難病関連データを集め提供しています。NANDOの語彙一覧および階層構造は以下から参照可能です。<br>
+            <a href="http://nanbyodata.jp/ontology/nando">・語彙一覧</a><br>
+          </p>
+        </div>
+        <div class="content-block">
+          <h3 class="content-title">免責事項</h3>
+          <p>
+            NanbyoData及びNANDOは誠実にデータを提供しますが、データの正確性、臨床的妥当性または有用性を検証することはありません。DBCLSは、明示的にも黙示的にも、利用者が当データを用いて行う一切の行為について、何ら責任を負うものではありません。DBCLSは、本サービスの変更、中断、または終了により被った損害に関しても、何ら責任を負うものではありません。また、ライフサイエンス統合データベースセンターのサイト・ポリシー内「<a
+              class="policy" href="https://dbcls.rois.ac.jp/policy.html">免責事項</a>」にも準ずるものとします。
+          </p>
+        </div>
+        <div class="content-block">
+          <h3 class="content-title">ライセンス</h3>
+          <p>
+            NANDO及びNanbyoDataで提供されるデータは、クリエイティブ・コモンズ【表示4.0国際】ライセンスに従うかぎり、商用利用を含め、自由に複製または改変してご利用いただくことが可能です。<br>
+            <a href="https://creativecommons.org/licenses/by/4.0/deed.ja">CC-BY 4.0</a> | <a
+              href="http://dbcls.rois.ac.jp/">DBCLS</a>
+          </p>
+        </div>
+        <div class="content-block">
+          <h3 class="content-title">出典</h3>
+          <p>
+            <a
+              href="https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/0000084783.html">厚生労働省「概要、診断基準等」</a>（2020年7月14日に利用）<br>
+            <a
+              href="https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/0000084783.html">厚生労働省「臨床調査個人票」</a>（2020年7月14日に利用）<br>
+            <a href="https://www.shouman.jp/disease/search/group/">小児慢性特定疾病情報センター「概要」</a>（2020年7月14日に利用）<br>
+            <a href="https://www.shouman.jp/disease/search/group/">小児慢性特定疾病情報センター「意見書」</a>（2020年7月14日に利用）
+          </p>
+        </div>
+        <div class="content-block">
+          <h3 class="content-title">謝辞</h3>
+          <p>
+            本オントロジーの構築に際して<a href="https://ddrare.nibiohn.go.jp/">DDrare</a>および<a
+              href="https://metadb.riken.jp/metadb/ontology/RDVJ">RDVJ</a>を参照した．
+            本オントロジーの構築に<a href="http://biohackathon.org/">BioHackathon</a>の成果を利用した．
+          </p>
+        </div>
+      </section>
+    </div>
 
     <!--- footer --->
     <footer id="footer">
-      <div class="footer__common">
-        <div class="footer__wrapper">
-          <div class="footer__wrapper__contents">
-            <div class="footer__info">
-              <div class="footer__organism">
-                <img src="../static/img/logo_dbcls.svg" alt="" class="footer__logo">
-                <div class='footer__organism-text'>
-                  <p class="footer__organism-sub">大学共同利用機関法人 情報・システム研究機構</p>
-                  <p class="footer__organism-sub">データサイエンス共同利用基盤施設</p>
-                  <p class="footer__organism-main">ライフサイエンス統合データベースセンター</p>
-                </div>
-              </div>
-              <div class="footer__address">
-                <h2 class="footer-title">Address</h2>
-                <ul class="address__list">
-                  <li>
-                    <p>〒277-0871</p>
-                    <p>千葉県柏市若柴178-4-4</p>
-                    <p>東京大学柏の葉キャンパス
-                      <br>駅前サテライト6階
-                    </p>
-                    <p>TEL. 04-7135-5508（代表）
-                      <br> FAX. 04-7135-5534（代表）
-                    </p>
-                  </li>
-                  <li>
-                    <p>〒411-8540</p>
-                    <p>静岡県三島市谷田1111</p>
-                    <p>国立遺伝学研究所
-                      <br>研究実験W棟412
-                    </p>
-                  </li>
-                </ul>
-              </div>
-              <div class="footer__links">
-                <h2 class="footer-title">Links</h2>
-                <ul class="links__wrapper">
-                  <li class="individual_link">
-                    <a href="http://lifesciencedb.jp/">統合ホームページ</a>
-                  </li>
-                  <li class="individual_link">
-                    <a href="https://youtube.com/togotv/live">DBCLS on YouTubeLive</a>
-                  </li>
-                  <li class="individual_link">
-                    <a href="https://ds.rois.ac.jp/">データサイエンス共同利用基盤施設</a>
-                  </li>
-                  <li class="individual_link">
-                    <a href="http://www.rois.ac.jp/">情報・システム研究機構</a>
-                  </li>
-                  <li class="individual_link">
-                    <a href="http://www.mext.go.jp/">文部科学省</a>
-                  </li>
-                </ul>
-              </div>
+      <div class="container">
+        <div class="footer__info">
+          <div class="footer__organism">
+            <img class="footer__logo" src="../static/img/logo_dbcls.svg" alt="DBCLSのロゴ">
+            <div class="footer__organism-text">
+              <p class="footer__organism-sub">大学共同利用機関法人 情報・システム研究機構</p>
+              <p class="footer__organism-sub">データサイエンス共同利用基盤施設</p>
+              <p class="footer__organism-main">ライフサイエンス統合データベースセンター</p>
             </div>
           </div>
+          <div class="footer__address">
+            <h2 class="footer-title">Address</h2>
+            <ul class="address__list">
+              <li>
+                <p>〒277-0871</p>
+                <p>千葉県柏市若柴178-4-4</p>
+                <p>東京大学柏の葉キャンパス
+                  <br>駅前サテライト6階
+                </p>
+                <p>TEL. 04-7135-5508（代表）
+                  <br> FAX. 04-7135-5534（代表）
+                </p>
+              </li>
+              <li>
+                <p>〒411-8540</p>
+                <p>静岡県三島市谷田1111</p>
+                <p>国立遺伝学研究所
+                  <br>研究実験W棟412
+                </p>
+              </li>
+            </ul>
+          </div>
+          <div class="footer__links">
+            <h2 class="footer-title">Links</h2>
+            <ul class="links__wrapper">
+              <li class="individual_link">
+                <a href="http://lifesciencedb.jp/">統合ホームページ</a>
+              </li>
+              <li class="individual_link">
+                <a href="https://youtube.com/togotv/live">DBCLS on YouTubeLive</a>
+              </li>
+              <li class="individual_link">
+                <a href="https://ds.rois.ac.jp/">データサイエンス共同利用基盤施設</a>
+              </li>
+              <li class="individual_link">
+                <a href="http://www.rois.ac.jp/">情報・システム研究機構</a>
+              </li>
+              <li class="individual_link">
+                <a href="http://www.mext.go.jp/">文部科学省</a>
+              </li>
+            </ul>
+          </div>
         </div>
-      </div>
-      <div class="footer__bottom">
-        <div class="footer__partners">
-          <ul class="footer__logo-wrapper">
+        <div class="footer__bottom">
+          <ul class="footer__partners">
             <li>
               <a href="https://jbioinfo.jp/" target="_blank">
-                <img class="logo__jbi" src="../static/img/jbi-3.png" alt="">
+                <img class="logo__jbi" src="../static/img/jbi-3.png" alt="JBIロゴ">
               </a>
             </li>
             <li>
               <a href="https://www.ddbj.nig.ac.jp/index.html" target="_blank">
-                <img class="logo__ddbj" src="../static/img/ddbj.png" alt="">
+                <img class="logo__ddbj" src="../static/img/ddbj.png" alt="DDBJロゴ">
               </a>
             </li>
             <li>
               <a href="https://biosciencedbc.jp/" target="_blank">
-                <img class="logo__nbdc" src="../static/img/nbdc.png" alt="">
+                <img class="logo__nbdc" src="../static/img/nbdc.png" alt="NBDCロゴ">
               </a>
             </li>
             <li>
               <a href="https://pdbj.org/" target="_blank">
-                <img class="logo__pdbj" src="../static/img/pdbj.png" alt="">
+                <img class="logo__pdbj" src="../static/img/pdbj.png" alt="PDBJロゴ">
               </a>
             </li>
           </ul>
-        </div>
-        <div class="footer__lisence">
-          <p> &copy; 2018 DBCLS, Licensed under <a href="https://creativecommons.org/licenses/by/4.0/deed.ja"
-              target="_blank">Creative Commons Attribution 4.0 International license (CC-BY 4.0)</a></p>
+          <div class="footer__lisence">
+            <p> &copy; 2018 DBCLS, Licensed under <a href="https://creativecommons.org/licenses/by/4.0/deed.ja"
+                target="_blank">Creative Commons Attribution 4.0 International license (CC-BY 4.0)</a></p>
+          </div>
         </div>
       </div>
     </footer>
@@ -241,17 +235,15 @@
       aria-hidden="true">
       <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
-          <div class="modal-body">
+          <div class="modal-body content-tos">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
-            <div class="modalContent_TOS">
-              <h5 class="modal-title modal-title" id="demoModalTitle">NanbyoData利用規約</h5>
+              <h3 class="modal-title modal-title" id="demoModalTitle">NanbyoData利用規約</h3>
               <p>
                 NanbyoDataは誠実にデータを提供しますが、データの正確性、臨床的妥当性または有用性を検証することはありません。DBCLSは、明示的にも黙示的にも、利用者が当データを用いて行う一切の行為について、何ら責任を負うものではありません。DBCLSは、本サービスの変更、中断、または終了により被った損害に関しても、何ら責任を負うものではありません。また、ライフサイエンス統合データベースセンターのサイト・ポリシー内「<a
                   class="policy" href="https://dbcls.rois.ac.jp/policy.html">免責事項</a>」にも準ずるものとします。
               </p>
-            </div>
             <div class="btn-close">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">CLOSE</button>
             </div>
@@ -260,10 +252,6 @@
       </div>
     </div>
     <!--- /#demoNormalModal --->
-    <!--ここまで-->
-
-
-
   </main>
 
 

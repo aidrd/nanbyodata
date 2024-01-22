@@ -1,6 +1,6 @@
 // News open/close function
 const newsWrapperEl = document.querySelector(
-  '#service > .news > .news-wrapper'
+  '.news > .news-wrapper'
 );
 const moreButtonEl = newsWrapperEl.querySelector('.more');
 const moreListEl = newsWrapperEl.querySelector('.logdata > .more-list');

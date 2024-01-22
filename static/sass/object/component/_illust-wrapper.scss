@@ -1,0 +1,19 @@
+.illust-wrapper {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 30px;
+
+  .illust-card {
+    width: 280px;
+    .illust-img {
+      height: 280px;
+      margin-bottom: 5px;
+    }
+
+    .illust-title {
+      text-align: center;
+      font-size: 17px;
+      color: var(--color-secondary);
+    }
+  }
+}

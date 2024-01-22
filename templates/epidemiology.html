@@ -95,9 +95,11 @@
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
       <div class="container">
-        <a class="navbar-brand js-scroll-trigger" href="/">
-          <img class="imgtitle" src="/static/img/NanbyoData_black_w.svg">
-        </a>
+        <h1>
+          <a class="navbar-brand js-scroll-trigger" href="/">
+            <img class="imgtitle" src="/static/img/NanbyoData_black_w.svg" alt="NanbyoDataロゴ">
+          </a>
+        </h1>
         <div class="flex-wrapper">
           <div class="flex">
             <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
@@ -119,7 +121,7 @@
                 <a class="nav-link" href="/epidemiology">EPIDEMIOLOGY</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="/#third">DOWNLOAD</a>
+                <a class="nav-link" href="/#download">DOWNLOAD</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="#"><button type="button" class="btn-TOS" data-toggle="modal"
@@ -135,19 +137,13 @@
       </div>
     </nav>
 
-
-    <div id="second"></div>
-
-    <!--ここから-->
-    <!--- about page -->
-    <section class="about-page">
-      <div class="about-title">
-        <h3>Epidemiology</h3>
-        <div class="h3-text">
-        </div>
-      </div>
-      <div class="container">
-        <h4>指定難病：疾患別患者数</h4>
+    <!--- Epidemiology page -->
+    <div class="page-layout">
+      <header class="page-title">
+        <h2>Epidemiology</h2>
+      </header>
+      <section class="container">
+        <h3 class="content-title">指定難病：疾患別患者数</h3>
         <p>
           <script type="module" src="https://togostanza.github.io/metastanza/pagination-table.js" async></script>
           <togostanza-pagination-table
@@ -156,97 +152,91 @@
             width="" fixed-columns="1" padding="0px" page-size-option="100" page-slider="true"
             columns="[{&quot;id&quot;: &quot;nando&quot;,&quot;label&quot;:&quot;NANDO ID&quot;}, {&quot;id&quot;:&quot;label&quot;,&quot;label&quot;:&quot;疾患名&quot;}, {&quot;id&quot;:&quot;num_of_2015&quot;,&quot;label&quot;:&quot;2015年&quot;}, {&quot;id&quot;:&quot;num_of_2016&quot;,&quot;label&quot;:&quot;2016年&quot;}, {&quot;id&quot;:&quot;num_of_2017&quot;,&quot;label&quot;:&quot;2017年&quot;}, {&quot;id&quot;:&quot;num_of_2018&quot;,&quot;label&quot;:&quot;2018年&quot;}, {&quot;id&quot;:&quot;num_of_2019&quot;,&quot;label&quot;:&quot;2019年&quot;}, {&quot;id&quot;:&quot;num_of_2020&quot;,&quot;label&quot;:&quot;2020年&quot;}]"></togostanza-pagination-table>
         </p>
-      </div>
-    </section>
+      </section>
+    </div>
 
     <!--- footer --->
     <footer id="footer">
-      <div class="footer__common">
-        <div class="footer__wrapper">
-          <div class="footer__wrapper__contents">
-            <div class="footer__info">
-              <div class="footer__organism">
-                <img src="../static/img/logo_dbcls.svg" alt="" class="footer__logo">
-                <div class='footer__organism-text'>
-                  <p class="footer__organism-sub">大学共同利用機関法人 情報・システム研究機構</p>
-                  <p class="footer__organism-sub">データサイエンス共同利用基盤施設</p>
-                  <p class="footer__organism-main">ライフサイエンス統合データベースセンター</p>
-                </div>
-              </div>
-              <div class="footer__address">
-                <h2 class="footer-title">Address</h2>
-                <ul class="address__list">
-                  <li>
-                    <p>〒277-0871</p>
-                    <p>千葉県柏市若柴178-4-4</p>
-                    <p>東京大学柏の葉キャンパス
-                      <br>駅前サテライト6階
-                    </p>
-                    <p>TEL. 04-7135-5508（代表）
-                      <br> FAX. 04-7135-5534（代表）
-                    </p>
-                  </li>
-                  <li>
-                    <p>〒411-8540</p>
-                    <p>静岡県三島市谷田1111</p>
-                    <p>国立遺伝学研究所
-                      <br>研究実験W棟412
-                    </p>
-                  </li>
-                </ul>
-              </div>
-              <div class="footer__links">
-                <h2 class="footer-title">Links</h2>
-                <ul class="links__wrapper">
-                  <li class="individual_link">
-                    <a href="http://lifesciencedb.jp/">統合ホームページ</a>
-                  </li>
-                  <li class="individual_link">
-                    <a href="https://youtube.com/togotv/live">DBCLS on YouTubeLive</a>
-                  </li>
-                  <li class="individual_link">
-                    <a href="https://ds.rois.ac.jp/">データサイエンス共同利用基盤施設</a>
-                  </li>
-                  <li class="individual_link">
-                    <a href="http://www.rois.ac.jp/">情報・システム研究機構</a>
-                  </li>
-                  <li class="individual_link">
-                    <a href="http://www.mext.go.jp/">文部科学省</a>
-                  </li>
-                </ul>
-              </div>
+      <div class="container">
+        <div class="footer__info">
+          <div class="footer__organism">
+            <img class="footer__logo" src="../static/img/logo_dbcls.svg" alt="DBCLSのロゴ">
+            <div class="footer__organism-text">
+              <p class="footer__organism-sub">大学共同利用機関法人 情報・システム研究機構</p>
+              <p class="footer__organism-sub">データサイエンス共同利用基盤施設</p>
+              <p class="footer__organism-main">ライフサイエンス統合データベースセンター</p>
             </div>
           </div>
+          <div class="footer__address">
+            <h2 class="footer-title">Address</h2>
+            <ul class="address__list">
+              <li>
+                <p>〒277-0871</p>
+                <p>千葉県柏市若柴178-4-4</p>
+                <p>東京大学柏の葉キャンパス
+                  <br>駅前サテライト6階
+                </p>
+                <p>TEL. 04-7135-5508（代表）
+                  <br> FAX. 04-7135-5534（代表）
+                </p>
+              </li>
+              <li>
+                <p>〒411-8540</p>
+                <p>静岡県三島市谷田1111</p>
+                <p>国立遺伝学研究所
+                  <br>研究実験W棟412
+                </p>
+              </li>
+            </ul>
+          </div>
+          <div class="footer__links">
+            <h2 class="footer-title">Links</h2>
+            <ul class="links__wrapper">
+              <li class="individual_link">
+                <a href="http://lifesciencedb.jp/">統合ホームページ</a>
+              </li>
+              <li class="individual_link">
+                <a href="https://youtube.com/togotv/live">DBCLS on YouTubeLive</a>
+              </li>
+              <li class="individual_link">
+                <a href="https://ds.rois.ac.jp/">データサイエンス共同利用基盤施設</a>
+              </li>
+              <li class="individual_link">
+                <a href="http://www.rois.ac.jp/">情報・システム研究機構</a>
+              </li>
+              <li class="individual_link">
+                <a href="http://www.mext.go.jp/">文部科学省</a>
+              </li>
+            </ul>
+          </div>
         </div>
-      </div>
-      <div class="footer__bottom">
-        <div class="footer__partners">
-          <ul class="footer__logo-wrapper">
+        <div class="footer__bottom">
+          <ul class="footer__partners">
             <li>
               <a href="https://jbioinfo.jp/" target="_blank">
-                <img class="logo__jbi" src="../static/img/jbi-3.png" alt="">
+                <img class="logo__jbi" src="../static/img/jbi-3.png" alt="JBIロゴ">
               </a>
             </li>
             <li>
               <a href="https://www.ddbj.nig.ac.jp/index.html" target="_blank">
-                <img class="logo__ddbj" src="../static/img/ddbj.png" alt="">
+                <img class="logo__ddbj" src="../static/img/ddbj.png" alt="DDBJロゴ">
               </a>
             </li>
             <li>
               <a href="https://biosciencedbc.jp/" target="_blank">
-                <img class="logo__nbdc" src="../static/img/nbdc.png" alt="">
+                <img class="logo__nbdc" src="../static/img/nbdc.png" alt="NBDCロゴ">
               </a>
             </li>
             <li>
               <a href="https://pdbj.org/" target="_blank">
-                <img class="logo__pdbj" src="../static/img/pdbj.png" alt="">
+                <img class="logo__pdbj" src="../static/img/pdbj.png" alt="PDBJロゴ">
               </a>
             </li>
           </ul>
-        </div>
-        <div class="footer__lisence">
-          <p> &copy; 2018 DBCLS, Licensed under <a href="https://creativecommons.org/licenses/by/4.0/deed.ja"
-              target="_blank">Creative Commons Attribution 4.0 International license (CC-BY 4.0)</a></p>
+          <div class="footer__lisence">
+            <p> &copy; 2018 DBCLS, Licensed under <a href="https://creativecommons.org/licenses/by/4.0/deed.ja"
+                target="_blank">Creative Commons Attribution 4.0 International license (CC-BY 4.0)</a></p>
+          </div>
         </div>
       </div>
     </footer>
@@ -256,17 +246,15 @@
       aria-hidden="true">
       <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
-          <div class="modal-body">
+          <div class="modal-body content-tos">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
-            <div class="modalContent_TOS">
-              <h5 class="modal-title modal-title" id="demoModalTitle">NanbyoData利用規約</h5>
+              <h3 class="modal-title modal-title" id="demoModalTitle">NanbyoData利用規約</h3>
               <p>
                 NanbyoDataは誠実にデータを提供しますが、データの正確性、臨床的妥当性または有用性を検証することはありません。DBCLSは、明示的にも黙示的にも、利用者が当データを用いて行う一切の行為について、何ら責任を負うものではありません。DBCLSは、本サービスの変更、中断、または終了により被った損害に関しても、何ら責任を負うものではありません。また、ライフサイエンス統合データベースセンターのサイト・ポリシー内「<a
                   class="policy" href="https://dbcls.rois.ac.jp/policy.html">免責事項</a>」にも準ずるものとします。
               </p>
-            </div>
             <div class="btn-close">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">CLOSE</button>
             </div>
