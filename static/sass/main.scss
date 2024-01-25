@@ -1,22 +1,23 @@
 /* Foundation */
-@use "./foundation/variables";
-@use "./foundation/reset";
+@use './foundation/variables';
+@use './foundation/reset';
 
-@use "./base";
+@use './base';
 
 /* Layout */
-@use "./layout/layout";
+@use './layout/layout';
 
 /* Component */
-@use "./component/linked-item";
-@use "./component/tokeninput";
+@use './component/linked-item';
+@use './component/tokeninput';
+@use './component/table';
 
-@use "./navigation";
-@use "./service";
-@use "./footer";
+@use './navigation';
+@use './service';
+@use './footer';
 
 /* Top Only */
-@use "./kv-wrap";
+@use './kv-wrap';
 
 /* Disease Only */
-@use "./summary-header";
+@use './summary-header';
