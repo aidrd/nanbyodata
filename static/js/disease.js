@@ -65,7 +65,14 @@ const nandoId = pathname.slice(nandoIndex + 6);
     ]);
 
     selectedItem();
-    switchingDisplayContents('temp-summary', entryData);
+
+    if (window.location.hash) {
+      const hash = window.location.hash;
+      const hashId = hash.replace('#', '');
+      switchingDisplayContents(hashId, entryData);
+    } else {
+      switchingDisplayContents('overview', entryData);
+    }
   } catch (error) {
     console.error('error:', error);
   }
@@ -110,7 +117,7 @@ function makeHeader(entryData) {
   notificationNumber.textContent = entryData.notification_number;
   if (!entryData.notification_number) {
     notificationNumber.parentNode.remove();
-    const tempDataSummary = document.getElementById('temp-summary');
+    const tempDataSummary = document.getElementById('overview');
     tempDataSummary.style.borderBottom = 'none';
   }
 }
@@ -268,7 +275,7 @@ function makeLinksList(entryData) {
 }
 
 function makeProperties(geneData) {
-  const causativeGene = document.getElementById('temp-causative-gene');
+  const causativeGene = document.getElementById('gene');
   const properties = causativeGene.querySelector('#temp-properties');
   const data = geneData;
 
@@ -293,25 +300,17 @@ function makeProperties(geneData) {
       ></togostanza-pagination-table>
       `;
 
-    const tempSpanElement = document.querySelector(
-      '#temp-causative-gene .data-num'
-    );
-    const navSpanElement = document.querySelector('.causative-gene .data-num');
+    const tempSpanElement = document.querySelector('#gene .data-num');
+    const navSpanElement = document.querySelector('.gene .data-num');
     tempSpanElement.innerText = data.length;
     navSpanElement.innerText = data.length;
   }
 }
 
 function checkSummaryData(entryData) {
-  const items = [
-    '.causative-gene',
-    '.medical-genetic-testing-info',
-    '.phenotype-view',
-    '.specific-bio-resource',
-    '.variant',
-  ];
+  const items = ['.gene', '.test', '.hpo', '.brc', '.variant'];
   const summaryWrapper = document.querySelector('.summary-wrapper');
-  const summaryNav = document.querySelector('.nav-link.summary');
+  const summaryNav = document.querySelector('.nav-link.overview');
   const diseaseDefinition = document.getElementById('temp-disease-definition');
   const navBorderTop = document.querySelector(
     '#temp-side-navigation > ul > li:first-child'
@@ -332,10 +331,9 @@ function checkSummaryData(entryData) {
       navBorderTop.style = 'border-top: none;';
       for (const item of items) {
         const cleanedItem = item.replace(/^\./, '');
-        const modifiedItem = 'temp-' + cleanedItem;
         const element = document.querySelector(item);
         if (element) {
-          switchingDisplayContents(modifiedItem, entryData);
+          switchingDisplayContents(cleanedItem, entryData);
           break;
         }
       }
@@ -430,9 +428,7 @@ function makeDiseaseDefinition(entryData) {
 }
 
 function makeMedicalGeneticTestingInfo(geneTestData) {
-  const medicalGeneticTestingInfo = document.getElementById(
-    'temp-medical-genetic-testing-info'
-  );
+  const medicalGeneticTestingInfo = document.getElementById('test');
   const inspectionView =
     medicalGeneticTestingInfo.querySelector('.inspection-view');
   const data = geneTestData;
@@ -458,19 +454,15 @@ function makeMedicalGeneticTestingInfo(geneTestData) {
       ></togostanza-pagination-table>
       `;
 
-    const tempSpanElement = document.querySelector(
-      '#temp-medical-genetic-testing-info .data-num'
-    );
-    const navSpanElement = document.querySelector(
-      '.medical-genetic-testing-info .data-num'
-    );
+    const tempSpanElement = document.querySelector('#test .data-num');
+    const navSpanElement = document.querySelector('.test .data-num');
     tempSpanElement.innerText = data.length;
     navSpanElement.innerText = data.length;
   }
 }
 
 function makePhenotypeView(hpoData) {
-  const tempPhenotypeView = document.getElementById('temp-phenotype-view');
+  const tempPhenotypeView = document.getElementById('hpo');
   const phenotypeViewJa = tempPhenotypeView.querySelector('.phenotype-ja');
   const phenotypeViewEn = tempPhenotypeView.querySelector('.phenotype-en');
   const data = hpoData;
@@ -512,19 +504,15 @@ function makePhenotypeView(hpoData) {
         ></togostanza-pagination-table>
         `;
 
-    const tempSpanElement = document.querySelector(
-      '#temp-phenotype-view .data-num'
-    );
-    const navSpanElement = document.querySelector('.phenotype-view .data-num');
+    const tempSpanElement = document.querySelector('#hpo .data-num');
+    const navSpanElement = document.querySelector('.hpo .data-num');
     tempSpanElement.innerText = data.length;
     navSpanElement.innerText = data.length;
   }
 }
 
 function makeSpecificBioResource(cellData, mouseData, dnaData) {
-  const specificBioResource = document.getElementById(
-    'temp-specific-bio-resource'
-  );
+  const specificBioResource = document.getElementById('brc');
   const tabWrap = specificBioResource.querySelector('.tab-wrap');
 
   let isCellData = false;
@@ -562,7 +550,7 @@ function makeSpecificBioResource(cellData, mouseData, dnaData) {
   function removeNavItemIfNotExist(entryDataProperty, className) {
     if (!entryDataProperty) {
       const navItem = document.querySelector(
-        '.specific-bio-resource .' + className + '.nav-link'
+        '.brc .' + className + '.nav-link'
       );
       if (navItem) {
         navItem.parentElement.remove();
@@ -643,7 +631,7 @@ function makeSpecificBioResource(cellData, mouseData, dnaData) {
 }
 
 function makeVariant(entryData, variantData) {
-  const variant = document.getElementById('temp-variant');
+  const variant = document.getElementById('variant');
   const properties = variant.querySelector('#temp-properties');
   const data = variantData;
 
@@ -667,7 +655,7 @@ function makeVariant(entryData, variantData) {
           ></togostanza-pagination-table>
           `;
 
-    const tempSpanElement = document.querySelector(`#temp-variant .data-num`);
+    const tempSpanElement = document.querySelector(`#variant .data-num`);
     const navSpanElement = document.querySelector('.variant .data-num');
     tempSpanElement.innerText = data.length;
     navSpanElement.innerText = data.length;
@@ -688,14 +676,7 @@ function makeSideNavigation(entryData) {
 
   const sideNavigation = document.getElementById('temp-side-navigation');
   const sideNavigationUl = sideNavigation.querySelector('ul');
-  const items = [
-    'temp-summary',
-    'temp-causative-gene',
-    'temp-medical-genetic-testing-info',
-    'temp-phenotype-view',
-    'temp-specific-bio-resource',
-    'temp-variant',
-  ];
+  const items = ['overview', 'gene', 'test', 'hpo', 'brc', 'variant'];
   const lis = sideNavigationUl.querySelectorAll('li');
   lis.forEach((li) => {
     li.addEventListener('click', () => {
@@ -714,47 +695,40 @@ function makeSideNavigation(entryData) {
   });
 
   // processing when the table of contents is pressed
-  document
-    .querySelectorAll('.specific-bio-resource a')
-    .forEach(function (aTag) {
-      aTag.addEventListener('click', function (event) {
-        event.preventDefault();
-        const classList = this.classList[0];
-        const checkBox = document.getElementById('specific-brc-' + classList);
-        if (checkBox && !checkBox.checked) {
-          checkBox.checked = true;
-        }
-      });
+  document.querySelectorAll('.brc a').forEach(function (aTag) {
+    aTag.addEventListener('click', function () {
+      const classList = this.classList[0];
+      const checkBox = document.getElementById('specific-brc-' + classList);
+      if (checkBox && !checkBox.checked) {
+        checkBox.checked = true;
+      }
     });
+  });
 
   // processing when tabs are switched
-  document
-    .querySelectorAll('#temp-specific-bio-resource .tab-switch')
-    .forEach(function (tabSwitch) {
-      tabSwitch.addEventListener('change', function () {
-        const selectedTabId = this.id.replace('specific-brc-', '');
-        const tocItem = document.querySelector(
-          '.specific-bio-resource a.' + selectedTabId
-        );
-        document.querySelectorAll('a').forEach(function (item) {
-          item.classList.remove('selected');
-        });
-        if (tocItem) {
-          tocItem.classList.add('selected');
-        }
+  document.querySelectorAll('#brc .tab-switch').forEach(function (tabSwitch) {
+    tabSwitch.addEventListener('change', function () {
+      const selectedTabId = this.id.replace('specific-brc-', '');
+      const tocItem = document.querySelector('.brc a.' + selectedTabId);
+      document.querySelectorAll('a').forEach(function (item) {
+        item.classList.remove('selected');
       });
+      if (tocItem) {
+        tocItem.classList.add('selected');
+      }
     });
+  });
 }
 
 function switchingDisplayContents(selectedItemId, entryData) {
   const items = [
-    '#temp-summary',
+    '#overview',
     '#temp-disease-definition',
-    '#temp-causative-gene',
-    '#temp-medical-genetic-testing-info',
-    '#temp-phenotype-view',
-    '#temp-specific-bio-resource',
-    '#temp-variant',
+    '#gene',
+    '#test',
+    '#hpo',
+    '#brc',
+    '#variant',
   ];
 
   // すべての要素を非表示にする
@@ -766,8 +740,8 @@ function switchingDisplayContents(selectedItemId, entryData) {
   });
 
   // 選択されているアイテムを表示する
-  if (selectedItemId === 'temp-summary') {
-    const tempSummary = document.getElementById('temp-summary');
+  if (selectedItemId === 'overview') {
+    const tempSummary = document.getElementById('overview');
     tempSummary.style.display = 'block';
     const tempAliases = document.getElementById('temp-aliases');
     const tempDiseaseDefinition = document.querySelector('.temp-wrapper');
@@ -781,15 +755,13 @@ function switchingDisplayContents(selectedItemId, entryData) {
     } else {
       checkSummaryData(entryData);
     }
-  } else if (selectedItemId === 'temp-specific-bio-resource') {
+  } else if (selectedItemId === 'brc') {
     const dataWrapper = document.getElementById('data-wrapper');
     const summary = document.querySelector('.summary-header');
     dataWrapper.insertBefore(summary, dataWrapper.firstChild);
     document.querySelector(`#${selectedItemId}`).style.display = 'block';
 
-    const checkedSwitch = document.querySelector(
-      '#temp-specific-bio-resource .tab-switch:checked'
-    );
+    const checkedSwitch = document.querySelector('#brc .tab-switch:checked');
     const selectedId = checkedSwitch.id.replace('specific-brc-', '');
 
     const targetElements = document.querySelectorAll('a');
@@ -803,6 +775,16 @@ function switchingDisplayContents(selectedItemId, entryData) {
       }
     });
   } else {
+    const targetElements = document.querySelectorAll('a');
+
+    targetElements.forEach(function (element) {
+      const classes = element.classList;
+      if (classes[1] === selectedItemId) {
+        element.classList.add('selected');
+      } else {
+        element.classList.remove('selected');
+      }
+    });
     const dataWrapper = document.getElementById('data-wrapper');
     const summary = document.querySelector('.summary-header');
     dataWrapper.insertBefore(summary, dataWrapper.firstChild);
@@ -814,9 +796,7 @@ function selectedItem() {
   const links = document.querySelectorAll('#temp-side-navigation .nav-link');
 
   links.forEach((link) => {
-    link.addEventListener('click', (event) => {
-      event.preventDefault();
-
+    link.addEventListener('click', () => {
       links.forEach((link) => {
         link.classList.remove('selected');
       });
