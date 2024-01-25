@@ -1,6 +1,8 @@
 import { navToggle } from './navigation.js';
+import { focusInput } from './focusInput.js';
 
 navToggle();
+focusInput();
 
 // dispaly: none until loading is finished
 document.getElementById('content').style.display = 'none';
