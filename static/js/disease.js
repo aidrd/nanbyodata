@@ -22,6 +22,27 @@ const nandoId = pathname.slice(nandoIndex + 6);
 
     const entryData = await entryDataPromise;
 
+    async function fetchData(apiEndpoint) {
+      const url = `https://nanbyodata.jp/sparqlist/api/${apiEndpoint}?nando_id=${nandoId}`;
+      const response = await fetch(url);
+      return response.json();
+    }
+
+    // 各種データを取得
+    const geneData = await fetchData('nanbyodata_get_gene_by_nando_id');
+    const geneTestData = await fetchData('nanbyodata_get_gene_test');
+    const hpoData = await fetchData('nanbyodata_get_hpo_data_by_nando_id');
+    const cellData = await fetchData(
+      'nanbyodata_get_riken_brc_cell_info_by_nando_id'
+    );
+    const mouseData = await fetchData(
+      'nanbyodata_get_riken_brc_mouse_info_by_nando_id'
+    );
+    const dnaData = await fetchData(
+      'nanbyodata_get_riken_brc_dna_info_by_nando_id'
+    );
+    const variantData = await fetchData('nanbyodata_get_variant_by_nando_id');
+
     await Promise.all([
       makeHeader(entryData),
       makeExternalLinks(entryData),
@@ -31,12 +52,12 @@ const nandoId = pathname.slice(nandoIndex + 6);
       checkSummaryData(entryData),
       checkInitialLanguage(),
       makeDiseaseDefinition(entryData),
-      makeProperties(entryData),
-      makeMedicalGeneticTestingInfo(entryData),
+      makeProperties(geneData),
+      makeMedicalGeneticTestingInfo(geneTestData),
       changeLangHP(),
-      makePhenotypeView(entryData),
-      makeSpecificBioResource(entryData),
-      makeVariant(entryData),
+      makePhenotypeView(hpoData),
+      makeSpecificBioResource(cellData, mouseData, dnaData),
+      makeVariant(entryData, variantData),
     ]);
 
     selectedItem();
@@ -242,38 +263,22 @@ function makeLinksList(entryData) {
   }
 }
 
-function makeProperties(entryData) {
+function makeProperties(geneData) {
   const causativeGene = document.getElementById('temp-causative-gene');
   const properties = causativeGene.querySelector('#temp-properties');
-  const item = {
-    existing: !!entryData.gene_uris,
-    url: `https://pubcasefinder.dbcls.jp/sparqlist/api/nanbyodata_get_gene_by_nando_id?nando_id=${entryData.nando_id}`,
-    columns: '',
-  };
-  if (item.existing) {
-    fetch(item.url)
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error(`HTTP Error status code: ${response.status}`);
-        }
-        return response.json();
-      })
-      .then((data) => {
-        const tempSpanElement = document.querySelector(
-          '#temp-causative-gene .data-num'
-        );
-        const navSpanElement = document.querySelector(
-          '.causative-gene .data-num'
-        );
-        tempSpanElement.innerText = data.length;
-        navSpanElement.innerText = data.length;
-      })
-      .catch((error) => {
-        console.error('Failed to get data:', error);
-      });
+  const data = geneData;
+
+  if (Array.isArray(data) && data.length === 0) {
+    causativeGene.remove();
+  } else {
+    // to avoid hitting api twice Use createObjectURL
+    const blob = new Blob([JSON.stringify(data)], {
+      type: 'application/json',
+    });
+    const objectUrl = URL.createObjectURL(blob);
     properties.innerHTML = `
       <togostanza-pagination-table
-      data-url="${item.url}"
+      data-url="${objectUrl}"
       data-type="json"
       custom-css-url="https://togostanza.github.io/togostanza-themes/contrib/nanbyodata.css"
       fixed-columns="1"
@@ -283,8 +288,13 @@ function makeProperties(entryData) {
       "
       ></togostanza-pagination-table>
       `;
-  } else {
-    causativeGene.remove();
+
+    const tempSpanElement = document.querySelector(
+      '#temp-causative-gene .data-num'
+    );
+    const navSpanElement = document.querySelector('.causative-gene .data-num');
+    tempSpanElement.innerText = data.length;
+    navSpanElement.innerText = data.length;
   }
 }
 
@@ -414,88 +424,65 @@ function makeDiseaseDefinition(entryData) {
   }
 }
 
-function makeMedicalGeneticTestingInfo(entryData) {
+function makeMedicalGeneticTestingInfo(geneTestData) {
   const medicalGeneticTestingInfo = document.getElementById(
     'temp-medical-genetic-testing-info'
   );
   const inspectionView =
     medicalGeneticTestingInfo.querySelector('.inspection-view');
-  const item = {
-    existing: !!entryData.genetesting,
-    url: `https://pubcasefinder.dbcls.jp/sparqlist/api/nanbyodata_get_gene_test?nando_id=${entryData.nando_id}`,
-    columns:
-      '[{&quot;id&quot;:&quot;label&quot;,&quot;label&quot;:&quot;Test name&quot;},{&quot;id&quot;:&quot;hp&quot;,&quot;label&quot;:&quot;More information&quot;,&quot;link&quot;:&quot;hp&quot;,&quot;target&quot;:&quot;_blank&quot;},{&quot;id&quot;:&quot;gene&quot;,&quot;label&quot;:&quot;Gene name&quot;},{&quot;id&quot;:&quot;facility&quot;,&quot;label&quot;:&quot;Test facility&quot;}]',
-  };
-  if (entryData.genetesting) {
-    fetch(item.url)
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error(`HTTP Error status code: ${response.status}`);
-        }
-        return response.json();
-      })
-      .then((data) => {
-        const tempSpanElement = document.querySelector(
-          '#temp-medical-genetic-testing-info .data-num'
-        );
-        const navSpanElement = document.querySelector(
-          '.medical-genetic-testing-info .data-num'
-        );
-        tempSpanElement.innerText = data.length;
-        navSpanElement.innerText = data.length;
-      })
-      .catch((error) => {
-        console.error('Failed to get data:', error);
-      });
-    inspectionView.innerHTML = `
-        <togostanza-pagination-table data-type="json"
-          data-url="${item.url}"
-          columns="${item.columns}"
-          custom-css-url="https://togostanza.github.io/togostanza-themes/contrib/nanbyodata.css"
-          page-size-option="100"
-          page-slider="true"
-          fixed-columns="1">
-        </togostanza-pagination-table>
-      `;
-  } else {
+  const data = geneTestData;
+
+  if (Array.isArray(data) && data.length === 0) {
     medicalGeneticTestingInfo.remove();
+  } else {
+    // to avoid hitting api twice Use createObjectURL
+    const blob = new Blob([JSON.stringify(data)], {
+      type: 'application/json',
+    });
+    const objectUrl = URL.createObjectURL(blob);
+    inspectionView.innerHTML = `
+      <togostanza-pagination-table
+      data-url="${objectUrl}"
+      data-type="json"
+      custom-css-url="https://togostanza.github.io/togostanza-themes/contrib/nanbyodata.css"
+      fixed-columns="1"
+      page-size-option="100"
+      page-slider="false"
+      columns="[{&quot;id&quot;:&quot;label&quot;,&quot;label&quot;:&quot;Test name&quot;},{&quot;id&quot;:&quot;hp&quot;,&quot;label&quot;:&quot;More information&quot;,&quot;link&quot;:&quot;hp&quot;,&quot;target&quot;:&quot;_blank&quot;},{&quot;id&quot;:&quot;gene&quot;,&quot;label&quot;:&quot;Gene name&quot;},{&quot;id&quot;:&quot;facility&quot;,&quot;label&quot;:&quot;Test facility&quot;}]
+      "
+      ></togostanza-pagination-table>
+      `;
+
+    const tempSpanElement = document.querySelector(
+      '#temp-medical-genetic-testing-info .data-num'
+    );
+    const navSpanElement = document.querySelector(
+      '.medical-genetic-testing-info .data-num'
+    );
+    tempSpanElement.innerText = data.length;
+    navSpanElement.innerText = data.length;
   }
 }
 
-function makePhenotypeView(entryData) {
+function makePhenotypeView(hpoData) {
   const tempPhenotypeView = document.getElementById('temp-phenotype-view');
   const phenotypeViewJa = tempPhenotypeView.querySelector('.phenotype-ja');
   const phenotypeViewEn = tempPhenotypeView.querySelector('.phenotype-en');
-  const item = {
-    existing: entryData.phenotype_flg,
-    url: `https://pubcasefinder.dbcls.jp/sparqlist/api/nanbyodata_get_hpo_data_by_nando_id?nando_id=${entryData.nando_id}`,
-    columns: '',
-  };
-  if (item.existing) {
-    fetch(item.url)
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error(`HTTP Error status code: ${response.status}`);
-        }
-        return response.json();
-      })
-      .then((data) => {
-        const tempSpanElement = document.querySelector(
-          '#temp-phenotype-view .data-num'
-        );
-        const navSpanElement = document.querySelector(
-          '.phenotype-view .data-num'
-        );
-        tempSpanElement.innerText = data.length;
-        navSpanElement.innerText = data.length;
-      })
-      .catch((error) => {
-        console.error('Failed to get data:', error);
-      });
+  const data = hpoData;
+
+  if (Array.isArray(data) && data.length === 0) {
+    tempPhenotypeView.remove();
+  } else {
+    // to avoid hitting api twice Use createObjectURL
+    const blob = new Blob([JSON.stringify(data)], {
+      type: 'application/json',
+    });
+    const objectUrl = URL.createObjectURL(blob);
+
     // lang ja
     phenotypeViewJa.innerHTML = `
       <togostanza-pagination-table
-      data-url="${item.url}"
+      data-url="${objectUrl}"
       custom-css-url="https://togostanza.github.io/togostanza-themes/contrib/nanbyodata.css"
       data-type="json"
       fixed-columns="1"
@@ -509,7 +496,7 @@ function makePhenotypeView(entryData) {
     // lang eng
     phenotypeViewEn.innerHTML = `
       <togostanza-pagination-table
-      data-url="${item.url}"
+      data-url="${objectUrl}"
       custom-css-url="https://togostanza.github.io/togostanza-themes/contrib/nanbyodata.css"
       data-type="json"
       fixed-columns="1"
@@ -519,37 +506,96 @@ function makePhenotypeView(entryData) {
       togostanza-custom_css_url=""
         ></togostanza-pagination-table>
         `;
-  } else {
-    tempPhenotypeView.remove();
+
+    const tempSpanElement = document.querySelector(
+      '#temp-phenotype-view .data-num'
+    );
+    const navSpanElement = document.querySelector('.phenotype-view .data-num');
+    tempSpanElement.innerText = data.length;
+    navSpanElement.innerText = data.length;
   }
 }
 
-function makeSpecificBioResource(entryData) {
+function makeSpecificBioResource(cellData, mouseData, dnaData) {
   const specificBioResource = document.getElementById(
     'temp-specific-bio-resource'
   );
   const tabWrap = specificBioResource.querySelector('.tab-wrap');
+
+  let isCellData = false;
+  let isMusData = false;
+  let isDnaData = false;
+
+  let cellObject = null;
+  if (Array.isArray(cellData) && cellData.length > 0) {
+    isCellData = true;
+    const blob = new Blob([JSON.stringify(cellData)], {
+      type: 'application/json',
+    });
+    cellObject = URL.createObjectURL(blob);
+  }
+
+  let mouseObject = null;
+  if (Array.isArray(mouseData) && mouseData.length > 0) {
+    isMusData = true;
+    const blob = new Blob([JSON.stringify(mouseData)], {
+      type: 'application/json',
+    });
+    mouseObject = URL.createObjectURL(blob);
+  }
+
+  let dnaObject = null;
+  if (Array.isArray(dnaData) && dnaData.length > 0) {
+    isDnaData = true;
+    const blob = new Blob([JSON.stringify(dnaData)], {
+      type: 'application/json',
+    });
+    dnaObject = URL.createObjectURL(blob);
+  }
+
+  // check existing tab
+  function removeNavItemIfNotExist(entryDataProperty, className) {
+    if (!entryDataProperty) {
+      const navItem = document.querySelector(
+        '.specific-bio-resource .' + className + '.nav-link'
+      );
+      if (navItem) {
+        navItem.parentElement.remove();
+      }
+    }
+  }
+
+  removeNavItemIfNotExist(isCellData, 'cell');
+  removeNavItemIfNotExist(isMusData, 'mus');
+  removeNavItemIfNotExist(isDnaData, 'dna');
+
   const items = [
     {
-      existing: !!entryData.cell,
+      existing: isCellData,
       id: 'cell',
-      url: `https://nanbyodata.jp/sparqlist/api/nanbyodata_get_riken_brc_cell_info_by_nando_id?nando_id=${entryData.nando_id}`,
+      url: `https://nanbyodata.jp/sparqlist/api/nanbyodata_get_riken_brc_cell_info_by_nando_id?nando_id=${nandoId}`,
       columns:
         '[{&quot;id&quot;:&quot;ID&quot;,&quot;label&quot;:&quot;Cell No.&quot;},{&quot;id&quot;:&quot;Cell_name&quot;,&quot;label&quot;:&quot;Cell name&quot;},{&quot;id&quot;:&quot;Homepage&quot;,&quot;label&quot;:&quot;Homepage&quot;,&quot;link&quot;:&quot;Homepage&quot;,&quot;target&quot;:&quot;_blank&quot;},{&quot;id&quot;:&quot;Description_e&quot;,&quot;label&quot;:&quot;Description (EN)&quot;},{&quot;id&quot;:&quot;Description_j&quot;,&quot;label&quot;:&quot;Description (JA)&quot;}]',
+      data: cellData,
+      object: cellObject,
     },
     {
-      existing: !!entryData.mus,
+      existing: isMusData,
       id: 'mus',
-      url: `https://pubcasefinder.dbcls.jp/sparqlist/api/nanbyodata_get_riken_brc_mouse_info_by_nando_id?nando_id=${entryData.nando_id}`,
+      url: `https://nanbyodata.jp/sparqlist/api/nanbyodata_get_riken_brc_mouse_info_by_nando_id?nando_id=${nandoId}`,
       columns:
         '[{&quot;id&quot;:&quot;mouse_id&quot;,&quot;label&quot;:&quot;RIKEN_BRC No.&quot;},{&quot;id&quot;:&quot;hp&quot;,&quot;label&quot;:&quot;Homepage&quot;,&quot;link&quot;:&quot;Homepage&quot;,&quot;target&quot;:&quot;_blank&quot;},{&quot;id&quot;:&quot;mouse_name&quot;,&quot;label&quot;:&quot;Strain name&quot;},{&quot;id&quot;:&quot;description&quot;,&quot;label&quot;:&quot;Strain description&quot;}]',
+      data: mouseData,
+      object: mouseObject,
     },
     {
-      existing: !!entryData.dna,
+      existing: isDnaData,
       id: 'dna',
-      url: `https://pubcasefinder.dbcls.jp/sparqlist/api/nanbyodata_get_riken_brc_dna_info_by_nando_id?nando_id=${entryData.nando_id}`,
+      url: `https://nanbyodata.jp/sparqlist/api/nanbyodata_get_riken_brc_dna_info_by_nando_id?nando_id=${nandoId}`,
       columns:
         '[{&quot;id&quot;:&quot;gene_id&quot;,&quot;label&quot;:&quot;Catalog number&quot;},{&quot;id&quot;:&quot;hp&quot;,&quot;label&quot;:&quot;Homepage&quot;,&quot;link&quot;:&quot;hp&quot;,&quot;target&quot;:&quot;_blank&quot;},{&quot;id&quot;:&quot;gene_label&quot;,&quot;label&quot;:&quot;Name&quot;},{&quot;id&quot;:&quot;ncbi_gene&quot;,&quot;label&quot;:&quot;NCBI gene link&quot;,&quot;link&quot;:&quot;ncbi_gene&quot;,&quot;target&quot;:&quot;_blank&quot;}]',
+      data: dnaData,
+      object: dnaObject,
     },
   ];
 
@@ -573,58 +619,38 @@ function makeSpecificBioResource(entryData) {
         }
         content.innerHTML = `
         <togostanza-pagination-table data-type="json"
-          data-url="${item.url}"
+          data-url="${item.object}"
           columns="${item.columns}"
           custom-css-url="https://togostanza.github.io/togostanza-themes/contrib/nanbyodata.css"
           page-size-option="100"
           page-slider="fales">
         </togostanza-pagination-table>
       `;
-        fetch(item.url)
-          .then((response) => {
-            if (!response.ok) {
-              throw new Error(`HTTP Error status code: ${response.status}`);
-            }
-            return response.json();
-          })
-          .then((data) => {
-            const tempSpanElement = document.querySelector(
-              `.specific-brc-${item.id} .data-num`
-            );
-            const navSpanElement = document.querySelector(
-              `.${item.id} .data-num`
-            );
-            tempSpanElement.innerText = data.length;
-            navSpanElement.innerText = data.length;
-          })
-          .catch((error) => {
-            console.error('Failed to get data:', error);
-          });
+        const tempSpanElement = document.querySelector(
+          `.specific-brc-${item.id} .data-num`
+        );
+        const navSpanElement = document.querySelector(`.${item.id} .data-num`);
+        tempSpanElement.innerText = item.data.length;
+        navSpanElement.innerText = item.data.length;
       }
     });
   }
 }
 
-async function makeVariant(entryData) {
-  try {
-    const url = `https://pubcasefinder.dbcls.jp/sparqlist/api/nanbyodata_get_variant_by_nando_id?nando_id=${entryData.nando_id}`;
-    const variant = document.getElementById('temp-variant');
-    const properties = variant.querySelector('#temp-properties');
-    const response = await fetch(url);
-    if (!response.ok) {
-      throw new Error(`HTTP Error status code: ${response.status}`);
-    }
-    const data = await response.json();
+function makeVariant(entryData, variantData) {
+  const variant = document.getElementById('temp-variant');
+  const properties = variant.querySelector('#temp-properties');
+  const data = variantData;
 
-    if (Array.isArray(data) && data.length === 0) {
-      variant.remove();
-    } else {
-      // to avoid hitting api twice Use createObjectURL
-      const blob = new Blob([JSON.stringify(data)], {
-        type: 'application/json',
-      });
-      const objectUrl = URL.createObjectURL(blob);
-      properties.innerHTML = `
+  if (Array.isArray(data) && data.length === 0) {
+    variant.remove();
+  } else {
+    // to avoid hitting api twice Use createObjectURL
+    const blob = new Blob([JSON.stringify(data)], {
+      type: 'application/json',
+    });
+    const objectUrl = URL.createObjectURL(blob);
+    properties.innerHTML = `
           <togostanza-pagination-table
               data-url="${objectUrl}"
               data-type="json"
@@ -636,21 +662,17 @@ async function makeVariant(entryData) {
           ></togostanza-pagination-table>
           `;
 
-      const tempSpanElement = document.querySelector(`#temp-variant .data-num`);
-      const navSpanElement = document.querySelector('.variant .data-num');
-      tempSpanElement.innerText = data.length;
-      navSpanElement.innerText = data.length;
-    }
-
-    makeSideNavigation(entryData);
-
-    // When loading finishes
-    document.querySelector('.loading-spinner').style.display = 'none';
-    document.getElementById('content').style.display = 'block';
-    document.getElementById('sidebar').style.display = 'block';
-  } catch (error) {
-    console.error('Failed to get data:', error);
+    const tempSpanElement = document.querySelector(`#temp-variant .data-num`);
+    const navSpanElement = document.querySelector('.variant .data-num');
+    tempSpanElement.innerText = data.length;
+    navSpanElement.innerText = data.length;
   }
+
+  // When loading finishes
+  document.querySelector('.loading-spinner').style.display = 'none';
+  document.getElementById('content').style.display = 'block';
+  document.getElementById('sidebar').style.display = 'block';
+  makeSideNavigation(entryData);
 }
 
 function makeSideNavigation(entryData) {
@@ -685,24 +707,6 @@ function makeSideNavigation(entryData) {
       liToRemove.parentNode.removeChild(liToRemove);
     }
   });
-
-  // specific bio resource
-
-  // check existing tab
-  function removeNavItemIfNotExist(entryDataProperty, className) {
-    if (!entryDataProperty) {
-      const navItem = document.querySelector(
-        '.specific-bio-resource .' + className + '.nav-link'
-      );
-      if (navItem) {
-        navItem.parentElement.remove();
-      }
-    }
-  }
-
-  removeNavItemIfNotExist(entryData.cell, 'cell');
-  removeNavItemIfNotExist(entryData.mus, 'mus');
-  removeNavItemIfNotExist(entryData.dna, 'dna');
 
   // processing when the table of contents is pressed
   document
