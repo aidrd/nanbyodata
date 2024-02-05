@@ -1026,7 +1026,7 @@ footer .footer__wrapper a:hover {
 }
 footer .footer__sitemap {
   background-color: #fff;
-  border-top: solid 0.5px #9E9E9E;
+  border-top: solid 0.5px #9e9e9e;
   color: #444;
   width: 100%;
 }
@@ -1079,12 +1079,17 @@ footer .footer__common .footer__info .footer__address .address__list li {
 }
 footer .footer__common .footer__info .footer__address .address__list li p {
   line-height: 1.5em;
+  font-size: 12px;
 }
 footer .footer__common .footer__info .footer__links {
   padding-top: 15px;
 }
 footer .footer__common .footer__info .footer__links.en {
   width: 192px;
+}
+footer .footer__common .footer__info .footer__links ul.links__wrapper {
+  inline-size: 200px;
+  overflow-wrap: break-word;
 }
 footer .footer__common .footer__info .footer__links ul.links__wrapper li.individual_link a {
   font-size: 12px;

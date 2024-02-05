@@ -79,7 +79,7 @@ footer {
 
   .footer__sitemap {
     background-color: #fff;
-    border-top: solid 0.5px #9E9E9E;
+    border-top: solid 0.5px #9e9e9e;
     color: #444;
     width: 100%;
   }
@@ -131,13 +131,12 @@ footer {
         .address__list {
           display: flex;
           justify-content: space-between;
-
           li {
             font-size: 12px;
             line-height: 1.5em;
-
             p {
               line-height: 1.5em;
+              font-size: 12px;
             }
           }
         }
@@ -150,12 +149,16 @@ footer {
           width: 192px;
         }
 
+        ul.links__wrapper {
+          inline-size: 200px;
+          overflow-wrap: break-word;
+        }
+
         ul.links__wrapper li.individual_link a {
           font-size: 12px;
           padding: 2px 0;
           font-weight: normal;
           color: #444;
-
           &:hover {
             color: #004098;
             border-bottom: solid 1px #004098;
@@ -185,7 +188,6 @@ footer {
           padding-bottom: 10px;
 
           img {
-
             &.logo__jbi,
             &.logo__ddbj,
             &.logo__nbdc,
@@ -213,7 +215,7 @@ footer {
         justify-content: center;
 
         &:before {
-          content: "";
+          content: '';
           width: 81px;
           height: 16px;
           display: block;
