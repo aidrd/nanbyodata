@@ -79,7 +79,12 @@
 #mainNav {
   .container {
     flex-wrap: nowrap;
-    align-items: center;
+    align-items: flex-start;
+
+    img.imgtitle {
+      position: relative;
+      top: 4px;
+    }
 
     .flex-wrapper {
       display: flex;
@@ -116,7 +121,7 @@
 #diseaseNav {
   .wrapper {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: space-between;
 
     .navbar-left {
@@ -144,6 +149,8 @@
 
     .navbar-right {
       .rigth-wrapper {
+        position: relative;
+        top: 4px;
         display: flex;
         flex-wrap: nowrap;
         align-items: center;
