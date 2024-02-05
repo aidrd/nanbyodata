@@ -667,6 +667,7 @@ function makeVariant(entryData, variantData) {
   document.querySelector('.loading-spinner').style.display = 'none';
   document.getElementById('content').style.display = 'block';
   document.getElementById('sidebar').style.display = 'block';
+
   makeSideNavigation(entryData);
 }
 
@@ -686,6 +687,14 @@ function makeSideNavigation(entryData) {
       switchingDisplayContents(id, entryData);
     });
   });
+
+  // specific bio resource
+  const specificBioResource = document.querySelector('.brc');
+
+  specificBioResource.addEventListener('click', function () {
+    window.location.hash = 'brc';
+  });
+
   items.forEach((id) => {
     const liElement = document.getElementById(id);
     if (!liElement) {
