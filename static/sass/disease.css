@@ -7,10 +7,7 @@ body {
 }
 
 #content {
-  overflow: auto;
-  top: 90px;
-  bottom: 0px;
-  position: fixed;
+  overflow: hidden;
 }
 
 .loading-spinner {
@@ -348,22 +345,22 @@ h5 {
   background: rgba(22, 35, 78, 0.2);
   color: var(--color-secondary);
 }
-#temp-side-navigation > ul > li .specific-bio-resource.selected {
+#temp-side-navigation > ul > li .brc.selected {
   background-color: transparent;
 }
-#temp-side-navigation > ul > li .specific-bio-resource {
+#temp-side-navigation > ul > li .brc {
   font-size: 14px;
   cursor: pointer;
   color: var(--color-secondary);
   font-weight: bold;
   padding: 10px 0 20px 10px;
 }
-#temp-side-navigation > ul > li .specific-bio-resource ul li {
+#temp-side-navigation > ul > li .brc ul li {
   position: relative;
   margin-left: 20px;
   padding-top: 4px;
 }
-#temp-side-navigation > ul > li .specific-bio-resource ul li::before {
+#temp-side-navigation > ul > li .brc ul li::before {
   content: "";
   display: block;
   width: 5px;
@@ -374,7 +371,7 @@ h5 {
   border-left: 1px solid rgba(22, 35, 78, 0.3);
   position: absolute;
 }
-#temp-side-navigation > ul > li .specific-bio-resource ul li::after {
+#temp-side-navigation > ul > li .brc ul li::after {
   content: "";
   display: block;
   width: 1px;
@@ -385,7 +382,7 @@ h5 {
   border-left: 15px solid rgba(22, 35, 78, 0.3);
   position: absolute;
 }
-#temp-side-navigation > ul > li .specific-bio-resource ul li a {
+#temp-side-navigation > ul > li .brc ul li a {
   display: block;
   text-decoration: none;
   position: relative;
@@ -394,7 +391,7 @@ h5 {
   margin-left: 20px;
   padding-left: 10px;
 }
-#temp-side-navigation > ul > li .specific-bio-resource ul li a:not(.selected):hover {
+#temp-side-navigation > ul > li .brc ul li a:not(.selected):hover {
   background: rgba(255, 255, 255, 0.5);
 }
 
@@ -810,7 +807,7 @@ header .intro-text p {
   display: block;
   padding-left: 15px;
   margin-bottom: 15px;
-  margin-top: 24px;
+  margin-top: 12px;
 }
 .temp-title::before {
   content: "";
@@ -964,6 +961,11 @@ details {
 }
 #data-wrapper > .properties {
   padding: 0 0 20px;
+}
+#data-wrapper > div {
+  display: block;
+  padding-top: 70px;
+  margin-top: -70px;
 }
 #data-wrapper details summary {
   color: #fff;

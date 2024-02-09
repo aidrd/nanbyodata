@@ -9,10 +9,15 @@ Foundation
 }
 
 body {
-  font-family: "Poppins", sans-serif, "Renner*", "Avenir", "Helvetica Neue", "Helvetica", "Arial", "Hiragino Sans", "ヒラギノ角ゴシック", YuGothic, "Yu Gothic", "メイリオ", Meiryo, "ＭＳ Ｐゴシック", "MS PGothic";
+  font-family: 'Poppins', sans-serif, 'Renner*', 'Avenir', 'Helvetica Neue',
+    'Helvetica', 'Arial', 'Hiragino Sans', 'ヒラギノ角ゴシック', YuGothic,
+    'Yu Gothic', 'メイリオ', Meiryo, 'ＭＳ Ｐゴシック', 'MS PGothic';
 }
 
-h1, ul, li, p {
+h1,
+ul,
+li,
+p {
   margin: 0;
   padding: 0;
 }
@@ -31,16 +36,18 @@ ul {
 }
 
 .br::before {
-  content: "\a";
+  content: '\a';
   white-space: pre;
 }
 
-a:visited, a:hover, a:active {
+a:visited,
+a:hover,
+a:active {
   color: var(--color-secondary);
 }
-a.link[target=_blank]::after {
-  font-family: "Font Awesome 5 Free";
-  content: "\f35d";
+a.link[target='_blank']::after {
+  font-family: 'Font Awesome 5 Free';
+  content: '\f35d';
   font-size: 105%;
   font-weight: 900;
   margin: 0 3px;
@@ -87,8 +94,8 @@ Layout
   text-align: center;
   font-size: 14px;
   -webkit-appearance: none;
-     -moz-appearance: none;
-          appearance: none;
+  -moz-appearance: none;
+  appearance: none;
   border-radius: 35px;
   padding: 5px 10px;
   border: 2px solid white;
@@ -179,7 +186,13 @@ Layout
   padding: 8px 20px;
   max-width: 690px;
 }
-#diseaseNav .wrapper .navbar-left .intro-text ul.token-input-list-facebook li.token-input-input-token-facebook #token-input-tokeninput {
+#diseaseNav
+  .wrapper
+  .navbar-left
+  .intro-text
+  ul.token-input-list-facebook
+  li.token-input-input-token-facebook
+  #token-input-tokeninput {
   height: 24px;
 }
 #diseaseNav .wrapper .navbar-right .rigth-wrapper {
@@ -227,7 +240,12 @@ footer .container .footer__info .footer__organism .footer__organism-text {
   text-align: center;
   margin-top: 11px;
 }
-footer .container .footer__info .footer__organism .footer__organism-text .footer__organism-main {
+footer
+  .container
+  .footer__info
+  .footer__organism
+  .footer__organism-text
+  .footer__organism-main {
   font-size: 15px;
   font-weight: 700;
   letter-spacing: -0.5px;
@@ -264,7 +282,7 @@ footer .container .footer__bottom .footer__lisence p {
   gap: 5px;
 }
 footer .container .footer__bottom .footer__lisence p:before {
-  content: "";
+  content: '';
   width: 81px;
   height: 16px;
   background: url(../img/by.svg) no-repeat;
@@ -276,7 +294,8 @@ footer .container .footer__bottom .footer__lisence p a {
 .page-layout {
   overflow: hidden;
 }
-.page-layout header.page-title, .page-layout header.search-area {
+.page-layout header.page-title,
+.page-layout header.search-area {
   border-bottom-right-radius: 2000px 250px;
   border-bottom-left-radius: 2000px 250px;
   padding: 100px 250px 40px;
@@ -305,7 +324,7 @@ footer .container .footer__bottom .footer__lisence p a {
   color: var(--color-secondary);
 }
 .page-layout .container .content-title::before {
-  content: "";
+  content: '';
   position: absolute;
   top: 0;
   left: 0;
@@ -339,7 +358,9 @@ ul.token-input-list-facebook {
   border: 1px solid #dfe1e5;
   border-radius: 30px;
 }
-ul.token-input-list-facebook li.token-input-input-token-facebook input#token-input-tokeninput {
+ul.token-input-list-facebook
+  li.token-input-input-token-facebook
+  input#token-input-tokeninput {
   font-size: 16px;
   border: 0;
   width: 100px;
@@ -400,21 +421,29 @@ div.token-input-dropdown-facebook ul li.token-input-dropdown-item-facebook {
 div.token-input-dropdown-facebook ul li.token-input-dropdown-item2-facebook {
   background-color: #fff;
 }
-div.token-input-dropdown-facebook ul li.token-input-selected-dropdown-item-facebook {
+div.token-input-dropdown-facebook
+  ul
+  li.token-input-selected-dropdown-item-facebook {
   background-color: #3b5998;
   color: #fff;
 }
 
 @font-face {
-  font-family: "Glyphicons Halflings";
-  src: url("../fonts/bootstrap/glyphicons-halflings-regular.eot");
-  src: url("../fonts/bootstrap/glyphicons-halflings-regular.eot%3F") format("embedded-opentype"), url("../fonts/bootstrap/glyphicons-halflings-regular.woff2") format("woff2"), url("../fonts/bootstrap/glyphicons-halflings-regular.woff") format("woff"), url("../fonts/bootstrap/glyphicons-halflings-regular.ttf") format("truetype"), url("../fonts/bootstrap/glyphicons-halflings-regular.svg") format("svg");
+  font-family: 'Glyphicons Halflings';
+  src: url('../fonts/bootstrap/glyphicons-halflings-regular.eot');
+  src: url('../fonts/bootstrap/glyphicons-halflings-regular.eot%3F')
+      format('embedded-opentype'),
+    url('../fonts/bootstrap/glyphicons-halflings-regular.woff2') format('woff2'),
+    url('../fonts/bootstrap/glyphicons-halflings-regular.woff') format('woff'),
+    url('../fonts/bootstrap/glyphicons-halflings-regular.ttf')
+      format('truetype'),
+    url('../fonts/bootstrap/glyphicons-halflings-regular.svg') format('svg');
 }
 .glyphicon {
   position: relative;
   top: 1px;
   display: inline-block;
-  font-family: "Glyphicons Halflings";
+  font-family: 'Glyphicons Halflings';
   font-style: normal;
   font-weight: normal;
   line-height: 1;
@@ -423,23 +452,27 @@ div.token-input-dropdown-facebook ul li.token-input-selected-dropdown-item-faceb
 }
 
 .glyphicon-info-sign:before {
-  content: "\e086";
+  content: '\e086';
 }
 
 li.token-input-token-result-facebook {
   font-size: 16px;
 }
-li.token-input-token-result-facebook span.token-input-token-word-facebook.token-input-token-information-facebook {
+li.token-input-token-result-facebook
+  span.token-input-token-word-facebook.token-input-token-information-facebook {
   top: 4px;
   font-size: 20px;
 }
-li.token-input-token-result-facebook span.token-input-token-word-facebook.token-input-token-id-facebook {
+li.token-input-token-result-facebook
+  span.token-input-token-word-facebook.token-input-token-id-facebook {
   font-size: 14px;
 }
-li.token-input-token-result-facebook span.token-input-token-word-facebook.token-input-token-name-facebook {
-  color: #3777B5;
+li.token-input-token-result-facebook
+  span.token-input-token-word-facebook.token-input-token-name-facebook {
+  color: #3777b5;
 }
-li.token-input-token-result-facebook.token-input-selected-dropdown-item-facebook span.token-input-token-word-facebook.token-input-token-name-facebook {
+li.token-input-token-result-facebook.token-input-selected-dropdown-item-facebook
+  span.token-input-token-word-facebook.token-input-token-name-facebook {
   color: #f5d7dc;
 }
 
@@ -491,23 +524,31 @@ div.token-input-dropdown-number-of-hits-facebook {
   width: 1%;
 }
 
-.popup-hierarchy-hpo-results-tooltip-facebook .popup-hierarchy-hpo-content-table-facebook {
+.popup-hierarchy-hpo-results-tooltip-facebook
+  .popup-hierarchy-hpo-content-table-facebook {
   background-color: #ffffff;
-  color: #4B5270;
-  border: 0px solid #2A3356;
+  color: #4b5270;
+  border: 0px solid #2a3356;
   border-radius: 6px;
   padding: 10px;
-  box-shadow: 0 24px 38px 3px rgba(0, 0, 0, 0.14), 0 9px 46px 8px rgba(0, 0, 0, 0.12), 0 11px 15px -7px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 24px 38px 3px rgba(0, 0, 0, 0.14),
+    0 9px 46px 8px rgba(0, 0, 0, 0.12), 0 11px 15px -7px rgba(0, 0, 0, 0.2);
   width: 100%;
 }
 
-.popup-hierarchy-hpo-results-tooltip-facebook .popup-hierarchy-hpo-content-table-facebook .popup-hierarchy-hpo-content-td-facebook {
+.popup-hierarchy-hpo-results-tooltip-facebook
+  .popup-hierarchy-hpo-content-table-facebook
+  .popup-hierarchy-hpo-content-td-facebook {
   color: #848484;
 }
 
-.popup-hierarchy-hpo-results-tooltip-facebook .popup-hierarchy-hpo-content-table-facebook .popup-hierarchy-hpo-content-td-name-facebook,
-.popup-hierarchy-hpo-results-tooltip-facebook .popup-hierarchy-hpo-content-table-facebook .popup-hierarchy-hpo-content-td-english-facebook {
-  color: #3777B5;
+.popup-hierarchy-hpo-results-tooltip-facebook
+  .popup-hierarchy-hpo-content-table-facebook
+  .popup-hierarchy-hpo-content-td-name-facebook,
+.popup-hierarchy-hpo-results-tooltip-facebook
+  .popup-hierarchy-hpo-content-table-facebook
+  .popup-hierarchy-hpo-content-td-english-facebook {
+  color: #3777b5;
 }
 
 /* Top Page */
@@ -619,7 +660,8 @@ header.search-area .intro-text .keyword a {
 .btn:focus {
   box-shadow: none;
 }
-.btn:hover, .btn:active {
+.btn:hover,
+.btn:active {
   color: #ffffff;
   background-color: #495aff;
 }
@@ -669,8 +711,8 @@ header.search-area .intro-text .keyword a {
   color: #c0c0c0;
 }
 .modal-content .modal-body table td a::before {
-  content: "\f15c";
-  font-family: "Font Awesome 5 Free";
+  content: '\f15c';
+  font-family: 'Font Awesome 5 Free';
   font-weight: 900;
   margin-right: 8px;
 }
@@ -680,8 +722,8 @@ header.search-area .intro-text .keyword a {
   letter-spacing: 1px;
 }
 .modal-content .modal-body.content-tos .modal-title::before {
-  content: "\f02d";
-  font-family: "Font Awesome 5 Free";
+  content: '\f02d';
+  font-family: 'Font Awesome 5 Free';
   font-weight: 900;
   margin-right: 8px;
   color: #495aff;
@@ -780,7 +822,7 @@ Disease page right top */
 }
 .summary-header > .data-name > h3 a.nando-link::after,
 .summary-header > .data-name > h3 span.nando-copy::after {
-  font-family: "Font Awesome 5 Free";
+  font-family: 'Font Awesome 5 Free';
   padding-left: 3px;
   margin: 0;
 }
@@ -788,11 +830,11 @@ Disease page right top */
   text-decoration: underline;
 }
 .summary-header > .data-name > h3 a.nando-link::after {
-  content: "\f35d";
+  content: '\f35d';
   font-weight: 900;
 }
 .summary-header > .data-name > h3 span.nando-copy::after {
-  content: "\f0c5";
+  content: '\f0c5';
   font-weight: normal;
   vertical-align: middle;
 }
@@ -813,4 +855,4 @@ Disease page right top */
 }
 .summary-header > .external-links {
   display: flex;
-}/*# sourceMappingURL=main.css.map */
+} /*# sourceMappingURL=main.css.map */

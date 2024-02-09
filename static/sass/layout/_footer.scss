@@ -57,10 +57,26 @@ footer {
         .address__list {
           display: flex;
           justify-content: space-between;
+
+          // li, pが必要かを確認
+          li {
+            font-size: 12px;
+            line-height: 1.5em;
+            p {
+              line-height: 1.5em;
+              font-size: 12px;
+            }
+          }
         }
       }
 
       .footer__links {
+        //ul.links__wrapperが必要かを確認
+        ul.links__wrapper {
+          inline-size: 200px;
+          overflow-wrap: break-word;
+        }
+
         li.individual_link {
           + li {
             margin-top: 5px;
