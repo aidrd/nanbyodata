@@ -15,7 +15,6 @@
 
   <!-- CSS -->
   <link rel="stylesheet" type="text/css" href="/static/sass/main.css">
-  <link rel="stylesheet" type="text/css" href="/static/sass/news.css">
 
   <title>NanbyoData</title>
 </head>
@@ -35,9 +34,9 @@
               aria-label="Toggle navigation">
               <i class="fas fa-bars"></i>
             </button>
-            <select class="language-select" onchange="location.href='?lang='+value;">
-              <option value="ja" {% if get_locale()=='ja' %}selected{% endif %}>日本語</option>
-              <option value="en" {% if get_locale()=='en' %}selected{% endif %}>English</option>
+            <select class="language-select">
+              <option value="ja" selected>日本語</option>
+              <option value="en">English</option>
             </select>
           </div>
           <div class="collapse navbar-collapse" id="navbarResponsive">
@@ -71,23 +70,130 @@
 
     <div id="second"></div>
 
-    <!--ここから-->
-    <!--- news page -->
     <section class="page-layout">
       <div class="title">
-        {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
-        <h3>お知らせ</h3>
-        {% else %}
-        <h3>News</h3>
-        {% endif %}
+        <h3>Datasets</h3>
         <div class="h3-text">
         </div>
       </div>
+      <!-- テーブルを増やす場合は以下のdivタグと同じ構成で作成してください -->
       <div class="container">
-        <h4 class="post-title">{{title}}</h4>
-        <hr />
-        <p class="post-date">{{date}}</p>
-        <div class="post-content">{{ content|safe }}</div>
+        <h4>データセット1</h4>
+        <p>サンプルテキスト</p>
+        <div class="table-contents">
+          <section class="section">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>header name</th>
+                  <th>header name</th>
+                  <th>header name</th>
+                  <th>header name</th>
+                  <th>header name</th>
+                  <th>header name</th>
+                  <th>header name</th>
+                  <th>header name</th>
+                  <th>header name</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><a href="./">Sample Link Item</a></td>
+                  <td>Sample Item</td>
+                  <td>Sample Item</td>
+                  <td>Sample Item</td>
+                  <td>Sample Item</td>
+                  <td>Sample Item</td>
+                  <td>Sample Item</td>
+                  <td>Sample Item</td>
+                  <td>Sample Item</td>
+                </tr>
+                <tr>
+                  <td><a href="./">Sample Link Item</a></td>
+                  <td>Sample Item</td>
+                  <td>Sample Item</td>
+                  <td>Sample Item</td>
+                  <td>Sample Item</td>
+                  <td>Sample Item</td>
+                  <td>Sample Item</td>
+                  <td>Sample Item</td>
+                  <td>Sample Item</td>
+                </tr>
+                <tr>
+                  <td><a href="./">Sample Link Item</a></td>
+                  <td>Sample Item</td>
+                  <td>Sample Item</td>
+                  <td>Sample Item</td>
+                  <td>Sample Item</td>
+                  <td>Sample Item</td>
+                  <td>Sample Item</td>
+                  <td>Sample Item</td>
+                  <td>Sample Item</td>
+                </tr>
+              </tbody>
+            </table>
+            <p class="notice">&#42; 補足情報</p>
+          </section>
+        </div>
+      </div>
+      <div class="container">
+        <h4>データセット2</h4>
+        <p>サンプルテキスト</p>
+        <div class="table-contents">
+          <section class="section">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>header name</th>
+                  <th>header name</th>
+                  <th>header name</th>
+                  <th>header name</th>
+                  <th>header name</th>
+                  <th>header name</th>
+                  <th>header name</th>
+                  <th>header name</th>
+                  <th>header name</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><a href="./">Sample Link Item</a></td>
+                  <td>Sample Item</td>
+                  <td>Sample Item</td>
+                  <td>Sample Item</td>
+                  <td>Sample Item</td>
+                  <td>Sample Item</td>
+                  <td>Sample Item</td>
+                  <td>Sample Item</td>
+                  <td>Sample Item</td>
+                </tr>
+                <tr>
+                  <td><a href="./">Sample Link Item</a></td>
+                  <td>Sample Item</td>
+                  <td>Sample Item</td>
+                  <td>Sample Item</td>
+                  <td>Sample Item</td>
+                  <td>Sample Item</td>
+                  <td>Sample Item</td>
+                  <td>Sample Item</td>
+                  <td>Sample Item</td>
+                </tr>
+                <tr>
+                  <td><a href="./">Sample Link Item</a></td>
+                  <td>Sample Item</td>
+                  <td>Sample Item</td>
+                  <td>Sample Item</td>
+                  <td>Sample Item</td>
+                  <td>Sample Item</td>
+                  <td>Sample Item</td>
+                  <td>Sample Item</td>
+                  <td>Sample Item</td>
+                </tr>
+              </tbody>
+            </table>
+            <p class="notice">&#42; 補足情報</p>
+          </section>
+        </div>
       </div>
     </section>
 
@@ -229,7 +335,7 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
     integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
     </script>
-  <script type="module" src="/static/js/main.js"></script>
+  <script type="text/javascript" src="js/main.js"></script>
 </body>
 
 </html>

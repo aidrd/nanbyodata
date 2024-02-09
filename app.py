@@ -70,6 +70,12 @@ def index():
 def about_nando():
     return render_template('about_nando.html')
 
+#####
+# DATASETSについて
+## GET: 
+@app.route('/datasets')
+def datasets():
+    return render_template('datasets.html')
 
 #####
 # NANDOについて
@@ -267,21 +273,26 @@ def get_news_info():
 
         html_content = markdown2.markdown(md_content, extras=["metadata", "tables"])
         metadata = html_content.metadata
-        title = metadata['title']
-        date = metadata['date']
+        title = metadata['title'].replace("'", "")
+        date = md_file.split('-post')[0].replace('-', '.')
         news_data[md_file] = {"date": date, "title": title, "path": md_file_path}
 
-    sorted_news_data = sorted(news_data.items(), key=lambda x: x[1]["date"], reverse=True)
-    sorted_news_data_dict = dict(sorted_news_data)
+    def sort_key(item):
+        date_str, post_section = item[0].split('-post')
+        post_num = post_section.split('.')[0]
+        date_obj = datetime.datetime.strptime(date_str, '%Y-%m-%d')
+        return (date_obj, int(post_num))
 
-    return sorted_news_data_dict
+
+    sorted_news_data = dict(sorted(news_data.items(), key=sort_key, reverse=True))
+    return sorted_news_data
 
 @app.route('/posts/<filename>')
 def page(filename):
     md_content = load_news_content(filename + '.md')
     html_content = markdown2.markdown(md_content, extras=["metadata", "tables", "task_list"])
     metadata = html_content.metadata
-    title = metadata['title']
-    date = metadata['date']
+    title = metadata['title'].replace("'", "")
+    date = filename.split('-post')[0].replace('-', '.')
 
     return render_template('news.html', title=title, date=date, content=html_content)
