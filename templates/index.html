@@ -90,12 +90,17 @@
         <div class="container">
           <div class="intro-text">
             <p>ex)</p>
+            {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
             <div class="keyword"><a href="/disease/NANDO:2200053">ユーイング肉腫</a></div>
             <div class="keyword"><a href="/disease/NANDO:1200473">非典型溶血性尿毒症症候群</a></div>
-            </div>
+            {% else %}
+            <div class="keyword"><a href="/disease/NANDO:2200053">Ewing's sarcoma</a></div>
+            <div class="keyword"><a href="/disease/NANDO:1200473">Atypical hemolytic uremic syndrome</a></div>
+            {% endif %}
           </div>
         </div>
-      </header>
+    </div>
+    </header>
     </div>
 
 
