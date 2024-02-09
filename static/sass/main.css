@@ -855,4 +855,12 @@ Disease page right top */
 }
 .summary-header > .external-links {
   display: flex;
+}
+
+/* News Only */
+#news-page hr {
+  margin: 0.1rem 0;
+}
+#news-page .post-date {
+  margin-bottom: 20px;
 } /*# sourceMappingURL=main.css.map */
