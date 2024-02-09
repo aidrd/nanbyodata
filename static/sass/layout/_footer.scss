@@ -23,8 +23,8 @@ footer {
     .footer__info {
       display: flex;
       justify-content: space-between;
-      margin-bottom: 60px;
-      min-width: fit-content;
+      gap: 20px;
+      margin-bottom: 50px;
 
       .footer__organism {
         .footer__logo {
@@ -52,34 +52,23 @@ footer {
       }
 
       .footer__address {
-        width: 310px;
+        max-width: 360px;
 
         .address__list {
           display: flex;
-          justify-content: space-between;
-
-          // li, pが必要かを確認
-          li {
-            font-size: 12px;
-            line-height: 1.5em;
-            p {
-              line-height: 1.5em;
-              font-size: 12px;
-            }
-          }
+          gap: 10px;
         }
       }
 
       .footer__links {
-        //ul.links__wrapperが必要かを確認
         ul.links__wrapper {
           inline-size: 200px;
           overflow-wrap: break-word;
-        }
 
-        li.individual_link {
-          + li {
-            margin-top: 5px;
+          li.individual_link {
+            + li {
+              margin-top: 5px;
+            }
           }
         }
       }

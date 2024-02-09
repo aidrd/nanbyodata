@@ -98,98 +98,95 @@
           <div class="keyword"><a href="/disease/NANDO:1200473">Atypical hemolytic uremic syndrome</a></div>
           {% endif %}
         </div>
-    </div>
-    </header>
-    </div>
+      </header>
 
-    <section class="container">
-      <section class="news">
+      <section class="container">
+        <section class="news-summary">
+          {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
+          <h2 class="section-title">お知らせ</h2>
+          {% else %}
+          <h2 class="section-title">News</h2>
+          {% endif %}
 
-        {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
-        <h2 class="section-title">お知らせ</h2>
-        {% else %}
-        <h2 class="section-title">News</h2>
-        {% endif %}
-
-        <div class="news-wrapper">
-          <div class="logdata">
-            {% for file_path, info in news_info.items() %}
-            {% if loop.index <= 5 %} <dl>
-              <dt><time datetime="{{ info.date }}">{{ info.date }}</time></dt>
-              <dd><a href="{{info.path}}">{{ info.title }}</a></dd>
-              </dl>
-              {% else %}
-              {% if loop.index == 6 %}
-              <div class="more-list">
-                {% endif %}
-                <dl>
-                  <dt><time datetime="{{ info.date }}">{{ info.date }}</time></dt>
-                  <dd><a href="{{info.path}}">{{ info.title }}</a></dd>
+          <div class="news-wrapper">
+            <div class="logdata">
+              {% for file_path, info in news_info.items() %}
+              {% if loop.index <= 5 %} <dl>
+                <dt><time datetime="{{ info.date }}">{{ info.date }}</time></dt>
+                <dd><a href="{{info.path}}">{{ info.title }}</a></dd>
                 </dl>
-                {% if loop.last %}
+                {% else %}
+                {% if loop.index == 6 %}
+                <div class="more-list">
+                  {% endif %}
+                  <dl>
+                    <dt><time datetime="{{ info.date }}">{{ info.date }}</time></dt>
+                    <dd><a href="{{info.path}}">{{ info.title }}</a></dd>
+                  </dl>
+                  {% if loop.last %}
+                </div>
+                {% endif %}
+                {% endif %}
+                {% endfor %}
+            </div>
+
+            <div class="more">more</div>
+          </div>
+        </section>
+
+
+        <section id="download">
+          {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
+          <h2 class="section-title">ダウンロード</h2>
+          <p class="section-description">NanbyoDataは<a
+              href="https://creativecommons.org/licenses/by/4.0/deed.ja">クリエイティブ・コモンズ【表示4.0国際】</a>の下に提供されています。
+          </p>
+          {% else %}
+          <h2 class="section-title">Download</h2>
+          <p class="section-description">NanbyoData is licensed under a <a href="https://creativecommons.org/licenses/by/4.0/">Creative Commons
+              Attribution 4.0 International</a>.
+          </p>
+          {% endif %}
+          </p>
+          <div class="card-wrapper">
+            <div class="card">
+              <img src="/static/img/img_data_1.png" class="card-img-top" alt="難病オントロジーimg">
+              <div class="card-body">
+                <img src="/static/img/icon_2_1.svg" class="illust" alt="難病オントロジーillust">
+                <h3 class="card-title">難病オントロジー</h3>
+                <p class="card-text">難病オントロジー（Nanbyo Disease Ontology,
+                  NANDO）は、難病に関する語彙、難病同士の関係、難病と他疾患リソースとの関連などを体系化したものです。難病オントロジーに基づき難病関連データを記述することにより、コンピュータを用いた処理やデータ共有が容易になります。
+                </p>
+                <button type="button" class="btn btn-primary" data-toggle="modal"
+                  data-target="#demoNormalModalA">Download</button>
               </div>
-              {% endif %}
-              {% endif %}
-              {% endfor %}
-          </div>
+            </div>
 
-          <div class="more">more</div>
-        </div>
+            <div class="card">
+              <img src="/static/img/img_data_2.png" class="card-img-top" alt="難病ー遺伝子関連データimg">
+              <div class="card-body">
+                <img src="/static/img/icon_2_2.svg" class="illust" alt="難病ー遺伝子関連データillust">
+                <h3 class="card-title">難病ー遺伝子関連データ</h3>
+                <p class="card-text">各難病について、疾患原因として報告されている遺伝子を関連付けたデータを提供します。</p>
+                <button type="button" class="btn btn-primary" data-toggle="modal"
+                  data-target="#demoNormalModalB">Download</button>
+              </div>
+            </div>
+
+            <div class="card">
+              <img src="/static/img/img_data_3.png" class="card-img-top" alt="難病ー症状関連データimg">
+              <div class="card-body">
+                <img src="/static/img/icon_2_3.svg" class="illust" alt="難病ー症状関連データillust">
+                <h3 class="card-title">難病ー症状関連データ</h3>
+                <p class="card-text">各難病について、報告されている症状をHuman Phenotype Ontology（HPO）を用いて関連付けたデータを提供します。</p>
+                <button type="button" class="btn btn-primary" data-toggle="modal"
+                  data-target="#demoNormalModalC">Download</button>
+              </div>
+            </div>
+          </div>
+        </section>
+
       </section>
-
-
-      <section id="download">
-        {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
-        <h3>ダウンロード</h3>
-        <p>NanbyoDataは<a
-            href="https://creativecommons.org/licenses/by/4.0/deed.ja">クリエイティブ・コモンズ【表示4.0国際】</a>の下に提供されています。
-        </p>
-        {% else %}
-        <h3>Download</h3>
-        <p>NanbyoData is licensed under a <a href="https://creativecommons.org/licenses/by/4.0/">Creative Commons
-            Attribution 4.0 International</a>.
-        </p>
-        {% endif %}
-        </p>
-        <div class="card-wrapper">
-          <div class="card">
-            <img src="/static/img/img_data_1.png" class="card-img-top" alt="難病オントロジーimg">
-            <div class="card-body">
-              <img src="/static/img/icon_2_1.svg" class="illust" alt="難病オントロジーillust">
-              <h3 class="card-title">難病オントロジー</h3>
-              <p class="card-text">難病オントロジー（Nanbyo Disease Ontology,
-                NANDO）は、難病に関する語彙、難病同士の関係、難病と他疾患リソースとの関連などを体系化したものです。難病オントロジーに基づき難病関連データを記述することにより、コンピュータを用いた処理やデータ共有が容易になります。
-              </p>
-              <button type="button" class="btn btn-primary" data-toggle="modal"
-                data-target="#demoNormalModalA">Download</button>
-            </div>
-          </div>
-
-          <div class="card">
-            <img src="/static/img/img_data_2.png" class="card-img-top" alt="難病ー遺伝子関連データimg">
-            <div class="card-body">
-              <img src="/static/img/icon_2_2.svg" class="illust" alt="難病ー遺伝子関連データillust">
-              <h3 class="card-title">難病ー遺伝子関連データ</h3>
-              <p class="card-text">各難病について、疾患原因として報告されている遺伝子を関連付けたデータを提供します。</p>
-              <button type="button" class="btn btn-primary" data-toggle="modal"
-                data-target="#demoNormalModalB">Download</button>
-            </div>
-          </div>
-
-          <div class="card">
-            <img src="/static/img/img_data_3.png" class="card-img-top" alt="難病ー症状関連データimg">
-            <div class="card-body">
-              <img src="/static/img/icon_2_3.svg" class="illust" alt="難病ー症状関連データillust">
-              <h3 class="card-title">難病ー症状関連データ</h3>
-              <p class="card-text">各難病について、報告されている症状をHuman Phenotype Ontology（HPO）を用いて関連付けたデータを提供します。</p>
-              <button type="button" class="btn btn-primary" data-toggle="modal"
-                data-target="#demoNormalModalC">Download</button>
-            </div>
-          </div>
-        </div>
-      </section>
-
-    </section>
     </div>
 
     <!--- footer --->

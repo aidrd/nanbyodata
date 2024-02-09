@@ -67,23 +67,18 @@
       </div>
     </nav>
 
-
-    <div id="second"></div>
-
-    <!--ここから-->
     <!--- news page -->
     <section class="page-layout" id="news-page">
-      <div class="title">
+      <header  class="page-title">
         {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
-        <h3>お知らせ</h3>
+        <h2>お知らせ</h2>
         {% else %}
-        <h3>News</h3>
+        <h2>News</h2>
         {% endif %}
-        <div class="h3-text">
         </div>
-      </div>
+      </header>
       <div class="container">
-        <h4 class="post-title">{{title}}</h4>
+        <h3 class="content-title">{{title}}</h3>
         <hr />
         <p class="post-date">{{date}}</p>
         <div class="post-content">{{ content|safe }}</div>

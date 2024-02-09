@@ -12,6 +12,7 @@ Layout
 @use './layout/navigation';
 @use './layout/footer';
 @use './layout/page-layout';
+@use './layout/news-article';
 /* Disease Page */
 @use './layout/disease';
 
@@ -24,14 +25,14 @@ Component
 @use './object/component/tokeninput';
 /* Top Page */
 @use './object/component/search-area';
-@use './object/component/news';
+@use './object/component/news-summary';
 @use './object/component/card-wrapper';
-@use './object/component/botton';
+@use './object/component/button';
 @use './object/component/modal';
 /* About Page */
 @use './object/component/illust-wrapper';
 /* Dataset Page */
-@use './object/component/component/table';
+@use './object/component/table';
 /* Disease Page */
 @use './object/component/linked-item';
 
@@ -42,6 +43,3 @@ Project
 @use './object/project/download-section';
 /* Disease Page */
 @use './object/project/summary-header';
-
-/* News Only */
-@use './news';
