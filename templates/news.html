@@ -15,7 +15,6 @@
 
   <!-- CSS -->
   <link rel="stylesheet" type="text/css" href="/static/sass/main.css">
-  <link rel="stylesheet" type="text/css" href="/static/sass/news.css">
 
   <title>NanbyoData</title>
 </head>
@@ -73,7 +72,7 @@
 
     <!--ここから-->
     <!--- news page -->
-    <section class="page-layout">
+    <section class="page-layout" id="news-page">
       <div class="title">
         {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
         <h3>お知らせ</h3>
