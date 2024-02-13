@@ -16,8 +16,10 @@ prefix dc: <http://purl.org/dc/elements/1.1/>
 prefix nando: <http://nanbyodata.jp/ontology/NANDO_>
 prefix sio: <http://semanticscience.org/resource/>
 SELECT DISTINCT
+?s
 ?nando
 ?label
+?label_en
 ?num_of_2015
 ?num_of_2016
 ?num_of_2017
@@ -27,11 +29,14 @@ SELECT DISTINCT
 WHERE {
   GRAPH<https://pubcasefinder.dbcls.jp/rdf/ontology/nando> {
   ?s dcterms:identifier ?nando ;
-    rdfs:label ?label .
-  FILTER (lang(?label) = "ja") .
+     rdfs:label ?label .
+     FILTER (lang(?label) = "ja") .
   ?s sio:SIO_000216 ?B_any .
   ?B_any nando:has_aYearOfStatistics ?any .
   ?any sio:SIO_000300 ?any_year .
+  OPTIONAL { ?s rdfs:label ?label_en . 
+            FILTER (lang(?label_en) = "en")
+  }
   OPTIONAL {
     ?s sio:SIO_000216 ?B1_2015 .
     ?B1_2015 nando:has_aYearOfStatistics ?B2_2015.
@@ -97,3 +102,7 @@ ORDER BY ?nando
   });
 }
 ```
+## Description
+- NanbyoDataで希少難病疾患の患者数を表示させるために利用しているSPARQListです。
+- RDFのデータは高月の方で作成し、PubcaseFinderのエンドポイントにデータはあります。
+- 編集：高月（2024/01/12)

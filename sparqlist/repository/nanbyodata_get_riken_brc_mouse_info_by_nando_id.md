@@ -1,4 +1,4 @@
-# Retrieve RIKEN BRC mouse data by the given NANDO ID
+# Get RIKEN BRC mouse data
 
 ## Parameters
 
@@ -48,3 +48,7 @@ where{
   });
 }
 ```
+## Description
+- NanbyoDataで理研のマウスの情報を表示させるために利用しているSPARQListです。
+- 理研のエンドポイントを利用しています。
+- 編集：高月（2024/01/12)

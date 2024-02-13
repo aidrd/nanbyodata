@@ -106,7 +106,7 @@ order by ?nando_ida,?hgnc_gene_symbol
       ncbi_url: d.gene_id.value,
       mondo_id: d.mondo_id.value,
       mondo_label: d.mondo_label.value,
-      mondo_url: d.mondo_id.value.replace("MONDO:", "http://purl.obolibrary.org/obo/MONDO_"),
+      mondo_url: d.mondo_id.value.replace("MONDO:", "https://monarchinitiative.org/MONDO:"),
       nando_idb: d.nando_idb.value,
       nando_ida: d.nando_ida.value,
       nando_label_e: d.nando_label_en.value,
@@ -117,5 +117,9 @@ order by ?nando_ida,?hgnc_gene_symbol
 };
 
 ```
+## Description
+- UIで遺伝子データを表示させるためのSPARQListです。
+- NANDOをMONDOに変換し、変換したMONDOを利用して遺伝子関連の情報を取得しています。
+- 編集：高月（2024/01//12)
 
 
