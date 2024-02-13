@@ -1,8 +1,10 @@
 import { navToggle } from './navigation.js';
 import { focusInput } from './focusInput.js';
+import { changePlaceholder } from './changePlaceholder.js';
 
 navToggle();
 focusInput();
+changePlaceholder();
 
 // dispaly: none until loading is finished
 document.getElementById('content').style.display = 'none';
