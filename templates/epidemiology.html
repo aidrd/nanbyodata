@@ -95,9 +95,11 @@
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
       <div class="container">
-        <a class="navbar-brand js-scroll-trigger" href="/">
-          <img class="imgtitle" src="/static/img/NanbyoData_black_w.svg">
-        </a>
+        <h1>
+          <a class="navbar-brand js-scroll-trigger" href="/">
+            <img class="imgtitle" src="/static/img/NanbyoData_black_w.svg" alt="NanbyoDataロゴ">
+          </a>
+        </h1>
         <div class="flex-wrapper">
           <div class="flex">
             <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
@@ -122,7 +124,7 @@
                 <a class="nav-link" href="/epidemiology">EPIDEMIOLOGY</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="/#third">DOWNLOAD</a>
+                <a class="nav-link" href="/#download">DOWNLOAD</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="#"><button type="button" class="btn-TOS" data-toggle="modal"
@@ -138,17 +140,13 @@
       </div>
     </nav>
 
-
-    <div id="second"></div>
-
-    <section class="page-layout">
-      <div class="title">
-        <h3>Epidemiology</h3>
-        <div class="h3-text">
-        </div>
-      </div>
-      <div class="container">
-        <h4>指定難病：疾患別患者数</h4>
+    <!--- Epidemiology page -->
+    <div class="page-layout">
+      <header class="page-title">
+        <h2>Epidemiology</h2>
+      </header>
+      <section class="container">
+        <h3 class="content-title">指定難病：疾患別患者数</h3>
         <p>
           <script type="module" src="https://togostanza.github.io/metastanza/pagination-table.js" async></script>
           <togostanza-pagination-table
@@ -157,8 +155,8 @@
             width="" fixed-columns="1" padding="0px" page-size-option="100" page-slider="true"
             columns="[{&quot;id&quot;: &quot;nando&quot;,&quot;label&quot;:&quot;NANDO ID&quot;}, {&quot;id&quot;:&quot;label&quot;,&quot;label&quot;:&quot;疾患名&quot;}, {&quot;id&quot;:&quot;num_of_2015&quot;,&quot;label&quot;:&quot;2015年&quot;}, {&quot;id&quot;:&quot;num_of_2016&quot;,&quot;label&quot;:&quot;2016年&quot;}, {&quot;id&quot;:&quot;num_of_2017&quot;,&quot;label&quot;:&quot;2017年&quot;}, {&quot;id&quot;:&quot;num_of_2018&quot;,&quot;label&quot;:&quot;2018年&quot;}, {&quot;id&quot;:&quot;num_of_2019&quot;,&quot;label&quot;:&quot;2019年&quot;}, {&quot;id&quot;:&quot;num_of_2020&quot;,&quot;label&quot;:&quot;2020年&quot;}]"></togostanza-pagination-table>
         </p>
-      </div>
-    </section>
+      </section>
+    </div>
 
     <!--- footer --->
     {% include 'footer.html' %}
@@ -168,17 +166,15 @@
       aria-hidden="true">
       <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
-          <div class="modal-body">
+          <div class="modal-body content-tos">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
-            <div class="modalContent_TOS">
-              <h5 class="modal-title modal-title" id="demoModalTitle">NanbyoData利用規約</h5>
+              <h3 class="modal-title modal-title" id="demoModalTitle">NanbyoData利用規約</h3>
               <p>
                 NanbyoDataは誠実にデータを提供しますが、データの正確性、臨床的妥当性または有用性を検証することはありません。DBCLSは、明示的にも黙示的にも、利用者が当データを用いて行う一切の行為について、何ら責任を負うものではありません。DBCLSは、本サービスの変更、中断、または終了により被った損害に関しても、何ら責任を負うものではありません。また、ライフサイエンス統合データベースセンターのサイト・ポリシー内「<a
                   class="policy" href="https://dbcls.rois.ac.jp/policy.html">免責事項</a>」にも準ずるものとします。
               </p>
-            </div>
             <div class="btn-close">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">CLOSE</button>
             </div>

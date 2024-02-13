@@ -1,0 +1,38 @@
+.card-wrapper {
+  display: flex;
+  justify-content: space-between;
+  gap: 30px;
+
+  .card {
+    width: 290px;
+    border-radius: 0;
+    border: none;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
+
+    .card-img-top {
+      border-radius: 0;
+    }
+
+    .card-body {
+      padding: 2rem;
+
+      .illust {
+        display: block;
+        width: 60px;
+        padding-bottom: 20px;
+        margin: 0 auto;
+      }
+
+      .card-title {
+        text-align: center;
+        font-size: 17px;
+        color: var(--color-secondary);
+        letter-spacing: 1px;
+      }
+
+      .card-text {
+        margin-bottom: 20px;
+      }
+    }
+  }
+}

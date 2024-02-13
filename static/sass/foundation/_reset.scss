@@ -1,9 +1,46 @@
-h1 {
+@charset "UTF-8";
+
+body {
+  font-family: 'Poppins', sans-serif, 'Renner*', 'Avenir', 'Helvetica Neue',
+    'Helvetica', 'Arial', 'Hiragino Sans', 'ヒラギノ角ゴシック', YuGothic,
+    'Yu Gothic', 'メイリオ', Meiryo, 'ＭＳ Ｐゴシック', 'MS PGothic';
+}
+
+h1, ul, li, p{
   margin: 0;
   padding: 0;
+}
+
+h1 {
   font-size: 0;
+}
+
+p {
+  color: var(--color-font);
+  font-size: 13px;
 }
 
 ul {
   list-style: none;
+}
+
+.br::before {
+  content: '\A';
+  white-space: pre;
+}
+
+a {
+  &:visited,
+  &:hover,
+  &:active {
+    color: var(--color-secondary);
+  }
+
+  &.link[target='_blank']::after {
+    font-family: 'Font Awesome 5 Free';
+    content: '\f35d';
+    font-size: 105%;
+    font-weight: 900;
+    margin: 0 3px;
+  }
 }

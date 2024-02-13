@@ -3,7 +3,7 @@
 		console.log('ready()');
 		var tokeninput = $('<div>')
 			.attr({'id':'tokeninput'})
-			.prependTo($('header>div.container>div.intro-text'))
+			.prependTo($('header > div.intro-text'))
 		;
 		tokeninput.tokenInput(function(){
 			var type = arguments[0];
