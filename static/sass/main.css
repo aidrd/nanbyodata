@@ -317,8 +317,14 @@ footer .container .footer__bottom .footer__lisence p a {
   border-top: 2px solid #495aff;
   margin-top: -15px;
 }
+.page-layout .container .section-block + .section-block {
+  margin-top: 70px;
+}
 .page-layout .container .content-block + .content-block {
   margin-top: 60px;
+}
+.page-layout .container #download {
+  scroll-margin-top: 90px;
 }
 
 #news-page hr {
@@ -772,12 +778,6 @@ header.search-area .intro-text .keyword a {
 /* ---------------
 Project
 --------------- */
-/* Top Page */
-#download {
-  padding-top: 110px;
-  margin-top: -50px;
-}
-
 /* Disease Page */
 /* summary-header
 Disease page right top */
