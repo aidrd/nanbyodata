@@ -282,7 +282,7 @@ function makeLinksList(entryData) {
 }
 
 function makeProperties(geneData) {
-  const causativeGene = document.getElementById('gene');
+  const causativeGene = document.getElementById('causal-genes');
   const properties = causativeGene.querySelector('#temp-properties');
   const data = geneData;
 
@@ -307,15 +307,21 @@ function makeProperties(geneData) {
       ></togostanza-pagination-table>
       `;
 
-    const tempSpanElement = document.querySelector('#gene .data-num');
-    const navSpanElement = document.querySelector('.gene .data-num');
+    const tempSpanElement = document.querySelector('#causal-genes .data-num');
+    const navSpanElement = document.querySelector('.causal-genes .data-num');
     tempSpanElement.innerText = data.length;
     navSpanElement.innerText = data.length;
   }
 }
 
 function checkSummaryData(entryData) {
-  const items = ['.gene', '.test', '.hpo', '.brc', '.variant'];
+  const items = [
+    '.causal-genes',
+    '.genetic-testing',
+    '.phenotypes',
+    '.brc',
+    '.variant',
+  ];
   const summaryWrapper = document.querySelector('.summary-wrapper');
   const summaryNav = document.querySelector('.nav-link.overview');
   const diseaseDefinition = document.getElementById('temp-disease-definition');
@@ -435,7 +441,7 @@ function makeDiseaseDefinition(entryData) {
 }
 
 function makeMedicalGeneticTestingInfo(geneTestData) {
-  const medicalGeneticTestingInfo = document.getElementById('test');
+  const medicalGeneticTestingInfo = document.getElementById('genetic-testing');
   const inspectionView =
     medicalGeneticTestingInfo.querySelector('.inspection-view');
   const data = geneTestData;
@@ -461,15 +467,17 @@ function makeMedicalGeneticTestingInfo(geneTestData) {
       ></togostanza-pagination-table>
       `;
 
-    const tempSpanElement = document.querySelector('#test .data-num');
-    const navSpanElement = document.querySelector('.test .data-num');
+    const tempSpanElement = document.querySelector(
+      '#genetic-testing .data-num'
+    );
+    const navSpanElement = document.querySelector('.genetic-testing .data-num');
     tempSpanElement.innerText = data.length;
     navSpanElement.innerText = data.length;
   }
 }
 
 function makePhenotypeView(hpoData) {
-  const tempPhenotypeView = document.getElementById('hpo');
+  const tempPhenotypeView = document.getElementById('phenotypes');
   const phenotypeViewJa = tempPhenotypeView.querySelector('.phenotype-ja');
   const phenotypeViewEn = tempPhenotypeView.querySelector('.phenotype-en');
   const data = hpoData;
@@ -511,8 +519,8 @@ function makePhenotypeView(hpoData) {
         ></togostanza-pagination-table>
         `;
 
-    const tempSpanElement = document.querySelector('#hpo .data-num');
-    const navSpanElement = document.querySelector('.hpo .data-num');
+    const tempSpanElement = document.querySelector('#phenotypes .data-num');
+    const navSpanElement = document.querySelector('.phenotypes .data-num');
     tempSpanElement.innerText = data.length;
     navSpanElement.innerText = data.length;
   }
@@ -684,7 +692,14 @@ function makeSideNavigation(entryData) {
 
   const sideNavigation = document.getElementById('temp-side-navigation');
   const sideNavigationUl = sideNavigation.querySelector('ul');
-  const items = ['overview', 'gene', 'test', 'hpo', 'brc', 'variant'];
+  const items = [
+    'overview',
+    'causal-genes',
+    'genetic-testing',
+    'phenotypes',
+    'brc',
+    'variant',
+  ];
   const lis = sideNavigationUl.querySelectorAll('li');
   lis.forEach((li) => {
     li.addEventListener('click', () => {
@@ -740,9 +755,9 @@ function switchingDisplayContents(selectedItemId, entryData) {
   const items = [
     '#overview',
     '#temp-disease-definition',
-    '#gene',
-    '#test',
-    '#hpo',
+    '#causal-genes',
+    '#genetic-testing',
+    '#phenotypes',
     '#brc',
     '#variant',
   ];
