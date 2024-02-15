@@ -709,12 +709,6 @@ function makeSideNavigation(entryData) {
   });
 
   // specific bio resource
-  const specificBioResource = document.querySelector('.brc');
-
-  specificBioResource.addEventListener('click', function () {
-    window.location.hash = 'brc';
-  });
-
   items.forEach((id) => {
     const liElement = document.getElementById(id);
     if (!liElement) {
@@ -725,11 +719,16 @@ function makeSideNavigation(entryData) {
     }
   });
 
-  // processing when the table of contents is pressed
-  document.querySelectorAll('.brc a').forEach(function (aTag) {
-    aTag.addEventListener('click', function () {
+  document.querySelectorAll('a[href="#brc"]').forEach(function (aTag) {
+    aTag.addEventListener('click', function (event) {
+      document.querySelector('#brc').scrollIntoView({
+        behavior: 'smooth',
+      });
+      event.preventDefault();
       const classList = this.classList[0];
-      const checkBox = document.getElementById('bio-resource-' + classList);
+      const selectName = 'bio-resource-' + classList;
+      window.location.hash = selectName;
+      const checkBox = document.getElementById(selectName);
       if (checkBox && !checkBox.checked) {
         checkBox.checked = true;
       }
@@ -746,6 +745,7 @@ function makeSideNavigation(entryData) {
       });
       if (tocItem) {
         tocItem.classList.add('selected');
+        window.location.hash = this.id;
       }
     });
   });
@@ -793,6 +793,7 @@ function switchingDisplayContents(selectedItemId, entryData) {
     document.querySelector(`#${selectedItemId}`).style.display = 'block';
 
     const checkedSwitch = document.querySelector('#brc .tab-switch:checked');
+    window.location.hash = checkedSwitch.id;
     const selectedId = checkedSwitch.id.replace('bio-resource-', '');
 
     const targetElements = document.querySelectorAll('a');
