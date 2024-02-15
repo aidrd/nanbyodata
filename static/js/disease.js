@@ -3,14 +3,15 @@ import { focusInput } from './focusInput.js';
 import { changePlaceholder } from './changePlaceholder.js';
 import { tree } from './tree.js';
 
+// dispaly: none until loading is finished
+document.getElementById('content').style.display = 'none';
+document.getElementById('sidebar').style.display = 'none';
+
+// external functions
 navToggle();
 focusInput();
 changePlaceholder();
 tree();
-
-// dispaly: none until loading is finished
-document.getElementById('content').style.display = 'none';
-document.getElementById('sidebar').style.display = 'none';
 
 // get NANDO ID
 const pathname = window.location.pathname;
@@ -20,7 +21,6 @@ const nandoId = pathname.slice(nandoIndex + 6);
 (async () => {
   try {
     const entryDataPromise = fetch(
-      //      'https://nanbyodata.jp/sparqlist/api/get_nando_entry_by_nando_id?nando_id=' +
       'https://nanbyodata.jp/sparqlist/api/nanbyodata_get_metadata?nando_id=' +
         nandoId,
       {
@@ -78,6 +78,7 @@ const nandoId = pathname.slice(nandoIndex + 6);
       const hashId = hash.replace('#', '');
       switchingDisplayContents(hashId, entryData);
     } else {
+      // TODO: overviewがない場合の処理
       switchingDisplayContents('overview', entryData);
     }
   } catch (error) {
@@ -676,12 +677,12 @@ function makeVariant(entryData, variantData) {
     navSpanElement.innerText = data.length;
   }
 
+  makeSideNavigation(entryData);
+
   // When loading finishes
   document.querySelector('.loading-spinner').style.display = 'none';
   document.getElementById('content').style.display = 'block';
   document.getElementById('sidebar').style.display = 'block';
-
-  makeSideNavigation(entryData);
 }
 
 function makeSideNavigation(entryData) {
@@ -786,11 +787,20 @@ function switchingDisplayContents(selectedItemId, entryData) {
     } else {
       checkSummaryData(entryData);
     }
-  } else if (selectedItemId === 'brc') {
+  } else if (
+    selectedItemId === 'brc' ||
+    selectedItemId === 'bio-resource-cell' ||
+    selectedItemId === 'bio-resource-mouse' ||
+    selectedItemId === 'bio-resource-dna'
+  ) {
     const dataWrapper = document.getElementById('data-wrapper');
     const summary = document.querySelector('.summary-header');
     dataWrapper.insertBefore(summary, dataWrapper.firstChild);
-    document.querySelector(`#${selectedItemId}`).style.display = 'block';
+    document.querySelector('#brc').style.display = 'block';
+    const checkBox = document.getElementById(selectedItemId);
+    if (checkBox && !checkBox.checked) {
+      checkBox.checked = true;
+    }
 
     const checkedSwitch = document.querySelector('#brc .tab-switch:checked');
     window.location.hash = checkedSwitch.id;
