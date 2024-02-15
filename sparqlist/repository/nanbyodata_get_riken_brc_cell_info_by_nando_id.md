@@ -1,4 +1,4 @@
-# Retrieve RIKEN BRC cell data by the given NANDO ID
+# Get RIKEN BRC cell data
 
 ## Parameters
 
@@ -61,3 +61,8 @@ WHERE {
   });
 }
 ```
+
+## Description
+- NanbyoDataで理研の細胞情報を表示させるために利用しているSPARQListです。
+- 理研のエンドポイントを利用しています。
+- 編集：高月（2024/01/12)

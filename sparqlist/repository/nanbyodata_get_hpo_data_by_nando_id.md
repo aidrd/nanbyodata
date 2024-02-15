@@ -1,4 +1,4 @@
-# Retrieve HPO class by the given NANDO ID
+# Get phenotype data
 
 ## Parameters
 
@@ -115,4 +115,7 @@ order by ?hpo_category_name_en ?hpo_label_ja
 }
 
 ```
-
+## Description
+- NanbyoDataで症状を表示させるためのSPARQListです。
+- NANDOからMONDOへ変更し、MONDOからHPOのIDを取得しています。
+- 編集：高月（2024/01/12)

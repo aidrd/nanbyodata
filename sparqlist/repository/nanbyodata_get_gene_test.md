@@ -1,4 +1,4 @@
-# Retrieve gene_test Data
+# Get genetic test data
 
 ## Parameters
 
@@ -46,5 +46,7 @@ WHERE {
   });
 }
 ```
-## Memo
-written by Takatsuki
+## Description
+- NANDOで遺伝子の各種検査を表示させているSPARQListです。
+- RDFのデータは高月の方で作成し、PubcaseFinderのエンドポイントにデータはあります。
+- 編集：高月(2024/01/12)

@@ -1,4 +1,4 @@
-# Retrieve Clinvar ID by the given NANDO ID
+# Get variant data in ClinVar
 
 ## Parameters
 
@@ -123,3 +123,9 @@ WHERE {
   });
 }
 ```
+## Description
+- NanbyoDataでヴァリアントの情報を表示させるために利用しているSPARQListです。
+- Togovarのエンドポイントを利用しています。
+- SPARQListの大元はTogovarから頂いています。
+- NANDOからMONDO,MONDOからMedGenのIDに変更して、Clinvarのデータを取得しています。
+- 編集：高月（2024/01/12)

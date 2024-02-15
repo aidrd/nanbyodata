@@ -482,12 +482,12 @@ WHERE {
       if (rows[i].mondo) {
         if (data.mondos) {
           if (!mondo_ids.includes(rows[i].mondo_id.value)) {
-            data.mondos.push({url: rows[i].mondo.value, id: rows[i].mondo_id.value});
+           data.mondos.push({url: rows[i].mondo_id.value.replace("MONDO:", "https://monarchinitiative.org/MONDO:"), id: rows[i].mondo_id.value});
             mondo_ids.push(rows[i].mondo_id.value);
           }
         } else {
           data.mondos = [];
-          data.mondos.push({url: rows[i].mondo.value, id: rows[i].mondo_id.value});
+          data.mondos.push({url: rows[i].mondo_id.value.replace("MONDO:", "https://monarchinitiative.org/MONDO:"), id: rows[i].mondo_id.value});
           mondo_ids.push(rows[i].mondo_id.value);
         }
         if (rows[i].db_xref) {
@@ -904,3 +904,8 @@ WHERE {
   }
 })
 ```
+
+## Description
+- 現在NanbyouDataの表示で疾患のメタ情報を表示する部分に利用しています。
+- 過去のUIからの変遷の結果、部分的に必要の無いパートがあるので、それについては調整を行います。
+- 編集：高月　2024/01/12

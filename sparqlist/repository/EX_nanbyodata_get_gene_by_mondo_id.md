@@ -77,3 +77,7 @@ order by ?nando_identifier ?hgnc_gene_symbol
 
   return dic
 };
+
+```
+## Description
+- 過去のUIで使用していたSPARQListで現在は使われていません。（編集：高月）

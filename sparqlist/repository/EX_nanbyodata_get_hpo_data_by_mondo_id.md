@@ -84,6 +84,10 @@ WHERE {
   return dic
 };
 
+```
+## Description
+- 過去のUIで使用していたSPARQListで現在は使われていません。（編集：高月）
+
 
 
 
