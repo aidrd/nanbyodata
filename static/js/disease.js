@@ -1,10 +1,12 @@
 import { navToggle } from './navigation.js';
 import { focusInput } from './focusInput.js';
 import { changePlaceholder } from './changePlaceholder.js';
+import { tree } from './tree.js';
 
 navToggle();
 focusInput();
 changePlaceholder();
+tree();
 
 // dispaly: none until loading is finished
 document.getElementById('content').style.display = 'none';
@@ -18,7 +20,7 @@ const nandoId = pathname.slice(nandoIndex + 6);
 (async () => {
   try {
     const entryDataPromise = fetch(
-//      'https://nanbyodata.jp/sparqlist/api/get_nando_entry_by_nando_id?nando_id=' +
+      //      'https://nanbyodata.jp/sparqlist/api/get_nando_entry_by_nando_id?nando_id=' +
       'https://nanbyodata.jp/sparqlist/api/nanbyodata_get_metadata?nando_id=' +
         nandoId,
       {
