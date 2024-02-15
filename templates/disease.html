@@ -127,7 +127,17 @@
               </ul>
             </div>
           </li>
-          <li><a href="#variant" class="nav-link variant">バリアント<span class="data-num"></span></a></li>
+          <li>
+            <div class="variant">バリアント
+              <ul>
+                <li><a href="#variant" class="clinvar nav-link">ClinVar<span class="data-num"></span></a>
+                </li>
+                <li><a href="#variant" class="mgend nav-link">MGeND<span class="data-num"></span></a>
+                </li>
+              </ul>
+            </div>
+          </li>
+          <!-- <li><a href="#variant" class="nav-link variant">バリアント<span class="data-num"></span></a></li> -->
         </ul>
       </section>
     </aside>
@@ -368,33 +378,32 @@
             </div>
           </div>
 
-          <!-- <div id="variant" open="">
+          <div id="variant" open="">
             <h4 class="temp-title">
               バリアント<small>&nbsp;From&nbsp;<a href="https://grch38.togovar.org/" target="_blank"
                   rel="noopener noreferrer">TogoVar</a></small>
             </h4>
             <div class="tab-wrap">
-              <input type="radio" name="specific-variant" class="tab-switch" id="specific-brc-clinvar" />
-              <label class="tab-label specific-variant-cell" for="specific-variant-clinvar">ClinVar<span
+              <input type="radio" name="variant" class="tab-switch" id="variant-clinvar" />
+              <label class="tab-label variant-clinvar" for="variant-clinvar">ClinVar<span
                   class="data-num"></span></label>
               <div class="tab-content clinvar">
               </div>
-              <input type="radio" name="specific-variant" class="tab-switch" id="specific-variant-mgend" />
-              <label class="tab-label specific-variant-mus" for="specific-variant-mgend">MGeND<span
-                  class="data-num"></span></label>
+              <input type="radio" name="variant" class="tab-switch" id="variant-mgend" />
+              <label class="tab-label variant-mgend" for="variant-mgend">MGeND<span class="data-num"></span></label>
               <div class="tab-content mgend">
               </div>
             </div>
-          </div> -->
+          </div>
 
-          <div id="variant" open="">
+          <!-- <div id="variant" open="">
             <h4 class="temp-title">バリアント<small>&nbsp;From&nbsp;<a href="https://grch38.togovar.org/" target="_blank"
                   rel="noopener noreferrer">TogoVar</a></small><span class="data-num"></span></h4>
             <div class="temp-wrapper">
               <div id="temp-properties" class="properties">
               </div>
             </div>
-          </div>
+          </div> -->
 
         </div>
       </main>

@@ -39,7 +39,7 @@ const nandoId = pathname.slice(nandoIndex + 6);
       return response.json();
     }
 
-    // 各種データを取得
+    // get all data
     const geneData = await fetchData('nanbyodata_get_gene_by_nando_id');
     const geneTestData = await fetchData('nanbyodata_get_gene_test');
     const hpoData = await fetchData('nanbyodata_get_hpo_data_by_nando_id');
@@ -52,7 +52,10 @@ const nandoId = pathname.slice(nandoIndex + 6);
     const dnaData = await fetchData(
       'nanbyodata_get_riken_brc_dna_info_by_nando_id'
     );
-    const variantData = await fetchData('nanbyodata_get_variant_by_nando_id');
+    const clinvarData = await fetchData('nanbyodata_get_variant_by_nando_id');
+    // TODO: add mgend data
+    // const mgendData = await fetchData('');
+    const mgendData = [];
 
     await Promise.all([
       makeHeader(entryData),
@@ -68,7 +71,7 @@ const nandoId = pathname.slice(nandoIndex + 6);
       changeLangHP(),
       makePhenotypeView(hpoData),
       makeSpecificBioResource(cellData, mouseData, dnaData),
-      makeVariant(entryData, variantData),
+      makeVariant(clinvarData, mgendData, entryData),
     ]);
 
     selectedItem();
@@ -78,7 +81,6 @@ const nandoId = pathname.slice(nandoIndex + 6);
       const hashId = hash.replace('#', '');
       switchingDisplayContents(hashId, entryData);
     } else {
-      // TODO: overviewがない場合の処理
       switchingDisplayContents('overview', entryData);
     }
   } catch (error) {
@@ -646,37 +648,101 @@ function makeSpecificBioResource(cellData, mouseData, dnaData) {
   }
 }
 
-function makeVariant(entryData, variantData) {
+function makeVariant(clinvarData, mgendData, entryData) {
   const variant = document.getElementById('variant');
-  const properties = variant.querySelector('#temp-properties');
-  const data = variantData;
+  const tabWrap = variant.querySelector('.tab-wrap');
 
-  if (Array.isArray(data) && data.length === 0) {
-    variant.remove();
-  } else {
-    // to avoid hitting api twice Use createObjectURL
-    const blob = new Blob([JSON.stringify(data)], {
+  let isClinvarData = false;
+  let isMgendData = false;
+
+  let clinvarObject = null;
+  if (Array.isArray(clinvarData) && clinvarData.length > 0) {
+    isClinvarData = true;
+    const blob = new Blob([JSON.stringify(clinvarData)], {
       type: 'application/json',
     });
-    const objectUrl = URL.createObjectURL(blob);
-    properties.innerHTML = `
-          <togostanza-pagination-table
-              data-url="${objectUrl}"
-              data-type="json"
-              custom-css-url="https://togostanza.github.io/togostanza-themes/contrib/nanbyodata.css"
-              fixed-columns="1"
-              page-size-option="100"
-              page-slider="false"
-              columns="[{&quot;id&quot;:&quot;Clinvar_id&quot;,&quot;label&quot;:&quot;Clinvar_ID&quot;,&quot;link&quot;:&quot;Clinvar_link&quot;,&quot;target&quot;:&quot;_bkank&quot;}, {&quot;id&quot;:&quot;title&quot;,&quot;label&quot;:&quot;HGVS&quot;}, {&quot;id&quot;:&quot;Interpretation&quot;,&quot;label&quot;:&quot;Interpretation&quot;}, {&quot;id&quot;:&quot;type&quot;,&quot;label&quot;:&quot;Variant type&quot;}, {&quot;id&quot;:&quot;position&quot;,&quot;label&quot;:&quot;Chr:Position&quot;}, {&quot;id&quot;:&quot;tgv_id&quot;,&quot;label&quot;:&quot;TogoVar_ID&quot;,&quot;link&quot;:&quot;tgv_link&quot;,&quot;target&quot;:&quot;_blank&quot;} , {&quot;id&quot;:&quot;MedGen_id&quot;,&quot;label&quot;:&quot;MedGen_ID&quot;,&quot;link&quot;:&quot;MedGen_link&quot;,&quot;target&quot;:&quot;_bkank&quot;}, {&quot;id&quot;:&quot;mondo_id&quot;,&quot;label&quot;:&quot;MONDO_ID&quot;,&quot;link&quot;:&quot;mondo&quot;,&quot;target&quot;:&quot;_bkank&quot;}]"
-          ></togostanza-pagination-table>
-          `;
-
-    const tempSpanElement = document.querySelector(`#variant .data-num`);
-    const navSpanElement = document.querySelector('.variant .data-num');
-    tempSpanElement.innerText = data.length;
-    navSpanElement.innerText = data.length;
+    clinvarObject = URL.createObjectURL(blob);
   }
 
+  let mgendObject = null;
+  if (Array.isArray(mgendData) && isMgendData.length > 0) {
+    isMgendData = true;
+    const blob = new Blob([JSON.stringify(isMgendData)], {
+      type: 'application/json',
+    });
+    mgendObject = URL.createObjectURL(blob);
+  }
+
+  // check existing tab
+  function removeNavItemIfNotExist(entryDataProperty, className) {
+    if (!entryDataProperty) {
+      const navItem = document.querySelector(
+        '.variant .' + className + '.nav-link'
+      );
+      if (navItem) {
+        navItem.parentElement.remove();
+      }
+    }
+  }
+
+  removeNavItemIfNotExist(isClinvarData, 'clinvar');
+  removeNavItemIfNotExist(isMgendData, 'mgend');
+  const items = [
+    {
+      existing: isClinvarData,
+      id: 'clinvar',
+      url: `https://nanbyodata.jp/sparqlist/api/nanbyodata_get_variant_by_nando_id=${nandoId}`,
+      columns:
+        '[{&quot;id&quot;:&quot;Clinvar_id&quot;,&quot;label&quot;:&quot;Clinvar_ID&quot;,&quot;link&quot;:&quot;Clinvar_link&quot;,&quot;target&quot;:&quot;_bkank&quot;}, {&quot;id&quot;:&quot;title&quot;,&quot;label&quot;:&quot;HGVS&quot;}, {&quot;id&quot;:&quot;Interpretation&quot;,&quot;label&quot;:&quot;Interpretation&quot;}, {&quot;id&quot;:&quot;type&quot;,&quot;label&quot;:&quot;Variant type&quot;}, {&quot;id&quot;:&quot;position&quot;,&quot;label&quot;:&quot;Chr:Position&quot;}, {&quot;id&quot;:&quot;tgv_id&quot;,&quot;label&quot;:&quot;TogoVar_ID&quot;,&quot;link&quot;:&quot;tgv_link&quot;,&quot;target&quot;:&quot;_blank&quot;} , {&quot;id&quot;:&quot;MedGen_id&quot;,&quot;label&quot;:&quot;MedGen_ID&quot;,&quot;link&quot;:&quot;MedGen_link&quot;,&quot;target&quot;:&quot;_bkank&quot;}, {&quot;id&quot;:&quot;mondo_id&quot;,&quot;label&quot;:&quot;MONDO_ID&quot;,&quot;link&quot;:&quot;mondo&quot;,&quot;target&quot;:&quot;_bkank&quot;}]',
+      data: clinvarData,
+      object: clinvarObject,
+    },
+    {
+      existing: isMgendData,
+      id: 'mgend',
+      url: ``,
+      columns: '',
+      data: mgendData,
+      object: mgendObject,
+    },
+  ];
+
+  if (items.every((item) => !item.existing)) {
+    variant.remove();
+  } else {
+    let isFirstTab = true;
+
+    items.forEach((item) => {
+      if (!item.existing) {
+        const input = document.getElementById(`variant-${item.id}`);
+        const label = input.nextElementSibling;
+        label.remove();
+        input.remove();
+      } else {
+        const content = tabWrap.querySelector(`.${item.id}`);
+        const currentTab = tabWrap.querySelector(`#variant-${item.id}`);
+        if (currentTab && isFirstTab) {
+          currentTab.checked = true;
+          isFirstTab = false;
+        }
+        content.innerHTML = `
+        <togostanza-pagination-table data-type="json"
+          data-url="${item.object}"
+          columns="${item.columns}"
+          custom-css-url="https://togostanza.github.io/togostanza-themes/contrib/nanbyodata.css"
+          page-size-option="100"
+          page-slider="fales">
+        </togostanza-pagination-table>
+      `;
+        const tempSpanElement = document.querySelector(
+          `.variant-${item.id} .data-num`
+        );
+        const navSpanElement = document.querySelector(`.${item.id} .data-num`);
+        tempSpanElement.innerText = item.data.length;
+        navSpanElement.innerText = item.data.length;
+      }
+    });
+  }
   makeSideNavigation(entryData);
 
   // When loading finishes
@@ -709,14 +775,28 @@ function makeSideNavigation(entryData) {
     });
   });
 
-  // specific bio resource
   items.forEach((id) => {
     const liElement = document.getElementById(id);
     if (!liElement) {
-      const liToRemove = document.querySelector(
-        `[href="#${id}"]`
-      ).parentElement;
-      liToRemove.parentNode.removeChild(liToRemove);
+      console.log(id);
+      switch (id) {
+        case 'brc':
+        case 'variant':
+          const elementToRemove = document.querySelector(`.${id}`);
+          if (elementToRemove && elementToRemove.parentNode) {
+            elementToRemove.parentNode.removeChild(elementToRemove);
+          }
+          break;
+        default:
+          const anchorElement = document.querySelector(`[href="#${id}"]`);
+          if (anchorElement && anchorElement.parentElement) {
+            const liToRemove = anchorElement.parentElement;
+            if (liToRemove.parentNode) {
+              liToRemove.parentNode.removeChild(liToRemove);
+            }
+          }
+          break;
+      }
     }
   });
 
@@ -728,6 +808,22 @@ function makeSideNavigation(entryData) {
       event.preventDefault();
       const classList = this.classList[0];
       const selectName = 'bio-resource-' + classList;
+      window.location.hash = selectName;
+      const checkBox = document.getElementById(selectName);
+      if (checkBox && !checkBox.checked) {
+        checkBox.checked = true;
+      }
+    });
+  });
+
+  document.querySelectorAll('a[href="#variant"]').forEach(function (aTag) {
+    aTag.addEventListener('click', function (event) {
+      document.querySelector('#variant').scrollIntoView({
+        behavior: 'smooth',
+      });
+      event.preventDefault();
+      const classList = this.classList[0];
+      const selectName = 'variant-' + classList;
       window.location.hash = selectName;
       const checkBox = document.getElementById(selectName);
       if (checkBox && !checkBox.checked) {
@@ -750,6 +846,33 @@ function makeSideNavigation(entryData) {
       }
     });
   });
+
+  document
+    .querySelectorAll('#variant .tab-switch')
+    .forEach(function (tabSwitch) {
+      tabSwitch.addEventListener('change', function () {
+        const selectedTabId = this.id.replace('variant-', '');
+        const tocItem = document.querySelector('.variant a.' + selectedTabId);
+        document.querySelectorAll('a').forEach(function (item) {
+          item.classList.remove('selected');
+        });
+        if (tocItem) {
+          tocItem.classList.add('selected');
+          window.location.hash = this.id;
+        }
+      });
+    });
+}
+
+function toggleDisplay(selector, displayStyle = 'none') {
+  const element = document.querySelector(selector);
+  if (element) element.style.display = displayStyle;
+}
+
+function toggleClassForElements(selector, className, condition) {
+  document.querySelectorAll(selector).forEach((element) => {
+    element.classList.toggle(className, condition(element));
+  });
 }
 
 function switchingDisplayContents(selectedItemId, entryData) {
@@ -763,86 +886,89 @@ function switchingDisplayContents(selectedItemId, entryData) {
     '#variant',
   ];
 
-  // すべての要素を非表示にする
-  items.forEach((selector) => {
-    const element = document.querySelector(selector);
-    if (element) {
-      element.style.display = 'none';
-    }
-  });
+  // Hide all elements
+  items.forEach((selector) => toggleDisplay(selector));
 
-  // 選択されているアイテムを表示する
-  if (selectedItemId === 'overview') {
-    const tempSummary = document.getElementById('overview');
-    tempSummary.style.display = 'block';
-    const tempAliases = document.getElementById('temp-aliases');
-    const tempDiseaseDefinition = document.querySelector('.temp-wrapper');
-    if (tempAliases) tempAliases.style.display = 'block';
-    if (tempDiseaseDefinition) tempDiseaseDefinition.style.display = 'block';
-    const diseaseDefinition = document.getElementById(
-      'temp-disease-definition'
-    );
-    if (diseaseDefinition) {
-      diseaseDefinition.style.display = 'block';
-    } else {
+  // Show selected items
+  switch (selectedItemId) {
+    case 'overview':
+      toggleDisplay('#overview', 'block');
+      ['temp-aliases', '.temp-wrapper', '#temp-disease-definition'].forEach(
+        (selector) => {
+          toggleDisplay(selector, 'block');
+        }
+      );
       checkSummaryData(entryData);
-    }
-  } else if (
-    selectedItemId === 'brc' ||
-    selectedItemId === 'bio-resource-cell' ||
-    selectedItemId === 'bio-resource-mouse' ||
-    selectedItemId === 'bio-resource-dna'
-  ) {
-    const dataWrapper = document.getElementById('data-wrapper');
-    const summary = document.querySelector('.summary-header');
-    dataWrapper.insertBefore(summary, dataWrapper.firstChild);
-    document.querySelector('#brc').style.display = 'block';
-    const checkBox = document.getElementById(selectedItemId);
-    if (checkBox && !checkBox.checked) {
-      checkBox.checked = true;
-    }
+      break;
+    case 'temp-disease-definition':
+    case 'causal-genes':
+    case 'genetic-testing':
+    case 'phenotypes':
+      prepareDataWrapper();
+      toggleDisplay(`#${selectedItemId}`, 'block');
+      toggleClassForElements('a', 'selected', (element) =>
+        element.classList.contains(selectedItemId)
+      );
+      break;
+    case 'brc':
+    case 'bio-resource-cell':
+    case 'bio-resource-mouse':
+    case 'bio-resource-dna':
+      prepareDataWrapper();
+      toggleDisplay('#brc', 'block');
+      let checkBoxBrc = document.getElementById(selectedItemId);
+      if (checkBoxBrc) checkBoxBrc.checked = true;
+      updateBioSelection('#brc .tab-switch:checked');
+      break;
+    case 'variant':
+    case 'variant-clinvar':
+    case 'variant-mgend':
+      prepareDataWrapper();
+      toggleDisplay('#variant', 'block');
+      let checkBoxVariant = document.getElementById(selectedItemId);
+      if (checkBoxVariant) checkBoxVariant.checked = true;
+      updateVariantSelection('#variant .tab-switch:checked');
+      break;
+    default:
+      window.location.href = window.location.href.split('#')[0];
+  }
+}
 
-    const checkedSwitch = document.querySelector('#brc .tab-switch:checked');
+function prepareDataWrapper() {
+  const dataWrapper = document.getElementById('data-wrapper');
+  const summary = document.querySelector('.summary-header');
+  if (dataWrapper.firstChild !== summary) {
+    dataWrapper.insertBefore(summary, dataWrapper.firstChild);
+  }
+}
+
+function updateBioSelection(selector) {
+  const checkedSwitch = document.querySelector(selector);
+  if (checkedSwitch) {
     window.location.hash = checkedSwitch.id;
     const selectedId = checkedSwitch.id.replace('bio-resource-', '');
+    toggleClassForElements('a', 'selected', (element) =>
+      element.classList.contains(selectedId)
+    );
+  }
+}
 
-    const targetElements = document.querySelectorAll('a');
-
-    targetElements.forEach(function (element) {
-      const classes = element.classList;
-      if (classes[0] === selectedId) {
-        element.classList.add('selected');
-      } else {
-        element.classList.remove('selected');
-      }
-    });
-  } else {
-    const targetElements = document.querySelectorAll('a');
-
-    targetElements.forEach(function (element) {
-      const classes = element.classList;
-      if (classes[1] === selectedItemId) {
-        element.classList.add('selected');
-      } else {
-        element.classList.remove('selected');
-      }
-    });
-    const dataWrapper = document.getElementById('data-wrapper');
-    const summary = document.querySelector('.summary-header');
-    dataWrapper.insertBefore(summary, dataWrapper.firstChild);
-    document.querySelector(`#${selectedItemId}`).style.display = 'block';
+function updateVariantSelection(selector) {
+  const checkedSwitch = document.querySelector(selector);
+  if (checkedSwitch) {
+    window.location.hash = checkedSwitch.id;
+    const selectedId = checkedSwitch.id.replace('variant-', '');
+    toggleClassForElements('a', 'selected', (element) =>
+      element.classList.contains(selectedId)
+    );
   }
 }
 
 function selectedItem() {
   const links = document.querySelectorAll('#temp-side-navigation .nav-link');
-
   links.forEach((link) => {
     link.addEventListener('click', () => {
-      links.forEach((link) => {
-        link.classList.remove('selected');
-      });
-
+      links.forEach((l) => l.classList.remove('selected'));
       link.classList.add('selected');
     });
   });

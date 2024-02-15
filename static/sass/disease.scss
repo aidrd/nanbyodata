@@ -171,10 +171,12 @@ h5 {
         background: rgba(22, 35, 78, 0.2);
         color: var(--color-secondary);
       }
-      .brc.selected {
+      .brc.selected,
+      .variant.selected {
         background-color: transparent;
       }
-      .brc {
+      .brc,
+      .variant {
         font-size: 14px;
         cursor: pointer;
         color: var(--color-secondary);
