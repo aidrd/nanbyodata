@@ -97,16 +97,16 @@
     <div class="loading-spinner"></div>
 
     <!-- Sidebar -->
-    <div id="sidebar">
-      <div class="breadcrumb-list">
-        <div class="navigation-title">疾患選択</div>
+    <aside id="sidebar">
+      <section class="breadcrumb-list">
+        <h2 class="sidebar-title">疾患選択</h2>
         <!-- パンくずリスト -->
         {{ breadcrumb_list_html |safe }}
-      </div>
+      </section>
 
       <!-- Side Navigation -->
-      <div id="temp-side-navigation">
-        <div class="navigation-title">目次</div>
+      <section id="temp-side-navigation">
+        <h2 class="sidebar-title">目次</h2>
         <ul>
           <li><a href="#overview" class="nav-link overview selected">概要
           <li><a href="#gene" class="nav-link gene">疾患原因遺伝子<span class="data-num"></span></a>
@@ -129,8 +129,8 @@
           </li>
           <li><a href="#variant" class="nav-link variant">バリアント<span class="data-num"></span></a></li>
         </ul>
-      </div>
-    </div>
+      </section>
+    </aside>
 
     <!-- Contents -->
     <script type="module" src="https://togostanza.github.io/metastanza/pagination-table.js" async></script>

@@ -6,6 +6,7 @@ Foundation
   --color-primary: #147786;
   --color-secondary: #13295a;
   --color-font: #696969;
+  --color-background-gray: #dadede;
 }
 
 body {
@@ -49,12 +50,19 @@ a.link[target=_blank]::after {
 /* ================================================
 Layout
 ================================================ */
-/* Main Page */
-/* Main page container */
+/* ---------- Main Page ---------- */
+/* container for mainNav, footer */
 .container {
-  width: 100%;
   max-width: 950px;
   margin: 0 auto;
+}
+
+/* Main page contents */
+.contents-wrapper {
+  min-height: calc(100vh - 508px);
+  padding: 55px 0 100px;
+  margin: 0 auto;
+  max-width: 950px;
 }
 
 /* Navigation */
@@ -101,7 +109,7 @@ Layout
 }
 .navbar select.language-select option {
   color: #13295a;
-  background: #dadede;
+  background: var(--color-background-gray);
   font-weight: bold;
 }
 .navbar ul.navbar-nav a.nav-link {
@@ -289,26 +297,23 @@ footer .container .footer__bottom .footer__lisence p a {
   color: #fff;
   text-align: center;
 }
-.page-layout .container {
-  margin: 55px auto 100px;
-}
-.page-layout .container h2.section-title {
+.page-layout h2.section-title {
   text-align: center;
   color: var(--color-secondary);
   font-size: 20px;
   margin-bottom: 1rem;
 }
-.page-layout .container p.section-description {
+.page-layout p.section-description {
   text-align: center;
   letter-spacing: 1px;
   margin-bottom: 20px;
 }
-.page-layout .container h3.content-title {
+.page-layout h3.content-title {
   position: relative;
   font-size: 16px;
   color: var(--color-secondary);
 }
-.page-layout .container h3.content-title::before {
+.page-layout h3.content-title::before {
   content: "";
   position: absolute;
   top: 0;
@@ -317,21 +322,51 @@ footer .container .footer__bottom .footer__lisence p a {
   border-top: 2px solid #495aff;
   margin-top: -15px;
 }
-.page-layout .container .content-block + .content-block {
+.page-layout .section-block + .section-block {
+  margin-top: 70px;
+}
+.page-layout .content-block + .content-block {
   margin-top: 60px;
 }
-
-#news-page hr {
+.page-layout #download {
+  scroll-margin-top: 90px;
+}
+.page-layout #news-page hr {
   margin: 0.1rem 0;
 }
-#news-page .post-date {
+.page-layout #news-page .post-date {
   margin-bottom: 20px;
 }
 
-/* Disease Page */
-#data-wrapper {
-  width: 80vw;
+/* ---------- Disease Page ---------- */
+#sidebar {
+  position: fixed;
+  top: 65px;
+  left: 0px;
+  width: 270px;
+  height: 100%;
+  text-align: left;
+  background-color: var(--color-background-gray);
+  --padding-inline: 8px;
 }
+#sidebar .sidebar-title {
+  font-size: 14px;
+  font-weight: bold;
+  color: #16234e;
+  opacity: 0.6;
+  padding: 2px var(--padding-inline);
+  margin: 0px calc(var(--padding-inline) * -1) 8px;
+}
+#sidebar .breadcrumb-list {
+  padding: 25px;
+  padding-bottom: 40px;
+}
+#sidebar .nav-link {
+  margin: 0;
+  margin-top: -1.5px;
+  position: relative;
+}
+
 #data-wrapper header.summary-header {
   margin-bottom: 12px;
 }
@@ -339,9 +374,9 @@ footer .container .footer__bottom .footer__lisence p a {
 /* ================================================
 Object
 ================================================ */
-/* ---------------
+/* -----------------------------------
 Component
---------------- */
+----------------------------------- */
 ul.token-input-list-facebook {
   overflow: hidden;
   font-size: 12px;
@@ -521,7 +556,7 @@ div.token-input-dropdown-number-of-hits-facebook {
   color: #3777B5;
 }
 
-/* Top Page */
+/* ---------- Top Page ---------- */
 /* Top search window */
 header.search-area ul.token-input-list-facebook {
   padding: 5px 20px;
@@ -698,7 +733,7 @@ header.search-area .intro-text .keyword a {
   color: #495aff;
 }
 
-/* About Page */
+/* ---------- About Page ---------- */
 .illust-wrapper {
   display: flex;
   justify-content: space-between;
@@ -717,7 +752,7 @@ header.search-area .intro-text .keyword a {
   color: var(--color-secondary);
 }
 
-/* Dataset Page */
+/* ---------- Dataset Page ---------- */
 .table-contents .table thead th {
   padding: 10px;
   border-top: none;
@@ -744,8 +779,115 @@ header.search-area .intro-text .keyword a {
   color: #444;
 }
 
-/* Disease Page */
-/* Disease Page */
+/* ---------- Disease Page ---------- */
+/* Loading Spinner */
+.loading-spinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 40px;
+  height: 40px;
+  margin: 10px auto;
+  border: 4px #ddd solid;
+  border-top: 4px var(--color-primary) solid;
+  border-radius: 50%;
+  animation: sp-anime 1s infinite linear;
+}
+
+@keyframes sp-anime {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+/* Breadcrumb List */
+.breadcrumb-list {
+  /*ツリー*/
+}
+.breadcrumb-list .breadcrumb-title {
+  color: var(--color-secondary);
+  font-weight: bold;
+  font-size: 14px;
+  margin-bottom: 3px;
+}
+.breadcrumb-list .breadcrumb-tree {
+  position: relative;
+  margin-left: 1rem;
+}
+.breadcrumb-list .breadcrumb-tree ul {
+  position: relative;
+  margin-left: 0.5rem;
+}
+.breadcrumb-list .breadcrumb-tree::before,
+.breadcrumb-list .breadcrumb-tree ul::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  border-left: 1px solid;
+}
+.breadcrumb-list .breadcrumb-tree li {
+  padding: 0.3rem 0 0 0.6rem;
+  line-height: 1.3rem;
+}
+.breadcrumb-list .breadcrumb-tree li:before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 1rem;
+  bottom: 0;
+  width: 10px;
+  border-top: 1px solid;
+  margin-top: -1px;
+  background: var(--color-background-gray);
+}
+
+.cp_ipselect select {
+  width: 100% !important;
+  padding-right: 1em;
+  cursor: pointer;
+  text-indent: 0.01px;
+  text-overflow: ellipsis;
+  border: none;
+  outline: none;
+  background: transparent;
+  background-image: none;
+  box-shadow: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+       appearance: none;
+}
+.cp_ipselect select::-ms-expand {
+  display: none;
+}
+.cp_ipselect.cp_sl03 {
+  position: relative;
+  border-radius: 2px;
+  border: 1px solid var(--color-secondary);
+  background: var(--color-background-gray);
+}
+.cp_ipselect.cp_sl03::before {
+  content: "";
+  position: absolute;
+  top: 0.6em;
+  right: 0.6em;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 6px solid var(--color-secondary);
+  pointer-events: none;
+}
+.cp_ipselect.cp_sl03 select {
+  font-weight: bold;
+  padding: 2px 26px 0px 5px;
+  color: var(--color-secondary);
+  font-size: 14px;
+}
+.cp_ipselect.cp_sl03 select option {
+  color: #13295a;
+  background: var(--color-background-gray);
+  font-weight: bold;
+}
+
+/* Link */
 .linked-item {
   margin-bottom: 3px;
   border: var(--color-primary) 1px solid;
@@ -769,16 +911,10 @@ header.search-area .intro-text .keyword a {
   padding: 4px 8px;
 }
 
-/* ---------------
+/* -----------------------------------
 Project
---------------- */
-/* Top Page */
-#download {
-  padding-top: 110px;
-  margin-top: -50px;
-}
-
-/* Disease Page */
+----------------------------------- */
+/* ---------- Disease Page ---------- */
 /* summary-header
 Disease page right top */
 .summary-header {

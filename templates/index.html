@@ -54,8 +54,8 @@
         </div>
       </header>
 
-      <section class="container">
-        <section class="news-summary">
+      <div class="contents-wrapper">
+        <section class="news-summary section-block">
           {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
           <h2 class="section-title">お知らせ</h2>
           {% else %}
@@ -89,7 +89,7 @@
         </section>
 
 
-        <section id="download">
+        <section id="download" class="section-block">
           {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
           <h2 class="section-title">ダウンロード</h2>
           <p class="section-description">NanbyoDataは<a
@@ -102,7 +102,7 @@
               Attribution 4.0 International</a>.
           </p>
           {% endif %}
-          </p>
+
           <div class="card-wrapper">
             <div class="card">
               <img src="/static/img/img_data_1.png" class="card-img-top" alt="難病オントロジーimg">
@@ -140,8 +140,7 @@
             </div>
           </div>
         </section>
-
-      </section>
+      </div>
     </div>
 
     <!--- footer --->

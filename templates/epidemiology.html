@@ -1,20 +1,20 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ja">
 
 <head>
   <!-- Required meta tags -->
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
   <link rel="stylesheet" href="https://indestructibletype-fonthosting.github.io/renner.css" type="text/css"
     charset="utf-8" />
-  <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
+  <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet" />
 
   <!-- CSS -->
-  <link rel="stylesheet" type="text/css" href="/static/sass/main.css">
+  <link rel="stylesheet" type="text/css" href="/static/sass/main.css" />
 
   <title>NanbyoData</title>
 </head>
@@ -29,7 +29,7 @@
         --togostanza-series-3-color: #0f89ac;
         --togostanza-series-4-color: #0f5b6d;
         --togostanza-series-5-color: #093b47;
-        --togostanza-background-color: #FFFFFF;
+        --togostanza-background-color: #ffffff;
         --togostanza-font-family: 'Roboto Condensed', sans-serif;
         --togostanza-axis-color: #444444;
         --togostanza-axis-width: 1;
@@ -50,23 +50,23 @@
         --togostanza-line-width: 1;
         --togostanza-opacity: 0.8;
         --togostanza-node-size: 100;
-        --togostanza-edge-color: #EEEEEE;
+        --togostanza-edge-color: #eeeeee;
         --togostanza-text-font-color: #444444;
         --togostanza-text-font-size: 12px;
         --togostanza-text-font-weight: 400;
-        --togostanza-table-border: 0px solid #CCCCCC;
-        --togostanza-table-shadow: 1px 1px 3px 1px #EEEEEE;
+        --togostanza-table-border: 0px solid #cccccc;
+        --togostanza-table-shadow: 1px 1px 3px 1px #eeeeee;
         --togostanza-thead-border-bottom: 1px solid #444444;
         --togostanza-thead-font-color: #94928d;
-        --togostanza-thead-background-color: #FFFFFF;
+        --togostanza-thead-background-color: #ffffff;
         --togostanza-thead-font-size: 12px;
         --togostanza-thead-font-weight: 400;
         --togostanza-tbody-border-bottom: 1px solid #dee2e6;
         --togostanza-tbody-font-color: #444444;
         --togostanza-tbody-font-size: 14px;
         --togostanza-tbody-font-weight: 400;
-        --togostanza-tbody-odd-background-color: #FFFFFF;
-        --togostanza-tbody-even-background-color: #FFFFFF;
+        --togostanza-tbody-odd-background-color: #ffffff;
+        --togostanza-tbody-even-background-color: #ffffff;
         --togostanza-control-border: 1px solid #aaa;
         --togostanza-control-active-color: #249eb3;
         --togostanza-non-active-color: #94928d;
@@ -75,11 +75,11 @@
         --togostanza-control-border-radius: 3px;
         --togostanza-pagination-font-color: #444444;
         --togostanza-pagination-font-size: 14px;
-        --togostanza-pagination-background-color: #FFFFFF;
+        --togostanza-pagination-background-color: #ffffff;
         --togostanza-pagination-border: 1px solid rgba(0, 0, 0, 0.1);
         --togostanza-pagination-border-radius: 3px;
         --togostanza-pagination-padding: 2px 8px;
-        --togostanza-pagination-current-font-color: #FFFFFF;
+        --togostanza-pagination-current-font-color: #ffffff;
         --togostanza-pagination-current-background-color: #249eb3;
         --togostanza-pagination-current-border: 1px solid #aaa;
         --togostanza-pagination-arrow-color: #333333;
@@ -100,7 +100,7 @@
       <header class="page-title">
         <h2>Epidemiology</h2>
       </header>
-      <section class="container">
+      <div class="contents-wrapper">
         <h3 class="content-title">指定難病：疾患別患者数</h3>
         <p>
           <script type="module" src="https://togostanza.github.io/metastanza/pagination-table.js" async></script>
@@ -110,7 +110,7 @@
             width="" fixed-columns="1" padding="0px" page-size-option="100" page-slider="true"
             columns="[{&quot;id&quot;: &quot;nando&quot;,&quot;label&quot;:&quot;NANDO ID&quot;}, {&quot;id&quot;:&quot;label&quot;,&quot;label&quot;:&quot;疾患名&quot;}, {&quot;id&quot;:&quot;num_of_2015&quot;,&quot;label&quot;:&quot;2015年&quot;}, {&quot;id&quot;:&quot;num_of_2016&quot;,&quot;label&quot;:&quot;2016年&quot;}, {&quot;id&quot;:&quot;num_of_2017&quot;,&quot;label&quot;:&quot;2017年&quot;}, {&quot;id&quot;:&quot;num_of_2018&quot;,&quot;label&quot;:&quot;2018年&quot;}, {&quot;id&quot;:&quot;num_of_2019&quot;,&quot;label&quot;:&quot;2019年&quot;}, {&quot;id&quot;:&quot;num_of_2020&quot;,&quot;label&quot;:&quot;2020年&quot;}]"></togostanza-pagination-table>
         </p>
-      </section>
+      </div>
     </div>
 
     <!--- footer --->
@@ -125,13 +125,17 @@
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
-            <h3 class="modal-title modal-title" id="demoModalTitle">NanbyoData利用規約</h3>
+            <h3 class="modal-title modal-title" id="demoModalTitle">
+              NanbyoData利用規約
+            </h3>
             <p>
               NanbyoDataは誠実にデータを提供しますが、データの正確性、臨床的妥当性または有用性を検証することはありません。DBCLSは、明示的にも黙示的にも、利用者が当データを用いて行う一切の行為について、何ら責任を負うものではありません。DBCLSは、本サービスの変更、中断、または終了により被った損害に関しても、何ら責任を負うものではありません。また、ライフサイエンス統合データベースセンターのサイト・ポリシー内「<a
                 class="policy" href="https://dbcls.rois.ac.jp/policy.html">免責事項</a>」にも準ずるものとします。
             </p>
             <div class="btn-close">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">CLOSE</button>
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                CLOSE
+              </button>
             </div>
           </div>
         </div>
@@ -139,27 +143,19 @@
     </div>
     <!--- /#demoNormalModal --->
     <!--ここまで-->
-
-
-
   </main>
-
-
-
-
-
 
   <!-- Optional JavaScript -->
   <!-- jQuery first, then Popper.js, then Bootstrap JS -->
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
-    </script>
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
-    </script>
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+    crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
-    </script>
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    crossorigin="anonymous"></script>
   <script type="module" src="/static/js/main.js"></script>
 </body>
 

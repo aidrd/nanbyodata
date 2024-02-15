@@ -1,6 +1,35 @@
-#data-wrapper {
-  width: 80vw;
+#sidebar {
+  position: fixed;
+  top: 65px;
+  left: 0px;
+  width: 270px;
+  height: 100%;
+  text-align: left;
+  background-color: var(--color-background-gray);
+  --padding-inline: 8px;
 
+  .sidebar-title {
+    font-size: 14px;
+    font-weight: bold;
+    color: #16234e;
+    opacity: 0.6;
+    padding: 2px var(--padding-inline);
+    margin: 0px calc(var(--padding-inline) * -1) 8px;
+  }
+
+  .breadcrumb-list {
+    padding: 25px;
+    padding-bottom: 40px;
+  }
+
+  .nav-link {
+    margin: 0;
+    margin-top: -1.5px;
+    position: relative;
+  }
+}
+
+#data-wrapper {
   header.summary-header {
     margin-bottom: 12px;
   }
