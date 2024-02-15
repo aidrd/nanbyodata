@@ -574,7 +574,7 @@ function makeSpecificBioResource(cellData, mouseData, dnaData) {
   }
 
   removeNavItemIfNotExist(isCellData, 'cell');
-  removeNavItemIfNotExist(isMusData, 'mus');
+  removeNavItemIfNotExist(isMusData, 'mouse');
   removeNavItemIfNotExist(isDnaData, 'dna');
 
   const items = [
@@ -589,7 +589,7 @@ function makeSpecificBioResource(cellData, mouseData, dnaData) {
     },
     {
       existing: isMusData,
-      id: 'mus',
+      id: 'mouse',
       url: `https://nanbyodata.jp/sparqlist/api/nanbyodata_get_riken_brc_mouse_info_by_nando_id?nando_id=${nandoId}`,
       columns:
         '[{&quot;id&quot;:&quot;mouse_id&quot;,&quot;label&quot;:&quot;RIKEN_BRC No.&quot;},{&quot;id&quot;:&quot;hp&quot;,&quot;label&quot;:&quot;Homepage&quot;,&quot;link&quot;:&quot;Homepage&quot;,&quot;target&quot;:&quot;_blank&quot;},{&quot;id&quot;:&quot;mouse_name&quot;,&quot;label&quot;:&quot;Strain name&quot;},{&quot;id&quot;:&quot;description&quot;,&quot;label&quot;:&quot;Strain description&quot;}]',
@@ -614,13 +614,13 @@ function makeSpecificBioResource(cellData, mouseData, dnaData) {
 
     items.forEach((item) => {
       if (!item.existing) {
-        const input = document.getElementById(`specific-brc-${item.id}`);
+        const input = document.getElementById(`bio-resource-${item.id}`);
         const label = input.nextElementSibling;
         label.remove();
         input.remove();
       } else {
         const content = tabWrap.querySelector(`.${item.id}`);
-        const currentTab = tabWrap.querySelector(`#specific-brc-${item.id}`);
+        const currentTab = tabWrap.querySelector(`#bio-resource-${item.id}`);
         if (currentTab && isFirstTab) {
           currentTab.checked = true;
           isFirstTab = false;
@@ -635,7 +635,7 @@ function makeSpecificBioResource(cellData, mouseData, dnaData) {
         </togostanza-pagination-table>
       `;
         const tempSpanElement = document.querySelector(
-          `.specific-brc-${item.id} .data-num`
+          `.bio-resource-${item.id} .data-num`
         );
         const navSpanElement = document.querySelector(`.${item.id} .data-num`);
         tempSpanElement.innerText = item.data.length;
@@ -729,7 +729,7 @@ function makeSideNavigation(entryData) {
   document.querySelectorAll('.brc a').forEach(function (aTag) {
     aTag.addEventListener('click', function () {
       const classList = this.classList[0];
-      const checkBox = document.getElementById('specific-brc-' + classList);
+      const checkBox = document.getElementById('bio-resource-' + classList);
       if (checkBox && !checkBox.checked) {
         checkBox.checked = true;
       }
@@ -739,7 +739,7 @@ function makeSideNavigation(entryData) {
   // processing when tabs are switched
   document.querySelectorAll('#brc .tab-switch').forEach(function (tabSwitch) {
     tabSwitch.addEventListener('change', function () {
-      const selectedTabId = this.id.replace('specific-brc-', '');
+      const selectedTabId = this.id.replace('bio-resource-', '');
       const tocItem = document.querySelector('.brc a.' + selectedTabId);
       document.querySelectorAll('a').forEach(function (item) {
         item.classList.remove('selected');
@@ -793,7 +793,7 @@ function switchingDisplayContents(selectedItemId, entryData) {
     document.querySelector(`#${selectedItemId}`).style.display = 'block';
 
     const checkedSwitch = document.querySelector('#brc .tab-switch:checked');
-    const selectedId = checkedSwitch.id.replace('specific-brc-', '');
+    const selectedId = checkedSwitch.id.replace('bio-resource-', '');
 
     const targetElements = document.querySelectorAll('a');
 
