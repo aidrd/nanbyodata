@@ -7,37 +7,38 @@ Foundation
 /* ================================================
 Layout
 ================================================ */
-/* Main Page */
+/* ---------- Main Page ---------- */
 @use './layout/main-container';
 @use './layout/navigation';
 @use './layout/footer';
 @use './layout/page-layout';
-@use './layout/news-article';
-/* Disease Page */
+/* ---------- Disease Page ---------- */
 @use './layout/disease';
 
 /* ================================================
 Object
 ================================================ */
-/* ---------------
+/* -----------------------------------
 Component
---------------- */
+----------------------------------- */
 @use './object/component/tokeninput';
-/* Top Page */
+/* ---------- Top Page ---------- */
 @use './object/component/search-area';
 @use './object/component/news-summary';
 @use './object/component/card-wrapper';
 @use './object/component/button';
 @use './object/component/modal';
-/* About Page */
+/* ---------- About Page ---------- */
 @use './object/component/illust-wrapper';
-/* Dataset Page */
+/* ---------- Dataset Page ---------- */
 @use './object/component/table';
-/* Disease Page */
+/* ---------- Disease Page ---------- */
+@use './object/component/loading-spinner';
+@use './object/component/breadcrumb-list';
 @use './object/component/linked-item';
 
-/* ---------------
+/* -----------------------------------
 Project
---------------- */
-/* Disease Page */
+----------------------------------- */
+/* ---------- Disease Page ---------- */
 @use './object/project/summary-header';

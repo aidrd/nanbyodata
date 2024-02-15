@@ -22,68 +22,24 @@
 <body>
   <main>
     <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
-      <div class="container">
-        <a class="navbar-brand js-scroll-trigger" href="/">
-          <img class="imgtitle" src="/static/img/NanbyoData_black_w.svg">
-        </a>
-        <div class="flex-wrapper">
-          <div class="flex">
-            <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
-              data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
-              aria-label="Toggle navigation">
-              <i class="fas fa-bars"></i>
-            </button>
-            <select class="language-select" onchange="location.href='?lang='+value;">
-              <option value="ja" {% if get_locale()=='ja' %}selected{% endif %}>日本語</option>
-              <option value="en" {% if get_locale()=='en' %}selected{% endif %}>English</option>
-            </select>
-          </div>
-          <div class="collapse navbar-collapse" id="navbarResponsive">
-            <ul class="navbar-nav">
-              <li class="nav-item">
-                <a class="nav-link" href="/about_nando">ABOUT</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="/datasets">DATASETS</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="/epidemiology">EPIDEMIOLOGY</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="/#third">DOWNLOAD</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#"><button type="button" class="btn-TOS" data-toggle="modal"
-                    data-target="#demoNormalModal_TOS">TERMS</button></a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" title="Comments & suggestions are welcome!"
-                  href="https://dbcls.rois.ac.jp/contact.html">CONTACT</a>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </nav>
+    {% include 'navigation.html' %}
 
-    <!--- news page -->
-    <section class="page-layout" id="news-page">
-      <header  class="page-title">
+    <!--- News article page -->
+    <div class="page-layout" id="news-page">
+      <header class="page-title">
         {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
         <h2>お知らせ</h2>
         {% else %}
         <h2>News</h2>
         {% endif %}
-        </div>
       </header>
-      <div class="container">
-        <h3 class="content-title">{{title}}</h3>
-        <hr />
-        <p class="post-date">{{date}}</p>
-        <div class="post-content">{{ content|safe }}</div>
+      <div class="contents-wrapper">
+          <h3 class="news-title">{{title}}</h3>
+          <hr />
+          <p class="post-date">{{date}}</p>
+          <div class="post-content">{{ content|safe }}</div>
       </div>
-    </section>
+    </div>
 
     <!--- footer --->
     {% include 'footer.html' %}
@@ -111,11 +67,6 @@
         </div>
       </div>
     </div>
-    <!--- /#demoNormalModal --->
-    <!--ここまで-->
-
-
-
   </main>
 
 
