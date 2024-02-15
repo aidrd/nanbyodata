@@ -784,7 +784,7 @@ function makeSideNavigation(entryData) {
         case 'variant':
           const elementToRemove = document.querySelector(`.${id}`);
           if (elementToRemove && elementToRemove.parentNode) {
-            elementToRemove.parentNode.removeChild(elementToRemove);
+            elementToRemove.parentNode.remove();
           }
           break;
         default:
@@ -792,7 +792,7 @@ function makeSideNavigation(entryData) {
           if (anchorElement && anchorElement.parentElement) {
             const liToRemove = anchorElement.parentElement;
             if (liToRemove.parentNode) {
-              liToRemove.parentNode.removeChild(liToRemove);
+              liToRemove.remove();
             }
           }
           break;
