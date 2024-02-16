@@ -29,8 +29,32 @@
   }
 }
 
+#content {
+  top: 90px;
+  bottom: 0px;
+  position: fixed;
+  z-index: -1;
+}
+
 #data-wrapper {
+  margin-top: inherit;
+  padding: 0 33px 50px;
+  width: 80vw;
+  position: relative;
+  z-index: -1;
+
   header.summary-header {
     margin-bottom: 12px;
   }
+}
+
+// TODO: This is a temporary fix for the z-index issue. We need to check ids
+#overview,
+#causal-genes,
+#genetic-testing,
+#phenotypes,
+#brc,
+#variant {
+  position: absolute;
+  z-index: 1;
 }
