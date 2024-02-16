@@ -29,19 +29,22 @@
   }
 }
 
+
+
 #content {
   top: 90px;
   bottom: 0px;
   position: fixed;
   z-index: -1;
+  width: calc(100vw - 270px);
+  overflow: scroll;
+  padding: 0 33px 50px;
 }
 
 #data-wrapper {
-  margin-top: inherit;
-  padding: 0 33px 50px;
-  width: 80vw;
-  position: relative;
-  z-index: -1;
+  > div {
+    scroll-margin-top: 70px;
+  }
 
   header.summary-header {
     margin-bottom: 12px;
@@ -57,4 +60,6 @@
 #variant {
   position: absolute;
   z-index: 1;
+  overflow: scroll;
+  width: calc(100vw - 270px - 33px - 33px);
 }

@@ -30,33 +30,6 @@ a[target=_blank]::after {
 }
 
 /*ナビ*/
-.toc {
-  position: fixed;
-  padding: 1em;
-  width: 14em;
-  line-height: 2;
-  color: #fff;
-  font-size: 15px;
-}
-.toc ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-.toc ul ul {
-  padding-left: 2.2em;
-}
-.toc li a {
-  display: inline-block;
-  color: #fff;
-  text-decoration: none;
-  transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
-}
-.toc li.visible > a {
-  color: #fff;
-  transform: translate(5px);
-}
-
 .toc-marker {
   position: absolute;
   top: 0;
@@ -111,10 +84,6 @@ p {
 
 h5 {
   font-size: 1em;
-}
-
-#content {
-  width: 100%;
 }
 
 #temp-side-navigation {
@@ -510,11 +479,6 @@ details {
 
 #data-wrapper > .properties {
   padding: 0 0 20px;
-}
-#data-wrapper > div {
-  display: block;
-  padding-top: 70px;
-  margin-top: -70px;
 }
 #data-wrapper details summary {
   color: #fff;

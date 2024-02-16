@@ -372,14 +372,13 @@ footer .container .footer__bottom .footer__lisence p a {
   bottom: 0px;
   position: fixed;
   z-index: -1;
+  width: calc(100vw - 270px);
+  overflow: scroll;
+  padding: 0 33px 50px;
 }
 
-#data-wrapper {
-  margin-top: inherit;
-  padding: 0 33px 50px;
-  width: 80vw;
-  position: relative;
-  z-index: -1;
+#data-wrapper > div {
+  scroll-margin-top: 70px;
 }
 #data-wrapper header.summary-header {
   margin-bottom: 12px;
@@ -393,6 +392,8 @@ footer .container .footer__bottom .footer__lisence p a {
 #variant {
   position: absolute;
   z-index: 1;
+  overflow: scroll;
+  width: calc(100vw - 270px - 33px - 33px);
 }
 
 /* ================================================
@@ -1030,6 +1031,7 @@ Disease page right top */
 }
 .summary-header > .data-name > h3 a.nando-link {
   text-decoration: underline;
+  overflow-wrap: break-word;
 }
 .summary-header > .data-name > h3 a.nando-link::after {
   content: "\f35d";
@@ -1054,6 +1056,7 @@ Disease page right top */
 .summary-header > .data-name > h3#temp-label-en {
   font-size: 26px;
   margin-top: 5px;
+  overflow-wrap: break-word;
 }
 .summary-header > .external-links {
   display: flex;

@@ -35,37 +35,37 @@ a[target='_blank']::after {
 }
 
 /*ナビ*/
-.toc {
-  position: fixed;
-  padding: 1em;
-  width: 14em;
-  line-height: 2;
-  color: #fff;
-  font-size: 15px;
-  ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    ul {
-      padding-left: 2.2em;
-    }
-  }
-  li {
-    a {
-      display: inline-block;
-      color: #fff;
-      text-decoration: none;
-      -webkit-transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
-      transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
-    }
-    &.visible > a {
-      color: #fff;
-      -webkit-transform: translate(5px);
-      -ms-transform: translate(5px);
-      transform: translate(5px);
-    }
-  }
-}
+// .toc {
+//   position: fixed;
+//   padding: 1em;
+//   width: 14em;
+//   line-height: 2;
+//   color: #fff;
+//   font-size: 15px;
+//   ul {
+//     list-style: none;
+//     padding: 0;
+//     margin: 0;
+//     ul {
+//       padding-left: 2.2em;
+//     }
+//   }
+//   li {
+//     a {
+//       display: inline-block;
+//       color: #fff;
+//       text-decoration: none;
+//       -webkit-transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+//       transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+//     }
+//     &.visible > a {
+//       color: #fff;
+//       -webkit-transform: translate(5px);
+//       -ms-transform: translate(5px);
+//       transform: translate(5px);
+//     }
+//   }
+// }
 
 .toc-marker {
   position: absolute;
@@ -127,9 +127,7 @@ h5 {
   font-size: 1em;
 }
 
-#content {
-  width: 100%;
-}
+
 
 #temp-side-navigation {
   border-top: 1px solid rgba(112, 112, 112, 0.4);
@@ -580,16 +578,10 @@ details {
 }
 
 #data-wrapper {
-
-
   > .properties {
     padding: 0 0 20px;
   }
-  > div {
-    display: block;
-    padding-top: 70px;
-    margin-top: -70px;
-  }
+
 
   details {
     summary {
