@@ -1,7 +1,7 @@
-// /* Breadcrumb List */
+/* Breadcrumb List */
 .breadcrumb-list {
   .breadcrumb-title {
-    color: #13295a;
+    color: var(--color-secondary);
     font-weight: bold;
     font-size: 14px;
     margin-bottom: 3px;
@@ -35,7 +35,7 @@
         width: 10px;
         border-top: 1px solid;
         margin-top: -1px;
-        background: #dadede;
+        background: var(--color-background-gray);
       }
 
       .wrapper {
