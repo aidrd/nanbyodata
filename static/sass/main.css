@@ -22,6 +22,10 @@ h1 {
   font-size: 0;
 }
 
+h5 {
+  font-size: 1em;
+}
+
 p {
   color: var(--color-font);
   font-size: 13px;
@@ -108,7 +112,7 @@ Layout
   cursor: pointer;
 }
 .navbar select.language-select option {
-  color: #13295a;
+  color: var(--color-secondary);
   background: var(--color-background-gray);
   font-weight: bold;
 }
@@ -867,12 +871,12 @@ header.search-area .intro-text .keyword a {
   font-size: 14px;
   position: relative;
   border-radius: 2px;
-  border: 1px solid #13295a;
+  border: 1px solid var(--color-secondary);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   cursor: pointer;
-  color: #13295a;
+  color: var(--color-secondary);
 }
 .breadcrumb-list .breadcrumb-tree .inner-tree .wrapper .select-option::after {
   content: "";
@@ -881,7 +885,7 @@ header.search-area .intro-text .keyword a {
   right: 0.6em;
   border-left: 6px solid transparent;
   border-right: 6px solid transparent;
-  border-top: 6px solid #13295a;
+  border-top: 6px solid var(--color-secondary);
   pointer-events: none;
 }
 .breadcrumb-list .breadcrumb-tree .inner-tree .wrapper .option-list {
@@ -951,7 +955,7 @@ header.search-area .intro-text .keyword a {
 .breadcrumb-list .breadcrumb-tree .inner-tree .wrapper.active .select-option::after {
   top: 2px;
   border-top: 6px solid transparent;
-  border-bottom: 6px solid #13295a;
+  border-bottom: 6px solid var(--color-secondary);
 }
 .breadcrumb-list .breadcrumb-tree .inner-tree .wrapper.active .option-list {
   display: block;
