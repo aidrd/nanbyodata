@@ -109,25 +109,34 @@
         <h2 class="sidebar-title">目次</h2>
         <ul>
           <li><a href="#overview" class="nav-link overview selected">概要
-          <li><a href="#gene" class="nav-link gene">疾患原因遺伝子<span class="data-num"></span></a>
+          <li><a href="#causal-genes" class="nav-link causal-genes">疾患原因遺伝子<span class="data-num"></span></a>
           </li>
-          <li><a href="#test" class="nav-link test">診療用遺伝学的検査情報<span class="data-num"></span></a>
+          <li><a href="#genetic-testing" class="nav-link genetic-testing">診療用遺伝学的検査情報<span class="data-num"></span></a>
           </li>
-          <li><a href="#hpo" class="nav-link hpo">臨床的特徴<span class="data-num"></span></a>
+          <li><a href="#phenotypes" class="nav-link phenotypes">臨床的特徴<span class="data-num"></span></a>
           </li>
           <li>
-            <div class="brc" href="#brc">難病特異的バイオリソース
+            <div class="brc">難病特異的バイオリソース
               <ul>
                 <li><a href="#brc" class="cell nav-link">細胞<span class="data-num"></span></a>
                 </li>
-                <li><a href="#brc" class="mus nav-link">マウス<span class="data-num"></span></a>
+                <li><a href="#brc" class="mouse nav-link">マウス<span class="data-num"></span></a>
                 </li>
                 <li><a href="#brc" class="dna nav-link">DNA<span class="data-num"></span></a>
                 </li>
               </ul>
             </div>
           </li>
-          <li><a href="#variant" class="nav-link variant">バリアント<span class="data-num"></span></a></li>
+          <li>
+            <div class="variant">バリアント
+              <ul>
+                <li><a href="#variant" class="clinvar nav-link">ClinVar<span class="data-num"></span></a>
+                </li>
+                <li><a href="#variant" class="mgend nav-link">MGeND<span class="data-num"></span></a>
+                </li>
+              </ul>
+            </div>
+          </li>
         </ul>
       </section>
     </aside>
@@ -313,7 +322,7 @@
             </div>
           </div>
 
-          <div id="gene" open="">
+          <div id="causal-genes" open="">
             <h4 class="temp-title">疾患原因遺伝子<small>&nbsp;From&nbsp;<a href="https://www.ncbi.nlm.nih.gov/medgen/"
                   target="_blank" rel="noopener noreferrer">MedGen</a>,&nbsp;<a href="https://www.orphadata.com/"
                   target="_blank" rel="noopener noreferrer">Orphadata</a>,&nbsp;<a href="https://thegencc.org/"
@@ -324,7 +333,7 @@
             </div>
           </div>
 
-          <div id="test" open="">
+          <div id="genetic-testing" open="">
             <h4 class="temp-title">
               診療用遺伝学的検査情報<small>&nbsp;From&nbsp;<a href="http://www.kentaikensa.jp/" target="_blank"
                   rel="noopener noreferrer">難病領域における検体検査の精度管理体制の整備に資する研究班</a></small><span class="data-num"></span>
@@ -333,7 +342,7 @@
             </div>
           </div>
 
-          <div id="hpo" open="">
+          <div id="phenotypes" open="">
             <h4 class="temp-title">臨床的特徴<small>&nbsp;From&nbsp;<a href="https://hpo.jax.org/app/" target="_blank"
                   rel="noopener noreferrer">HPO</a></small><span class="data-num"></span>
             </h4>
@@ -351,30 +360,49 @@
                   rel="noopener noreferrer">Riken BRC</a></small>
             </h4>
             <div class="tab-wrap">
-              <input type="radio" name="specific-brc" class="tab-switch" id="specific-brc-cell" />
-              <label class="tab-label specific-brc-cell" for="specific-brc-cell">細胞<span
+              <input type="radio" name="specific-brc" class="tab-switch" id="bio-resource-cell" />
+              <label class="tab-label bio-resource-cell" for="bio-resource-cell">細胞<span
                   class="data-num"></span></label>
               <div class="tab-content cell">
               </div>
-              <input type="radio" name="specific-brc" class="tab-switch" id="specific-brc-mus" />
-              <label class="tab-label specific-brc-mus" for="specific-brc-mus">マウス<span class="data-num"></span></label>
-              <div class="tab-content mus">
+              <input type="radio" name="specific-brc" class="tab-switch" id="bio-resource-mouse" />
+              <label class="tab-label bio-resource-mouse" for="bio-resource-mouse">マウス<span
+                  class="data-num"></span></label>
+              <div class="tab-content mouse">
               </div>
-              <input type="radio" name="specific-brc" class="tab-switch" id="specific-brc-dna" />
-              <label class="tab-label specific-brc-dna" for="specific-brc-dna">DNA<span class="data-num"></span></label>
+              <input type="radio" name="specific-brc" class="tab-switch" id="bio-resource-dna" />
+              <label class="tab-label bio-resource-dna" for="bio-resource-dna">DNA<span class="data-num"></span></label>
               <div class="tab-content dna">
               </div>
             </div>
           </div>
 
           <div id="variant" open="">
+            <h4 class="temp-title">
+              バリアント<small>&nbsp;From&nbsp;<a href="https://grch38.togovar.org/" target="_blank"
+                  rel="noopener noreferrer">TogoVar</a></small>
+            </h4>
+            <div class="tab-wrap">
+              <input type="radio" name="variant" class="tab-switch" id="variant-clinvar" />
+              <label class="tab-label variant-clinvar" for="variant-clinvar">ClinVar<span
+                  class="data-num"></span></label>
+              <div class="tab-content clinvar">
+              </div>
+              <input type="radio" name="variant" class="tab-switch" id="variant-mgend" />
+              <label class="tab-label variant-mgend" for="variant-mgend">MGeND<span class="data-num"></span></label>
+              <div class="tab-content mgend">
+              </div>
+            </div>
+          </div>
+
+          <!-- <div id="variant" open="">
             <h4 class="temp-title">バリアント<small>&nbsp;From&nbsp;<a href="https://grch38.togovar.org/" target="_blank"
                   rel="noopener noreferrer">TogoVar</a></small><span class="data-num"></span></h4>
             <div class="temp-wrapper">
               <div id="temp-properties" class="properties">
               </div>
             </div>
-          </div>
+          </div> -->
 
         </div>
       </main>

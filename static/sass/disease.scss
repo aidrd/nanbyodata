@@ -171,10 +171,12 @@ h5 {
         background: rgba(22, 35, 78, 0.2);
         color: var(--color-secondary);
       }
-      .brc.selected {
+      .brc.selected,
+      .variant.selected {
         background-color: transparent;
       }
-      .brc {
+      .brc,
+      .variant {
         font-size: 14px;
         cursor: pointer;
         color: var(--color-secondary);
@@ -746,4 +748,157 @@ details {
 
 .inspection-view {
   padding-top: 10px;
+}
+
+// tree用のテストstyle
+.breadcrumb-list {
+  .breadcrumb-title {
+    color: #13295a;
+    font-weight: bold;
+    font-size: 14px;
+    margin-bottom: 3px;
+  }
+
+  /*ツリー*/
+  .breadcrumb-tree {
+    position: relative;
+    left: 10px;
+    margin-left: calc(var(--i) * 20px);
+    margin-right: 10px;
+
+    &::before,
+    .breadcrumb-tree::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      border-left: 1px solid;
+    }
+
+    .inner-tree {
+      padding: 0.3rem 0 0 0.6rem;
+      line-height: 1.3rem;
+
+      &:before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 1rem;
+        bottom: 0;
+        width: 10px;
+        border-top: 1px solid;
+        margin-top: -1px;
+        background: #dadede;
+      }
+    }
+  }
+}
+
+/* -------------------------------------------------- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.select-option,
+li {
+  cursor: pointer;
+}
+
+.select-option {
+  font-weight: bold;
+  padding: 2px 26px 0px 5px;
+  font-size: 14px;
+  position: relative;
+  border-radius: 2px;
+  border: 1px solid #13295a;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: pointer;
+  color: #13295a;
+}
+
+.select-option::after {
+  content: '';
+  position: absolute;
+  top: 0.6em;
+  right: 0.6em;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 6px solid #13295a;
+  pointer-events: none;
+}
+
+.wrapper.active .select-option::after {
+  top: 2px;
+  border-top: 6px solid transparent;
+  border-bottom: 6px solid #13295a;
+}
+.content {
+  display: none;
+  position: absolute;
+  z-index: 1;
+  width: max-content;
+  padding: 8px;
+  margin-top: 5px;
+  background: rgba(207, 210, 221, 0.98);
+  border-radius: 7px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+.wrapper.active .content {
+  display: block;
+}
+
+.content .options {
+  max-height: 250px;
+  overflow-y: auto;
+  padding-right: 7px;
+}
+.options::-webkit-scrollbar {
+  width: 7px;
+}
+.options::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 25px;
+}
+.options::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 25px;
+}
+.options::-webkit-scrollbar-thumb:hover {
+  background: #b3b3b3;
+}
+.options .option {
+  line-height: 1.7;
+  padding: 0 20px;
+  font-size: 14px;
+  border-radius: 5px;
+}
+.options .option:hover {
+  background: #4285f4;
+  color: #fff;
+}
+
+.option::before {
+  content: '';
+  display: inline-block;
+  position: relative;
+  bottom: 1px;
+  right: 9px;
+  width: 5px;
+  height: 10px;
+  border-right: 1.5px solid transparent;
+  border-bottom: 1.5px solid transparent;
+  transform: rotate(40deg);
+  pointer-events: none;
+}
+
+.option.selected::before {
+  border-color: #13295a;
+}
+
+li.selected:hover::before {
+  border-color: #fff;
 }
