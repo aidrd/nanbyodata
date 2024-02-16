@@ -985,15 +985,11 @@ header.search-area .intro-text .keyword a {
   position: relative;
 }
 #temp-side-navigation > ul > li .data-num {
-  color: white;
-  background-color: rgba(55, 117, 132, 0.7);
-  padding: 0 5px;
-  border-radius: 50%;
+  padding: 0 6px;
   font-size: 12px;
+  min-width: 18px;
   position: absolute;
   right: 8px;
-  min-width: 18px;
-  text-align: center;
 }
 #temp-side-navigation > ul > li .selected {
   background: rgba(22, 35, 78, 0.2);
@@ -1088,6 +1084,13 @@ header.search-area .intro-text .keyword a {
   background-color: #fff;
   color: var(--color-primary);
   padding: 4px 8px;
+}
+
+.data-num {
+  color: white;
+  background-color: rgba(55, 117, 132, 0.7);
+  text-align: center;
+  border-radius: 0.5lh;
 }
 
 /* -----------------------------------

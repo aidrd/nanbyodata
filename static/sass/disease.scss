@@ -313,16 +313,13 @@ h5 {
     display: block;
   }
   .data-num {
-    color: white;
-    background-color: rgba(55, 117, 132, 0.7);
-    padding: 2px 7px;
-    border-radius: 50%;
+    padding: 0 6px 0 7px;
     font-size: 15px;
+    line-height: 1.5;
     position: absolute;
     margin-top: 3px;
     margin-left: 5px;
     min-width: 22px;
-    text-align: center;
   }
 }
 
@@ -432,14 +429,10 @@ details summary {
   margin-bottom: 0;
 
   .data-num {
-    color: white;
-    background-color: rgba(55, 117, 132, 0.7);
     padding: 0px 5px;
-    border-radius: 50%;
     font-size: 10px;
     margin-left: 5px;
     min-width: 15px;
-    text-align: center;
   }
 
   small {
