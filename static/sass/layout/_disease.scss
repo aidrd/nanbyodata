@@ -1,63 +1,48 @@
-#sidebar {
-  position: fixed;
-  top: 65px;
-  left: 0px;
-  width: 270px;
-  height: 100%;
-  text-align: left;
-  background-color: var(--color-background-gray);
-  --padding-inline: 8px;
+.content-wrapper {
+  position: relative;
+  top: 76px;
 
-  > section {
-    padding: 25px;
+  #sidebar {
+    position: fixed;
+    overflow-y: auto;
+    height: calc(100vh - 76px);
+    width: 270px;
+    background-color: var(--color-background-gray);
 
-    &:first-child {
-      padding-bottom: 40px;
-      border-bottom: 1px solid rgba(112, 112, 112, 0.4);
+    > section {
+      padding: var(--spacing-disease-content);
+
+      &:first-child {
+        padding-bottom: 35px;
+        border-bottom: 1px solid rgba(112, 112, 112, 0.4);
+      }
+
+      .sidebar-title {
+        font-size: 14px;
+        font-weight: bold;
+        color: #16234e;
+        opacity: 0.6;
+      }
     }
+  }
 
-    .sidebar-title {
-      font-size: 14px;
-      font-weight: bold;
-      color: #16234e;
-      opacity: 0.6;
-      padding: 2px var(--padding-inline);
-      margin: 0px calc(var(--padding-inline) * -1) 8px;
+  #content {
+    position: fixed;
+    left: 270px;
+    overflow-y: auto;
+    height: calc(100vh - 76px);
+    width: calc(100% - 270px);
+    z-index: -1;
+    padding: var(--spacing-disease-content);
+
+    #data-wrapper {
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-disease-content);
+
+      >div {
+        scroll-margin-top: var(--spacing-disease-content);;
+      }
     }
   }
-}
-
-
-
-#content {
-  top: 90px;
-  bottom: 0px;
-  position: fixed;
-  z-index: -1;
-  width: calc(100vw - 270px);
-  overflow: scroll;
-  padding: 0 33px 50px;
-}
-
-#data-wrapper {
-  > div {
-    scroll-margin-top: 70px;
-  }
-
-  header.summary-header {
-    margin-bottom: 12px;
-  }
-}
-
-// TODO: This is a temporary fix for the z-index issue. We need to check ids
-#overview,
-#causal-genes,
-#genetic-testing,
-#phenotypes,
-#brc,
-#variant {
-  position: absolute;
-  z-index: 1;
-  overflow: scroll;
-  width: calc(100vw - 270px - 33px - 33px);
 }

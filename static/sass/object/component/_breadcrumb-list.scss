@@ -70,8 +70,8 @@
 
         .option-list {
           display: none;
-          position: absolute;
-          z-index: 1;
+          position: fixed;
+          z-index: var(--zindex-sidebar-optionlist);
           width: max-content;
           padding: 8px;
           margin-top: 2px;

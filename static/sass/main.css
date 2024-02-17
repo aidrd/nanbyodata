@@ -7,6 +7,9 @@ Foundation
   --color-secondary: #13295a;
   --color-font: #696969;
   --color-background-gray: #dadede;
+  --spacing-disease-content: 25px;
+  --spacing-inner-box: 10px;
+  --zindex-sidebar-optionlist: 100;
 }
 
 body {
@@ -343,59 +346,46 @@ footer .container .footer__bottom .footer__lisence p a {
 }
 
 /* ---------- Disease Page ---------- */
-#sidebar {
+.content-wrapper {
+  position: relative;
+  top: 76px;
+}
+.content-wrapper #sidebar {
   position: fixed;
-  top: 65px;
-  left: 0px;
+  overflow-y: auto;
+  height: calc(100vh - 76px);
   width: 270px;
-  height: 100%;
-  text-align: left;
   background-color: var(--color-background-gray);
-  --padding-inline: 8px;
 }
-#sidebar > section {
-  padding: 25px;
+.content-wrapper #sidebar > section {
+  padding: var(--spacing-disease-content);
 }
-#sidebar > section:first-child {
-  padding-bottom: 40px;
+.content-wrapper #sidebar > section:first-child {
+  padding-bottom: 35px;
   border-bottom: 1px solid rgba(112, 112, 112, 0.4);
 }
-#sidebar > section .sidebar-title {
+.content-wrapper #sidebar > section .sidebar-title {
   font-size: 14px;
   font-weight: bold;
   color: #16234e;
   opacity: 0.6;
-  padding: 2px var(--padding-inline);
-  margin: 0px calc(var(--padding-inline) * -1) 8px;
 }
-
-#content {
-  top: 90px;
-  bottom: 0px;
+.content-wrapper #content {
   position: fixed;
+  left: 270px;
+  overflow-y: auto;
+  height: calc(100vh - 76px);
+  width: calc(100% - 270px);
   z-index: -1;
-  width: calc(100vw - 270px);
-  overflow: scroll;
-  padding: 0 33px 50px;
+  padding: var(--spacing-disease-content);
 }
-
-#data-wrapper > div {
-  scroll-margin-top: 70px;
+.content-wrapper #content #data-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-disease-content);
 }
-#data-wrapper header.summary-header {
-  margin-bottom: 12px;
-}
-
-#overview,
-#causal-genes,
-#genetic-testing,
-#phenotypes,
-#brc,
-#variant {
-  position: absolute;
-  z-index: 1;
-  overflow: scroll;
-  width: calc(100vw - 270px - 33px - 33px);
+.content-wrapper #content #data-wrapper > div {
+  scroll-margin-top: var(--spacing-disease-content);
 }
 
 /* ================================================
@@ -890,8 +880,8 @@ header.search-area .intro-text .keyword a {
 }
 .breadcrumb-list .breadcrumb-tree .inner-tree .wrapper .option-list {
   display: none;
-  position: absolute;
-  z-index: 1;
+  position: fixed;
+  z-index: var(--zindex-sidebar-optionlist);
   width: -moz-max-content;
   width: max-content;
   padding: 8px;
@@ -1069,14 +1059,12 @@ header.search-area .intro-text .keyword a {
 
 /* Link */
 .linked-item {
-  margin-bottom: 3px;
   border: var(--color-primary) 1px solid;
   border-radius: 3px;
   background-color: var(--color-primary);
   font-size: 12px;
   font-weight: bold;
   line-height: 1.4;
-  margin-right: 2px;
 }
 .linked-item > a {
   color: #fff;
@@ -1089,6 +1077,23 @@ header.search-area .intro-text .keyword a {
   background-color: #fff;
   color: var(--color-primary);
   padding: 4px 8px;
+}
+
+.linked-items {
+  display: inline;
+  font-weight: bold;
+  border-radius: 3px;
+  margin-block-start: 0;
+  margin-block-end: 0;
+}
+.linked-items > dt {
+  font-size: 12px;
+  font-weight: 500;
+}
+.linked-items > dd {
+  margin-inline-start: 0;
+  display: inline-block;
+  margin: 0;
 }
 
 .data-num {
@@ -1176,4 +1181,38 @@ Disease page right top */
 }
 .summary-header > .external-links {
   display: flex;
+  gap: 5px;
+}
+
+/* Summary wrapper */
+.summary-wrapper {
+  padding: var(--spacing-inner-box);
+  border-radius: 3px;
+  background-color: rgba(20, 119, 134, 0.2);
+}
+.summary-wrapper #temp-aliases .inheritance-uris,
+.summary-wrapper .temp-wrapper .inheritance-uris {
+  display: flex;
+}
+.summary-wrapper #temp-aliases .inheritance-uris > dl > dt,
+.summary-wrapper .temp-wrapper .inheritance-uris > dl > dt {
+  font-weight: bold;
+}
+.summary-wrapper .aliases > dl {
+  margin: 0 0 4px;
+  border-radius: 3px;
+}
+.summary-wrapper .aliases > dl > div {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+.summary-wrapper .aliases > dl > dt {
+  font-size: 12px;
+  font-weight: bold;
+}
+.summary-wrapper .aliases > dl > dd {
+  margin-inline-start: 0;
+  font-size: 14px;
+  display: inline;
 }/*# sourceMappingURL=main.css.map */

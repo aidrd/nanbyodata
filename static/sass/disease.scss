@@ -5,8 +5,6 @@ body {
   font-family: 'Poppins', sans-serif, 'Renner*', 'Avenir', 'Helvetica Neue',
     'Helvetica', 'Arial', 'Hiragino Sans', 'ヒラギノ角ゴシック', YuGothic,
     'Yu Gothic', 'メイリオ', Meiryo, 'ＭＳ Ｐゴシック', 'MS PGothic';
-  margin: 0px;
-  padding: 84px 0px 0px 270px;
 }
 
 a[target='_blank']::after {
@@ -125,20 +123,6 @@ a[target='_blank']::after {
 
 #temp-disease-definition .google-translate {
   color: #0431b4;
-}
-
-.summary-wrapper {
-  padding: 10px;
-  border-radius: 3px;
-  background-color: rgba(20, 119, 134, 0.2);
-
-  #temp-aliases .inheritance-uris,
-  .temp-wrapper .inheritance-uris {
-    display: flex;
-    > dl > dt {
-      font-weight: bold;
-    }
-  }
 }
 
 .br::before {
@@ -289,7 +273,6 @@ a[target='_blank']::after {
   display: block;
   padding-left: 15px;
   margin-bottom: 15px;
-  margin-top: 12px;
   &::before {
     content: '';
     width: 6px;
@@ -311,64 +294,13 @@ a[target='_blank']::after {
 }
 
 .properties {
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -ms-flex-wrap: wrap;
   flex-wrap: wrap;
-  gap: 3px;
+  gap: 5px;
 }
 
 .link-wrapper {
   border-bottom: none;
-}
-
-.aliases > dl {
-  margin: 0 0 4px;
-  border-radius: 3px;
-  > div {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-  }
-
-  > {
-    dt {
-      font-size: 12px;
-      font-weight: bold;
-    }
-
-    dd {
-      -webkit-margin-start: 0;
-      margin-inline-start: 0;
-      font-size: 14px;
-      display: inline;
-    }
-  }
-}
-
-.linked-items {
-  display: inline;
-  font-weight: bold;
-  border-radius: 3px;
-  margin-right: 2px;
-  -webkit-margin-before: 0;
-  margin-block-start: 0;
-  -webkit-margin-after: 0;
-  margin-block-end: 0;
-
-  > {
-    dt {
-      font-size: 12px;
-      font-weight: 500;
-    }
-
-    dd {
-      -webkit-margin-start: 0;
-      margin-inline-start: 0;
-      display: inline-block;
-    }
-  }
 }
 
 details summary {
