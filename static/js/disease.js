@@ -773,7 +773,6 @@ function makeSideNavigation(entryData) {
   items.forEach((id) => {
     const liElement = document.getElementById(id);
     if (!liElement) {
-      console.log(id);
       switch (id) {
         case 'brc':
         case 'variant':
