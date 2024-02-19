@@ -112,7 +112,8 @@
             <li><a href="#overview" class="nav-link overview selected">概要
             <li><a href="#causal-genes" class="nav-link causal-genes">疾患原因遺伝子<span class="data-num"></span></a>
             </li>
-            <li><a href="#genetic-testing" class="nav-link genetic-testing">診療用遺伝学的検査情報<span class="data-num"></span></a>
+            <li><a href="#genetic-testing" class="nav-link genetic-testing">診療用遺伝学的検査情報<span
+                  class="data-num"></span></a>
             </li>
             <li><a href="#phenotypes" class="nav-link phenotypes">臨床的特徴<span class="data-num"></span></a>
             </li>
@@ -232,32 +233,70 @@
                 <h2 id="temp-label-ja"></h2>
                 <h3 id="temp-label-en"></h3>
               </div>
-              <div id="temp-external-links" class="external-links">
-                <div class="linked-item -unlinked">
-                  告示番号: <span id="temp-notification-number"></span>
+
+              <div class="summary-header-links">
+                <div id="temp-external-links" class="external-links">
+                  <div class="linked-item -unlinked">
+                    告示番号: <span id="temp-notification-number"></span>
+                  </div>
+                  <div class="linked-item mhlw">
+                    <a target="_blank" rel="noopener noreferrer">
+                      概要、診断基準等
+                    </a>
+                  </div>
+                  <div class="linked-item source">
+                    <a target="_blank" rel="noopener noreferrer">
+                      臨床調査個人票・医療意見書
+                    </a>
+                  </div>
+                  <div class="linked-item nanbyou">
+                    <a target="_blank" rel="noopener noreferrer">
+                      難病情報センター
+                    </a>
+                  </div>
+                  <div class="linked-item shouman">
+                    <a target="_blank" rel="noopener noreferrer">
+                      小児慢性特定疾病情報センター
+                    </a>
+                  </div>
                 </div>
-                <div class="linked-item mhlw">
-                  <a target="_blank" rel="noopener noreferrer">
-                    概要、診断基準等
-                  </a>
-                </div>
-                <div class="linked-item source">
-                  <a target="_blank" rel="noopener noreferrer">
-                    臨床調査個人票・医療意見書
-                  </a>
-                </div>
-                <div class="linked-item nanbyou">
-                  <a target="_blank" rel="noopener noreferrer">
-                    難病情報センター
-                  </a>
-                </div>
-                <div class="linked-item shouman">
-                  <a target="_blank" rel="noopener noreferrer">
-                    小児慢性特定疾病情報センター
-                  </a>
+
+                <div class="summary-header-actions">
+                  <div class="summary-download">
+                    <button aria-controls="modal-download" aria-expanded="false" class="open-modal-btn">
+                      <span class="btn-text">Download</span>
+                    </button>
+                    <div class="modal-view" id="modal-download" aria-hidden="true" role="dialog"
+                      aria-labelledby="modalDownloadTitle">
+                      <div class="modal-title" id="modalDownloadTitle">ダウンロード</div>
+                      <form id="downloadForm" method="get" class="modal-body">
+                        <div class="modal-wrapper">
+                          <label class="label" for="format">Format :</label>
+                          <select name="format" id="format">
+                            <option value="text">TEXT</option>
+                            <option value="json">JSON</option>
+                          </select>
+                        </div>
+                        <button type="submit" class="modal-btn">Download</button>
+                      </form>
+                    </div>
+                  </div>
+
+                  <div class="summary-share">
+                    <button aria-controls="modal-share" aria-expanded="false" class="open-modal-btn">
+                      <span class="btn-text">Share</span>
+                    </button>
+                    <div class="modal-view" id="modal-share" aria-hidden="true" role="dialog"
+                      aria-labelledby="modalShareTitle">
+                      <div class="modal-title" id="modalShareTitle">共有リンク</div>
+                      <div class="share-link"></div>
+                      <button type="button" class="modal-btn">Copy</button>
+                    </div>
+                  </div>
                 </div>
               </div>
             </header>
+
             <div id="overview" open="">
               <h4 class="temp-title">概要</h4>
               <div class="summary-wrapper">
@@ -372,7 +411,8 @@
                 <div class="tab-content mouse">
                 </div>
                 <input type="radio" name="specific-brc" class="tab-switch" id="bio-resource-dna" />
-                <label class="tab-label bio-resource-dna" for="bio-resource-dna">DNA<span class="data-num"></span></label>
+                <label class="tab-label bio-resource-dna" for="bio-resource-dna">DNA<span
+                    class="data-num"></span></label>
                 <div class="tab-content dna">
                 </div>
               </div>

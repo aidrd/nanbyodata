@@ -29,6 +29,7 @@
     position: relative;
     font-size: 16px;
     color: var(--color-secondary);
+    margin-bottom: var(--spacing-heading-bottom);
 
     &::before {
       content: '';
