@@ -1,7 +1,9 @@
 import { navToggle } from './navigation.js';
 import { focusInput } from './focusInput.js';
 import { changePlaceholder } from './changePlaceholder.js';
+import { popup } from './popup.js';
 import { breadcrumb } from './breadcrumb.js';
+import { downloadDatasets } from './download.js';
 
 // dispaly: none until loading is finished
 document.getElementById('content').style.display = 'none';
@@ -16,7 +18,9 @@ const nandoId = pathname.slice(nandoIndex + 6);
 navToggle();
 focusInput();
 changePlaceholder();
+popup();
 breadcrumb(nandoId);
+
 
 (async () => {
   try {
@@ -69,50 +73,7 @@ breadcrumb(nandoId);
       { name: 'Variant Clinvar', data: clinvarData },
     ];
 
-    function exportData(format) {
-      let dataToDownload = '';
-
-      if (format === 'json') {
-        // JSON形式でデータを準備
-        const jsonData = datasets.reduce(
-          (acc, { name, data }) => ({ ...acc, [name]: data }),
-          {}
-        );
-        dataToDownload = JSON.stringify(jsonData, null, 2);
-      } else if (format === 'text') {
-        // テキスト形式でデータを準備
-        dataToDownload = datasets
-          .map(({ name, data }) => {
-            return `--- ${name} ---\n${JSON.stringify(data, null, 2)}`;
-          })
-          .join('\n\n');
-      }
-
-      // データをダウンロード用ファイルとしてユーザーに提供
-      downloadFile(
-        dataToDownload,
-        format === 'json' ? 'application/json' : 'text/plain',
-        `NANDO_ID_${nandoId}.${format}`
-      );
-    }
-
-    // TODO: どちらかの形式で渡す
-    // objectが空の場合の処理
-    // file名を変更する
-    // exportData('text');
-    exportData('json');
-
-    function downloadFile(data, type, filename) {
-      const blob = new Blob([data], { type: type });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = filename;
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(url);
-    }
+    downloadDatasets(nandoId, datasets);
 
     await Promise.all([
       makeHeader(entryData),

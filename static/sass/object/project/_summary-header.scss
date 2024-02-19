@@ -5,19 +5,12 @@ Disease page right top */
   border-radius: 5px;
 
   > .data-name,
-  > .external-links {
-    padding: 10px;
+  > .summary-header-links {
+    padding: var(--spacing-inner-box);
   }
 
   > .data-name {
     border-bottom: 1px dashed #c1c6d3;
-    margin: 0;
-
-    h2,
-    h3,
-    p {
-      margin: 0;
-    }
 
     > h3 {
       font-size: 18px;
@@ -49,14 +42,14 @@ Disease page right top */
         overflow-wrap: break-word;
 
         &::after {
-          content: '\f35d';
+          content: var(--font-link);
           font-weight: 900;
         }
       }
 
       span.nando-copy {
         &::after {
-          content: '\f0c5';
+          content: var(--font-copy);
           font-weight: normal;
           vertical-align: middle;
         }
@@ -84,8 +77,39 @@ Disease page right top */
     }
   }
 
-  > .external-links {
+  .summary-header-links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 5px;
+
+    .summary-download {
+
+      .btn-text {
+        &::before {
+          font-family: 'Font Awesome 5 Free';
+          content: var(--font-download);
+          font-weight: 900;
+          margin-right: 6px;
+        }
+      }
+    }
+      .summary-share {
+        .btn-text {
+          &::before {
+            font-family: 'Font Awesome 5 Free';
+            content: "\f1e0";
+            font-weight: 900;
+            margin-right: 6px;
+          }
+        }
+      }
+
+  }
+
+  .external-links {
     display: flex;
     gap: 5px;
+    height: fit-content;
   }
 }
