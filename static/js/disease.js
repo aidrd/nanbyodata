@@ -1,22 +1,22 @@
 import { navToggle } from './navigation.js';
 import { focusInput } from './focusInput.js';
 import { changePlaceholder } from './changePlaceholder.js';
-import { tree } from './tree.js';
+import { breadcrumb } from './breadcrumb.js';
 
 // dispaly: none until loading is finished
 document.getElementById('content').style.display = 'none';
 document.getElementById('sidebar').style.display = 'none';
 
-// external functions
-navToggle();
-focusInput();
-changePlaceholder();
-tree();
-
 // get NANDO ID
 const pathname = window.location.pathname;
 const nandoIndex = pathname.indexOf('NANDO:');
 const nandoId = pathname.slice(nandoIndex + 6);
+
+// external functions
+navToggle();
+focusInput();
+changePlaceholder();
+breadcrumb(nandoId);
 
 (async () => {
   try {
@@ -752,11 +752,6 @@ function makeVariant(clinvarData, mgendData, entryData) {
 }
 
 function makeSideNavigation(entryData) {
-  const selectTreeBox = document.querySelector(`select[name="${nandoId}"]`);
-  if (selectTreeBox) {
-    selectTreeBox.style.backgroundColor = 'rgba(22, 35, 78, 0.2)';
-  }
-
   const sideNavigation = document.getElementById('temp-side-navigation');
   const sideNavigationUl = sideNavigation.querySelector('ul');
   const items = [

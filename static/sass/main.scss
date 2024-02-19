@@ -35,10 +35,13 @@ Component
 /* ---------- Disease Page ---------- */
 @use './object/component/loading-spinner';
 @use './object/component/breadcrumb-list';
+@use './object/component/disease-side-nav';
 @use './object/component/linked-item';
+@use './object/component/data-num';
 
 /* -----------------------------------
 Project
 ----------------------------------- */
 /* ---------- Disease Page ---------- */
 @use './object/project/summary-header';
+@use './object/project/summary-wrapper';

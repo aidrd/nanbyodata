@@ -46,6 +46,7 @@ Disease page right top */
 
       a.nando-link {
         text-decoration: underline;
+        overflow-wrap: break-word;
 
         &::after {
           content: '\f35d';
@@ -79,10 +80,12 @@ Disease page right top */
     > h3#temp-label-en {
       font-size: 26px;
       margin-top: 5px;
+      overflow-wrap: break-word;
     }
   }
 
   > .external-links {
     display: flex;
+    gap: 5px;
   }
 }

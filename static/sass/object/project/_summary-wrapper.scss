@@ -1,0 +1,38 @@
+/* Summary wrapper */
+.summary-wrapper {
+  padding: var(--spacing-inner-box);
+  border-radius: 3px;
+  background-color: rgba(20, 119, 134, 0.2);
+
+  #temp-aliases .inheritance-uris,
+  .temp-wrapper .inheritance-uris {
+    display: flex;
+    > dl > dt {
+      font-weight: bold;
+    }
+  }
+
+  .aliases > dl {
+    margin: 0 0 4px;
+    border-radius: 3px;
+    > div {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+    }
+
+    > {
+      dt {
+        font-size: 12px;
+        font-weight: bold;
+      }
+
+      dd {
+        -webkit-margin-start: 0;
+        margin-inline-start: 0;
+        font-size: 14px;
+        display: inline;
+      }
+    }
+  }
+}

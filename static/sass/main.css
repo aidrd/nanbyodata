@@ -7,6 +7,9 @@ Foundation
   --color-secondary: #13295a;
   --color-font: #696969;
   --color-background-gray: #dadede;
+  --spacing-disease-content: 25px;
+  --spacing-inner-box: 10px;
+  --zindex-sidebar-optionlist: 100;
 }
 
 body {
@@ -20,6 +23,10 @@ h1, ul, li, p {
 
 h1 {
   font-size: 0;
+}
+
+h5 {
+  font-size: 1em;
 }
 
 p {
@@ -108,7 +115,7 @@ Layout
   cursor: pointer;
 }
 .navbar select.language-select option {
-  color: #13295a;
+  color: var(--color-secondary);
   background: var(--color-background-gray);
   font-weight: bold;
 }
@@ -339,36 +346,46 @@ footer .container .footer__bottom .footer__lisence p a {
 }
 
 /* ---------- Disease Page ---------- */
-#sidebar {
-  position: fixed;
-  top: 65px;
-  left: 0px;
-  width: 270px;
-  height: 100%;
-  text-align: left;
-  background-color: var(--color-background-gray);
-  --padding-inline: 8px;
+.content-wrapper {
+  position: relative;
+  top: 76px;
 }
-#sidebar .sidebar-title {
+.content-wrapper #sidebar {
+  position: fixed;
+  overflow-y: auto;
+  height: calc(100vh - 76px);
+  width: 270px;
+  background-color: var(--color-background-gray);
+}
+.content-wrapper #sidebar > section {
+  padding: var(--spacing-disease-content);
+}
+.content-wrapper #sidebar > section:first-child {
+  padding-bottom: 35px;
+  border-bottom: 1px solid rgba(112, 112, 112, 0.4);
+}
+.content-wrapper #sidebar > section .sidebar-title {
   font-size: 14px;
   font-weight: bold;
   color: #16234e;
   opacity: 0.6;
-  padding: 2px var(--padding-inline);
-  margin: 0px calc(var(--padding-inline) * -1) 8px;
 }
-#sidebar .breadcrumb-list {
-  padding: 25px;
-  padding-bottom: 40px;
+.content-wrapper #content {
+  position: fixed;
+  left: 270px;
+  overflow-y: auto;
+  height: calc(100vh - 76px);
+  width: calc(100% - 270px);
+  z-index: -1;
+  padding: var(--spacing-disease-content);
 }
-#sidebar .nav-link {
-  margin: 0;
-  margin-top: -1.5px;
-  position: relative;
+.content-wrapper #content #data-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-disease-content);
 }
-
-#data-wrapper header.summary-header {
-  margin-bottom: 12px;
+.content-wrapper #content #data-wrapper > div {
+  scroll-margin-top: var(--spacing-disease-content);
 }
 
 /* ================================================
@@ -800,9 +817,6 @@ header.search-area .intro-text .keyword a {
   }
 }
 /* Breadcrumb List */
-.breadcrumb-list {
-  /*ツリー*/
-}
 .breadcrumb-list .breadcrumb-title {
   color: var(--color-secondary);
   font-weight: bold;
@@ -811,25 +825,23 @@ header.search-area .intro-text .keyword a {
 }
 .breadcrumb-list .breadcrumb-tree {
   position: relative;
-  margin-left: 1rem;
-}
-.breadcrumb-list .breadcrumb-tree ul {
-  position: relative;
-  margin-left: 0.5rem;
+  left: 10px;
+  margin-left: calc(var(--i) * 20px);
+  margin-right: 10px;
 }
 .breadcrumb-list .breadcrumb-tree::before,
-.breadcrumb-list .breadcrumb-tree ul::before {
+.breadcrumb-list .breadcrumb-tree .breadcrumb-tree::before {
   content: "";
   position: absolute;
   top: 0;
   bottom: 0;
   border-left: 1px solid;
 }
-.breadcrumb-list .breadcrumb-tree li {
+.breadcrumb-list .breadcrumb-tree .inner-tree {
   padding: 0.3rem 0 0 0.6rem;
   line-height: 1.3rem;
 }
-.breadcrumb-list .breadcrumb-tree li:before {
+.breadcrumb-list .breadcrumb-tree .inner-tree:before {
   content: "";
   position: absolute;
   left: 0;
@@ -840,32 +852,23 @@ header.search-area .intro-text .keyword a {
   margin-top: -1px;
   background: var(--color-background-gray);
 }
-
-.cp_ipselect select {
-  width: 100% !important;
-  padding-right: 1em;
-  cursor: pointer;
-  text-indent: 0.01px;
-  text-overflow: ellipsis;
-  border: none;
-  outline: none;
-  background: transparent;
-  background-image: none;
-  box-shadow: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-       appearance: none;
+.breadcrumb-list .breadcrumb-tree .inner-tree .wrapper:hover {
+  background-color: rgba(255, 255, 255, 0.5);
 }
-.cp_ipselect select::-ms-expand {
-  display: none;
-}
-.cp_ipselect.cp_sl03 {
+.breadcrumb-list .breadcrumb-tree .inner-tree .wrapper .select-option {
+  font-weight: bold;
+  padding: 2px 26px 0px 5px;
+  font-size: 14px;
   position: relative;
   border-radius: 2px;
   border: 1px solid var(--color-secondary);
-  background: var(--color-background-gray);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: pointer;
+  color: var(--color-secondary);
 }
-.cp_ipselect.cp_sl03::before {
+.breadcrumb-list .breadcrumb-tree .inner-tree .wrapper .select-option::after {
   content: "";
   position: absolute;
   top: 0.6em;
@@ -875,28 +878,193 @@ header.search-area .intro-text .keyword a {
   border-top: 6px solid var(--color-secondary);
   pointer-events: none;
 }
-.cp_ipselect.cp_sl03 select {
-  font-weight: bold;
-  padding: 2px 26px 0px 5px;
-  color: var(--color-secondary);
-  font-size: 14px;
+.breadcrumb-list .breadcrumb-tree .inner-tree .wrapper .option-list {
+  display: none;
+  position: fixed;
+  z-index: var(--zindex-sidebar-optionlist);
+  width: -moz-max-content;
+  width: max-content;
+  padding: 8px;
+  margin-top: 2px;
+  background: rgba(227, 227, 226, 0.98);
+  border-radius: 7px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
 }
-.cp_ipselect.cp_sl03 select option {
-  color: #13295a;
-  background: var(--color-background-gray);
+.breadcrumb-list .breadcrumb-tree .inner-tree .wrapper .option-list .options {
+  max-height: 300px;
+  overflow-y: auto;
+  padding-right: 7px;
+}
+.breadcrumb-list .breadcrumb-tree .inner-tree .wrapper .option-list .options .option {
+  line-height: 1.7;
+  padding: 0 20px;
+  font-size: 12px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.breadcrumb-list .breadcrumb-tree .inner-tree .wrapper .option-list .options .option:hover {
+  background: #4285f4;
+  color: #fff;
+}
+.breadcrumb-list .breadcrumb-tree .inner-tree .wrapper .option-list .options .option:before {
+  content: "";
+  display: inline-block;
+  position: relative;
+  bottom: 1px;
+  right: 9px;
+  width: 5px;
+  height: 10px;
+  border-right: 2px solid transparent;
+  border-bottom: 2px solid transparent;
+  transform: rotate(40deg);
+  pointer-events: none;
+}
+.breadcrumb-list .breadcrumb-tree .inner-tree .wrapper .option-list .options .option.selected::before {
+  border-color: #444;
+}
+.breadcrumb-list .breadcrumb-tree .inner-tree .wrapper .option-list .options .option.selected:hover::before {
+  border-color: #fff;
+}
+.breadcrumb-list .breadcrumb-tree .inner-tree .wrapper .option-list .options::-webkit-scrollbar {
+  width: 7px;
+}
+.breadcrumb-list .breadcrumb-tree .inner-tree .wrapper .option-list .options::-webkit-scrollbar-track {
+  background: #e9e9e9;
+  border-radius: 25px;
+}
+.breadcrumb-list .breadcrumb-tree .inner-tree .wrapper .option-list .options::-webkit-scrollbar-thumb {
+  background: #aaa;
+  border-radius: 25px;
+}
+.breadcrumb-list .breadcrumb-tree .inner-tree .wrapper .option-list .options::-webkit-scrollbar-thumb:hover {
+  background: #b3b3b3;
+}
+.breadcrumb-list .breadcrumb-tree .inner-tree .wrapper.active:hover {
+  background-color: transparent;
+}
+.breadcrumb-list .breadcrumb-tree .inner-tree .wrapper.active .select-option::after {
+  top: 2px;
+  border-top: 6px solid transparent;
+  border-bottom: 6px solid var(--color-secondary);
+}
+.breadcrumb-list .breadcrumb-tree .inner-tree .wrapper.active .option-list {
+  display: block;
+}
+
+/* Disease side navigation */
+#temp-side-navigation > ul {
+  padding: 0;
+  list-style-type: none;
+}
+#temp-side-navigation > ul > li {
+  border-bottom: 1px dashed var(--color-secondary);
+}
+#temp-side-navigation > ul > li:first-child {
+  border-top: 1px dashed var(--color-secondary);
+}
+#temp-side-navigation > ul > li > a {
+  display: block;
   font-weight: bold;
+  border-radius: 2px;
+  padding: 10px;
+  color: var(--color-secondary);
+  text-decoration: none;
+  margin-bottom: -1px;
+}
+#temp-side-navigation > ul > li > a:not(.selected):hover {
+  background: rgba(255, 255, 255, 0.5);
+}
+#temp-side-navigation > ul > li .nav-link {
+  margin: 0;
+  margin-top: -1.5px;
+  position: relative;
+}
+#temp-side-navigation > ul > li .data-num {
+  padding: 0 6px;
+  font-size: 12px;
+  min-width: 18px;
+  position: absolute;
+  right: 8px;
+}
+#temp-side-navigation > ul > li .selected {
+  background: rgba(22, 35, 78, 0.2);
+  color: var(--color-secondary);
+}
+#temp-side-navigation > ul > li .brc.selected,
+#temp-side-navigation > ul > li .variant.selected {
+  background-color: transparent;
+}
+#temp-side-navigation > ul > li .brc,
+#temp-side-navigation > ul > li .variant {
+  font-size: 14px;
+  cursor: pointer;
+  color: var(--color-secondary);
+  font-weight: bold;
+  padding: 10px 0 20px 10px;
+}
+#temp-side-navigation > ul > li .brc ul,
+#temp-side-navigation > ul > li .variant ul {
+  position: relative;
+  bottom: 6px;
+}
+#temp-side-navigation > ul > li .brc ul li,
+#temp-side-navigation > ul > li .variant ul li {
+  position: relative;
+  margin-left: 20px;
+  padding-top: 4px;
+}
+#temp-side-navigation > ul > li .brc ul li::before,
+#temp-side-navigation > ul > li .variant ul li::before {
+  content: "";
+  display: block;
+  width: 5px;
+  height: 33px;
+  top: 0;
+  bottom: 0;
+  left: 2px;
+  border-left: 1px solid rgba(22, 35, 78, 0.3);
+  position: absolute;
+}
+#temp-side-navigation > ul > li .brc ul li:first-child::before,
+#temp-side-navigation > ul > li .variant ul li:first-child::before {
+  top: 8px;
+  height: 26px;
+}
+#temp-side-navigation > ul > li .brc ul li::after,
+#temp-side-navigation > ul > li .variant ul li::after {
+  content: "";
+  display: block;
+  width: 1px;
+  height: 1px;
+  top: 33px;
+  bottom: 0;
+  left: 2px;
+  border-left: 15px solid rgba(22, 35, 78, 0.3);
+  position: absolute;
+}
+#temp-side-navigation > ul > li .brc ul li a,
+#temp-side-navigation > ul > li .variant ul li a {
+  display: block;
+  text-decoration: none;
+  position: relative;
+  top: 16px;
+  padding: 5px;
+  margin-left: 20px;
+  padding-left: 10px;
+}
+#temp-side-navigation > ul > li .brc ul li a:not(.selected):hover,
+#temp-side-navigation > ul > li .variant ul li a:not(.selected):hover {
+  background: rgba(255, 255, 255, 0.5);
 }
 
 /* Link */
 .linked-item {
-  margin-bottom: 3px;
   border: var(--color-primary) 1px solid;
   border-radius: 3px;
   background-color: var(--color-primary);
   font-size: 12px;
   font-weight: bold;
   line-height: 1.4;
-  margin-right: 2px;
 }
 .linked-item > a {
   color: #fff;
@@ -909,6 +1077,30 @@ header.search-area .intro-text .keyword a {
   background-color: #fff;
   color: var(--color-primary);
   padding: 4px 8px;
+}
+
+.linked-items {
+  display: inline;
+  font-weight: bold;
+  border-radius: 3px;
+  margin-block-start: 0;
+  margin-block-end: 0;
+}
+.linked-items > dt {
+  font-size: 12px;
+  font-weight: 500;
+}
+.linked-items > dd {
+  margin-inline-start: 0;
+  display: inline-block;
+  margin: 0;
+}
+
+.data-num {
+  color: white;
+  background-color: rgba(55, 117, 132, 0.7);
+  text-align: center;
+  border-radius: 0.5lh;
 }
 
 /* -----------------------------------
@@ -960,6 +1152,7 @@ Disease page right top */
 }
 .summary-header > .data-name > h3 a.nando-link {
   text-decoration: underline;
+  overflow-wrap: break-word;
 }
 .summary-header > .data-name > h3 a.nando-link::after {
   content: "\f35d";
@@ -984,7 +1177,42 @@ Disease page right top */
 .summary-header > .data-name > h3#temp-label-en {
   font-size: 26px;
   margin-top: 5px;
+  overflow-wrap: break-word;
 }
 .summary-header > .external-links {
   display: flex;
+  gap: 5px;
+}
+
+/* Summary wrapper */
+.summary-wrapper {
+  padding: var(--spacing-inner-box);
+  border-radius: 3px;
+  background-color: rgba(20, 119, 134, 0.2);
+}
+.summary-wrapper #temp-aliases .inheritance-uris,
+.summary-wrapper .temp-wrapper .inheritance-uris {
+  display: flex;
+}
+.summary-wrapper #temp-aliases .inheritance-uris > dl > dt,
+.summary-wrapper .temp-wrapper .inheritance-uris > dl > dt {
+  font-weight: bold;
+}
+.summary-wrapper .aliases > dl {
+  margin: 0 0 4px;
+  border-radius: 3px;
+}
+.summary-wrapper .aliases > dl > div {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+.summary-wrapper .aliases > dl > dt {
+  font-size: 12px;
+  font-weight: bold;
+}
+.summary-wrapper .aliases > dl > dd {
+  margin-inline-start: 0;
+  font-size: 14px;
+  display: inline;
 }/*# sourceMappingURL=main.css.map */

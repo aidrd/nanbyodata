@@ -42,7 +42,7 @@
     flex-grow: inherit;
     cursor: pointer;
     option {
-      color: #13295a;
+      color: var(--color-secondary);
       background: var(--color-background-gray);
       font-weight: bold;
     }
