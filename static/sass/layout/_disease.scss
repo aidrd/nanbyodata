@@ -41,8 +41,47 @@
       flex-direction: column;
       gap: var(--spacing-disease-content);
 
-      >div {
-        scroll-margin-top: var(--spacing-disease-content);;
+      > div {
+        scroll-margin-top: var(--spacing-disease-content);
+      }
+
+      .temp-title {
+        border-radius: 3px;
+        color: var(--color-secondary);
+        font-size: 24px;
+        white-space: nowrap;
+        font-weight: 600;
+        position: relative;
+        padding-left: 15px;
+        margin-bottom: 15px;
+
+        &::before {
+          content: '';
+          position: absolute;
+          left: 1px;
+          width: 6px;
+          height: 28px;
+          background-color: var(--color-secondary);
+        }
+        .data-num {
+          padding: 0 6px 0 7px;
+          font-size: 15px;
+          line-height: 1.5;
+          position: absolute;
+          margin-top: 3px;
+          margin-left: 5px;
+          min-width: 22px;
+        }
+      }
+
+      #temp-disease-definition {
+        a[target='_blank'] {
+          color: #0431b4;
+          &::after {
+            color: inherit;
+            margin-left: 5px;
+          }
+        }
       }
     }
   }

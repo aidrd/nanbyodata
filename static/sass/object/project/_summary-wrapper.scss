@@ -12,6 +12,12 @@
     }
   }
 
+  .properties {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+  }
+
   .aliases > dl {
     margin: 0 0 4px;
     border-radius: 3px;

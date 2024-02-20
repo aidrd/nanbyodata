@@ -84,7 +84,6 @@ Disease page right top */
     gap: 5px;
 
     .summary-download {
-
       .btn-text {
         &::before {
           font-family: 'Font Awesome 5 Free';
@@ -94,17 +93,16 @@ Disease page right top */
         }
       }
     }
-      .summary-share {
-        .btn-text {
-          &::before {
-            font-family: 'Font Awesome 5 Free';
-            content: "\f1e0";
-            font-weight: 900;
-            margin-right: 6px;
-          }
+    .summary-share {
+      .btn-text {
+        &::before {
+          font-family: 'Font Awesome 5 Free';
+          content: '\f1e0';
+          font-weight: 900;
+          margin-right: 6px;
         }
       }
-
+    }
   }
 
   .external-links {

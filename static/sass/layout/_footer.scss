@@ -17,6 +17,10 @@ footer {
       text-decoration-color: #004098;
       text-underline-offset: 4px;
     }
+
+    &[target='_blank']::after {
+      content: '';
+    }
   }
 
   .container {
@@ -66,7 +70,7 @@ footer {
           overflow-wrap: break-word;
 
           li.individual_link {
-            + li {
+            +li {
               margin-top: 5px;
             }
           }
