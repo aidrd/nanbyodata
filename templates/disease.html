@@ -256,34 +256,37 @@
 
                 <div class="summary-header-actions">
                   <div class="summary-download">
-                    <button aria-controls="modal-download" aria-expanded="false" class="open-modal-btn">
+                    <button aria-controls="popup-download" aria-expanded="false" class="open-popup-btn">
                       <span class="btn-text">Download</span>
                     </button>
-                    <div class="modal-view" id="modal-download" aria-hidden="true" role="dialog"
-                      aria-labelledby="modalDownloadTitle">
-                      <div class="modal-title" id="modalDownloadTitle">ダウンロード</div>
-                      <form id="downloadForm" method="get" class="modal-body">
-                        <div class="modal-wrapper">
+                    <div class="popup-view" id="popup-download" aria-hidden="true" role="dialog"
+                      aria-labelledby="popupDownloadTitle">
+                      <div class="popup-title" id="popupDownloadTitle">ダウンロード</div>
+                      <form id="downloadForm" method="get" class="popup-body">
+                        <div class="popup-wrapper">
                           <label class="label" for="format">Format :</label>
                           <select name="format" id="format">
-                            <option value="text">TEXT</option>
+                            <option value="txt">TXT</option>
                             <option value="json">JSON</option>
                           </select>
                         </div>
-                        <button type="submit" class="modal-btn">Download</button>
+                        <button type="submit" class="popup-btn">Download</button>
                       </form>
                     </div>
                   </div>
 
                   <div class="summary-share">
-                    <button aria-controls="modal-share" aria-expanded="false" class="open-modal-btn">
+                    <button aria-controls="popup-share" aria-expanded="false" class="open-popup-btn">
                       <span class="btn-text">Share</span>
                     </button>
-                    <div class="modal-view" id="modal-share" aria-hidden="true" role="dialog"
-                      aria-labelledby="modalShareTitle">
-                      <div class="modal-title" id="modalShareTitle">共有リンク</div>
+                    <div class="popup-view" id="popup-share" aria-hidden="true" role="dialog"
+                      aria-labelledby="popupShareTitle">
+                      <div class="popup-title" id="popupShareTitle">共有リンク</div>
                       <div class="share-link"></div>
-                      <button type="button" class="modal-btn">Copy</button>
+                      <div class="flex-wrapper">
+                        <button type="button" class="popup-btn copy">Copy</button>
+                        <button type="button" class="popup-btn email">Email</button>
+                    </div>
                     </div>
                   </div>
                 </div>

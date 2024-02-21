@@ -7,7 +7,7 @@ export const downloadDatasets = (nandoId, datasets) => {
         {}
       );
       return JSON.stringify(jsonData, null, 2);
-    } else if (format === 'text') {
+    } else if (format === 'txt') {
       // テキスト形式でデータを準備
       return datasets
         .map(({ name, data }) => `--- ${name} ---\n${JSON.stringify(data, null, 2)}`)

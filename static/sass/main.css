@@ -82,6 +82,12 @@ a[target=_blank]::after {
   margin: 0 3px;
 }
 
+.flex-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
 /* ================================================
 Layout
 ================================================ */
@@ -1180,16 +1186,16 @@ header.search-area .intro-text .keyword a {
 .summary-header-actions .summary-share {
   position: relative;
 }
-.summary-header-actions .open-modal-btn {
+.summary-header-actions .open-popup-btn {
   display: flex;
   gap: 4px;
   border: 1px solid var(--color-summary-border);
   border-radius: var(--radius-base);
 }
-.summary-header-actions .open-modal-btn:focus {
+.summary-header-actions .open-popup-btn:focus {
   outline: none;
 }
-.summary-header-actions .modal-view {
+.summary-header-actions .popup-view {
   position: absolute;
   top: 40px;
   z-index: var(--zindex-popup);
@@ -1201,10 +1207,10 @@ header.search-area .intro-text .keyword a {
   transform-origin: top center;
   transition: 200ms ease-in-out;
 }
-.summary-header-actions .modal-view[aria-hidden=false] {
+.summary-header-actions .popup-view[aria-hidden=false] {
   transform: scale(1);
 }
-.summary-header-actions .modal-view::before {
+.summary-header-actions .popup-view::before {
   content: "";
   position: fixed;
   top: -3px;
@@ -1214,12 +1220,12 @@ header.search-area .intro-text .keyword a {
   border-bottom: 8px solid #fff;
   pointer-events: none;
 }
-.summary-header-actions .modal-view .modal-title {
+.summary-header-actions .popup-view .popup-title {
   font-size: 1rem;
   font-weight: 600;
   margin-bottom: 6px;
 }
-.summary-header-actions .modal-btn {
+.summary-header-actions .popup-btn {
   width: -moz-fit-content;
   width: fit-content;
   padding: 0.375rem 1.75rem;
@@ -1233,54 +1239,49 @@ header.search-area .intro-text .keyword a {
   transition: 0.3s;
   outline: none;
 }
-.summary-header-actions .modal-btn:hover {
+.summary-header-actions .popup-btn:hover {
   opacity: 0.8;
 }
-.summary-header-actions .summary-download .modal-view {
+.summary-header-actions .summary-download .popup-view {
   right: -52px;
   width: 200px;
 }
-.summary-header-actions .summary-download .modal-view::before {
+.summary-header-actions .summary-download .popup-view::before {
   left: 88px;
 }
-.summary-header-actions .summary-download .modal-view .modal-body {
+.summary-header-actions .summary-download .popup-view .popup-body {
   display: flex;
   flex-direction: column;
   gap: 10px;
   font-size: 14px;
   padding: 0;
 }
-.summary-header-actions .summary-download .modal-view .modal-body .modal-wrapper {
+.summary-header-actions .summary-download .popup-view .popup-body .popup-wrapper {
   display: flex;
   align-items: center;
   gap: 10px;
+  position: relative;
 }
-.summary-header-actions .summary-download .modal-view .modal-body .modal-wrapper::before {
+.summary-header-actions .summary-download .popup-view .popup-body .popup-wrapper::before, .summary-header-actions .summary-download .popup-view .popup-body .popup-wrapper::after {
   content: "";
   position: absolute;
-  top: 12px;
   right: 10px;
-  transform: translateY(-50%);
   border-left: 0.3em solid transparent;
   border-right: 0.3em solid transparent;
+  pointer-events: none;
+}
+.summary-header-actions .summary-download .popup-view .popup-body .popup-wrapper::before {
+  top: 11px;
   border-bottom: 0.3em solid currentColor;
-  pointer-events: none;
 }
-.summary-header-actions .summary-download .modal-view .modal-body .modal-wrapper::after {
-  content: "";
-  position: absolute;
-  top: 17px;
-  right: 10px;
-  transform: translateY(50%);
-  border-left: 0.3em solid transparent;
-  border-right: 0.3em solid transparent;
+.summary-header-actions .summary-download .popup-view .popup-body .popup-wrapper::after {
+  top: 20px;
   border-top: 0.3em solid currentColor;
-  pointer-events: none;
 }
-.summary-header-actions .summary-download .modal-view .modal-body .modal-wrapper .label {
+.summary-header-actions .summary-download .popup-view .popup-body .popup-wrapper .label {
   margin: 0;
 }
-.summary-header-actions .summary-download .modal-view .modal-body .modal-wrapper select {
+.summary-header-actions .summary-download .popup-view .popup-body .popup-wrapper select {
   flex: 1;
   padding: 0.3rem 1.75rem 0.3rem 0.75rem;
   font-size: 14px;
@@ -1291,13 +1292,14 @@ header.search-area .intro-text .keyword a {
   -webkit-appearance: none;
      -moz-appearance: none;
           appearance: none;
+  cursor: pointer;
 }
-.summary-header-actions .summary-share .modal-view {
+.summary-header-actions .summary-share .popup-view {
   right: -17px;
   width: 250px;
 }
-.summary-header-actions .summary-share .modal-view::before {
-  left: 190px;
+.summary-header-actions .summary-share .popup-view::before {
+  left: 185px;
 }
 .summary-header-actions .summary-share .share-link {
   word-break: break-all;

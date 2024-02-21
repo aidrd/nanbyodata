@@ -21,7 +21,6 @@ changePlaceholder();
 popup();
 breadcrumb(nandoId);
 
-
 (async () => {
   try {
     const entryDataPromise = fetch(
