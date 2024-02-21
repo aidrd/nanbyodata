@@ -11,8 +11,8 @@
   .open-modal-btn {
     display: flex;
     gap: 4px;
-    border: 1px solid #c1c6d3;
-    border-radius: 0.25rem;
+    border: 1px solid var(--color-summary-border);
+    border-radius: var(--radius-base);
 
     &:focus {
       outline: none;
@@ -25,7 +25,7 @@
     z-index: var(--zindex-popup);
     padding: 15px;
     background-color: #fff;
-    border-radius: 10px;
+    border-radius: var(--radius-large);
     box-shadow: 1px 1px 13px 1px rgba(0, 0, 0, 0.3);
     transform: scale(0);
     transform-origin: top center;
@@ -61,9 +61,9 @@
     font-size: 0.8rem;
     line-height: 1.5;
     color: #fff;
-    background-color: #147786;
+    background-color: var(--color-primary);
     border: none;
-    border-radius: 0.25rem;
+    border-radius: var(--radius-base);
     cursor: pointer;
     transition: 0.3s;
     outline: none;
@@ -133,8 +133,8 @@
             padding: 0.3rem 1.75rem 0.3rem 0.75rem;
             font-size: 14px;
             font-weight: 400;
-            border: 1px solid #ced4da;
-            border-radius: 0.25rem;
+            border: 1px solid var(--color-summary-border);
+            border-radius: var(--radius-base);
             outline: none;
             appearance: none;
           }

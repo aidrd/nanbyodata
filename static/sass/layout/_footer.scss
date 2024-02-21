@@ -1,7 +1,7 @@
 /* Footer */
 footer {
   padding: 40px 0 20px;
-  background-color: #f9f8f5;
+  background-color: var(--color-footer-bg);
 
   li,
   p,
@@ -13,8 +13,8 @@ footer {
 
   a {
     &:hover {
-      color: #004098;
-      text-decoration-color: #004098;
+      color: var(--color-link);
+      text-decoration-color: var(--color-link);
       text-underline-offset: 4px;
     }
 

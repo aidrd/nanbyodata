@@ -4,8 +4,8 @@
       th {
         padding: 10px;
         border-top: none;
-        border-bottom: 1px solid #444;
-        color: #94928d;
+        border-bottom: 1px solid var(--color-black);
+        color: var(--color-dataset-th);
         font-size: 12px;
         white-space: nowrap;
         font-weight: 400;
@@ -16,21 +16,21 @@
         td {
           padding: 10px;
           font-size: 14px;
-          color: #444;
-          border-bottom: 1px solid #dee2e6;
+          color: var(--color-black);
+          border-bottom: 1px solid var(--color-table-dash);
           white-space: nowrap;
         }
       }
       tr:last-child {
         td {
-          border-bottom: 1px solid #444;
+          border-bottom: 1px solid var(--color-black);
         }
       }
     }
     a {
       text-decoration: underline;
       &:visited {
-        color: #444;
+        color: var(--color-black);
       }
     }
   }

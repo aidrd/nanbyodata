@@ -20,7 +20,7 @@
       .sidebar-title {
         font-size: 14px;
         font-weight: bold;
-        color: #16234e;
+        color: var(--color-secondary);
         opacity: 0.6;
         margin-bottom: var(--spacing-heading-bottom);
       }
@@ -33,20 +33,19 @@
     overflow-y: auto;
     height: calc(100vh - 76px);
     width: calc(100% - 270px);
-    z-index: -1;
     padding: var(--spacing-disease-content);
+    z-index: -1;
 
     #data-wrapper {
       display: flex;
       flex-direction: column;
       gap: var(--spacing-disease-content);
-
       > div {
         scroll-margin-top: var(--spacing-disease-content);
       }
 
       .temp-title {
-        border-radius: 3px;
+        border-radius: var(--radius-base);
         color: var(--color-secondary);
         font-size: 24px;
         white-space: nowrap;
@@ -76,7 +75,7 @@
 
       #temp-disease-definition {
         a[target='_blank'] {
-          color: #0431b4;
+          color: var(--color-link);
           &::after {
             color: inherit;
             margin-left: 5px;
