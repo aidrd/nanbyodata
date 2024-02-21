@@ -60,16 +60,16 @@ breadcrumb(nandoId);
     // const mgendData = await fetchData('');
     const mgendData = [];
 
-    // TODO:ダウンロード用のデータをまとめる
+    // download datasets
     const datasets = [
       { name: 'Overview', data: entryData },
       { name: 'Causal Genes', data: geneData },
-      { name: 'Phenotypes', data: geneTestData },
-      { name: 'HPO Data', data: hpoData },
-      { name: 'Bio Resource Cell', data: cellData },
-      { name: 'Bio Resource Mouse', data: mouseData },
-      { name: 'Bio Resource DNA', data: dnaData },
-      { name: 'Variant Clinvar', data: clinvarData },
+      { name: 'Genetic Testing', data: geneTestData },
+      { name: 'Phenotypes', data: hpoData },
+      { name: 'Cell', data: cellData },
+      { name: 'Mouse', data: mouseData },
+      { name: 'DNA', data: dnaData },
+      { name: 'Clinvar', data: clinvarData },
     ];
 
     downloadDatasets(nandoId, datasets);
