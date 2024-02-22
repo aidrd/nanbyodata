@@ -1,14 +1,45 @@
 :root {
   // color
   --color-primary: #147786;
+  --color-primary-opacity2: rgba(20, 119, 134, 0.2);
+  --color-primary-opacity7: rgba(20, 119, 134, 0.7);
+  --color-primary-lighter: #6a9fa6;
   --color-secondary: #13295a;
   --color-font: #696969;
   --color-background-gray: #dadede;
+  --color-blue: #495aff;
+  --color-link: #004098;
+  --color-table-border: #c0c0c0;
+  --color-table-dash: #dcdcdc;
+  --color-dataset-th: #94928d;
+  --color-black: #444;
+  --color-spinner-bg: #ddd;
+  --color-summary-border: #c1c6d3;
+  --color-summary-link: #90959b;
+  --color-nav-hover: #7c7c7c;
+  --color-footer-bg: #f9f8f5;
+  --color-breadcrumb-hover: rgba(255, 255, 255, 0.5);
 
   // spacing
   --spacing-disease-content: 25px;
   --spacing-inner-box: 10px;
+  --spacing-heading-bottom: 8px;
+
+  // radius
+  --radius-small: 2px;
+  --radius-base: 3px;
+  --radius-medium: 5px;
+  --radius-large: 10px;
 
   // z-index
+  --zindex-disease-side-link: 1;
+  --zindex-popup: 50;
   --zindex-sidebar-optionlist: 100;
+
+  // FontAwesome
+  --icon-link: '\f35d';
+  --icon-copy: '\f0c5';
+  --icon-download: '\f019';
+  --icon-book: '\f02d';
+  --icon-file: '\f15c';
 }

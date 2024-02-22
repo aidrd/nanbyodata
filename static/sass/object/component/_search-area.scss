@@ -16,11 +16,10 @@ header.search-area {
 
     .keyword {
       display: inline-block;
-      background-color: #5ba0aa;
-      color: var(--color-secondary);
+      background-color: var(--color-primary-lighter);
       padding: 5px 10px;
       font-size: 14px;
-      border-radius: 3px;
+      border-radius: var(--radius-base);
 
       a {
         color: #fff;

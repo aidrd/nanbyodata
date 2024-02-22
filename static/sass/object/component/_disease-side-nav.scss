@@ -11,20 +11,21 @@
       > a {
         display: block;
         font-weight: bold;
-        border-radius: 2px;
         padding: 10px;
         color: var(--color-secondary);
         text-decoration: none;
         margin-bottom: -1px;
 
         &:not(.selected):hover {
-          background: rgba(255, 255, 255, 0.5);
+          background-color: var(--color-breadcrumb-hover);
         }
       }
       .nav-link {
         margin: 0;
         margin-top: -1.5px;
         position: relative;
+        color: var(--color-secondary);
+        font-size: 14px;
       }
       .data-num {
         padding: 0 6px;
@@ -34,12 +35,8 @@
         right: 8px;
       }
       .selected {
-        background: rgba(22, 35, 78, 0.2);
+        background-color: rgba(22, 35, 78, 0.2);
         color: var(--color-secondary);
-      }
-      .brc.selected,
-      .variant.selected {
-        background-color: transparent;
       }
       .brc,
       .variant {
@@ -48,7 +45,6 @@
         color: var(--color-secondary);
         font-weight: bold;
         padding: 10px 0 20px 10px;
-
         ul {
           position: relative;
           bottom: 6px;
@@ -95,9 +91,11 @@
               padding: 5px;
               margin-left: 20px;
               padding-left: 10px;
+              z-index: var(--zindex-disease-side-link);
+              border-radius: var(--radius-small);
             }
             a:not(.selected):hover {
-              background: rgba(255, 255, 255, 0.5);
+              background-color: var(--color-breadcrumb-hover);
             }
           }
         }

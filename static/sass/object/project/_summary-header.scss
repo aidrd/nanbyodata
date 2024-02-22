@@ -1,23 +1,16 @@
 /* summary-header
 Disease page right top */
 .summary-header {
-  border: solid 2px #c1c6d3;
-  border-radius: 5px;
+  border: solid 2px var(--color-summary-border);
+  border-radius: var(--radius-medium);
 
   > .data-name,
-  > .external-links {
-    padding: 10px;
+  > .summary-header-links {
+    padding: var(--spacing-inner-box);
   }
 
   > .data-name {
-    border-bottom: 1px dashed #c1c6d3;
-    margin: 0;
-
-    h2,
-    h3,
-    p {
-      margin: 0;
-    }
+    border-bottom: 1px dashed var(--color-summary-border);
 
     > h3 {
       font-size: 18px;
@@ -25,16 +18,16 @@ Disease page right top */
 
       a.nando-link,
       span.nando-copy {
-        font-size: 12px;
-        color: #90959b;
-        font-weight: normal;
-        cursor: pointer;
-        margin-left: 5px;
         position: relative;
         top: -2px;
+        margin-left: 5px;
+        font-size: 12px;
+        color: var(--color-summary-link);
+        font-weight: normal;
+        cursor: pointer;
 
         &:hover {
-          color: black;
+          color: #000;
         }
 
         &::after {
@@ -49,14 +42,14 @@ Disease page right top */
         overflow-wrap: break-word;
 
         &::after {
-          content: '\f35d';
+          content: var(--icon-link);
           font-weight: 900;
         }
       }
 
       span.nando-copy {
         &::after {
-          content: '\f0c5';
+          content: var(--icon-copy);
           font-weight: normal;
           vertical-align: middle;
         }
@@ -84,8 +77,37 @@ Disease page right top */
     }
   }
 
-  > .external-links {
+  .summary-header-links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 5px;
+
+    .summary-download {
+      .btn-text {
+        &::before {
+          font-family: 'Font Awesome 5 Free';
+          content: var(--icon-download);
+          font-weight: 900;
+          margin-right: 6px;
+        }
+      }
+    }
+    .summary-share {
+      .btn-text {
+        &::before {
+          font-family: 'Font Awesome 5 Free';
+          content: '\f1e0';
+          font-weight: 900;
+          margin-right: 6px;
+        }
+      }
+    }
+  }
+
+  .external-links {
     display: flex;
     gap: 5px;
+    height: fit-content;
   }
 }

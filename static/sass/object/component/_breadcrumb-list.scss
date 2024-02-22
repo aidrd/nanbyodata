@@ -35,12 +35,12 @@
         width: 10px;
         border-top: 1px solid;
         margin-top: -1px;
-        background: var(--color-background-gray);
+        background-color: var(--color-background-gray);
       }
 
       .wrapper {
         &:hover {
-          background-color: rgba(255, 255, 255, 0.5);
+          background-color: var(--color-breadcrumb-hover);
         }
 
         .select-option {
@@ -48,7 +48,7 @@
           padding: 2px 26px 0px 5px;
           font-size: 14px;
           position: relative;
-          border-radius: 2px;
+          border-radius: var(--radius-small);
           border: 1px solid var(--color-secondary);
           white-space: nowrap;
           overflow: hidden;
@@ -75,8 +75,8 @@
           width: max-content;
           padding: 8px;
           margin-top: 2px;
-          background: rgba(227, 227, 226, 0.98);
-          border-radius: 7px;
+          background-color: rgba(227, 227, 226, 0.98);
+          border-radius: var(--radius-large);
           box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
 
           .options {
@@ -88,11 +88,11 @@
               line-height: 1.7;
               padding: 0 20px;
               font-size: 12px;
-              border-radius: 5px;
+              border-radius: var(--radius-medium);
               cursor: pointer;
 
               &:hover {
-                background: #4285f4;
+                background-color: #4285f4;
                 color: #fff;
               }
 
@@ -111,7 +111,7 @@
               }
 
               &.selected::before {
-                border-color: #444;
+                border-color: var(--color-black);
               }
 
               &.selected:hover::before {
@@ -125,16 +125,16 @@
           }
 
           .options::-webkit-scrollbar-track {
-            background: #e9e9e9;
-            border-radius: 25px;
+            background-color: #e9e9e9;
+            border-radius: 0.5lh;
           }
 
           .options::-webkit-scrollbar-thumb {
-            background: #aaa;
-            border-radius: 25px;
+            background-color: #aaa;
+            border-radius: 0.5lh;
 
             &:hover {
-              background: #b3b3b3;
+              background-color: #b3b3b3;
             }
           }
         }
