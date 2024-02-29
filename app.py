@@ -147,12 +147,12 @@ def make_selector_subclasses(onto, id_nando, next_term_id, index):
         <div class="inner-tree">
             <div class="wrapper" data-value="{next_term_id}">
                 <div class="select-option">{selected_disease_name}</div>
-                <div class="content">
+                <div class="option-list">
                     <ul class="options">'''
 
     sub = onto[id_nando].subclasses(with_self=False, distance=1)
     for term in sub:
-        html_selector += f'<li value="/disease/NANDO:{term.id}">{term.name}</li>'
+        html_selector += f'<li class="option" data-value="{term.id}">{term.name}</li>'
     html_selector += '''
                     </ul>
                 </div>
