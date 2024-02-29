@@ -1485,6 +1485,7 @@ Disease page right top */
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+  gap: 5px;
 }
 .summary-wrapper .aliases > dl > dt {
   font-size: 12px;
