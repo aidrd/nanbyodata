@@ -1,0 +1,13 @@
+/* container for mainNav, footer */
+.container {
+  max-width: 950px;
+  margin: 0 auto;
+}
+
+/* Main page contents */
+.contents-wrapper {
+  min-height: calc(100vh - 508px);
+  padding: 55px 0 100px;
+  margin: 0 auto;
+  max-width: 950px;
+}

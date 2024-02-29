@@ -1,0 +1,29 @@
+/* Top search window */
+header.search-area {
+  ul.token-input-list-facebook {
+    padding: 5px 20px;
+    margin: 10px auto 20px;
+    max-width: 580px;
+  }
+
+  .intro-text {
+    p {
+      display: inline-block;
+      letter-spacing: 2px;
+      font-size: 13px;
+      color: #fff;
+    }
+
+    .keyword {
+      display: inline-block;
+      background-color: var(--color-primary-lighter);
+      padding: 5px 10px;
+      font-size: 14px;
+      border-radius: var(--radius-base);
+
+      a {
+        color: #fff;
+      }
+    }
+  }
+}

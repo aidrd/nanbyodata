@@ -1,141 +1,146 @@
-$('#myModal').on('shown.bs.modal', function () {
-  $('#myInput').trigger('focus')
-})
+import { navToggle } from './navigation.js';
+import { focusInput } from './focusInput.js';
+import { changePlaceholder } from './changePlaceholder.js';
+import { setLangChange } from './setLangChange.js';
 
-$(function () {
-  var nav = $('.navbar')
-  var header_height = 550;
+navToggle();
+focusInput();
+changePlaceholder();
+setLangChange();
 
-  $(window).scroll(function () {
+// It is not used below and may not be a problem to delete.  It is left commented out just in case.
 
-    if ($(window).scrollTop() > header_height) {
-      nav.addClass('scroll');
-    } else {
-      nav.removeClass('scroll');
-    }
-  });
-});
+// $('#myModal').on('shown.bs.modal', function () {
+//   $('#myInput').trigger('focus');
+// });
 
+// $(function () {
+//   var nav = $('.navbar');
+//   var header_height = 550;
 
-/* */
+//   $(window).scroll(function () {
+//     if ($(window).scrollTop() > header_height) {
+//       nav.addClass('scroll');
+//     } else {
+//       nav.removeClass('scroll');
+//     }
+//   });
+// });
 
-window.onload = function () {
+// /* */
 
-  var toc = document.querySelector('.toc');
-  var tocPath = document.querySelector('.toc-marker path');
-  var tocItems;
+// window.onload = function () {
+//   var toc = document.querySelector('.toc');
+//   var tocPath = document.querySelector('.toc-marker path');
+//   var tocItems;
 
-  // Factor of screen size that the element must cross
-  // before it's considered visible
-  var TOP_MARGIN = 0.1,
-    BOTTOM_MARGIN = 0.2;
+//   // Factor of screen size that the element must cross
+//   // before it's considered visible
+//   var TOP_MARGIN = 0.1,
+//     BOTTOM_MARGIN = 0.2;
 
-  var pathLength;
+//   var pathLength;
 
-  window.addEventListener('resize', drawPath, false);
-  window.addEventListener('scroll', sync, false);
+//   window.addEventListener('resize', drawPath, false);
+//   window.addEventListener('scroll', sync, false);
 
-  drawPath();
+//   drawPath();
 
-  function drawPath() {
+//   function drawPath() {
+//     tocItems = [].slice.call(toc.querySelectorAll('li'));
 
-    tocItems = [].slice.call(toc.querySelectorAll('li'));
+//     // Cache element references and measurements
+//     tocItems = tocItems.map(function (item) {
+//       var anchor = item.querySelector('a');
+//       var target = document.getElementById(
+//         anchor.getAttribute('href').slice(1)
+//       );
 
-    // Cache element references and measurements
-    tocItems = tocItems.map(function (item) {
-      var anchor = item.querySelector('a');
-      var target = document.getElementById(anchor.getAttribute('href').slice(1));
+//       return {
+//         listItem: item,
+//         anchor: anchor,
+//         target: target,
+//       };
+//     });
 
-      return {
-        listItem: item,
-        anchor: anchor,
-        target: target
-      };
-    });
+//     // Remove missing targets
+//     tocItems = tocItems.filter(function (item) {
+//       return !!item.target;
+//     });
 
-    // Remove missing targets
-    tocItems = tocItems.filter(function (item) {
-      return !!item.target;
-    });
+//     var path = [];
+//     var pathIndent;
 
-    var path = [];
-    var pathIndent;
+//     tocItems.forEach(function (item, i) {
+//       var x = item.anchor.offsetLeft - 5,
+//         y = item.anchor.offsetTop,
+//         height = item.anchor.offsetHeight;
 
-    tocItems.forEach(function (item, i) {
+//       if (i === 0) {
+//         path.push('M', x, y, 'L', x, y + height);
+//         item.pathStart = 0;
+//       } else {
+//         // Draw an additional line when there's a change in
+//         // indent levels
+//         if (pathIndent !== x) path.push('L', pathIndent, y);
 
-      var x = item.anchor.offsetLeft - 5,
-        y = item.anchor.offsetTop,
-        height = item.anchor.offsetHeight;
+//         path.push('L', x, y);
 
-      if (i === 0) {
-        path.push('M', x, y, 'L', x, y + height);
-        item.pathStart = 0;
-      }
-      else {
-        // Draw an additional line when there's a change in
-        // indent levels
-        if (pathIndent !== x) path.push('L', pathIndent, y);
+//         // Set the current path so that we can measure it
+//         tocPath.setAttribute('d', path.join(' '));
+//         item.pathStart = tocPath.getTotalLength() || 0;
 
-        path.push('L', x, y);
+//         path.push('L', x, y + height);
+//       }
 
-        // Set the current path so that we can measure it
-        tocPath.setAttribute('d', path.join(' '));
-        item.pathStart = tocPath.getTotalLength() || 0;
+//       pathIndent = x;
 
-        path.push('L', x, y + height);
-      }
+//       tocPath.setAttribute('d', path.join(' '));
+//       item.pathEnd = tocPath.getTotalLength();
+//     });
 
-      pathIndent = x;
+//     pathLength = tocPath.getTotalLength();
 
-      tocPath.setAttribute('d', path.join(' '));
-      item.pathEnd = tocPath.getTotalLength();
+//     sync();
+//   }
 
-    });
+//   function sync() {
+//     var windowHeight = window.innerHeight;
 
-    pathLength = tocPath.getTotalLength();
+//     var pathStart = pathLength,
+//       pathEnd = 0;
 
-    sync();
+//     var visibleItems = 0;
 
-  }
+//     tocItems.forEach(function (item) {
+//       var targetBounds = item.target.getBoundingClientRect();
 
-  function sync() {
+//       if (
+//         targetBounds.bottom > windowHeight * TOP_MARGIN &&
+//         targetBounds.top < windowHeight * (1 - BOTTOM_MARGIN)
+//       ) {
+//         pathStart = Math.min(item.pathStart, pathStart);
+//         pathEnd = Math.max(item.pathEnd, pathEnd);
 
-    var windowHeight = window.innerHeight;
+//         visibleItems += 1;
 
-    var pathStart = pathLength,
-      pathEnd = 0;
+//         item.listItem.classList.add('visible');
+//       } else {
+//         item.listItem.classList.remove('visible');
+//       }
+//     });
 
-    var visibleItems = 0;
-
-    tocItems.forEach(function (item) {
-
-      var targetBounds = item.target.getBoundingClientRect();
-
-      if (targetBounds.bottom > windowHeight * TOP_MARGIN && targetBounds.top < windowHeight * (1 - BOTTOM_MARGIN)) {
-        pathStart = Math.min(item.pathStart, pathStart);
-        pathEnd = Math.max(item.pathEnd, pathEnd);
-
-        visibleItems += 1;
-
-        item.listItem.classList.add('visible');
-      }
-      else {
-        item.listItem.classList.remove('visible');
-      }
-
-    });
-
-    // Specify the visible path or hide the path altogether
-    // if there are no visible items
-    if (visibleItems > 0 && pathStart < pathEnd) {
-      tocPath.setAttribute('stroke-dashoffset', '1');
-      tocPath.setAttribute('stroke-dasharray', '1, ' + pathStart + ', ' + (pathEnd - pathStart) + ', ' + pathLength);
-      tocPath.setAttribute('opacity', 1);
-    }
-    else {
-      tocPath.setAttribute('opacity', 0);
-    }
-
-  }
-
-};
+//     // Specify the visible path or hide the path altogether
+//     // if there are no visible items
+//     if (visibleItems > 0 && pathStart < pathEnd) {
+//       tocPath.setAttribute('stroke-dashoffset', '1');
+//       tocPath.setAttribute(
+//         'stroke-dasharray',
+//         '1, ' + pathStart + ', ' + (pathEnd - pathStart) + ', ' + pathLength
+//       );
+//       tocPath.setAttribute('opacity', 1);
+//     } else {
+//       tocPath.setAttribute('opacity', 0);
+//     }
+//   }
+// };

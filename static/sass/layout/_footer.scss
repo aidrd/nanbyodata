@@ -1,0 +1,117 @@
+/* Footer */
+footer {
+  padding: 40px 0 20px;
+  background-color: var(--color-footer-bg);
+
+  li,
+  p,
+  a,
+  a:visited {
+    color: var(--color-font);
+    font-size: 12px;
+  }
+
+  a {
+    &:hover {
+      color: var(--color-link);
+      text-decoration-color: var(--color-link);
+      text-underline-offset: 4px;
+    }
+
+    &[target='_blank']::after {
+      content: '';
+    }
+  }
+
+  .container {
+    .footer__info {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      margin-bottom: 50px;
+
+      .footer__organism {
+        .footer__logo {
+          width: 150px;
+          display: block;
+          margin: 0 auto;
+        }
+
+        .footer__organism-text {
+          text-align: center;
+          margin-top: 11px;
+
+          .footer__organism-main {
+            font-size: 15px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+          }
+        }
+      }
+
+      h2.footer-title {
+        font-weight: 800;
+        font-size: 14px;
+        margin-bottom: 10px;
+      }
+
+      .footer__address {
+        max-width: 360px;
+
+        .address__list {
+          display: flex;
+          gap: 10px;
+        }
+      }
+
+      .footer__links {
+        ul.links__wrapper {
+          inline-size: 200px;
+          overflow-wrap: break-word;
+
+          li.individual_link {
+            +li {
+              margin-top: 5px;
+            }
+          }
+        }
+      }
+    }
+
+    .footer__bottom {
+      .footer__partners {
+        width: 550px;
+        margin: 0 auto 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        li {
+          img {
+            width: 115px;
+          }
+        }
+      }
+
+      .footer__lisence {
+        p {
+          font-size: 10px;
+          display: flex;
+          justify-content: center;
+          gap: 5px;
+
+          &:before {
+            content: '';
+            width: 81px;
+            height: 16px;
+            background: url(../img/by.svg) no-repeat;
+          }
+
+          a {
+            font-size: inherit;
+          }
+        }
+      }
+    }
+  }
+}

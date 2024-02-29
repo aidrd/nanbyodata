@@ -1,14 +1,49 @@
-@use "./variables";
-@use "./base";
+/* ================================================
+Foundation
+================================================ */
+@use './foundation/variables';
+@use './foundation/reset';
 
-/* Layout */
-@use "./layout/layout";
+/* ================================================
+Layout
+================================================ */
+/* ---------- Main Page ---------- */
+@use './layout/main-container';
+@use './layout/navigation';
+@use './layout/footer';
+@use './layout/page-layout';
+/* ---------- Disease Page ---------- */
+@use './layout/disease';
 
-@use "./navigation";
-@use "./footer";
+/* ================================================
+Object
+================================================ */
+/* -----------------------------------
+Component
+----------------------------------- */
+@use './object/component/tokeninput';
+/* ---------- Top Page ---------- */
+@use './object/component/search-area';
+@use './object/component/news-summary';
+@use './object/component/card-wrapper';
+@use './object/component/button';
+@use './object/component/modal';
+/* ---------- About Page ---------- */
+@use './object/component/illust-wrapper';
+/* ---------- Dataset Page ---------- */
+@use './object/component/table';
+/* ---------- Disease Page ---------- */
+@use './object/component/loading-spinner';
+@use './object/component/breadcrumb-list';
+@use './object/component/disease-side-nav';
+@use './object/component/linked-item';
+@use './object/component/data-num';
+@use './object/component/popup';
+@use './object/component/tab-wrap';
 
-/* Component */
-@use "./component/linked-item";
-
-/* Disease Only */
-@use "./summary-header"
+/* -----------------------------------
+Project
+----------------------------------- */
+/* ---------- Disease Page ---------- */
+@use './object/project/summary-header';
+@use './object/project/summary-wrapper';

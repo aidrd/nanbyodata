@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="ja">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://indestructibletype-fonthosting.github.io/renner.css" type="text/css"
+    charset="utf-8" />
+  <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
+
+  <!-- CSS -->
+  <link rel="stylesheet" type="text/css" href="/static/sass/main.css">
+
+  <title>NanbyoData</title>
+</head>
+
+<body>
+  <main>
+    <!-- Navigation -->
+    {% include 'component/navigation.html' %}
+
+    <!--- News article page -->
+    <div class="page-layout" id="news-page">
+      <header class="page-title">
+        {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
+        <h2>お知らせ</h2>
+        {% else %}
+        <h2>News</h2>
+        {% endif %}
+      </header>
+      <div class="contents-wrapper">
+        <h3 class="news-title">{{title}}</h3>
+        <hr />
+        <p class="post-date">{{date}}</p>
+        <div class="post-content">{{ content|safe }}</div>
+      </div>
+    </div>
+
+    <!--- footer --->
+    {% include 'component/footer.html' %}
+
+    <!--- NanbyoData利用規約 modal -->
+    {% include 'component/modal-tos.html' %}
+  </main>
+
+
+
+
+
+
+  <!-- Optional JavaScript -->
+  <!-- jQuery first, then Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
+    </script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+    </script>
+  <script type="module" src="/static/js/main.js"></script>
+</body>
+
+</html>

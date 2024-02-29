@@ -3,7 +3,7 @@
 		console.log('ready()');
 		var tokeninput = $('<div>')
 			.attr({'id':'tokeninput'})
-			.insertAfter($('header>div.container>div.intro-text>h1.display-4'))
+			.prependTo($('header > div.intro-text'))
 		;
 		tokeninput.tokenInput(function(){
 			var type = arguments[0];

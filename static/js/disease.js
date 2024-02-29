@@ -1,3 +1,11 @@
+import { navToggle } from './navigation.js';
+import { focusInput } from './focusInput.js';
+import { changePlaceholder } from './changePlaceholder.js';
+// import { popup } from './popup.js';
+import { breadcrumb } from './breadcrumb.js';
+// import { downloadDatasets } from './download.js';
+import { setLangChange } from './setLangChange.js';
+
 // dispaly: none until loading is finished
 document.getElementById('content').style.display = 'none';
 document.getElementById('sidebar').style.display = 'none';
@@ -7,10 +15,17 @@ const pathname = window.location.pathname;
 const nandoIndex = pathname.indexOf('NANDO:');
 const nandoId = pathname.slice(nandoIndex + 6);
 
+// external functions
+navToggle();
+focusInput();
+changePlaceholder();
+// popup();
+breadcrumb(nandoId);
+setLangChange();
+
 (async () => {
   try {
     const entryDataPromise = fetch(
-//      'https://nanbyodata.jp/sparqlist/api/get_nando_entry_by_nando_id?nando_id=' +
       'https://nanbyodata.jp/sparqlist/api/nanbyodata_get_metadata?nando_id=' +
         nandoId,
       {
@@ -29,10 +44,12 @@ const nandoId = pathname.slice(nandoIndex + 6);
       return response.json();
     }
 
-    // 各種データを取得
-    const geneData = await fetchData('nanbyodata_get_gene_by_nando_id');
-    const geneTestData = await fetchData('nanbyodata_get_gene_test');
-    const hpoData = await fetchData('nanbyodata_get_hpo_data_by_nando_id');
+    // get all data
+    const causalGeneData = await fetchData('nanbyodata_get_gene_by_nando_id');
+    const geneticTestingData = await fetchData('nanbyodata_get_gene_test');
+    const phenotypesData = await fetchData(
+      'nanbyodata_get_hpo_data_by_nando_id'
+    );
     const cellData = await fetchData(
       'nanbyodata_get_riken_brc_cell_info_by_nando_id'
     );
@@ -42,7 +59,24 @@ const nandoId = pathname.slice(nandoIndex + 6);
     const dnaData = await fetchData(
       'nanbyodata_get_riken_brc_dna_info_by_nando_id'
     );
-    const variantData = await fetchData('nanbyodata_get_variant_by_nando_id');
+    const clinvarData = await fetchData('nanbyodata_get_variant_by_nando_id');
+    // TODO: add mgend data
+    // const mgendData = await fetchData('');
+    const mgendData = [];
+
+    // download datasets
+    const datasets = [
+      { name: 'Overview', data: entryData },
+      { name: 'Causal Genes', data: causalGeneData },
+      { name: 'Genetic Testing', data: geneticTestingData },
+      { name: 'Phenotypes', data: phenotypesData },
+      { name: 'Cell', data: cellData },
+      { name: 'Mouse', data: mouseData },
+      { name: 'DNA', data: dnaData },
+      { name: 'Clinvar', data: clinvarData },
+    ];
+
+    // downloadDatasets(nandoId, datasets);
 
     await Promise.all([
       makeHeader(entryData),
@@ -51,18 +85,23 @@ const nandoId = pathname.slice(nandoIndex + 6);
       makeInheritanceUris(entryData),
       makeLinksList(entryData),
       checkSummaryData(entryData),
-      checkInitialLanguage(),
       makeDiseaseDefinition(entryData),
-      makeProperties(geneData),
-      makeMedicalGeneticTestingInfo(geneTestData),
-      changeLangHP(),
-      makePhenotypeView(hpoData),
-      makeSpecificBioResource(cellData, mouseData, dnaData),
-      makeVariant(entryData, variantData),
+      makeProperties(causalGeneData),
+      makeGeneticTesting(geneticTestingData),
+      makePhenotypes(phenotypesData),
+      makeBioResource(cellData, mouseData, dnaData),
+      makeVariant(clinvarData, mgendData, entryData),
     ]);
 
     selectedItem();
-    switchingDisplayContents('temp-summary', entryData);
+
+    if (window.location.hash) {
+      const hash = window.location.hash;
+      const hashId = hash.replace('#', '');
+      switchingDisplayContents(hashId, entryData);
+    } else {
+      switchingDisplayContents('overview', entryData);
+    }
   } catch (error) {
     console.error('error:', error);
   }
@@ -107,7 +146,7 @@ function makeHeader(entryData) {
   notificationNumber.textContent = entryData.notification_number;
   if (!entryData.notification_number) {
     notificationNumber.parentNode.remove();
-    const tempDataSummary = document.getElementById('temp-summary');
+    const tempDataSummary = document.getElementById('overview');
     tempDataSummary.style.borderBottom = 'none';
   }
 }
@@ -264,10 +303,10 @@ function makeLinksList(entryData) {
   }
 }
 
-function makeProperties(geneData) {
-  const causativeGene = document.getElementById('temp-causative-gene');
+function makeProperties(causalGeneData) {
+  const causativeGene = document.getElementById('causal-genes');
   const properties = causativeGene.querySelector('#temp-properties');
-  const data = geneData;
+  const data = causalGeneData;
 
   if (Array.isArray(data) && data.length === 0) {
     causativeGene.remove();
@@ -290,10 +329,8 @@ function makeProperties(geneData) {
       ></togostanza-pagination-table>
       `;
 
-    const tempSpanElement = document.querySelector(
-      '#temp-causative-gene .data-num'
-    );
-    const navSpanElement = document.querySelector('.causative-gene .data-num');
+    const tempSpanElement = document.querySelector('#causal-genes .data-num');
+    const navSpanElement = document.querySelector('.causal-genes .data-num');
     tempSpanElement.innerText = data.length;
     navSpanElement.innerText = data.length;
   }
@@ -301,14 +338,14 @@ function makeProperties(geneData) {
 
 function checkSummaryData(entryData) {
   const items = [
-    '.causative-gene',
-    '.medical-genetic-testing-info',
-    '.phenotype-view',
-    '.specific-bio-resource',
+    '.causal-genes',
+    '.genetic-testing',
+    '.phenotypes',
+    '.brc',
     '.variant',
   ];
   const summaryWrapper = document.querySelector('.summary-wrapper');
-  const summaryNav = document.querySelector('.nav-link.summary');
+  const summaryNav = document.querySelector('.nav-link.overview');
   const diseaseDefinition = document.getElementById('temp-disease-definition');
   const navBorderTop = document.querySelector(
     '#temp-side-navigation > ul > li:first-child'
@@ -329,10 +366,9 @@ function checkSummaryData(entryData) {
       navBorderTop.style = 'border-top: none;';
       for (const item of items) {
         const cleanedItem = item.replace(/^\./, '');
-        const modifiedItem = 'temp-' + cleanedItem;
         const element = document.querySelector(item);
         if (element) {
-          switchingDisplayContents(modifiedItem, entryData);
+          switchingDisplayContents(cleanedItem, entryData);
           break;
         }
       }
@@ -341,24 +377,6 @@ function checkSummaryData(entryData) {
         navBorderTop.style = 'border-top: block;';
       }
     }
-  }
-}
-
-function checkInitialLanguage() {
-  const selectLang = document.querySelector('.language-select');
-  selectLang.addEventListener('change', changeLangHP);
-}
-
-function changeLangHP() {
-  const selectedValue = document.querySelector('.language-select').value;
-  const phenotypeViewJa = document.querySelector('.phenotype-ja');
-  const phenotypeViewEn = document.querySelector('.phenotype-en');
-  if (selectedValue === 'ja') {
-    phenotypeViewJa.style.display = 'block';
-    phenotypeViewEn.style.display = 'none';
-  } else {
-    phenotypeViewJa.style.display = 'none';
-    phenotypeViewEn.style.display = 'block';
   }
 }
 
@@ -405,7 +423,8 @@ function makeDiseaseDefinition(entryData) {
       const content = tabWrap.querySelector(`.${item.class}`);
 
       content.textContent = item.desc;
-      currentTab = tabWrap.querySelector(`#disease-${item.class}`);
+      const currentTab = tabWrap.querySelector(`#disease-${item.class}`);
+
       if (currentTab && isFirstTab) {
         currentTab.checked = true;
         isFirstTab = false;
@@ -425,16 +444,13 @@ function makeDiseaseDefinition(entryData) {
   }
 }
 
-function makeMedicalGeneticTestingInfo(geneTestData) {
-  const medicalGeneticTestingInfo = document.getElementById(
-    'temp-medical-genetic-testing-info'
-  );
-  const inspectionView =
-    medicalGeneticTestingInfo.querySelector('.inspection-view');
-  const data = geneTestData;
+function makeGeneticTesting(geneticTestingData) {
+  const geneticTesting = document.getElementById('genetic-testing');
+  const inspectionView = geneticTesting.querySelector('.inspection-view');
+  const data = geneticTestingData;
 
   if (Array.isArray(data) && data.length === 0) {
-    medicalGeneticTestingInfo.remove();
+    geneticTesting.remove();
   } else {
     // to avoid hitting api twice Use createObjectURL
     const blob = new Blob([JSON.stringify(data)], {
@@ -455,24 +471,28 @@ function makeMedicalGeneticTestingInfo(geneTestData) {
       `;
 
     const tempSpanElement = document.querySelector(
-      '#temp-medical-genetic-testing-info .data-num'
+      '#genetic-testing .data-num'
     );
-    const navSpanElement = document.querySelector(
-      '.medical-genetic-testing-info .data-num'
-    );
+    const navSpanElement = document.querySelector('.genetic-testing .data-num');
     tempSpanElement.innerText = data.length;
     navSpanElement.innerText = data.length;
   }
 }
 
-function makePhenotypeView(hpoData) {
-  const tempPhenotypeView = document.getElementById('temp-phenotype-view');
-  const phenotypeViewJa = tempPhenotypeView.querySelector('.phenotype-ja');
-  const phenotypeViewEn = tempPhenotypeView.querySelector('.phenotype-en');
-  const data = hpoData;
+function makePhenotypes(phenotypesData) {
+  const currentLang = document.querySelector('.language-select').value;
+  const tempPhenotypes = document.getElementById('phenotypes');
+  const phenotypeLang =
+    currentLang === 'ja' ? '.phenotype-ja' : '.phenotype-en';
+  const columns = {
+    ja: '[{&quot;id&quot;:&quot;hpo_label_ja&quot;,&quot;label&quot;:&quot;Symptom (JA)&quot;},{&quot;id&quot;:&quot;hpo_label_en&quot;,&quot;label&quot;:&quot;Symptom (EN)&quot;},{&quot;id&quot;:&quot;hpo_id&quot;,&quot;label&quot;:&quot;HPO ID&quot;,&quot;link&quot;:&quot;hpo_url&quot;,&quot;target&quot;:&quot;_blank&quot;},{&quot;id&quot;:&quot;hpo_category_name_en&quot;,&quot;label&quot;:&quot;Symptom category&quot;,&quot;link&quot;:&quot;hpo_category&quot;,&quot;target&quot;:&quot;_blank&quot;}]',
+    en: '[{&quot;id&quot;:&quot;hpo_label_en&quot;,&quot;label&quot;:&quot;Symptom&quot;},{&quot;id&quot;:&quot;hpo_id&quot;,&quot;label&quot;:&quot;HPO ID&quot;,&quot;link&quot;:&quot;hpo_url&quot;,&quot;target&quot;:&quot;_blank&quot;},{&quot;id&quot;:&quot;hpo_category_name_en&quot;,&quot;label&quot;:&quot;Symptom category&quot;,&quot;link&quot;:&quot;hpo_category&quot;,&quot;target&quot;:&quot;_blank&quot;}]',
+  };
+  const phenotypeView = tempPhenotypes.querySelector(phenotypeLang);
+  const data = phenotypesData;
 
   if (Array.isArray(data) && data.length === 0) {
-    tempPhenotypeView.remove();
+    tempPhenotypes.remove();
   } else {
     // to avoid hitting api twice Use createObjectURL
     const blob = new Blob([JSON.stringify(data)], {
@@ -480,8 +500,7 @@ function makePhenotypeView(hpoData) {
     });
     const objectUrl = URL.createObjectURL(blob);
 
-    // lang ja
-    phenotypeViewJa.innerHTML = `
+    phenotypeView.innerHTML = `
       <togostanza-pagination-table
       data-url="${objectUrl}"
       custom-css-url="https://togostanza.github.io/togostanza-themes/contrib/nanbyodata.css"
@@ -489,39 +508,21 @@ function makePhenotypeView(hpoData) {
       fixed-columns="1"
       page-size-option="100"
       page-slider="false"
-      columns="[{&quot;id&quot;:&quot;hpo_label_ja&quot;,&quot;label&quot;:&quot;Symptom (JA)&quot;},{&quot;id&quot;:&quot;hpo_label_en&quot;,&quot;label&quot;:&quot;Symptom (EN)&quot;},{&quot;id&quot;:&quot;hpo_id&quot;,&quot;label&quot;:&quot;HPO ID&quot;,&quot;link&quot;:&quot;hpo_url&quot;,&quot;target&quot;:&quot;_blank&quot;},{&quot;id&quot;:&quot;hpo_category_name_en&quot;,&quot;label&quot;:&quot;Symptom category&quot;,&quot;link&quot;:&quot;hpo_category&quot;,&quot;target&quot;:&quot;_blank&quot;}]"
+      columns="${columns[currentLang]}"
       togostanza-custom_css_url=""
         ></togostanza-pagination-table>
         `;
 
-    // lang eng
-    phenotypeViewEn.innerHTML = `
-      <togostanza-pagination-table
-      data-url="${objectUrl}"
-      custom-css-url="https://togostanza.github.io/togostanza-themes/contrib/nanbyodata.css"
-      data-type="json"
-      fixed-columns="1"
-      page-size-option="100"
-      page-slider="false"
-      columns="[{&quot;id&quot;:&quot;hpo_label_en&quot;,&quot;label&quot;:&quot;Symptom&quot;},{&quot;id&quot;:&quot;hpo_id&quot;,&quot;label&quot;:&quot;HPO ID&quot;,&quot;link&quot;:&quot;hpo_url&quot;,&quot;target&quot;:&quot;_blank&quot;},{&quot;id&quot;:&quot;hpo_category_name_en&quot;,&quot;label&quot;:&quot;Symptom category&quot;,&quot;link&quot;:&quot;hpo_category&quot;,&quot;target&quot;:&quot;_blank&quot;}]"
-      togostanza-custom_css_url=""
-        ></togostanza-pagination-table>
-        `;
-
-    const tempSpanElement = document.querySelector(
-      '#temp-phenotype-view .data-num'
-    );
-    const navSpanElement = document.querySelector('.phenotype-view .data-num');
+    const tempSpanElement = document.querySelector('#phenotypes .data-num');
+    const navSpanElement = document.querySelector('.phenotypes .data-num');
     tempSpanElement.innerText = data.length;
     navSpanElement.innerText = data.length;
   }
 }
 
-function makeSpecificBioResource(cellData, mouseData, dnaData) {
-  const specificBioResource = document.getElementById(
-    'temp-specific-bio-resource'
-  );
-  const tabWrap = specificBioResource.querySelector('.tab-wrap');
+function makeBioResource(cellData, mouseData, dnaData) {
+  const bioResource = document.getElementById('brc');
+  const tabWrap = bioResource.querySelector('.tab-wrap');
 
   let isCellData = false;
   let isMusData = false;
@@ -558,7 +559,7 @@ function makeSpecificBioResource(cellData, mouseData, dnaData) {
   function removeNavItemIfNotExist(entryDataProperty, className) {
     if (!entryDataProperty) {
       const navItem = document.querySelector(
-        '.specific-bio-resource .' + className + '.nav-link'
+        '.brc .' + className + '.nav-link'
       );
       if (navItem) {
         navItem.parentElement.remove();
@@ -567,7 +568,7 @@ function makeSpecificBioResource(cellData, mouseData, dnaData) {
   }
 
   removeNavItemIfNotExist(isCellData, 'cell');
-  removeNavItemIfNotExist(isMusData, 'mus');
+  removeNavItemIfNotExist(isMusData, 'mouse');
   removeNavItemIfNotExist(isDnaData, 'dna');
 
   const items = [
@@ -582,7 +583,7 @@ function makeSpecificBioResource(cellData, mouseData, dnaData) {
     },
     {
       existing: isMusData,
-      id: 'mus',
+      id: 'mouse',
       url: `https://nanbyodata.jp/sparqlist/api/nanbyodata_get_riken_brc_mouse_info_by_nando_id?nando_id=${nandoId}`,
       columns:
         '[{&quot;id&quot;:&quot;mouse_id&quot;,&quot;label&quot;:&quot;RIKEN_BRC No.&quot;},{&quot;id&quot;:&quot;hp&quot;,&quot;label&quot;:&quot;Homepage&quot;,&quot;link&quot;:&quot;Homepage&quot;,&quot;target&quot;:&quot;_blank&quot;},{&quot;id&quot;:&quot;mouse_name&quot;,&quot;label&quot;:&quot;Strain name&quot;},{&quot;id&quot;:&quot;description&quot;,&quot;label&quot;:&quot;Strain description&quot;}]',
@@ -601,19 +602,19 @@ function makeSpecificBioResource(cellData, mouseData, dnaData) {
   ];
 
   if (items.every((item) => !item.existing)) {
-    specificBioResource.remove();
+    bioResource.remove();
   } else {
     let isFirstTab = true;
 
     items.forEach((item) => {
       if (!item.existing) {
-        const input = document.getElementById(`specific-brc-${item.id}`);
+        const input = document.getElementById(`bio-resource-${item.id}`);
         const label = input.nextElementSibling;
         label.remove();
         input.remove();
       } else {
         const content = tabWrap.querySelector(`.${item.id}`);
-        currentTab = tabWrap.querySelector(`#specific-brc-${item.id}`);
+        const currentTab = tabWrap.querySelector(`#bio-resource-${item.id}`);
         if (currentTab && isFirstTab) {
           currentTab.checked = true;
           isFirstTab = false;
@@ -628,7 +629,7 @@ function makeSpecificBioResource(cellData, mouseData, dnaData) {
         </togostanza-pagination-table>
       `;
         const tempSpanElement = document.querySelector(
-          `.specific-brc-${item.id} .data-num`
+          `.bio-resource-${item.id} .data-num`
         );
         const navSpanElement = document.querySelector(`.${item.id} .data-num`);
         tempSpanElement.innerText = item.data.length;
@@ -638,59 +639,119 @@ function makeSpecificBioResource(cellData, mouseData, dnaData) {
   }
 }
 
-function makeVariant(entryData, variantData) {
-  const variant = document.getElementById('temp-variant');
-  const properties = variant.querySelector('#temp-properties');
-  const data = variantData;
+function makeVariant(clinvarData, mgendData, entryData) {
+  const variant = document.getElementById('variant');
+  const tabWrap = variant.querySelector('.tab-wrap');
 
-  if (Array.isArray(data) && data.length === 0) {
-    variant.remove();
-  } else {
-    // to avoid hitting api twice Use createObjectURL
-    const blob = new Blob([JSON.stringify(data)], {
+  let isClinvarData = false;
+  let isMgendData = false;
+
+  let clinvarObject = null;
+  if (Array.isArray(clinvarData) && clinvarData.length > 0) {
+    isClinvarData = true;
+    const blob = new Blob([JSON.stringify(clinvarData)], {
       type: 'application/json',
     });
-    const objectUrl = URL.createObjectURL(blob);
-    properties.innerHTML = `
-          <togostanza-pagination-table
-              data-url="${objectUrl}"
-              data-type="json"
-              custom-css-url="https://togostanza.github.io/togostanza-themes/contrib/nanbyodata.css"
-              fixed-columns="1"
-              page-size-option="100"
-              page-slider="false"
-              columns="[{&quot;id&quot;:&quot;Clinvar_id&quot;,&quot;label&quot;:&quot;Clinvar_ID&quot;,&quot;link&quot;:&quot;Clinvar_link&quot;,&quot;target&quot;:&quot;_bkank&quot;}, {&quot;id&quot;:&quot;title&quot;,&quot;label&quot;:&quot;HGVS&quot;}, {&quot;id&quot;:&quot;Interpretation&quot;,&quot;label&quot;:&quot;Interpretation&quot;}, {&quot;id&quot;:&quot;type&quot;,&quot;label&quot;:&quot;Variant type&quot;}, {&quot;id&quot;:&quot;position&quot;,&quot;label&quot;:&quot;Chr:Position&quot;}, {&quot;id&quot;:&quot;tgv_id&quot;,&quot;label&quot;:&quot;TogoVar_ID&quot;,&quot;link&quot;:&quot;tgv_link&quot;,&quot;target&quot;:&quot;_blank&quot;} , {&quot;id&quot;:&quot;MedGen_id&quot;,&quot;label&quot;:&quot;MedGen_ID&quot;,&quot;link&quot;:&quot;MedGen_link&quot;,&quot;target&quot;:&quot;_bkank&quot;}, {&quot;id&quot;:&quot;mondo_id&quot;,&quot;label&quot;:&quot;MONDO_ID&quot;,&quot;link&quot;:&quot;mondo&quot;,&quot;target&quot;:&quot;_bkank&quot;}]"
-          ></togostanza-pagination-table>
-          `;
-
-    const tempSpanElement = document.querySelector(`#temp-variant .data-num`);
-    const navSpanElement = document.querySelector('.variant .data-num');
-    tempSpanElement.innerText = data.length;
-    navSpanElement.innerText = data.length;
+    clinvarObject = URL.createObjectURL(blob);
   }
+
+  let mgendObject = null;
+  if (Array.isArray(mgendData) && isMgendData.length > 0) {
+    isMgendData = true;
+    const blob = new Blob([JSON.stringify(isMgendData)], {
+      type: 'application/json',
+    });
+    mgendObject = URL.createObjectURL(blob);
+  }
+
+  // check existing tab
+  function removeNavItemIfNotExist(entryDataProperty, className) {
+    if (!entryDataProperty) {
+      const navItem = document.querySelector(
+        '.variant .' + className + '.nav-link'
+      );
+      if (navItem) {
+        navItem.parentElement.remove();
+      }
+    }
+  }
+
+  removeNavItemIfNotExist(isClinvarData, 'clinvar');
+  removeNavItemIfNotExist(isMgendData, 'mgend');
+  const items = [
+    {
+      existing: isClinvarData,
+      id: 'clinvar',
+      url: `https://nanbyodata.jp/sparqlist/api/nanbyodata_get_variant_by_nando_id=${nandoId}`,
+      columns:
+        '[{&quot;id&quot;:&quot;Clinvar_id&quot;,&quot;label&quot;:&quot;Clinvar_ID&quot;,&quot;link&quot;:&quot;Clinvar_link&quot;,&quot;target&quot;:&quot;_bkank&quot;}, {&quot;id&quot;:&quot;title&quot;,&quot;label&quot;:&quot;HGVS&quot;}, {&quot;id&quot;:&quot;Interpretation&quot;,&quot;label&quot;:&quot;Interpretation&quot;}, {&quot;id&quot;:&quot;type&quot;,&quot;label&quot;:&quot;Variant type&quot;}, {&quot;id&quot;:&quot;position&quot;,&quot;label&quot;:&quot;Chr:Position&quot;}, {&quot;id&quot;:&quot;tgv_id&quot;,&quot;label&quot;:&quot;TogoVar_ID&quot;,&quot;link&quot;:&quot;tgv_link&quot;,&quot;target&quot;:&quot;_blank&quot;} , {&quot;id&quot;:&quot;MedGen_id&quot;,&quot;label&quot;:&quot;MedGen_ID&quot;,&quot;link&quot;:&quot;MedGen_link&quot;,&quot;target&quot;:&quot;_bkank&quot;}, {&quot;id&quot;:&quot;mondo_id&quot;,&quot;label&quot;:&quot;MONDO_ID&quot;,&quot;link&quot;:&quot;mondo&quot;,&quot;target&quot;:&quot;_bkank&quot;}]',
+      data: clinvarData,
+      object: clinvarObject,
+    },
+    {
+      existing: isMgendData,
+      id: 'mgend',
+      url: ``,
+      columns: '',
+      data: mgendData,
+      object: mgendObject,
+    },
+  ];
+
+  if (items.every((item) => !item.existing)) {
+    variant.remove();
+  } else {
+    let isFirstTab = true;
+
+    items.forEach((item) => {
+      if (!item.existing) {
+        const input = document.getElementById(`variant-${item.id}`);
+        const label = input.nextElementSibling;
+        label.remove();
+        input.remove();
+      } else {
+        const content = tabWrap.querySelector(`.${item.id}`);
+        const currentTab = tabWrap.querySelector(`#variant-${item.id}`);
+        if (currentTab && isFirstTab) {
+          currentTab.checked = true;
+          isFirstTab = false;
+        }
+        content.innerHTML = `
+        <togostanza-pagination-table data-type="json"
+          data-url="${item.object}"
+          columns="${item.columns}"
+          custom-css-url="https://togostanza.github.io/togostanza-themes/contrib/nanbyodata.css"
+          page-size-option="100"
+          page-slider="fales">
+        </togostanza-pagination-table>
+      `;
+        const tempSpanElement = document.querySelector(
+          `.variant-${item.id} .data-num`
+        );
+        const navSpanElement = document.querySelector(`.${item.id} .data-num`);
+        tempSpanElement.innerText = item.data.length;
+        navSpanElement.innerText = item.data.length;
+      }
+    });
+  }
+  makeSideNavigation(entryData);
 
   // When loading finishes
   document.querySelector('.loading-spinner').style.display = 'none';
   document.getElementById('content').style.display = 'block';
   document.getElementById('sidebar').style.display = 'block';
-  makeSideNavigation(entryData);
 }
 
 function makeSideNavigation(entryData) {
-  const selectTreeBox = document.querySelector(`select[name="${nandoId}"]`);
-  if (selectTreeBox) {
-    selectTreeBox.style.backgroundColor = 'rgba(22, 35, 78, 0.2)';
-  }
-
   const sideNavigation = document.getElementById('temp-side-navigation');
   const sideNavigationUl = sideNavigation.querySelector('ul');
   const items = [
-    'temp-summary',
-    'temp-causative-gene',
-    'temp-medical-genetic-testing-info',
-    'temp-phenotype-view',
-    'temp-specific-bio-resource',
-    'temp-variant',
+    'overview',
+    'causal-genes',
+    'genetic-testing',
+    'phenotypes',
+    'brc',
+    'variant',
   ];
   const lis = sideNavigationUl.querySelectorAll('li');
   lis.forEach((li) => {
@@ -699,124 +760,200 @@ function makeSideNavigation(entryData) {
       switchingDisplayContents(id, entryData);
     });
   });
+
   items.forEach((id) => {
     const liElement = document.getElementById(id);
     if (!liElement) {
-      const liToRemove = document.querySelector(
-        `[href="#${id}"]`
-      ).parentElement;
-      liToRemove.parentNode.removeChild(liToRemove);
+      switch (id) {
+        case 'brc':
+        case 'variant':
+          const elementToRemove = document.querySelector(`.${id}`);
+          if (elementToRemove && elementToRemove.parentNode) {
+            elementToRemove.parentNode.remove();
+          }
+          break;
+        default:
+          const anchorElement = document.querySelector(`[href="#${id}"]`);
+          if (anchorElement && anchorElement.parentElement) {
+            const liToRemove = anchorElement.parentElement;
+            if (liToRemove.parentNode) {
+              liToRemove.remove();
+            }
+          }
+          break;
+      }
     }
   });
 
-  // processing when the table of contents is pressed
-  document
-    .querySelectorAll('.specific-bio-resource a')
-    .forEach(function (aTag) {
-      aTag.addEventListener('click', function (event) {
-        event.preventDefault();
-        const classList = this.classList[0];
-        const checkBox = document.getElementById('specific-brc-' + classList);
-        if (checkBox && !checkBox.checked) {
-          checkBox.checked = true;
-        }
+  document.querySelectorAll('a[href="#brc"]').forEach(function (aTag) {
+    aTag.addEventListener('click', function (event) {
+      document.querySelector('#brc').scrollIntoView({
+        behavior: 'smooth',
       });
+      event.preventDefault();
+      const classList = this.classList[0];
+      const selectName = 'bio-resource-' + classList;
+      window.location.hash = selectName;
+      const checkBox = document.getElementById(selectName);
+      if (checkBox && !checkBox.checked) {
+        checkBox.checked = true;
+      }
     });
+  });
+
+  document.querySelectorAll('a[href="#variant"]').forEach(function (aTag) {
+    aTag.addEventListener('click', function (event) {
+      document.querySelector('#variant').scrollIntoView({
+        behavior: 'smooth',
+      });
+      event.preventDefault();
+      const classList = this.classList[0];
+      const selectName = 'variant-' + classList;
+      window.location.hash = selectName;
+      const checkBox = document.getElementById(selectName);
+      if (checkBox && !checkBox.checked) {
+        checkBox.checked = true;
+      }
+    });
+  });
 
   // processing when tabs are switched
+  document.querySelectorAll('#brc .tab-switch').forEach(function (tabSwitch) {
+    tabSwitch.addEventListener('change', function () {
+      const selectedTabId = this.id.replace('bio-resource-', '');
+      const tocItem = document.querySelector('.brc a.' + selectedTabId);
+      document.querySelectorAll('a').forEach(function (item) {
+        item.classList.remove('selected');
+      });
+      if (tocItem) {
+        tocItem.classList.add('selected');
+        window.location.hash = this.id;
+      }
+    });
+  });
+
   document
-    .querySelectorAll('#temp-specific-bio-resource .tab-switch')
+    .querySelectorAll('#variant .tab-switch')
     .forEach(function (tabSwitch) {
       tabSwitch.addEventListener('change', function () {
-        const selectedTabId = this.id.replace('specific-brc-', '');
-        const tocItem = document.querySelector(
-          '.specific-bio-resource a.' + selectedTabId
-        );
+        const selectedTabId = this.id.replace('variant-', '');
+        const tocItem = document.querySelector('.variant a.' + selectedTabId);
         document.querySelectorAll('a').forEach(function (item) {
           item.classList.remove('selected');
         });
         if (tocItem) {
           tocItem.classList.add('selected');
+          window.location.hash = this.id;
         }
       });
     });
 }
 
+function toggleDisplay(selector, displayStyle = 'none') {
+  const element = document.querySelector(selector);
+  if (element) element.style.display = displayStyle;
+}
+
+function toggleClassForElements(selector, className, condition) {
+  document.querySelectorAll(selector).forEach((element) => {
+    element.classList.toggle(className, condition(element));
+  });
+}
+
 function switchingDisplayContents(selectedItemId, entryData) {
   const items = [
-    '#temp-summary',
+    '#overview',
     '#temp-disease-definition',
-    '#temp-causative-gene',
-    '#temp-medical-genetic-testing-info',
-    '#temp-phenotype-view',
-    '#temp-specific-bio-resource',
-    '#temp-variant',
+    '#causal-genes',
+    '#genetic-testing',
+    '#phenotypes',
+    '#brc',
+    '#variant',
   ];
 
-  // すべての要素を非表示にする
-  items.forEach((selector) => {
-    const element = document.querySelector(selector);
-    if (element) {
-      element.style.display = 'none';
-    }
-  });
+  // Hide all elements
+  items.forEach((selector) => toggleDisplay(selector));
 
-  // 選択されているアイテムを表示する
-  if (selectedItemId === 'temp-summary') {
-    const tempSummary = document.getElementById('temp-summary');
-    tempSummary.style.display = 'block';
-    const tempAliases = document.getElementById('temp-aliases');
-    const tempDiseaseDefinition = document.querySelector('.temp-wrapper');
-    if (tempAliases) tempAliases.style.display = 'block';
-    if (tempDiseaseDefinition) tempDiseaseDefinition.style.display = 'block';
-    const diseaseDefinition = document.getElementById(
-      'temp-disease-definition'
-    );
-    if (diseaseDefinition) {
-      diseaseDefinition.style.display = 'block';
-    } else {
+  // Show selected items
+  switch (selectedItemId) {
+    case 'overview':
+      toggleDisplay('#overview', 'block');
+      ['temp-aliases', '.temp-wrapper', '#temp-disease-definition'].forEach(
+        (selector) => {
+          toggleDisplay(selector, 'block');
+        }
+      );
       checkSummaryData(entryData);
-    }
-  } else if (selectedItemId === 'temp-specific-bio-resource') {
-    const dataWrapper = document.getElementById('data-wrapper');
-    const summary = document.querySelector('.summary-header');
-    dataWrapper.insertBefore(summary, dataWrapper.firstChild);
-    document.querySelector(`#${selectedItemId}`).style.display = 'block';
+      break;
+    case 'temp-disease-definition':
+    case 'causal-genes':
+    case 'genetic-testing':
+    case 'phenotypes':
+      prepareDataWrapper();
+      toggleDisplay(`#${selectedItemId}`, 'block');
+      toggleClassForElements('a', 'selected', (element) =>
+        element.classList.contains(selectedItemId)
+      );
+      break;
+    case 'brc':
+    case 'bio-resource-cell':
+    case 'bio-resource-mouse':
+    case 'bio-resource-dna':
+      prepareDataWrapper();
+      toggleDisplay('#brc', 'block');
+      let checkBoxBrc = document.getElementById(selectedItemId);
+      if (checkBoxBrc) checkBoxBrc.checked = true;
+      updateBioSelection('#brc .tab-switch:checked');
+      break;
+    case 'variant':
+    case 'variant-clinvar':
+    case 'variant-mgend':
+      prepareDataWrapper();
+      toggleDisplay('#variant', 'block');
+      let checkBoxVariant = document.getElementById(selectedItemId);
+      if (checkBoxVariant) checkBoxVariant.checked = true;
+      updateVariantSelection('#variant .tab-switch:checked');
+      break;
+    default:
+      window.location.href = window.location.href.split('#')[0];
+  }
+}
 
-    const checkedSwitch = document.querySelector(
-      '#temp-specific-bio-resource .tab-switch:checked'
+function prepareDataWrapper() {
+  const dataWrapper = document.getElementById('data-wrapper');
+  const summary = document.querySelector('.summary-header');
+  if (dataWrapper.firstChild !== summary) {
+    dataWrapper.insertBefore(summary, dataWrapper.firstChild);
+  }
+}
+
+function updateBioSelection(selector) {
+  const checkedSwitch = document.querySelector(selector);
+  if (checkedSwitch) {
+    window.location.hash = checkedSwitch.id;
+    const selectedId = checkedSwitch.id.replace('bio-resource-', '');
+    toggleClassForElements('a', 'selected', (element) =>
+      element.classList.contains(selectedId)
     );
-    const selectedId = checkedSwitch.id.replace('specific-brc-', '');
+  }
+}
 
-    const targetElements = document.querySelectorAll('a');
-
-    targetElements.forEach(function (element) {
-      const classes = element.classList;
-      if (classes[0] === selectedId) {
-        element.classList.add('selected');
-      } else {
-        element.classList.remove('selected');
-      }
-    });
-  } else {
-    const dataWrapper = document.getElementById('data-wrapper');
-    const summary = document.querySelector('.summary-header');
-    dataWrapper.insertBefore(summary, dataWrapper.firstChild);
-    document.querySelector(`#${selectedItemId}`).style.display = 'block';
+function updateVariantSelection(selector) {
+  const checkedSwitch = document.querySelector(selector);
+  if (checkedSwitch) {
+    window.location.hash = checkedSwitch.id;
+    const selectedId = checkedSwitch.id.replace('variant-', '');
+    toggleClassForElements('a', 'selected', (element) =>
+      element.classList.contains(selectedId)
+    );
   }
 }
 
 function selectedItem() {
   const links = document.querySelectorAll('#temp-side-navigation .nav-link');
-
   links.forEach((link) => {
-    link.addEventListener('click', (event) => {
-      event.preventDefault();
-
-      links.forEach((link) => {
-        link.classList.remove('selected');
-      });
-
+    link.addEventListener('click', () => {
+      links.forEach((l) => l.classList.remove('selected'));
       link.classList.add('selected');
     });
   });

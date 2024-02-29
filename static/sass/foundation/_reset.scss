@@ -1,0 +1,57 @@
+@charset "UTF-8";
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700&family=Sriracha&display=swap');
+
+body {
+  font-family: 'Poppins', sans-serif, 'Renner*', 'Avenir', 'Helvetica Neue',
+    'Helvetica', 'Arial', 'Hiragino Sans', 'ヒラギノ角ゴシック', YuGothic,
+    'Yu Gothic', 'メイリオ', Meiryo, 'ＭＳ Ｐゴシック', 'MS PGothic';
+}
+
+h1, h2, h3, ul, li, p{
+  margin: 0;
+  padding: 0;
+}
+
+h1 {
+  font-size: 0;
+}
+
+h5 {
+  font-size: 1em;
+}
+
+p {
+  color: var(--color-font);
+  font-size: 13px;
+}
+
+ul {
+  list-style: none;
+}
+
+.br::before {
+  content: '\A';
+  white-space: pre;
+}
+
+a {
+  &:visited,
+  &:hover,
+  &:active {
+    color: var(--color-secondary);
+  }
+
+  &[target='_blank']::after {
+    font-family: 'Font Awesome 5 Free';
+    content: var(--icon-link);
+    font-size: 85%;
+    font-weight: 900;
+    margin: 0 3px;
+  }
+}
+
+.flex-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
