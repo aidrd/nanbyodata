@@ -151,8 +151,14 @@
 
       <div class="container">
         <div id="third"></div>
-        <h3>オープンデータ</h3>
-        <p>本サイトで提供されているデータは、クリエイティブ・コモンズ【表示4.0国際】ライセンスに従うかぎり、<span class="br">商用利用</span>を含め、自由に複製または改変してご利用いただくことが可能です。
+        {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
+        <h3>ダウンロード</h3>
+        <p>NanbyoDataは<a href="https://creativecommons.org/licenses/by/4.0/deed.ja">クリエイティブ・コモンズ【表示4.0国際】</a>の下に提供されています。
+        {% else %}
+        <h3>Download</h3>
+        <p>NanbyoData is licensed under a <a href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International</a>.
+        {% endif %}
+
         </p>
         <div class="cardWrapper">
           <div class="card" style="width: 18rem;">
@@ -316,22 +322,22 @@
                   <th>Date</th>
                 </tr>
                 <tr>
-                  <td>1.0.1</td>
-                  <td><a href="https://nanbyodata.jp/ontology/nando.ttl">Turtle</a></td>
+                  <td>2023-11-28</td>
+                  <td><a href="https://nanbyodata.jp/ontology/2023-11-28/nando.ttl">Turtle</a></td>
                   <td>2.7MB</td>
-                  <td>2021-08-05</td>
+                  <td>2023-11-28</td>
                 </tr>
                 <tr>
-                  <td>1.0.1</td>
-                  <td><a href="https://nanbyodata.jp/ontology/nando.rdf">RDF/XML</a></td>
+                  <td>2023-11-28</td>
+                  <td><a href="https://nanbyodata.jp/ontology/2023-11-28/nando.rdf">RDF/XML</a></td>
                   <td>3.6MB</td>
-                  <td>2021-08-05</td>
+                  <td>2023-11-28</td>
                 </tr>
                 <tr>
-                  <td>1.0.1</td>
-                  <td><a href="https://nanbyodata.jp/ontology/nando.xlsx">Excel(.xlsx)</a></td>
-                  <td>265KB</td>
-                  <td>2021-08-05</td>
+                  <td>2023-11-28</td>
+                  <td><a href="https://nanbyodata.jp/ontology/2023-11-28/nando.xlsx">Excel(.xlsx)</a></td>
+                  <td>249KB</td>
+                  <td>2023-11-28</td>
                 </tr>
               </table>
             </div>
