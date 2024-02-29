@@ -1,9 +1,9 @@
 import { navToggle } from './navigation.js';
 import { focusInput } from './focusInput.js';
 import { changePlaceholder } from './changePlaceholder.js';
-import { popup } from './popup.js';
+// import { popup } from './popup.js';
 import { breadcrumb } from './breadcrumb.js';
-import { downloadDatasets } from './download.js';
+// import { downloadDatasets } from './download.js';
 
 // dispaly: none until loading is finished
 document.getElementById('content').style.display = 'none';
@@ -18,7 +18,7 @@ const nandoId = pathname.slice(nandoIndex + 6);
 navToggle();
 focusInput();
 changePlaceholder();
-popup();
+// popup();
 breadcrumb(nandoId);
 
 (async () => {
@@ -72,7 +72,7 @@ breadcrumb(nandoId);
       { name: 'Clinvar', data: clinvarData },
     ];
 
-    downloadDatasets(nandoId, datasets);
+    // downloadDatasets(nandoId, datasets);
 
     await Promise.all([
       makeHeader(entryData),
