@@ -1,80 +1,91 @@
-const openModalBtns = document.querySelectorAll('.open-modal-btn');
-const modalViews = document.querySelectorAll('.modal-view');
+const openPopupBtns = document.querySelectorAll('.open-popup-btn');
+const downloadBtn = openPopupBtns[0];
+const shareBtn = openPopupBtns[1];
+const popupViews = document.querySelectorAll('.popup-view');
+const downloadPopup = popupViews[0];
+const sharePopup = popupViews[1];
 
 export const popup = () => {
-  openModalBtns.forEach((button) => {
-    button.addEventListener('click', (e) => {
-      const activeActionContent = e.target.closest('div');
-      const activeModal = activeActionContent.querySelector('.modal-view');
-      if (button.getAttribute('aria-expanded') === 'true') {
-        closeModal(activeModal);
-      } else {
-        openModal(activeModal);
-      }
+  function togglePopup(popupId, isOpen) {
+    const popup = document.querySelector(popupId);
+    const activeButton = Array.from(openPopupBtns).find(
+      (button) => button.getAttribute('aria-controls') === popupId.substring(1)
+    );
+    popup.setAttribute('aria-hidden', !isOpen);
+    activeButton.setAttribute('aria-expanded', isOpen);
+  }
+
+  // ボタンでのpopupの開閉
+  openPopupBtns.forEach((button) => {
+    button.addEventListener('click', () => {
+      const popupId = '#' + button.getAttribute('aria-controls');
+      const isOpen = button.getAttribute('aria-expanded') === 'true';
+      togglePopup(popupId, !isOpen);
     });
   });
 
-  function openModal(modal) {
-    modal.setAttribute('aria-hidden', false);
-    const activeButton = Array.from(openModalBtns).find((button) => {
-      return button.getAttribute('aria-controls') === modal.id;
-    });
-    activeButton.setAttribute('aria-expanded', true);
-  }
-
-  function closeModal(modal) {
-    modal.setAttribute('aria-hidden', true);
-    const activeButton = Array.from(openModalBtns).find(
-      (button) => button.getAttribute('aria-controls') === modal.id
-    );
-    activeButton.setAttribute('aria-expanded', false);
-  }
-
+  // popupを閉じる
   document.addEventListener('click', function (e) {
-    const isOpenModalBtn = e.target.closest('.open-modal-btn');
-    if (isOpenModalBtn) {
-      const targetName = isOpenModalBtn.getAttribute('aria-controls');
+    const isOpenPopupBtn = e.target.closest('.open-popup-btn');
+    const isInsidePopup = e.target.closest('.popup-view');
+
+    // 別のpopup buttonクリックした時に他のpopupを閉じる
+    if (isOpenPopupBtn) {
       if (
-        targetName === 'modal-download' &&
-        openModalBtns[1].getAttribute('aria-expanded') === 'true'
+        isOpenPopupBtn === downloadBtn &&
+        shareBtn.getAttribute('aria-expanded') === 'true'
       ) {
-        openModalBtns[1].setAttribute('aria-expanded', false);
-        modalViews[1].setAttribute('aria-hidden', true);
+        shareBtn.setAttribute('aria-expanded', false);
+        sharePopup.setAttribute('aria-hidden', true);
         return;
       } else if (
-        targetName === 'modal-share' &&
-        openModalBtns[0].getAttribute('aria-expanded') === 'true'
+        isOpenPopupBtn === shareBtn &&
+        downloadBtn.getAttribute('aria-expanded') === 'true'
       ) {
-        openModalBtns[0].setAttribute('aria-expanded', false);
-        modalViews[0].setAttribute('aria-hidden', true);
+        downloadBtn.setAttribute('aria-expanded', false);
+        downloadPopup.setAttribute('aria-hidden', true);
         return;
       }
     }
 
-    document.querySelectorAll('.modal-view').forEach((modal) => {
-      if (isOpenModalBtn || e.target.closest('.modal-view')) {
+    // popup外をクリックした時に閉じる
+    document.querySelectorAll('.popup-view').forEach((popup) => {
+      if (isOpenPopupBtn || isInsidePopup) {
         return;
       } else {
-        modal.parentElement
-          .querySelector('.open-modal-btn')
+        popup.parentElement
+          .querySelector('.open-popup-btn')
           .setAttribute('aria-expanded', false);
-        modal.setAttribute('aria-hidden', true);
+        popup.setAttribute('aria-hidden', true);
       }
     });
   });
 };
 
-document.addEventListener('DOMContentLoaded', () => {
-  document.querySelector('.summary-share .share-link').textContent =
-    window.location.href;
+// Share Link
+function updateShareLink() {
+  const shareLinkElement = document.querySelector('.summary-share .share-link');
+  shareLinkElement.textContent = window.location.href;
+}
+document.addEventListener('DOMContentLoaded', updateShareLink);
+document.querySelectorAll('#temp-side-navigation .nav-link').forEach((link) => {
+  link.addEventListener('click', () => setTimeout(updateShareLink, 0));
 });
 
-document.querySelectorAll('#temp-side-navigation .nav-link').forEach((link) => {
-  link.addEventListener('click', () => {
-    //本当はsetIntervalではなくdispatchEventを使いたいが、どこで行っているかわからないので保留
-    setInterval(() => {
-      document.querySelector('.summary-share .share-link').textContent =
-        window.location.href;
-    }, 1);
-  });
-});
+async function copyToClipboard() {
+  const shareLink = window.location.href;
+  const copyButton = document.querySelector('.summary-share button.copy');
+  copyButton.textContent = 'Copied!';
+  await navigator.clipboard.writeText(shareLink);
+  setTimeout(() => (copyButton.textContent = 'Copy'), 1000);
+}
+function openMailer() {
+  const shareLink = window.location.href;
+  window.location.href = `mailto:?body=${shareLink}`;
+}
+document
+  .querySelector('.summary-share button.copy')
+  .addEventListener('click', copyToClipboard);
+document
+  .querySelector('.summary-share button.email')
+  .addEventListener('click', openMailer);

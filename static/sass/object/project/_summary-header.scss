@@ -1,8 +1,8 @@
 /* summary-header
 Disease page right top */
 .summary-header {
-  border: solid 2px #c1c6d3;
-  border-radius: 5px;
+  border: solid 2px var(--color-summary-border);
+  border-radius: var(--radius-medium);
 
   > .data-name,
   > .summary-header-links {
@@ -10,7 +10,7 @@ Disease page right top */
   }
 
   > .data-name {
-    border-bottom: 1px dashed #c1c6d3;
+    border-bottom: 1px dashed var(--color-summary-border);
 
     > h3 {
       font-size: 18px;
@@ -18,16 +18,16 @@ Disease page right top */
 
       a.nando-link,
       span.nando-copy {
-        font-size: 12px;
-        color: #90959b;
-        font-weight: normal;
-        cursor: pointer;
-        margin-left: 5px;
         position: relative;
         top: -2px;
+        margin-left: 5px;
+        font-size: 12px;
+        color: var(--color-summary-link);
+        font-weight: normal;
+        cursor: pointer;
 
         &:hover {
-          color: black;
+          color: #000;
         }
 
         &::after {
@@ -42,14 +42,14 @@ Disease page right top */
         overflow-wrap: break-word;
 
         &::after {
-          content: var(--font-link);
+          content: var(--icon-link);
           font-weight: 900;
         }
       }
 
       span.nando-copy {
         &::after {
-          content: var(--font-copy);
+          content: var(--icon-copy);
           font-weight: normal;
           vertical-align: middle;
         }
@@ -84,27 +84,25 @@ Disease page right top */
     gap: 5px;
 
     .summary-download {
-
       .btn-text {
         &::before {
           font-family: 'Font Awesome 5 Free';
-          content: var(--font-download);
+          content: var(--icon-download);
           font-weight: 900;
           margin-right: 6px;
         }
       }
     }
-      .summary-share {
-        .btn-text {
-          &::before {
-            font-family: 'Font Awesome 5 Free';
-            content: "\f1e0";
-            font-weight: 900;
-            margin-right: 6px;
-          }
+    .summary-share {
+      .btn-text {
+        &::before {
+          font-family: 'Font Awesome 5 Free';
+          content: '\f1e0';
+          font-weight: 900;
+          margin-right: 6px;
         }
       }
-
+    }
   }
 
   .external-links {

@@ -1,9 +1,9 @@
 import { navToggle } from './navigation.js';
 import { focusInput } from './focusInput.js';
 import { changePlaceholder } from './changePlaceholder.js';
-import { popup } from './popup.js';
+// import { popup } from './popup.js';
 import { breadcrumb } from './breadcrumb.js';
-import { downloadDatasets } from './download.js';
+// import { downloadDatasets } from './download.js';
 import { setLangChange } from './setLangChange.js';
 
 // dispaly: none until loading is finished
@@ -19,7 +19,7 @@ const nandoId = pathname.slice(nandoIndex + 6);
 navToggle();
 focusInput();
 changePlaceholder();
-popup();
+// popup();
 breadcrumb(nandoId);
 setLangChange();
 
@@ -64,19 +64,19 @@ setLangChange();
     // const mgendData = await fetchData('');
     const mgendData = [];
 
-    // TODO:ダウンロード用のデータをまとめる
+    // download datasets
     const datasets = [
       { name: 'Overview', data: entryData },
       { name: 'Causal Genes', data: causalGeneData },
-      { name: 'Phenotypes', data: geneticTestingData },
-      { name: 'HPO Data', data: phenotypesData },
-      { name: 'Bio Resource Cell', data: cellData },
-      { name: 'Bio Resource Mouse', data: mouseData },
-      { name: 'Bio Resource DNA', data: dnaData },
-      { name: 'Variant Clinvar', data: clinvarData },
+      { name: 'Genetic Testing', data: geneticTestingData },
+      { name: 'Phenotypes', data: phenotypesData },
+      { name: 'Cell', data: cellData },
+      { name: 'Mouse', data: mouseData },
+      { name: 'DNA', data: dnaData },
+      { name: 'Clinvar', data: clinvarData },
     ];
 
-    downloadDatasets(nandoId, datasets);
+    // downloadDatasets(nandoId, datasets);
 
     await Promise.all([
       makeHeader(entryData),

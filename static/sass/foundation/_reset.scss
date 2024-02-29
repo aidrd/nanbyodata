@@ -1,4 +1,5 @@
 @charset "UTF-8";
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700&family=Sriracha&display=swap');
 
 body {
   font-family: 'Poppins', sans-serif, 'Renner*', 'Avenir', 'Helvetica Neue',
@@ -40,11 +41,17 @@ a {
     color: var(--color-secondary);
   }
 
-  &.link[target='_blank']::after {
+  &[target='_blank']::after {
     font-family: 'Font Awesome 5 Free';
-    content: '\f35d';
-    font-size: 105%;
+    content: var(--icon-link);
+    font-size: 85%;
     font-weight: 900;
     margin: 0 3px;
   }
+}
+
+.flex-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 5px;
 }
