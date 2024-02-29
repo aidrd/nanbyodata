@@ -22,7 +22,7 @@
     crossorigin></script>
   <link rel="import" href="https://nanbyodata.jp/stanza/nando_entry_v2/" />
 
-    <!-- Main CSS -->
+  <!-- Main CSS -->
   <link rel="stylesheet" type="text/css" href="/static/sass/main.css" />
 
   <title>NanbyoData</title>
@@ -53,7 +53,7 @@
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive">
               <i class="fas fa-bars"></i>
             </button>
-            <select class="language-select" onchange="location.href='?lang='+value;">
+            <select class="language-select">
               <option value="ja" {% if get_locale()=='ja' %}selected{% endif %}>日本語</option>
               <option value="en" {% if get_locale()=='en' %}selected{% endif %}>English</option>
             </select>

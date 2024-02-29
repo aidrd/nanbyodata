@@ -4,6 +4,7 @@ import { changePlaceholder } from './changePlaceholder.js';
 // import { popup } from './popup.js';
 import { breadcrumb } from './breadcrumb.js';
 // import { downloadDatasets } from './download.js';
+import { setLangChange } from './setLangChange.js';
 
 // dispaly: none until loading is finished
 document.getElementById('content').style.display = 'none';
@@ -20,6 +21,7 @@ focusInput();
 changePlaceholder();
 // popup();
 breadcrumb(nandoId);
+setLangChange();
 
 (async () => {
   try {
@@ -43,9 +45,11 @@ breadcrumb(nandoId);
     }
 
     // get all data
-    const geneData = await fetchData('nanbyodata_get_gene_by_nando_id');
-    const geneTestData = await fetchData('nanbyodata_get_gene_test');
-    const hpoData = await fetchData('nanbyodata_get_hpo_data_by_nando_id');
+    const causalGeneData = await fetchData('nanbyodata_get_gene_by_nando_id');
+    const geneticTestingData = await fetchData('nanbyodata_get_gene_test');
+    const phenotypesData = await fetchData(
+      'nanbyodata_get_hpo_data_by_nando_id'
+    );
     const cellData = await fetchData(
       'nanbyodata_get_riken_brc_cell_info_by_nando_id'
     );
@@ -63,9 +67,9 @@ breadcrumb(nandoId);
     // download datasets
     const datasets = [
       { name: 'Overview', data: entryData },
-      { name: 'Causal Genes', data: geneData },
-      { name: 'Genetic Testing', data: geneTestData },
-      { name: 'Phenotypes', data: hpoData },
+      { name: 'Causal Genes', data: causalGeneData },
+      { name: 'Genetic Testing', data: geneticTestingData },
+      { name: 'Phenotypes', data: phenotypesData },
       { name: 'Cell', data: cellData },
       { name: 'Mouse', data: mouseData },
       { name: 'DNA', data: dnaData },
@@ -81,13 +85,11 @@ breadcrumb(nandoId);
       makeInheritanceUris(entryData),
       makeLinksList(entryData),
       checkSummaryData(entryData),
-      checkInitialLanguage(),
       makeDiseaseDefinition(entryData),
-      makeProperties(geneData),
-      makeMedicalGeneticTestingInfo(geneTestData),
-      changeLangHP(),
-      makePhenotypeView(hpoData),
-      makeSpecificBioResource(cellData, mouseData, dnaData),
+      makeProperties(causalGeneData),
+      makeGeneticTesting(geneticTestingData),
+      makePhenotypes(phenotypesData),
+      makeBioResource(cellData, mouseData, dnaData),
       makeVariant(clinvarData, mgendData, entryData),
     ]);
 
@@ -301,10 +303,10 @@ function makeLinksList(entryData) {
   }
 }
 
-function makeProperties(geneData) {
+function makeProperties(causalGeneData) {
   const causativeGene = document.getElementById('causal-genes');
   const properties = causativeGene.querySelector('#temp-properties');
-  const data = geneData;
+  const data = causalGeneData;
 
   if (Array.isArray(data) && data.length === 0) {
     causativeGene.remove();
@@ -378,24 +380,6 @@ function checkSummaryData(entryData) {
   }
 }
 
-function checkInitialLanguage() {
-  const selectLang = document.querySelector('.language-select');
-  selectLang.addEventListener('change', changeLangHP);
-}
-
-function changeLangHP() {
-  const selectedValue = document.querySelector('.language-select').value;
-  const phenotypeViewJa = document.querySelector('.phenotype-ja');
-  const phenotypeViewEn = document.querySelector('.phenotype-en');
-  if (selectedValue === 'ja') {
-    phenotypeViewJa.style.display = 'block';
-    phenotypeViewEn.style.display = 'none';
-  } else {
-    phenotypeViewJa.style.display = 'none';
-    phenotypeViewEn.style.display = 'block';
-  }
-}
-
 function makeDiseaseDefinition(entryData) {
   const diseaseDefinition = document.getElementById('temp-disease-definition');
   const tabWrap = diseaseDefinition.querySelector(
@@ -460,14 +444,13 @@ function makeDiseaseDefinition(entryData) {
   }
 }
 
-function makeMedicalGeneticTestingInfo(geneTestData) {
-  const medicalGeneticTestingInfo = document.getElementById('genetic-testing');
-  const inspectionView =
-    medicalGeneticTestingInfo.querySelector('.inspection-view');
-  const data = geneTestData;
+function makeGeneticTesting(geneticTestingData) {
+  const geneticTesting = document.getElementById('genetic-testing');
+  const inspectionView = geneticTesting.querySelector('.inspection-view');
+  const data = geneticTestingData;
 
   if (Array.isArray(data) && data.length === 0) {
-    medicalGeneticTestingInfo.remove();
+    geneticTesting.remove();
   } else {
     // to avoid hitting api twice Use createObjectURL
     const blob = new Blob([JSON.stringify(data)], {
@@ -496,14 +479,20 @@ function makeMedicalGeneticTestingInfo(geneTestData) {
   }
 }
 
-function makePhenotypeView(hpoData) {
-  const tempPhenotypeView = document.getElementById('phenotypes');
-  const phenotypeViewJa = tempPhenotypeView.querySelector('.phenotype-ja');
-  const phenotypeViewEn = tempPhenotypeView.querySelector('.phenotype-en');
-  const data = hpoData;
+function makePhenotypes(phenotypesData) {
+  const currentLang = document.querySelector('.language-select').value;
+  const tempPhenotypes = document.getElementById('phenotypes');
+  const phenotypeLang =
+    currentLang === 'ja' ? '.phenotype-ja' : '.phenotype-en';
+  const columns = {
+    ja: '[{&quot;id&quot;:&quot;hpo_label_ja&quot;,&quot;label&quot;:&quot;Symptom (JA)&quot;},{&quot;id&quot;:&quot;hpo_label_en&quot;,&quot;label&quot;:&quot;Symptom (EN)&quot;},{&quot;id&quot;:&quot;hpo_id&quot;,&quot;label&quot;:&quot;HPO ID&quot;,&quot;link&quot;:&quot;hpo_url&quot;,&quot;target&quot;:&quot;_blank&quot;},{&quot;id&quot;:&quot;hpo_category_name_en&quot;,&quot;label&quot;:&quot;Symptom category&quot;,&quot;link&quot;:&quot;hpo_category&quot;,&quot;target&quot;:&quot;_blank&quot;}]',
+    en: '[{&quot;id&quot;:&quot;hpo_label_en&quot;,&quot;label&quot;:&quot;Symptom&quot;},{&quot;id&quot;:&quot;hpo_id&quot;,&quot;label&quot;:&quot;HPO ID&quot;,&quot;link&quot;:&quot;hpo_url&quot;,&quot;target&quot;:&quot;_blank&quot;},{&quot;id&quot;:&quot;hpo_category_name_en&quot;,&quot;label&quot;:&quot;Symptom category&quot;,&quot;link&quot;:&quot;hpo_category&quot;,&quot;target&quot;:&quot;_blank&quot;}]',
+  };
+  const phenotypeView = tempPhenotypes.querySelector(phenotypeLang);
+  const data = phenotypesData;
 
   if (Array.isArray(data) && data.length === 0) {
-    tempPhenotypeView.remove();
+    tempPhenotypes.remove();
   } else {
     // to avoid hitting api twice Use createObjectURL
     const blob = new Blob([JSON.stringify(data)], {
@@ -511,8 +500,7 @@ function makePhenotypeView(hpoData) {
     });
     const objectUrl = URL.createObjectURL(blob);
 
-    // lang ja
-    phenotypeViewJa.innerHTML = `
+    phenotypeView.innerHTML = `
       <togostanza-pagination-table
       data-url="${objectUrl}"
       custom-css-url="https://togostanza.github.io/togostanza-themes/contrib/nanbyodata.css"
@@ -520,21 +508,7 @@ function makePhenotypeView(hpoData) {
       fixed-columns="1"
       page-size-option="100"
       page-slider="false"
-      columns="[{&quot;id&quot;:&quot;hpo_label_ja&quot;,&quot;label&quot;:&quot;Symptom (JA)&quot;},{&quot;id&quot;:&quot;hpo_label_en&quot;,&quot;label&quot;:&quot;Symptom (EN)&quot;},{&quot;id&quot;:&quot;hpo_id&quot;,&quot;label&quot;:&quot;HPO ID&quot;,&quot;link&quot;:&quot;hpo_url&quot;,&quot;target&quot;:&quot;_blank&quot;},{&quot;id&quot;:&quot;hpo_category_name_en&quot;,&quot;label&quot;:&quot;Symptom category&quot;,&quot;link&quot;:&quot;hpo_category&quot;,&quot;target&quot;:&quot;_blank&quot;}]"
-      togostanza-custom_css_url=""
-        ></togostanza-pagination-table>
-        `;
-
-    // lang eng
-    phenotypeViewEn.innerHTML = `
-      <togostanza-pagination-table
-      data-url="${objectUrl}"
-      custom-css-url="https://togostanza.github.io/togostanza-themes/contrib/nanbyodata.css"
-      data-type="json"
-      fixed-columns="1"
-      page-size-option="100"
-      page-slider="false"
-      columns="[{&quot;id&quot;:&quot;hpo_label_en&quot;,&quot;label&quot;:&quot;Symptom&quot;},{&quot;id&quot;:&quot;hpo_id&quot;,&quot;label&quot;:&quot;HPO ID&quot;,&quot;link&quot;:&quot;hpo_url&quot;,&quot;target&quot;:&quot;_blank&quot;},{&quot;id&quot;:&quot;hpo_category_name_en&quot;,&quot;label&quot;:&quot;Symptom category&quot;,&quot;link&quot;:&quot;hpo_category&quot;,&quot;target&quot;:&quot;_blank&quot;}]"
+      columns="${columns[currentLang]}"
       togostanza-custom_css_url=""
         ></togostanza-pagination-table>
         `;
@@ -546,9 +520,9 @@ function makePhenotypeView(hpoData) {
   }
 }
 
-function makeSpecificBioResource(cellData, mouseData, dnaData) {
-  const specificBioResource = document.getElementById('brc');
-  const tabWrap = specificBioResource.querySelector('.tab-wrap');
+function makeBioResource(cellData, mouseData, dnaData) {
+  const bioResource = document.getElementById('brc');
+  const tabWrap = bioResource.querySelector('.tab-wrap');
 
   let isCellData = false;
   let isMusData = false;
@@ -628,7 +602,7 @@ function makeSpecificBioResource(cellData, mouseData, dnaData) {
   ];
 
   if (items.every((item) => !item.existing)) {
-    specificBioResource.remove();
+    bioResource.remove();
   } else {
     let isFirstTab = true;
 

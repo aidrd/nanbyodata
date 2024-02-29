@@ -31,12 +31,12 @@
     transform-origin: top center;
     transition: 200ms ease-in-out;
 
-    &[aria-hidden="false"] {
+    &[aria-hidden='false'] {
       transform: scale(1);
     }
 
     &::before {
-      content: "";
+      content: '';
       position: fixed;
       top: -3px;
       transform: translateY(-50%);
@@ -46,14 +46,12 @@
       pointer-events: none;
     }
 
-
     .popup-title {
       font-size: 1rem;
       font-weight: 600;
       margin-bottom: 6px;
     }
   }
-
 
   .popup-btn {
     width: fit-content;
@@ -72,7 +70,6 @@
       opacity: 0.8;
     }
   }
-
 
   .summary-download {
     .popup-view {
@@ -95,8 +92,9 @@
           gap: 10px;
           position: relative;
 
-          &::before, &::after {
-            content: "";
+          &::before,
+          &::after {
+            content: '';
             position: absolute;
             right: 10px;
             border-left: 0.3em solid transparent;
@@ -130,7 +128,6 @@
         }
       }
     }
-
   }
 
   .summary-share {

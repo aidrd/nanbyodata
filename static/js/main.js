@@ -1,10 +1,12 @@
 import { navToggle } from './navigation.js';
 import { focusInput } from './focusInput.js';
 import { changePlaceholder } from './changePlaceholder.js';
+import { setLangChange } from './setLangChange.js';
 
 navToggle();
 focusInput();
 changePlaceholder();
+setLangChange();
 
 // It is not used below and may not be a problem to delete.  It is left commented out just in case.
 
