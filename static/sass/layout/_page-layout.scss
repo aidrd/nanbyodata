@@ -43,13 +43,13 @@
   }
 
   .section-block {
-    +.section-block {
+    + .section-block {
       margin-top: 70px;
     }
   }
 
   .content-block {
-    +.content-block {
+    + .content-block {
       margin-top: 60px;
     }
   }
@@ -60,15 +60,25 @@
 
   &#news-page {
     .news-title {
-      font-size: 1.75rem;
+      font-size: 1.125rem;
+      font-weight: bold;
     }
 
     hr {
-      margin: 0.1rem 0;
+      margin: 0.4rem 0;
     }
 
     .post-date {
-      margin-bottom: 20px;
+      font-family: Muli;
+      font-size: 0.8rem;
+      letter-spacing: 0.1rem;
+      margin-bottom: 40px;
+    }
+
+    .post-content {
+      p {
+        font-size: 1rem;
+      }
     }
   }
 }
