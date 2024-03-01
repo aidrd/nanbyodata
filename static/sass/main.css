@@ -434,7 +434,7 @@ footer .container .footer__bottom .footer__lisence p a {
   gap: var(--spacing-disease-content);
 }
 .content-wrapper #content #data-wrapper > div {
-  scroll-margin-top: var(--spacing-disease-content);
+  scroll-margin-top: 100vh;
 }
 .content-wrapper #content #data-wrapper .temp-title {
   border-radius: var(--radius-base);

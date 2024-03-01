@@ -41,7 +41,7 @@
       flex-direction: column;
       gap: var(--spacing-disease-content);
       > div {
-        scroll-margin-top: var(--spacing-disease-content);
+        scroll-margin-top: 100vh;
       }
 
       .temp-title {
