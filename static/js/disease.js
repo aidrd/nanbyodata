@@ -787,9 +787,6 @@ function makeSideNavigation(entryData) {
 
   document.querySelectorAll('a[href="#brc"]').forEach(function (aTag) {
     aTag.addEventListener('click', function (event) {
-      document.querySelector('#brc').scrollIntoView({
-        behavior: 'smooth',
-      });
       event.preventDefault();
       const classList = this.classList[0];
       const selectName = 'bio-resource-' + classList;
@@ -803,9 +800,6 @@ function makeSideNavigation(entryData) {
 
   document.querySelectorAll('a[href="#variant"]').forEach(function (aTag) {
     aTag.addEventListener('click', function (event) {
-      document.querySelector('#variant').scrollIntoView({
-        behavior: 'smooth',
-      });
       event.preventDefault();
       const classList = this.classList[0];
       const selectName = 'variant-' + classList;
@@ -900,6 +894,10 @@ function switchingDisplayContents(selectedItemId, entryData) {
     case 'bio-resource-mouse':
     case 'bio-resource-dna':
       prepareDataWrapper();
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth',
+      });
       toggleDisplay('#brc', 'block');
       let checkBoxBrc = document.getElementById(selectedItemId);
       if (checkBoxBrc) checkBoxBrc.checked = true;
@@ -909,6 +907,10 @@ function switchingDisplayContents(selectedItemId, entryData) {
     case 'variant-clinvar':
     case 'variant-mgend':
       prepareDataWrapper();
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth',
+      });
       toggleDisplay('#variant', 'block');
       let checkBoxVariant = document.getElementById(selectedItemId);
       if (checkBoxVariant) checkBoxVariant.checked = true;
