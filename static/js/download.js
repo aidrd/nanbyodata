@@ -1,15 +1,9 @@
 export const downloadDatasets = (nandoId, datasets) => {
   function prepareDataToDownload(format, datasets) {
     if (format === 'json') {
-      return prepareJsonData();
+      return JSON.stringify(prepareJsonData(), null, 2);
     } else if (format === 'txt') {
-      // テキスト形式でデータを準備
-      return datasets
-        .map(
-          ({ name, data }) =>
-            `--- ${name} ---\n${JSON.stringify(data, null, 2)}`
-        )
-        .join('\n\n');
+      return prepareTxtData();
     }
     return '';
   }
@@ -38,7 +32,76 @@ export const downloadDatasets = (nandoId, datasets) => {
         jsonData[name] = data;
       }
     });
-    return JSON.stringify(jsonData, null, 2);
+    return jsonData;
+  }
+
+  function prepareTxtData() {
+    const jsonData = prepareJsonData();
+    let txtData = '';
+
+    Object.entries(jsonData).forEach(([categoryName, categoryData]) => {
+      if (categoryName === 'Overview') {
+        txtData += `-- ${categoryName} --\n`;
+        processObject(categoryData, '');
+        txtData += '\n';
+      } else {
+        processCategory(categoryName, categoryData);
+      }
+    });
+
+    return txtData;
+
+    function processObject(obj, prefix) {
+      Object.entries(obj).forEach(([key, value]) => {
+        if (Array.isArray(value)) {
+          if (typeof value[0] === 'object') {
+            processArray(value, `${prefix}${key}/`);
+          } else {
+            processArray(value, `${prefix}${key} - `);
+          }
+        } else if (typeof value === 'object') {
+          processObject(value, `${prefix}${key}/`);
+        } else {
+          txtData += `${prefix}${key} - ${value}\n`;
+        }
+      });
+    }
+
+    function processArray(arr, prefix) {
+      arr.forEach((item) => {
+        if (typeof item === 'object') {
+          processObject(item, prefix);
+        } else {
+          txtData += `${prefix}${item}\n`;
+        }
+      });
+    }
+
+    function processCategory(categoryName, categoryData) {
+      if (Array.isArray(categoryData)) {
+        txtData += `-- ${categoryName} --\n`;
+        if (categoryData.length > 0) {
+          const keysTxt = Object.keys(categoryData[0]).join('\t') + '\n';
+          const valuesTxt = categoryData
+            .map((item) => Object.values(item).join('\t'))
+            .join('\n');
+          txtData += keysTxt + valuesTxt + '\n';
+        }
+        txtData += '\n';
+      } else {
+        Object.entries(categoryData).forEach(([key, value]) => {
+          txtData += `-- ${categoryName}/${key} --\n`;
+          if (value.length > 0) {
+            const keysTxt = Object.keys(value[0]).join('\t') + '\n';
+            const valuesTxt = value
+              .map((item) => Object.values(item).join('\t'))
+              .join('\n');
+            txtData += keysTxt + valuesTxt + '\n';
+          }
+          txtData += '\n';
+        });
+      }
+    }
   }
 
   function downloadFile(data, type, filename) {
