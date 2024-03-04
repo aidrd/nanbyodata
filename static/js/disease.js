@@ -324,6 +324,7 @@ function makeProperties(causalGeneData) {
       fixed-columns="1"
       page-size-option="100"
       page-slider="false"
+      togostanza-menu-placement = "top-left"
       columns="[{&quot;id&quot;:&quot;gene_symbol&quot;,&quot;label&quot;:&quot;Gene symbol&quot;,&quot;link&quot;:&quot;omim_url&quot;,&quot;target&quot;:&quot;_blank&quot;},{&quot;id&quot;:&quot;ncbi_id&quot;,&quot;label&quot;:&quot;NCBI gene ID&quot;,&quot;link&quot;:&quot;ncbi_url&quot;,&quot;target&quot;:&quot;_blank&quot;},{&quot;id&quot;:&quot;nando_label_e&quot;,&quot;label&quot;:&quot;NANDO disease label&quot;,&quot;link&quot;:&quot;nando_ida&quot;,&quot;target&quot;:&quot;_blank&quot;},{&quot;id&quot;:&quot;mondo_label&quot;,&quot;label&quot;:&quot;Mondo disease label&quot;,&quot;link&quot;:&quot;mondo_url&quot;,&quot;target&quot;:&quot;_blank&quot;}]
       "
       ></togostanza-pagination-table>
@@ -465,6 +466,7 @@ function makeGeneticTesting(geneticTestingData) {
       fixed-columns="1"
       page-size-option="100"
       page-slider="false"
+      togostanza-menu-placement = "top-left"
       columns="[{&quot;id&quot;:&quot;label&quot;,&quot;label&quot;:&quot;Test name&quot;},{&quot;id&quot;:&quot;hp&quot;,&quot;label&quot;:&quot;More information&quot;,&quot;link&quot;:&quot;hp&quot;,&quot;target&quot;:&quot;_blank&quot;},{&quot;id&quot;:&quot;gene&quot;,&quot;label&quot;:&quot;Gene name&quot;},{&quot;id&quot;:&quot;facility&quot;,&quot;label&quot;:&quot;Test facility&quot;}]
       "
       ></togostanza-pagination-table>
@@ -508,6 +510,7 @@ function makePhenotypes(phenotypesData) {
       fixed-columns="1"
       page-size-option="100"
       page-slider="false"
+      togostanza-menu-placement = "top-left"
       columns="${columns[currentLang]}"
       togostanza-custom_css_url=""
         ></togostanza-pagination-table>
@@ -586,7 +589,7 @@ function makeBioResource(cellData, mouseData, dnaData) {
       id: 'mouse',
       url: `https://nanbyodata.jp/sparqlist/api/nanbyodata_get_riken_brc_mouse_info_by_nando_id?nando_id=${nandoId}`,
       columns:
-        '[{&quot;id&quot;:&quot;mouse_id&quot;,&quot;label&quot;:&quot;RIKEN_BRC No.&quot;},{&quot;id&quot;:&quot;hp&quot;,&quot;label&quot;:&quot;Homepage&quot;,&quot;link&quot;:&quot;Homepage&quot;,&quot;target&quot;:&quot;_blank&quot;},{&quot;id&quot;:&quot;mouse_name&quot;,&quot;label&quot;:&quot;Strain name&quot;},{&quot;id&quot;:&quot;description&quot;,&quot;label&quot;:&quot;Strain description&quot;}]',
+        '[{&quot;id&quot;:&quot;mouse_id&quot;,&quot;label&quot;:&quot;RIKEN_BRC No.&quot;},{&quot;id&quot;:&quot;hp&quot;,&quot;label&quot;:&quot;Homepage&quot;,&quot;link&quot;:&quot;hp&quot;,&quot;target&quot;:&quot;_blank&quot;},{&quot;id&quot;:&quot;mouse_name&quot;,&quot;label&quot;:&quot;Strain name&quot;},{&quot;id&quot;:&quot;description&quot;,&quot;label&quot;:&quot;Strain description&quot;}]',
       data: mouseData,
       object: mouseObject,
     },
@@ -626,6 +629,7 @@ function makeBioResource(cellData, mouseData, dnaData) {
           custom-css-url="https://togostanza.github.io/togostanza-themes/contrib/nanbyodata.css"
           page-size-option="100"
           page-slider="fales">
+          togostanza-menu-placement = "top-left"
         </togostanza-pagination-table>
       `;
         const tempSpanElement = document.querySelector(
@@ -723,6 +727,7 @@ function makeVariant(clinvarData, mgendData, entryData) {
           custom-css-url="https://togostanza.github.io/togostanza-themes/contrib/nanbyodata.css"
           page-size-option="100"
           page-slider="fales">
+          togostanza-menu-placement = "top-left"
         </togostanza-pagination-table>
       `;
         const tempSpanElement = document.querySelector(
