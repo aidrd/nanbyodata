@@ -73,6 +73,11 @@
       }
 
       #temp-disease-definition {
+        .tab-content {
+          max-width: 600px;
+          text-align: justify;
+        }
+
         a[target='_blank'] {
           color: var(--color-link);
           &::after {

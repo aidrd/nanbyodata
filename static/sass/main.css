@@ -491,6 +491,10 @@ footer .container .footer__bottom .footer__lisence small:before {
   margin-left: 5px;
   min-width: 22px;
 }
+.content-wrapper #content #data-wrapper #temp-disease-definition .tab-content {
+  max-width: 600px;
+  text-align: justify;
+}
 .content-wrapper #content #data-wrapper #temp-disease-definition a[target=_blank] {
   color: var(--color-link);
 }
