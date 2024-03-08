@@ -81,6 +81,7 @@ export const downloadDatasets = (nandoId, datasets) => {
       if (Array.isArray(categoryData)) {
         txtData += `-- ${categoryName} --\n`;
         if (categoryData.length > 0) {
+          console.log(categoryName,Object.keys(categoryData[0]))
           const keysTxt = Object.keys(categoryData[0]).join('\t') + '\n';
           const valuesTxt = categoryData
             .map((item) => Object.values(item).join('\t'))
@@ -92,13 +93,17 @@ export const downloadDatasets = (nandoId, datasets) => {
         Object.entries(categoryData).forEach(([key, value]) => {
           txtData += `-- ${categoryName}/${key} --\n`;
           if (value.length > 0) {
+            console.log(key,Object.keys(value[0]))
             const keysTxt = Object.keys(value[0]).join('\t') + '\n';
             const valuesTxt = value
               .map((item) => Object.values(item).join('\t'))
               .join('\n');
             txtData += keysTxt + valuesTxt + '\n';
           }
-          txtData += '\n';
+
+          if (key !== 'Clinvar') {
+            txtData += '\n';
+          }
         });
       }
     }
@@ -122,6 +127,7 @@ export const downloadDatasets = (nandoId, datasets) => {
       e.preventDefault();
       const format = new FormData(this).get('format');
       const dataToDownload = prepareDataToDownload(format, datasets);
+      console.log(dataToDownload);
 
       // データをダウンロード用ファイルとしてユーザーに提供
       const mimeType = format === 'json' ? 'application/json' : 'text/plain';
