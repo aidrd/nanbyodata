@@ -1,19 +1,32 @@
 import { makeSideNavigation } from './diseaseSideNavigation.js';
+import {
+  causalGeneColumns,
+  geneticTestingColumns,
+  phenotypesJaColumns,
+  phenotypesEnColumns,
+  bioResourceCellColumns,
+  bioResourceMouseColumns,
+  bioResourceDnaColumns,
+  variantClinvarColumns,
+} from './paginationColumns.js';
 
 // causalGene(疾患原因遺伝子)
 export function makeCausalGene(causalGeneData) {
-  const columns = `[{&quot;id&quot;:&quot;gene_symbol&quot;,&quot;label&quot;:&quot;Gene symbol&quot;,&quot;link&quot;:&quot;omim_url&quot;,&quot;target&quot;:&quot;_blank&quot;},{&quot;id&quot;:&quot;ncbi_id&quot;,&quot;label&quot;:&quot;NCBI gene ID&quot;,&quot;link&quot;:&quot;ncbi_url&quot;,&quot;target&quot;:&quot;_blank&quot;},{&quot;id&quot;:&quot;nando_label_e&quot;,&quot;label&quot;:&quot;NANDO disease label&quot;,&quot;link&quot;:&quot;nando_ida&quot;,&quot;target&quot;:&quot;_blank&quot;},{&quot;id&quot;:&quot;mondo_label&quot;,&quot;label&quot;:&quot;Mondo disease label&quot;,&quot;link&quot;:&quot;mondo_url&quot;,&quot;target&quot;:&quot;_blank&quot;}]`;
-  makeData(causalGeneData, 'causal-genes', 'causal-genes-table', columns);
+  makeData(
+    causalGeneData,
+    'causal-genes',
+    'causal-genes-table',
+    convertColumntoText(causalGeneColumns)
+  );
 }
 
 // geneticTesting(診療用遺伝学的検査情報)
 export function makeGeneticTesting(geneticTestingData) {
-  const columns = `[{&quot;id&quot;:&quot;label&quot;,&quot;label&quot;:&quot;Test name&quot;},{&quot;id&quot;:&quot;hp&quot;,&quot;label&quot;:&quot;More information&quot;,&quot;link&quot;:&quot;hp&quot;,&quot;target&quot;:&quot;_blank&quot;},{&quot;id&quot;:&quot;gene&quot;,&quot;label&quot;:&quot;Gene name&quot;},{&quot;id&quot;:&quot;facility&quot;,&quot;label&quot;:&quot;Test facility&quot;}]`;
   makeData(
     geneticTestingData,
     'genetic-testing',
     'genetic-testing-table',
-    columns
+    convertColumntoText(geneticTestingColumns)
   );
 }
 
@@ -22,8 +35,8 @@ export function makePhenotypes(phenotypesData) {
   const currentLang = document.querySelector('.language-select').value;
   const phenotypeLang = currentLang === 'ja' ? 'phenotype-ja' : 'phenotype-en';
   const columns = {
-    ja: '[{&quot;id&quot;:&quot;hpo_label_ja&quot;,&quot;label&quot;:&quot;Symptom (JA)&quot;},{&quot;id&quot;:&quot;hpo_label_en&quot;,&quot;label&quot;:&quot;Symptom (EN)&quot;},{&quot;id&quot;:&quot;hpo_id&quot;,&quot;label&quot;:&quot;HPO ID&quot;,&quot;link&quot;:&quot;hpo_url&quot;,&quot;target&quot;:&quot;_blank&quot;},{&quot;id&quot;:&quot;hpo_category_name_en&quot;,&quot;label&quot;:&quot;Symptom category&quot;,&quot;link&quot;:&quot;hpo_category&quot;,&quot;target&quot;:&quot;_blank&quot;}]',
-    en: '[{&quot;id&quot;:&quot;hpo_label_en&quot;,&quot;label&quot;:&quot;Symptom&quot;},{&quot;id&quot;:&quot;hpo_id&quot;,&quot;label&quot;:&quot;HPO ID&quot;,&quot;link&quot;:&quot;hpo_url&quot;,&quot;target&quot;:&quot;_blank&quot;},{&quot;id&quot;:&quot;hpo_category_name_en&quot;,&quot;label&quot;:&quot;Symptom category&quot;,&quot;link&quot;:&quot;hpo_category&quot;,&quot;target&quot;:&quot;_blank&quot;}]',
+    ja: convertColumntoText(phenotypesJaColumns),
+    en: convertColumntoText(phenotypesEnColumns),
   };
   makeData(phenotypesData, 'phenotypes', phenotypeLang, columns[currentLang]);
 }
@@ -53,24 +66,21 @@ export function makeBioResource(cellData, mouseData, dnaData) {
     {
       existing: cellDataset.hasData,
       id: 'cell',
-      columns:
-        '[{&quot;id&quot;:&quot;ID&quot;,&quot;label&quot;:&quot;Cell No.&quot;},{&quot;id&quot;:&quot;Cell_name&quot;,&quot;label&quot;:&quot;Cell name&quot;},{&quot;id&quot;:&quot;Homepage&quot;,&quot;label&quot;:&quot;Homepage&quot;,&quot;link&quot;:&quot;Homepage&quot;,&quot;target&quot;:&quot;_blank&quot;},{&quot;id&quot;:&quot;Description_e&quot;,&quot;label&quot;:&quot;Description (EN)&quot;},{&quot;id&quot;:&quot;Description_j&quot;,&quot;label&quot;:&quot;Description (JA)&quot;}]',
+      columns: convertColumntoText(bioResourceCellColumns),
       data: cellData,
       object: cellDataset.dataObject,
     },
     {
       existing: mouseDataset.hasData,
       id: 'mouse',
-      columns:
-        '[{&quot;id&quot;:&quot;mouse_id&quot;,&quot;label&quot;:&quot;RIKEN_BRC No.&quot;},{&quot;id&quot;:&quot;hp&quot;,&quot;label&quot;:&quot;Homepage&quot;,&quot;link&quot;:&quot;Homepage&quot;,&quot;target&quot;:&quot;_blank&quot;},{&quot;id&quot;:&quot;mouse_name&quot;,&quot;label&quot;:&quot;Strain name&quot;},{&quot;id&quot;:&quot;description&quot;,&quot;label&quot;:&quot;Strain description&quot;}]',
+      columns: convertColumntoText(bioResourceMouseColumns),
       data: mouseData,
       object: mouseDataset.dataObject,
     },
     {
       existing: dnaDataset.hasData,
       id: 'dna',
-      columns:
-        '[{&quot;id&quot;:&quot;gene_id&quot;,&quot;label&quot;:&quot;Catalog number&quot;},{&quot;id&quot;:&quot;hp&quot;,&quot;label&quot;:&quot;Homepage&quot;,&quot;link&quot;:&quot;hp&quot;,&quot;target&quot;:&quot;_blank&quot;},{&quot;id&quot;:&quot;gene_label&quot;,&quot;label&quot;:&quot;Name&quot;},{&quot;id&quot;:&quot;ncbi_gene&quot;,&quot;label&quot;:&quot;NCBI gene link&quot;,&quot;link&quot;:&quot;ncbi_gene&quot;,&quot;target&quot;:&quot;_blank&quot;}]',
+      columns: convertColumntoText(bioResourceDnaColumns),
       data: dnaData,
       object: dnaDataset.dataObject,
     },
@@ -99,8 +109,7 @@ export function makeVariant(clinvarData, mgendData, entryData) {
     {
       existing: clinvarDataset.hasData,
       id: 'clinvar',
-      columns:
-        '[{&quot;id&quot;:&quot;Clinvar_id&quot;,&quot;label&quot;:&quot;Clinvar_ID&quot;,&quot;link&quot;:&quot;Clinvar_link&quot;,&quot;target&quot;:&quot;_bkank&quot;}, {&quot;id&quot;:&quot;title&quot;,&quot;label&quot;:&quot;HGVS&quot;}, {&quot;id&quot;:&quot;Interpretation&quot;,&quot;label&quot;:&quot;Interpretation&quot;}, {&quot;id&quot;:&quot;type&quot;,&quot;label&quot;:&quot;Variant type&quot;}, {&quot;id&quot;:&quot;position&quot;,&quot;label&quot;:&quot;Chr:Position&quot;}, {&quot;id&quot;:&quot;tgv_id&quot;,&quot;label&quot;:&quot;TogoVar_ID&quot;,&quot;link&quot;:&quot;tgv_link&quot;,&quot;target&quot;:&quot;_blank&quot;} , {&quot;id&quot;:&quot;MedGen_id&quot;,&quot;label&quot;:&quot;MedGen_ID&quot;,&quot;link&quot;:&quot;MedGen_link&quot;,&quot;target&quot;:&quot;_bkank&quot;}, {&quot;id&quot;:&quot;mondo_id&quot;,&quot;label&quot;:&quot;MONDO_ID&quot;,&quot;link&quot;:&quot;mondo&quot;,&quot;target&quot;:&quot;_bkank&quot;}]',
+      columns: convertColumntoText(variantClinvarColumns),
       data: clinvarData,
       object: clinvarDataset.dataObject,
     },
@@ -120,6 +129,15 @@ export function makeVariant(clinvarData, mgendData, entryData) {
   document.querySelector('.loading-spinner').style.display = 'none';
   document.getElementById('content').style.display = 'block';
   document.getElementById('sidebar').style.display = 'block';
+}
+
+/**
+ * Convert column to text formats.
+ * @param {Object[]} columns - Columns for togostanza-pagination-table.
+ * @returns {string}
+ */
+function convertColumntoText(columns) {
+  return JSON.stringify(columns).replace(/"/g, '&quot;');
 }
 
 /**
