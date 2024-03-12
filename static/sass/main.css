@@ -1329,13 +1329,6 @@ header.search-area .intro-text .keyword a {
   flex-wrap: wrap;
   margin: 12px 0;
 }
-.tab-wrap::after {
-  content: "";
-  width: 100%;
-  height: 2px;
-  background-color: var(--color-secondary);
-  order: -1;
-}
 .tab-wrap .tab-label {
   position: relative;
   display: flex;
@@ -1348,6 +1341,7 @@ header.search-area .intro-text .keyword a {
   font-weight: bold;
   margin-bottom: 0;
   cursor: pointer;
+  border-bottom: 2px solid var(--color-secondary);
 }
 .tab-wrap .tab-label .data-num {
   padding: 0px 5px;
@@ -1357,6 +1351,9 @@ header.search-area .intro-text .keyword a {
 }
 .tab-wrap .tab-label small {
   margin-right: 4px;
+}
+.tab-wrap .tab-label.-flex {
+  flex: 1;
 }
 .tab-wrap .tab-content {
   width: 100%;
@@ -1371,7 +1368,6 @@ header.search-area .intro-text .keyword a {
 .tab-wrap .tab-switch:checked + .tab-label {
   border: var(--color-secondary) 2px solid;
   border-bottom: #fff 2px solid;
-  margin-bottom: -2px;
 }
 .tab-wrap .tab-switch:checked + .tab-label + .tab-content {
   height: auto;
