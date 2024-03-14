@@ -407,6 +407,7 @@ footer .container .footer__bottom .footer__lisence p a {
   top: 76px;
 }
 .content-wrapper #sidebar {
+  display: none;
   position: fixed;
   overflow-y: auto;
   height: calc(100vh - 76px);
@@ -435,6 +436,7 @@ footer .container .footer__bottom .footer__lisence p a {
   width: calc(100% - 270px);
   padding: var(--spacing-disease-content);
   z-index: -1;
+  display: none;
 }
 .content-wrapper #content #data-wrapper {
   display: flex;

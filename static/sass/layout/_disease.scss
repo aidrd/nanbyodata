@@ -3,6 +3,7 @@
   top: 76px;
 
   #sidebar {
+    display: none;
     position: fixed;
     overflow-y: auto;
     height: calc(100vh - 76px);
@@ -35,6 +36,7 @@
     width: calc(100% - 270px);
     padding: var(--spacing-disease-content);
     z-index: -1;
+    display: none;
 
     #data-wrapper {
       display: flex;
