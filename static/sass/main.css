@@ -29,8 +29,8 @@ Foundation
   --font-size-medium: 1rem; /* 16px */
   --font-size-large: 1.125rem; /* 18px */
   --font-size-xl: 1.25rem; /* 20px */
-  --font-size-xxl: 1.5rem; /* 24px */
-  --font-size-xxxl: 2rem; /* 32px */
+  --font-size-2xl: 1.5rem; /* 24px */
+  --font-size-3xl: 2rem; /* 32px */
   --spacing-disease-content: 25px;
   --spacing-inner-box: 10px;
   --spacing-heading-bottom: 8px;
@@ -154,7 +154,7 @@ Layout
 .navbar button.navbar-toggler i {
   position: relative;
   top: 1px;
-  font-size: var(--font-size-xxxl);
+  font-size: var(--font-size-3xl);
   vertical-align: top;
 }
 .navbar select.language-select {
@@ -366,7 +366,7 @@ footer .container .footer__bottom .footer__lisence small:before {
 }
 .page-layout header.page-title h2,
 .page-layout header.search-area h2 {
-  font-size: var(--font-size-xxxl);
+  font-size: var(--font-size-3xl);
   font-weight: 700;
 }
 .page-layout h2.section-title {
@@ -465,7 +465,7 @@ footer .container .footer__bottom .footer__lisence small:before {
   scroll-margin-top: 100vh;
 }
 .content-wrapper #content #data-wrapper .temp-title {
-  font-size: var(--font-size-xxl);
+  font-size: var(--font-size-2xl);
   border-radius: var(--radius-base);
   color: var(--color-secondary);
   white-space: nowrap;
@@ -860,7 +860,7 @@ header.search-area .intro-text .keyword a {
   margin-right: 8px;
 }
 .modal-content .modal-body.content-tos .modal-title {
-  font-size: var(--font-size-xxxl);
+  font-size: var(--font-size-3xl);
   color: var(--color-secondary);
   letter-spacing: 1px;
 }
@@ -1465,14 +1465,14 @@ Disease page right top */
   padding-top: 25px;
 }
 .summary-header > .data-name > h2#temp-label-ja ruby {
-  font-size: var(--font-size-xxxl);
+  font-size: var(--font-size-3xl);
 }
 .summary-header > .data-name > h2#temp-label-ja ruby rt {
   font-size: var(--font-size-xs);
   font-weight: normal;
 }
 .summary-header > .data-name > h3#temp-label-en {
-  font-size: var(--font-size-xxl);
+  font-size: var(--font-size-2xl);
   margin-top: 5px;
   overflow-wrap: break-word;
 }
