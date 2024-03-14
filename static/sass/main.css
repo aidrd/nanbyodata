@@ -1083,7 +1083,7 @@ header.search-area .intro-text .keyword a {
   background-color: rgba(22, 35, 78, 0.2);
   color: var(--color-secondary);
 }
-#temp-side-navigation > ul > li .brc,
+#temp-side-navigation > ul > li .bio-resource,
 #temp-side-navigation > ul > li .variant {
   font-size: 14px;
   cursor: pointer;
@@ -1091,18 +1091,18 @@ header.search-area .intro-text .keyword a {
   font-weight: bold;
   padding: 10px 0 20px 10px;
 }
-#temp-side-navigation > ul > li .brc ul,
+#temp-side-navigation > ul > li .bio-resource ul,
 #temp-side-navigation > ul > li .variant ul {
   position: relative;
   bottom: 6px;
 }
-#temp-side-navigation > ul > li .brc ul li,
+#temp-side-navigation > ul > li .bio-resource ul li,
 #temp-side-navigation > ul > li .variant ul li {
   position: relative;
   margin-left: 20px;
   padding-top: 4px;
 }
-#temp-side-navigation > ul > li .brc ul li::before,
+#temp-side-navigation > ul > li .bio-resource ul li::before,
 #temp-side-navigation > ul > li .variant ul li::before {
   content: "";
   display: block;
@@ -1114,12 +1114,12 @@ header.search-area .intro-text .keyword a {
   border-left: 1px solid rgba(22, 35, 78, 0.3);
   position: absolute;
 }
-#temp-side-navigation > ul > li .brc ul li:first-child::before,
+#temp-side-navigation > ul > li .bio-resource ul li:first-child::before,
 #temp-side-navigation > ul > li .variant ul li:first-child::before {
   top: 8px;
   height: 26px;
 }
-#temp-side-navigation > ul > li .brc ul li::after,
+#temp-side-navigation > ul > li .bio-resource ul li::after,
 #temp-side-navigation > ul > li .variant ul li::after {
   content: "";
   display: block;
@@ -1131,7 +1131,7 @@ header.search-area .intro-text .keyword a {
   border-left: 15px solid rgba(22, 35, 78, 0.3);
   position: absolute;
 }
-#temp-side-navigation > ul > li .brc ul li a,
+#temp-side-navigation > ul > li .bio-resource ul li a,
 #temp-side-navigation > ul > li .variant ul li a {
   display: block;
   text-decoration: none;
@@ -1143,7 +1143,7 @@ header.search-area .intro-text .keyword a {
   z-index: var(--zindex-disease-side-link);
   border-radius: var(--radius-small);
 }
-#temp-side-navigation > ul > li .brc ul li a:not(.selected):hover,
+#temp-side-navigation > ul > li .bio-resource ul li a:not(.selected):hover,
 #temp-side-navigation > ul > li .variant ul li a:not(.selected):hover {
   background-color: var(--color-breadcrumb-hover);
 }
