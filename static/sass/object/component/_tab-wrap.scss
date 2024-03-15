@@ -30,6 +30,15 @@
 
     &.-flex {
       flex: 1;
+      @media (min-width: 1200px) {
+        min-width: 30%;
+      }
+      @media (min-width: 1400px) {
+        min-width: 40%;
+      }
+      @media (min-width: 1600px) {
+        min-width: 70%;
+      }
     }
   }
 
@@ -37,7 +46,7 @@
     width: 100%;
     height: 0;
     overflow: hidden;
-    opacity: 0;
+    display: none;
     line-height: 2;
   }
 
@@ -52,7 +61,7 @@
         height: auto;
         overflow: auto;
         padding: 10px 5px;
-        opacity: 1;
+        display: block;
       }
     }
   }
