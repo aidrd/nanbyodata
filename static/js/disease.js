@@ -4,13 +4,15 @@ import { changePlaceholder } from './changePlaceholder.js';
 import { popup } from './popup.js';
 import { breadcrumb } from './breadcrumb.js';
 import { downloadDatasets } from './download.js';
-import { makeCausalGene, makeGeneticTesting, makePhenotypes, makeBioResource, makeVariant } from "./diseaseContent.js";
+import {
+  makeCausalGene,
+  makeGeneticTesting,
+  makePhenotypes,
+  makeBioResource,
+  makeVariant,
+} from './diseaseContent.js';
 import { switchingDisplayContents } from './diseaseSideNavigation.js';
 import { setLangChange } from './setLangChange.js';
-
-// dispaly: none until loading is finished
-document.getElementById('content').style.display = 'none';
-document.getElementById('sidebar').style.display = 'none';
 
 // get NANDO ID
 const pathname = window.location.pathname;

@@ -173,9 +173,8 @@ Layout
   cursor: pointer;
 }
 .navbar select.language-select option {
-  color: var(--color-secondary);
+  color: var(--color-black);
   background-color: var(--color-background-gray);
-  font-weight: bold;
 }
 .navbar ul.navbar-nav a.nav-link {
   color: #fff;
@@ -428,6 +427,7 @@ footer .container .footer__bottom .footer__lisence small:before {
   top: 76px;
 }
 .content-wrapper #sidebar {
+  display: none;
   position: fixed;
   overflow-y: auto;
   height: calc(100vh - 76px);
@@ -455,6 +455,7 @@ footer .container .footer__bottom .footer__lisence small:before {
   width: calc(100% - 270px);
   padding: var(--spacing-disease-content);
   z-index: -1;
+  display: none;
 }
 .content-wrapper #content #data-wrapper {
   display: flex;
@@ -1355,13 +1356,6 @@ header.search-area .intro-text .keyword a {
   flex-wrap: wrap;
   margin: 12px 0;
 }
-.tab-wrap::after {
-  content: "";
-  width: 100%;
-  height: 2px;
-  background-color: var(--color-secondary);
-  order: -1;
-}
 .tab-wrap .tab-label {
   position: relative;
   display: flex;
@@ -1374,6 +1368,7 @@ header.search-area .intro-text .keyword a {
   font-weight: bold;
   margin-bottom: 0;
   cursor: pointer;
+  border-bottom: 2px solid var(--color-secondary);
 }
 .tab-wrap .tab-label .data-num {
   padding: 0 4px;
@@ -1384,11 +1379,29 @@ header.search-area .intro-text .keyword a {
 .tab-wrap .tab-label small {
   margin-right: 4px;
 }
+.tab-wrap .tab-label.-flex {
+  flex: 1;
+}
+@media (min-width: 1200px) {
+  .tab-wrap .tab-label.-flex {
+    min-width: 30%;
+  }
+}
+@media (min-width: 1400px) {
+  .tab-wrap .tab-label.-flex {
+    min-width: 40%;
+  }
+}
+@media (min-width: 1600px) {
+  .tab-wrap .tab-label.-flex {
+    min-width: 70%;
+  }
+}
 .tab-wrap .tab-content {
   width: 100%;
   height: 0;
   overflow: hidden;
-  opacity: 0;
+  display: none;
   line-height: 2;
 }
 .tab-wrap .tab-switch {
@@ -1397,13 +1410,12 @@ header.search-area .intro-text .keyword a {
 .tab-wrap .tab-switch:checked + .tab-label {
   border: var(--color-secondary) 2px solid;
   border-bottom: #fff 2px solid;
-  margin-bottom: -2px;
 }
 .tab-wrap .tab-switch:checked + .tab-label + .tab-content {
   height: auto;
   overflow: auto;
   padding: 10px 5px;
-  opacity: 1;
+  display: block;
 }
 
 /* -----------------------------------
