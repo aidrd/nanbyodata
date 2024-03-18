@@ -173,9 +173,8 @@ Layout
   cursor: pointer;
 }
 .navbar select.language-select option {
-  color: var(--color-secondary);
+  color: var(--color-black);
   background-color: var(--color-background-gray);
-  font-weight: bold;
 }
 .navbar ul.navbar-nav a.nav-link {
   color: #fff;
