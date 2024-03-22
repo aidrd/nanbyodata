@@ -1,3 +1,19 @@
+// Epidemiology
+export const epidemiologyColumns = [
+  { id: 'nando', label: 'NANDO ID' },
+  { id: 'label', label: '疾患名', link: 's', target: '_blank' },
+  { id: 'number', label: '告知番号', align: 'center' },
+  { id: 'num_of_2015', label: '2015年', type: 'number' },
+  { id: 'num_of_2016', label: '2016年', type: 'number' },
+  { id: 'num_of_2017', label: '2017年', type: 'number' },
+  { id: 'num_of_2018', label: '2018年', type: 'number' },
+  { id: 'num_of_2019', label: '2019年', type: 'number' },
+  { id: 'num_of_2020', label: '2020年', type: 'number' },
+  { id: 'num_of_2021', label: '2021年', type: 'number' },
+  { id: 'num_of_2022', label: '2022年', type: 'number' },
+];
+
+// Disease
 export const causalGeneColumns = [
   {
     id: 'gene_symbol',
@@ -60,7 +76,7 @@ export const bioResourceCellColumns = [
 
 export const bioResourceMouseColumns = [
   { id: 'mouse_id', label: 'RIKEN_BRC No.' },
-  { id: 'hp', label: 'Homepage', link: 'Homepage', target: '_blank' },
+  { id: 'hp', label: 'Homepage', link: 'hp', target: '_blank' },
   { id: 'mouse_name', label: 'Strain name' },
   { id: 'description', label: 'Strain description' },
 ];
@@ -97,3 +113,14 @@ export const variantClinvarColumns = [
   },
   { id: 'mondo_id', label: 'MONDO_ID', link: 'mondo', target: '_bkank' },
 ];
+
+
+// Functions
+/**
+ * Convert column to text formats.
+ * @param {Object[]} columns - Columns for togostanza-pagination-table.
+ * @returns {string}
+ */
+export function convertColumntoText(columns) {
+  return JSON.stringify(columns).replace(/"/g, '&quot;');
+}

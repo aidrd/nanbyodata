@@ -8,6 +8,7 @@ import {
   bioResourceMouseColumns,
   bioResourceDnaColumns,
   variantClinvarColumns,
+  convertColumntoText
 } from './paginationColumns.js';
 
 // causalGene(疾患原因遺伝子)
@@ -129,15 +130,6 @@ export function makeVariant(clinvarData, mgendData, entryData) {
   document.querySelector('.loading-spinner').style.display = 'none';
   document.getElementById('content').style.display = 'block';
   document.getElementById('sidebar').style.display = 'block';
-}
-
-/**
- * Convert column to text formats.
- * @param {Object[]} columns - Columns for togostanza-pagination-table.
- * @returns {string}
- */
-function convertColumntoText(columns) {
-  return JSON.stringify(columns).replace(/"/g, '&quot;');
 }
 
 /**
