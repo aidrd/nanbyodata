@@ -62,6 +62,13 @@ def index():
     return render_template('index.html', news_info=news_info)
 
 
+#####
+# NanbyoData API page
+# /api
+@app.route('/api')
+def api():
+    return render_template('api.html')
+
 
 #####
 # NANDOについて
