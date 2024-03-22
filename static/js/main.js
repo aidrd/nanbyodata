@@ -2,11 +2,13 @@ import { navToggle } from './navigation.js';
 import { focusInput } from './focusInput.js';
 import { changePlaceholder } from './changePlaceholder.js';
 import { setLangChange } from './setLangChange.js';
+import { drawEpidemiologyTable } from "./epidemiology.js";
 
 navToggle();
 focusInput();
 changePlaceholder();
 setLangChange();
+drawEpidemiologyTable()
 
 // It is not used below and may not be a problem to delete.  It is left commented out just in case.
 
