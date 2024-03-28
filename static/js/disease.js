@@ -19,6 +19,9 @@ const pathname = window.location.pathname;
 const nandoIndex = pathname.indexOf('NANDO:');
 const nandoId = pathname.slice(nandoIndex + 6);
 
+// for cache busting
+const timestamp = Date.now();
+
 // external functions
 navToggle();
 focusInput();
@@ -31,7 +34,8 @@ setLangChange();
   try {
     const entryDataPromise = fetch(
       'https://nanbyodata.jp/sparqlist/api/nanbyodata_get_metadata?nando_id=' +
-        nandoId,
+        nandoId +
+        `&timestamp=${timestamp}`,
       {
         method: 'GET',
         headers: {
@@ -43,7 +47,7 @@ setLangChange();
     const entryData = await entryDataPromise;
 
     async function fetchData(apiEndpoint) {
-      const url = `https://nanbyodata.jp/sparqlist/api/${apiEndpoint}?nando_id=${nandoId}`;
+      const url = `https://nanbyodata.jp/sparqlist/api/${apiEndpoint}?nando_id=${nandoId}&timestamp=${timestamp}`;
       const response = await fetch(url);
       return response.json();
     }
