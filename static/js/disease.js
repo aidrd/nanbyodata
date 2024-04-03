@@ -33,7 +33,7 @@ setLangChange();
 (async () => {
   try {
     const entryDataPromise = fetch(
-      'https://nanbyodata.jp/sparqlist/api/nanbyodata_get_metadata?nando_id=' +
+      'https://nanbyodata.jp/sparqlist/api/nanbyodata_get_overview_by_nando_id?nando_id=' +
         nandoId +
         `&timestamp=${timestamp}`,
       {
