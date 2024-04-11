@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  app:
+    container_name: ${CONTAINER_NAME:-nanbyodata-app}
+    image: ${IMAGE_NAME:-nanbyodata-app}
+    build: .
+    ports:
+      - ${PORT:-8000}:8000
+    volumes:
+      - .:/app
+    environment:
+      - UWSGI_INI=uwsgi/uwsgi.ini
+      # [TODO] sparqlist uri, virtuoso EP? etc..
+    # [TODO] user $UID:$GID 

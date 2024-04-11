@@ -1,6 +1,8 @@
-memo.txt
-cgi/log.txt
 config.cfg
-uwsgi/uwsgi.log
-uwsgi/uwsgi.pid
+__pycache__/
+*.log
+cgi/log.txt
+*.pid
+.env
+memo.txt
 ontology/current_release
