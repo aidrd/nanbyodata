@@ -3,7 +3,7 @@
 from flask import Flask, session, render_template, request, redirect, url_for, jsonify, make_response, send_from_directory
 import os
 import re
-import MySQLdb
+#import MySQLdb
 import json
 import sys
 import datetime
@@ -14,7 +14,8 @@ import pronto
 from io import StringIO, BytesIO
 import csv
 # https://blog.capilano-fw.com/?p=398
-from flask_babel import gettext,Babel
+from flask_babel import Babel
+#from flask.ext.babel import gettext,Babel
 from flask_cors import CORS
 import markdown2
 import requests
@@ -26,8 +27,8 @@ CORS(app)
 app.secret_key = 'nanbyodata0824'
 
 # https://github.com/shibacow/flask_babel_sample/blob/master/srv.py
-babel = Babel(app)
-@babel.localeselector
+#babel = Babel(app)
+#@babel.localeselector
 def get_locale():
     if 'lang' not in session:
         session['lang'] = request.accept_languages.best_match(['ja', 'ja_JP', 'en'])
@@ -36,16 +37,20 @@ def get_locale():
     return session.get('lang', 'en')
 app.jinja_env.globals.update(get_locale=get_locale)
 
+# flask の　@babel.localeselector
+# https://stackoverflow.com/questions/75229322/flask-babel-get-locale-seems-to-be-not-working
+babel = Babel(app, locale_selector=get_locale)
+
 # debug
 app.debug = True
 
 #####
 # DB設定
-app.config.from_pyfile('config.cfg')
-db_sock = app.config['DBSOCK']
-db_name = app.config['DBNAME']
-db_user = app.config['DBUSER']
-db_pw   = app.config['DBPW']
+#app.config.from_pyfile('config.cfg')
+#db_sock = app.config['DBSOCK']
+#db_name = app.config['DBNAME']
+#db_user = app.config['DBUSER']
+#db_pw   = app.config['DBPW']
 
 
 #####
