@@ -145,7 +145,9 @@ def REST_API_disease(id_nando=""):
             subclass_html = make_selector_subclasses(onto, term.id, next_term_id, index)
             breadcrumb_html += subclass_html
         breadcrumb_html += '</section>'
-        return render_template('disease.html', id_nando=id_nando, breadcrumb_list_html=breadcrumb_html)
+        
+        overview = get_overview(id_nando)
+        return render_template('disease.html', id_nando=id_nando, breadcrumb_list_html=breadcrumb_html, title=overview['title'], description=overview['description'])
 
 def make_selector_subclasses(onto, id_nando, next_term_id, index):
     selected_disease_name = onto[next_term_id].name if next_term_id in onto else "下位疾患"
@@ -168,6 +170,23 @@ def make_selector_subclasses(onto, id_nando, next_term_id, index):
     </div>'''
 
     return html_selector
+
+def get_overview(id_nando):
+    url = f'https://nanbyodata.jp/sparqlist/api/nanbyodata_get_overview_by_nando_id?nando_id={id_nando}'
+    response = requests.get(url)
+    overview = response.json()
+    title = overview.get('label_ja') or overview.get('label_en', '')
+
+    description = overview.get('description')
+    if not description:
+        mond_desc = overview.get('mondo_decs', [])
+        if mond_desc and isinstance(mond_desc, list) and len(mond_desc) > 0:
+            description = mond_desc[0].get('id')
+        
+        if not description:
+            description = overview.get('medgen_definition', '')
+
+    return {'title': title, 'description': description}
 
 # Newsページ
 def load_news_content(filename):
