@@ -1,9 +1,16 @@
-import { epidemiologyColumns, convertColumntoText } from './paginationColumns.js';
+import {
+  epidemiologyJaColumns,
+  epidemiologyEnColumns,
+  convertColumntoText,
+} from './paginationColumns.js';
 
 export const drawEpidemiologyTable = () => {
   const tableView = document.querySelector('#epidemiology-table');
+  const currentLang = document.querySelector('.language-select').value;
+  const epidemiologyColumns =
+    currentLang === 'ja' ? epidemiologyJaColumns : epidemiologyEnColumns;
   updateElementWithTable(tableView, convertColumntoText(epidemiologyColumns));
-}
+};
 /**
  * Updates the specified HTML element with a table using the provided object URL and columns.
  * @param {HTMLElement} element - The HTML element to be updated for the table.
