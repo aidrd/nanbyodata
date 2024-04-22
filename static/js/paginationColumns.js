@@ -1,5 +1,5 @@
 // Epidemiology
-export const epidemiologyColumns = [
+export const epidemiologyJaColumns = [
   { id: 'nando', label: 'NANDO ID' },
   { id: 'label', label: '疾患名', link: 's', target: '_blank' },
   { id: 'number', label: '告知番号', align: 'center' },
@@ -11,6 +11,20 @@ export const epidemiologyColumns = [
   { id: 'num_of_2020', label: '2020年', type: 'number' },
   { id: 'num_of_2021', label: '2021年', type: 'number' },
   { id: 'num_of_2022', label: '2022年', type: 'number' },
+];
+
+export const epidemiologyEnColumns = [
+  { id: 'nando', label: 'NANDO ID' },
+  { id: 'label', label: 'disease name', link: 's', target: '_blank' },
+  { id: 'number', label: 'notice number', align: 'center' },
+  { id: 'num_of_2015', label: '2015', type: 'number' },
+  { id: 'num_of_2016', label: '2016', type: 'number' },
+  { id: 'num_of_2017', label: '2017', type: 'number' },
+  { id: 'num_of_2018', label: '2018', type: 'number' },
+  { id: 'num_of_2019', label: '2019', type: 'number' },
+  { id: 'num_of_2020', label: '2020', type: 'number' },
+  { id: 'num_of_2021', label: '2021', type: 'number' },
+  { id: 'num_of_2022', label: '2022', type: 'number' },
 ];
 
 // Disease
@@ -113,7 +127,6 @@ export const variantClinvarColumns = [
   },
   { id: 'mondo_id', label: 'MONDO_ID', link: 'mondo', target: '_bkank' },
 ];
-
 
 // Functions
 /**
