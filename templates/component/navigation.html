@@ -36,8 +36,13 @@
                 data-target="#demoNormalModal_TOS">TERMS</button></a>
           </li>
           <li class="nav-item">
+            {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
             <a class="nav-link" title="Comments & suggestions are welcome!"
               href="https://dbcls.rois.ac.jp/contact.html">CONTACT</a>
+            {% else %}
+            <a class="nav-link" title="Comments & suggestions are welcome!"
+              href="https://dbcls.rois.ac.jp/contact-en.html">CONTACT</a>
+            {% endif %}
           </li>
         </ul>
       </div>

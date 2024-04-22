@@ -118,10 +118,17 @@
               <img src="/static/img/img_data_1.png" class="card-img-top" alt="難病オントロジーimg">
               <div class="card-body">
                 <img src="/static/img/icon_2_1.svg" class="illust" alt="難病オントロジーillust">
+		{% if get_locale() == "ja" or get_locale() == "ja_JP" %}
                 <h3 class="card-title">難病オントロジー</h3>
                 <p class="card-text">難病オントロジー（Nanbyo Disease Ontology,
                   NANDO）は、難病に関する語彙、難病同士の関係、難病と他疾患リソースとの関連などを体系化したものです。難病オントロジーに基づき難病関連データを記述することにより、コンピュータを用いた処理やデータ共有が容易になります。
                 </p>
+		{% else %}
+                <h3 class="card-title">Nanbyo Disease Ontology</h3>
+                <p class="card-text">
+Nanbyo Disease Ontology (NANDO) with over 2700 terms which represent individual Nanbyo diseases in Japan.
+                </p>
+		{% endif %}
                 <button type="button" class="btn btn-primary" data-toggle="modal"
                   data-target="#demoNormalModalA">Download</button>
               </div>
@@ -131,8 +138,13 @@
               <img src="/static/img/img_data_2.png" class="card-img-top" alt="難病ー遺伝子関連データimg">
               <div class="card-body">
                 <img src="/static/img/icon_2_2.svg" class="illust" alt="難病ー遺伝子関連データillust">
+		{% if get_locale() == "ja" or get_locale() == "ja_JP" %}
                 <h3 class="card-title">難病ー遺伝子関連データ</h3>
                 <p class="card-text">各難病について、疾患原因として報告されている遺伝子を関連付けたデータを提供します。</p>
+		{% else %}
+                <h3 class="card-title">Nanbyo-Gene Associations</h3>
+                <p class="card-text">We provide the causative genes for each Nanbyo disease.</p>
+		{% endif %}
                 <button type="button" class="btn btn-primary" data-toggle="modal"
                   data-target="#demoNormalModalB">Download</button>
               </div>
@@ -142,8 +154,13 @@
               <img src="/static/img/img_data_3.png" class="card-img-top" alt="難病ー症状関連データimg">
               <div class="card-body">
                 <img src="/static/img/icon_2_3.svg" class="illust" alt="難病ー症状関連データillust">
+		{% if get_locale() == "ja" or get_locale() == "ja_JP" %}
                 <h3 class="card-title">難病ー症状関連データ</h3>
                 <p class="card-text">各難病について、報告されている症状をHuman Phenotype Ontology（HPO）を用いて関連付けたデータを提供します。</p>
+		{% else %}
+                <h3 class="card-title">Nanbyo-Phenotype Associations</h3>
+                <p class="card-text">We provide the phenotypes for each Nanbyo disease using the Human Phenotype Ontology (HPO).</p>
+		{% endif %}
                 <button type="button" class="btn btn-primary" data-toggle="modal"
                   data-target="#demoNormalModalC">Download</button>
               </div>
@@ -167,9 +184,8 @@
               <span aria-hidden="true">&times;</span>
             </button>
             <img src="/static/img/modal_icon_1.png">
-            <h3 class="modal-title" id="demoModalTitle">難病オントロジー（NANDO）</h3>
-            <p>NANDOの詳細情報は<a href="https://github.com/aidrd/nando" target="_blank">GitHub</a>をご参照ください。
-            </p>
+            <h3 class="modal-title" id="demoModalTitle">Nanbyo Disease Ontology</h3>
+            </br>
             <table>
               <tr>
                 <th>Version</th>
@@ -215,8 +231,8 @@
               <span aria-hidden="true">&times;</span>
             </button>
             <img src="/static/img/modal_icon_2.png">
-            <h3 class="modal-title" id="demoModalTitle">難病ー遺伝子関連データ</h3>
-            <p>それぞれの難病に関連する疾患原因遺伝子（HGNC Gene Symbol）を収納</p>
+            <h3 class="modal-title" id="demoModalTitle">Nanbyo-Gene Associations</h3>
+            </br>
             <table>
               <tr>
                 <th>Version</th>
@@ -256,8 +272,8 @@
               <span aria-hidden="true">&times;</span>
             </button>
             <img src="/static/img/modal_icon_3.png">
-            <h3 class="modal-title" id="demoModalTitle">難病ー症状関連データ</h3>
-            <p>それぞれの難病に関連する症状（Human Phenotype Ontology）を収納</p>
+            <h3 class="modal-title" id="demoModalTitle">Nanbyo-Phenotype Associations</h3>
+            </br>
             <table>
               <tr>
                 <th>Version</th>
@@ -288,7 +304,11 @@
     <!--- /#demoNormalModal --->
 
     <!--- NanbyoData利用規約 modal -->
+    {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
     {% include 'component/modal-tos.html' %}
+    {% else %}
+    {% include 'component/modal-tos_en.html' %}
+    {% endif %}
 
   </main>
 

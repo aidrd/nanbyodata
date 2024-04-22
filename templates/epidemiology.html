@@ -1,5 +1,11 @@
 <!DOCTYPE html>
+{% if get_locale() == "ja" or get_locale() == "ja_JP" %}
 <html lang="ja">
+{% elif get_locale() == "ko" or get_locale() == "ko_KR" %}
+<html lang="ko">
+{% else %}
+<html lang="en">
+{% endif %}
 
 <head>
   <!-- Required meta tags -->
@@ -113,7 +119,11 @@
         <h2>Epidemiology</h2>
       </header>
       <div class="contents-wrapper">
+        {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
         <h3 class="content-title">指定難病：疾患別患者数</h3>
+        {% else %}
+        <h3 class="content-title">Designated intractable disease: Number of patients for each disease</h3>
+        {% endif %}
         <div id="epidemiology-table"></div>
       </div>
     </div>
@@ -122,7 +132,12 @@
     {% include 'component/footer.html' %}
 
     <!--- NanbyoData利用規約 modal -->
+    {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
     {% include 'component/modal-tos.html' %}
+    {% else %}
+    {% include 'component/modal-tos_en.html' %}
+    {% endif %}
+
   </main>
 
   <!-- Optional JavaScript -->
