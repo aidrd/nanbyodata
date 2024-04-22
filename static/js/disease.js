@@ -58,15 +58,15 @@ setLangChange();
     const phenotypesData = await fetchData(
       'nanbyodata_get_hpo_data_by_nando_id'
     );
-    const cellData = await fetchData(
-      'nanbyodata_get_riken_brc_cell_info_by_nando_id'
-    );
-    const mouseData = await fetchData(
-      'nanbyodata_get_riken_brc_mouse_info_by_nando_id'
-    );
-    const dnaData = await fetchData(
-      'nanbyodata_get_riken_brc_dna_info_by_nando_id'
-    );
+    // const cellData = await fetchData(
+    //   'nanbyodata_get_riken_brc_cell_info_by_nando_id'
+    // );
+    // const mouseData = await fetchData(
+    //   'nanbyodata_get_riken_brc_mouse_info_by_nando_id'
+    // );
+    // const dnaData = await fetchData(
+    //   'nanbyodata_get_riken_brc_dna_info_by_nando_id'
+    // );
     const clinvarData = await fetchData('nanbyodata_get_variant_by_nando_id');
     // TODO: add mgend data
     // const mgendData = await fetchData('');
@@ -78,9 +78,9 @@ setLangChange();
       { name: 'Causal Genes', data: causalGeneData },
       { name: 'Genetic Testing', data: geneticTestingData },
       { name: 'Phenotypes', data: phenotypesData },
-      { name: 'Cell', data: cellData },
-      { name: 'Mouse', data: mouseData },
-      { name: 'DNA', data: dnaData },
+      // { name: 'Cell', data: cellData },
+      // { name: 'Mouse', data: mouseData },
+      // { name: 'DNA', data: dnaData },
       { name: 'Clinvar', data: clinvarData },
     ];
 
@@ -97,7 +97,7 @@ setLangChange();
       makeCausalGene(causalGeneData),
       makeGeneticTesting(geneticTestingData),
       makePhenotypes(phenotypesData),
-      makeBioResource(cellData, mouseData, dnaData),
+      // makeBioResource(cellData, mouseData, dnaData),
       makeVariant(clinvarData, mgendData, entryData),
     ]);
 
