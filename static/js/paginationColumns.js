@@ -15,8 +15,8 @@ export const epidemiologyJaColumns = [
 
 export const epidemiologyEnColumns = [
   { id: 'nando', label: 'NANDO ID' },
-  { id: 'label', label: 'disease name', link: 's', target: '_blank' },
-  { id: 'number', label: 'notice number', align: 'center' },
+  { id: 'label_en', label: 'Disease name', link: 's', target: '_blank' },
+  { id: 'number', label: 'Notification number', align: 'center' },
   { id: 'num_of_2015', label: '2015', type: 'number' },
   { id: 'num_of_2016', label: '2016', type: 'number' },
   { id: 'num_of_2017', label: '2017', type: 'number' },
