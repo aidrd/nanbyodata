@@ -1113,9 +1113,19 @@ header.search-area .intro-text .keyword a {
   color: var(--color-secondary);
   cursor: default;
 }
+#temp-side-navigation > ul > li .nav-link:hover {
+  background-color: var(--color-breadcrumb-hover);
+}
 #temp-side-navigation > ul > li .nav-link.-disabled {
   background-color: rgba(128, 128, 128, 0.142);
   color: rgba(19, 41, 90, 0.2705882353);
+  cursor: default;
+}
+#temp-side-navigation > ul > li .nav-link.-disabled:hover {
+  background-color: rgba(128, 128, 128, 0.142);
+}
+#temp-side-navigation > ul > li .nav-link.selected:hover {
+  background-color: rgba(22, 35, 78, 0.2);
 }
 #temp-side-navigation > ul > li .data-num {
   padding: 0 5px;
@@ -1185,7 +1195,21 @@ header.search-area .intro-text .keyword a {
   padding-left: 10px;
   z-index: var(--zindex-disease-side-link);
   border-radius: var(--radius-small);
+  background-color: transparent;
 }
+#temp-side-navigation > ul > li .bio-resource ul li a:hover,
+#temp-side-navigation > ul > li .variant ul li a:hover {
+  background-color: var(--color-breadcrumb-hover);
+}
+#temp-side-navigation > ul > li .bio-resource ul li .-disabled:hover,
+#temp-side-navigation > ul > li .variant ul li .-disabled:hover {
+  background-color: rgba(128, 128, 128, 0.142);
+}
+#temp-side-navigation > ul > li .bio-resource ul li .selected,
+#temp-side-navigation > ul > li .variant ul li .selected {
+  background-color: rgba(22, 35, 78, 0.2);
+}
+
 /* Link */
 .linked-item {
   border: var(--color-primary) 1px solid;

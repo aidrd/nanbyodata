@@ -19,10 +19,11 @@ export function makeCausalGene(causalGeneData) {
     'causal-genes-table',
     convertColumntoText(causalGeneColumns)
   );
-  const navLink = document.querySelector('.nav-link.causal-genes');
-  navLink.style.background = 'none';
-  navLink.style.color = '#13295a';
-  navLink.style.cursor = 'pointer';
+  if (causalGeneData.length > 0 && causalGeneData.length !== null) {
+    const navLink = document.querySelector('.nav-link.causal-genes');
+    navLink.style.cursor = 'pointer';
+    navLink.classList.remove('-disabled');
+  }
 }
 
 // geneticTesting(診療用遺伝学的検査情報)
@@ -33,10 +34,11 @@ export function makeGeneticTesting(geneticTestingData) {
     'genetic-testing-table',
     convertColumntoText(geneticTestingColumns)
   );
-  const navLink = document.querySelector('.nav-link.genetic-testing');
-  navLink.style.background = 'none';
-  navLink.style.color = '#13295a';
-  navLink.style.cursor = 'pointer';
+  if (geneticTestingData.length > 0 && geneticTestingData.length !== null) {
+    const navLink = document.querySelector('.nav-link.genetic-testing');
+    navLink.style.cursor = 'pointer';
+    navLink.classList.remove('-disabled');
+  }
 }
 
 // phenotypes(臨床的特徴)
@@ -48,10 +50,11 @@ export function makePhenotypes(phenotypesData) {
     en: convertColumntoText(phenotypesEnColumns),
   };
   makeData(phenotypesData, 'phenotypes', phenotypeLang, columns[currentLang]);
-  const navLink = document.querySelector('.nav-link.phenotypes');
-  navLink.style.background = 'none';
-  navLink.style.color = '#13295a';
-  navLink.style.cursor = 'pointer';
+  if (phenotypesData.length > 0 && phenotypesData.length !== null) {
+    const navLink = document.querySelector('.nav-link.phenotypes');
+    navLink.style.cursor = 'pointer';
+    navLink.classList.remove('-disabled');
+  }
 }
 
 // bioResource(難病特異的バイオリソース)
@@ -97,6 +100,21 @@ export function makeBioResource(cellData, mouseData, dnaData) {
   ];
 
   processTabs(items, 'bio-resource', tabWrap);
+  if (cellData.length > 0 && cellData.length !== null) {
+    const navLink = document.querySelector('.nav-link.cell');
+    navLink.style.cursor = 'pointer';
+    navLink.classList.remove('-disabled');
+  }
+  if (mouseData.length > 0 && mouseData.length !== null) {
+    const navLink = document.querySelector('.nav-link.mouse');
+    navLink.style.cursor = 'pointer';
+    navLink.classList.remove('-disabled');
+  }
+  if (dnaData.length > 0 && dnaData.length !== null) {
+    const navLink = document.querySelector('.nav-link.dna');
+    navLink.style.cursor = 'pointer';
+    navLink.classList.remove('-disabled');
+  }
 }
 
 // variant(バリアント)
@@ -131,6 +149,16 @@ export function makeVariant(clinvarData, mgendData) {
   ];
 
   processTabs(items, 'variant', tabWrap);
+  if (clinvarData.length > 0 && clinvarData.length !== null) {
+    const navLink = document.querySelector('.nav-link.clinvar');
+    navLink.style.cursor = 'pointer';
+    navLink.classList.remove('-disabled');
+  }
+  if (mgendData.length > 0 && mgendData.length !== null) {
+    const navLink = document.querySelector('.nav-link.mgend');
+    navLink.style.cursor = 'pointer';
+    navLink.classList.remove('-disabled');
+  }
 
   // finish loading
   // document.querySelector('.loading-spinner').style.display = 'none';

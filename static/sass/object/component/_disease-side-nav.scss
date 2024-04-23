@@ -15,10 +15,6 @@
         color: var(--color-secondary);
         text-decoration: none;
         margin-bottom: -1px;
-
-        &:not(.selected):hover {
-          // background-color: var(--color-breadcrumb-hover);
-        }
       }
       .nav-link {
         margin: 0;
@@ -26,9 +22,21 @@
         position: relative;
         color: var(--color-secondary);
         cursor: default;
+        &:hover {
+          background-color: var(--color-breadcrumb-hover);
+        }
         &.-disabled {
           background-color: rgba(128, 128, 128, 0.142);
           color: #13295a45;
+          cursor: default;
+          &:hover {
+            background-color: rgba(128, 128, 128, 0.142);
+          }
+        }
+        &.selected {
+          &:hover {
+            background-color: rgba(22, 35, 78, 0.2);
+          }
         }
       }
       .data-num {
@@ -44,7 +52,6 @@
       }
       .bio-resource,
       .variant {
-        // cursor: pointer;
         color: var(--color-secondary);
         font-weight: bold;
         padding: 10px 0 20px 10px;
@@ -96,9 +103,16 @@
               padding-left: 10px;
               z-index: var(--zindex-disease-side-link);
               border-radius: var(--radius-small);
+              background-color: transparent;
             }
-            a:not(.selected):hover {
-              // background-color: var(--color-breadcrumb-hover);
+            a:hover {
+              background-color: var(--color-breadcrumb-hover);
+            }
+            .-disabled:hover {
+              background-color: rgba(128, 128, 128, 0.142);
+            }
+            .selected {
+              background-color: rgba(22, 35, 78, 0.2);
             }
           }
         }

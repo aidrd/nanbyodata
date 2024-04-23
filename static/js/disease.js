@@ -66,9 +66,8 @@ setLangChange();
           document.getElementById('content').style.display = 'block';
         } else {
           const navLink = document.querySelector('.nav-link.overview');
-          navLink.style.background = 'none';
-          navLink.style.color = '#13295a';
           navLink.style.cursor = 'pointer';
+          navLink.classList.remove('-disabled');
           document.getElementById('content').style.display = 'block';
         }
       }
