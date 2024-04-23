@@ -137,13 +137,15 @@ function makeHeader(entryData) {
     });
 
   const labelJa = document.getElementById('temp-label-ja');
-  labelJa.innerHTML =
-    '<ruby>' +
-    entryData.label_ja +
-    '<rt>' +
-    entryData.ruby +
-    '</rt>' +
-    '</ruby>';
+  if (labelJa) {
+    labelJa.innerHTML =
+      '<ruby>' +
+      entryData.label_ja +
+      '<rt>' +
+      entryData.ruby +
+      '</rt>' +
+      '</ruby>';
+  }
 
   const labelEn = document.getElementById('temp-label-en');
   labelEn.textContent = entryData.label_en;
@@ -203,8 +205,9 @@ function makeExternalLinks(entryData) {
 function makeAlternativeName(entryData) {
   const altLabelJa = document.querySelector('.alt-label-ja');
   const altLabelEn = document.querySelector('.alt-label-en');
+  const currentLang = document.querySelector('.language-select').value;
 
-  if (entryData.alt_label_ja) {
+  if (entryData.alt_label_ja && currentLang === 'ja') {
     const divElement = document.createElement('div');
     altLabelJa.append(divElement);
     entryData.alt_label_ja.forEach((item) => {
@@ -360,11 +363,12 @@ function makeDiseaseDefinition(entryData) {
   const tabWrap = diseaseDefinition.querySelector(
     '#temp-disease-definition .tab-wrap'
   );
+  const currentLang = document.querySelector('.language-select').value;
 
   const items = [
     {
       class: 'mhlw',
-      existing: !!entryData.description,
+      existing: currentLang === 'en' ? false : !!entryData.description,
       desc: entryData.description,
       translate: false,
     },
