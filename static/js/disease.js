@@ -32,19 +32,6 @@ setLangChange();
 
 (async () => {
   try {
-    const timestamp = Date.now();
-    const pathname = window.location.pathname;
-    const nandoIndex = pathname.indexOf('NANDO:');
-    const nandoId = pathname.slice(nandoIndex + 6);
-
-    // 外部関数の呼び出し
-    navToggle();
-    focusInput();
-    changePlaceholder();
-    popup();
-    breadcrumb(nandoId);
-    setLangChange();
-
     // 関数 fetchData の定義
     async function fetchData(apiEndpoint) {
       const url = `https://nanbyodata.jp/sparqlist/api/${apiEndpoint}?nando_id=${nandoId}&timestamp=${timestamp}`;
@@ -71,7 +58,19 @@ setLangChange();
         checkSummaryData(entryData);
         makeDiseaseDefinition(entryData);
         switchingDisplayContents('overview', entryData);
-        document.getElementById('content').style.display = 'block';
+        selectedItem();
+
+        if (
+          document.querySelector('.summary-wrapper').style.display === 'none'
+        ) {
+          document.getElementById('content').style.display = 'block';
+        } else {
+          const navLink = document.querySelector('.nav-link.overview');
+          navLink.style.background = 'none';
+          navLink.style.color = '#13295a';
+          navLink.style.cursor = 'pointer';
+          document.getElementById('content').style.display = 'block';
+        }
       }
     });
 

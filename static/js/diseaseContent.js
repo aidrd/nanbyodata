@@ -19,6 +19,10 @@ export function makeCausalGene(causalGeneData) {
     'causal-genes-table',
     convertColumntoText(causalGeneColumns)
   );
+  const navLink = document.querySelector('.nav-link.causal-genes');
+  navLink.style.background = 'none';
+  navLink.style.color = '#13295a';
+  navLink.style.cursor = 'pointer';
 }
 
 // geneticTesting(診療用遺伝学的検査情報)
@@ -29,6 +33,10 @@ export function makeGeneticTesting(geneticTestingData) {
     'genetic-testing-table',
     convertColumntoText(geneticTestingColumns)
   );
+  const navLink = document.querySelector('.nav-link.genetic-testing');
+  navLink.style.background = 'none';
+  navLink.style.color = '#13295a';
+  navLink.style.cursor = 'pointer';
 }
 
 // phenotypes(臨床的特徴)
@@ -40,6 +48,10 @@ export function makePhenotypes(phenotypesData) {
     en: convertColumntoText(phenotypesEnColumns),
   };
   makeData(phenotypesData, 'phenotypes', phenotypeLang, columns[currentLang]);
+  const navLink = document.querySelector('.nav-link.phenotypes');
+  navLink.style.background = 'none';
+  navLink.style.color = '#13295a';
+  navLink.style.cursor = 'pointer';
 }
 
 // bioResource(難病特異的バイオリソース)

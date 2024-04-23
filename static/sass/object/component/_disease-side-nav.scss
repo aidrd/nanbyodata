@@ -17,7 +17,7 @@
         margin-bottom: -1px;
 
         &:not(.selected):hover {
-          background-color: var(--color-breadcrumb-hover);
+          // background-color: var(--color-breadcrumb-hover);
         }
       }
       .nav-link {
@@ -25,6 +25,11 @@
         margin-top: -1.5px;
         position: relative;
         color: var(--color-secondary);
+        cursor: default;
+        &.-disabled {
+          background-color: rgba(128, 128, 128, 0.142);
+          color: #13295a45;
+        }
       }
       .data-num {
         padding: 0 5px;
@@ -39,7 +44,7 @@
       }
       .bio-resource,
       .variant {
-        cursor: pointer;
+        // cursor: pointer;
         color: var(--color-secondary);
         font-weight: bold;
         padding: 10px 0 20px 10px;
@@ -65,7 +70,7 @@
             }
 
             &:first-child::before {
-              top:8px;
+              top: 8px;
               height: 26px;
             }
 
@@ -93,7 +98,7 @@
               border-radius: var(--radius-small);
             }
             a:not(.selected):hover {
-              background-color: var(--color-breadcrumb-hover);
+              // background-color: var(--color-breadcrumb-hover);
             }
           }
         }

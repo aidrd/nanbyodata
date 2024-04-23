@@ -1106,14 +1106,16 @@ header.search-area .intro-text .keyword a {
   text-decoration: none;
   margin-bottom: -1px;
 }
-#temp-side-navigation > ul > li > a:not(.selected):hover {
-  background-color: var(--color-breadcrumb-hover);
-}
 #temp-side-navigation > ul > li .nav-link {
   margin: 0;
   margin-top: -1.5px;
   position: relative;
   color: var(--color-secondary);
+  cursor: default;
+}
+#temp-side-navigation > ul > li .nav-link.-disabled {
+  background-color: rgba(128, 128, 128, 0.142);
+  color: rgba(19, 41, 90, 0.2705882353);
 }
 #temp-side-navigation > ul > li .data-num {
   padding: 0 5px;
@@ -1128,7 +1130,6 @@ header.search-area .intro-text .keyword a {
 }
 #temp-side-navigation > ul > li .bio-resource,
 #temp-side-navigation > ul > li .variant {
-  cursor: pointer;
   color: var(--color-secondary);
   font-weight: bold;
   padding: 10px 0 20px 10px;
@@ -1185,11 +1186,6 @@ header.search-area .intro-text .keyword a {
   z-index: var(--zindex-disease-side-link);
   border-radius: var(--radius-small);
 }
-#temp-side-navigation > ul > li .bio-resource ul li a:not(.selected):hover,
-#temp-side-navigation > ul > li .variant ul li a:not(.selected):hover {
-  background-color: var(--color-breadcrumb-hover);
-}
-
 /* Link */
 .linked-item {
   border: var(--color-primary) 1px solid;
