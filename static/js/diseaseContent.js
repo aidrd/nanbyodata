@@ -139,7 +139,7 @@ function makeData(data, categoryName, tableId, columns) {
   const objectUrl = createObjectUrlFromData(data);
   updateElementWithTable(tableView, objectUrl, columns);
   updateDataNumElement(`#${categoryName}`, `.${categoryName}`, data.length);
-  makeSideNavigation(entryData);
+  makeSideNavigation();
 }
 
 /**
@@ -189,8 +189,8 @@ function updateDataNumElement(mainWrapperName, navWrapperName, dataLength) {
     `${navWrapperName} .loading-spinner`
   );
   if (navLoadingSpinner) navLoadingSpinner.style.display = 'none';
-  mainContentNumberEl.innerText = dataLength;
-  navContentNumberEl.innerText = dataLength;
+  if (mainContentNumberEl) mainContentNumberEl.innerText = dataLength;
+  if (navContentNumberEl) navContentNumberEl.innerText = dataLength;
 }
 
 // for BioResource & Variant

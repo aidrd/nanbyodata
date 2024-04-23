@@ -1,6 +1,4 @@
-import { checkSummaryData } from './disease.js';
-
-export function makeSideNavigation(entryData) {
+export function makeSideNavigation() {
   const sideNavigation = document.getElementById('temp-side-navigation');
   const sideNavigationUl = sideNavigation.querySelector('ul');
   const items = [
@@ -15,7 +13,7 @@ export function makeSideNavigation(entryData) {
   lis.forEach((li) => {
     li.addEventListener('click', () => {
       const id = li.querySelector('a').getAttribute('href').replace('#', '');
-      switchingDisplayContents(id, entryData);
+      switchingDisplayContents(id);
     });
   });
 
@@ -105,7 +103,7 @@ export function makeSideNavigation(entryData) {
     });
 }
 
-export function switchingDisplayContents(selectedItemId, entryData) {
+export function switchingDisplayContents(selectedItemId) {
   const items = [
     '#overview',
     '#temp-disease-definition',
@@ -128,7 +126,6 @@ export function switchingDisplayContents(selectedItemId, entryData) {
           toggleDisplay(selector, 'block');
         }
       );
-      checkSummaryData(entryData);
       break;
     case 'temp-disease-definition':
     case 'causal-genes':
