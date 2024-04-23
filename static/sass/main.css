@@ -17,6 +17,7 @@ Foundation
   --color-table-dash: #dcdcdc;
   --color-dataset-th: #94928d;
   --color-black: #444;
+  --color-white: #fff;
   --color-spinner-bg: #ddd;
   --color-summary-border: #c1c6d3;
   --color-summary-link: #90959b;
@@ -427,7 +428,6 @@ footer .container .footer__bottom .footer__lisence small:before {
   top: 76px;
 }
 .content-wrapper #sidebar {
-  display: none;
   position: fixed;
   overflow-y: auto;
   height: calc(100vh - 76px);
@@ -934,6 +934,20 @@ header.search-area .intro-text .keyword a {
   border-top: 4px var(--color-primary) solid;
   border-radius: 50%;
   animation: sp-anime 1s infinite linear;
+}
+.loading-spinner.-sidenav {
+  display: block;
+  top: 0;
+  border: 4px var(--color-white) solid;
+  border-top: 4px var(--color-primary) solid;
+  right: 8px;
+  left: unset;
+  width: 20px;
+  height: 20px;
+  opacity: 0.5;
+}
+.loading-spinner.-sidenav.-child {
+  top: -5px;
 }
 
 @keyframes sp-anime {

@@ -8,7 +8,7 @@ import {
   bioResourceMouseColumns,
   bioResourceDnaColumns,
   variantClinvarColumns,
-  convertColumntoText
+  convertColumntoText,
 } from './paginationColumns.js';
 
 // causalGene(疾患原因遺伝子)
@@ -65,21 +65,18 @@ export function makeBioResource(cellData, mouseData, dnaData) {
 
   const items = [
     {
-      existing: cellDataset.hasData,
       id: 'cell',
       columns: convertColumntoText(bioResourceCellColumns),
       data: cellData,
       object: cellDataset.dataObject,
     },
     {
-      existing: mouseDataset.hasData,
       id: 'mouse',
       columns: convertColumntoText(bioResourceMouseColumns),
       data: mouseData,
       object: mouseDataset.dataObject,
     },
     {
-      existing: dnaDataset.hasData,
       id: 'dna',
       columns: convertColumntoText(bioResourceDnaColumns),
       data: dnaData,
@@ -91,7 +88,7 @@ export function makeBioResource(cellData, mouseData, dnaData) {
 }
 
 // variant(バリアント)
-export function makeVariant(clinvarData, mgendData, entryData) {
+export function makeVariant(clinvarData, mgendData) {
   const variant = document.getElementById('variant');
   const tabWrap = variant.querySelector('.tab-wrap');
 
@@ -108,14 +105,12 @@ export function makeVariant(clinvarData, mgendData, entryData) {
 
   const items = [
     {
-      existing: clinvarDataset.hasData,
       id: 'clinvar',
       columns: convertColumntoText(variantClinvarColumns),
       data: clinvarData,
       object: clinvarDataset.dataObject,
     },
     {
-      existing: mgendDataset.hasData,
       id: 'mgend',
       columns: '',
       data: mgendData,
@@ -125,11 +120,10 @@ export function makeVariant(clinvarData, mgendData, entryData) {
 
   processTabs(items, 'variant', tabWrap);
 
-  makeSideNavigation(entryData);
   // finish loading
-  document.querySelector('.loading-spinner').style.display = 'none';
-  document.getElementById('content').style.display = 'block';
-  document.getElementById('sidebar').style.display = 'block';
+  // document.querySelector('.loading-spinner').style.display = 'none';
+  // document.getElementById('content').style.display = 'block';
+  // document.getElementById('sidebar').style.display = 'block';
 }
 
 /**
@@ -141,14 +135,11 @@ export function makeVariant(clinvarData, mgendData, entryData) {
  */
 function makeData(data, categoryName, tableId, columns) {
   const container = document.getElementById(categoryName);
-  if (Array.isArray(data) && data.length === 0) {
-    container.remove();
-    return;
-  }
   const tableView = container.querySelector(`#${tableId}`);
   const objectUrl = createObjectUrlFromData(data);
   updateElementWithTable(tableView, objectUrl, columns);
   updateDataNumElement(`#${categoryName}`, `.${categoryName}`, data.length);
+  makeSideNavigation(entryData);
 }
 
 /**
@@ -194,6 +185,10 @@ function updateDataNumElement(mainWrapperName, navWrapperName, dataLength) {
   const navContentNumberEl = document.querySelector(
     `${navWrapperName} .data-num`
   );
+  const navLoadingSpinner = document.querySelector(
+    `${navWrapperName} .loading-spinner`
+  );
+  if (navLoadingSpinner) navLoadingSpinner.style.display = 'none';
   mainContentNumberEl.innerText = dataLength;
   navContentNumberEl.innerText = dataLength;
 }
@@ -206,29 +201,21 @@ function updateDataNumElement(mainWrapperName, navWrapperName, dataLength) {
  * @param {HTMLElement} tabWrap - The tab wrapper element.
  */
 function processTabs(items, rootId, tabWrap) {
-  if (!items.some((item) => item.existing)) {
-    // If all tabs do not exist, remove the element
-    document.getElementById(rootId).remove();
-  } else {
-    let isFirstTab = true;
-    items.forEach(({ existing, id, columns, data, object }) => {
-      if (!existing) {
-        // If there is no data, remove the input, label, and div
-        document.getElementById(`${rootId}-${id}`).remove();
-        tabWrap.querySelector(`label.tab-label.${rootId}-${id}`).remove();
-        tabWrap.querySelector(`.tab-content.${id}`).remove();
-      } else {
-        const tableView = tabWrap.querySelector(`.${id}`);
-        const currentTab = tabWrap.querySelector(`#${rootId}-${id}`);
-        if (currentTab && isFirstTab) {
-          currentTab.checked = true;
-          isFirstTab = false;
-        }
-        updateElementWithTable(tableView, object, columns);
-        updateDataNumElement(`.${rootId}-${id}`, `.${id}`, data.length);
-      }
-    });
-  }
+  let isFirstTab = true;
+  items.forEach(({ id, columns, data, object }) => {
+    const tableView = tabWrap.querySelector(`.${id}`);
+    const currentTab = tabWrap.querySelector(`#${rootId}-${id}`);
+    if (currentTab && isFirstTab) {
+      currentTab.checked = true;
+      isFirstTab = false;
+    }
+    updateElementWithTable(tableView, object, columns);
+    updateDataNumElement(
+      `.${rootId}-${id}`,
+      `.${id}`,
+      data === null ? 'error' : data.length
+    );
+  });
 }
 
 /**
@@ -240,7 +227,7 @@ function processTabs(items, rootId, tabWrap) {
  */
 function processDataAndRemoveNavItems(rootId, data, className) {
   const processDataResult = processData(data);
-  removeNavItemIfNotExist(rootId, processDataResult.hasData, className);
+  // removeNavItemIfNotExist(rootId, processDataResult.hasData, className);
   return processDataResult;
 }
 /**
@@ -263,11 +250,11 @@ function processData(data) {
  * @param {boolean} hasData - Indicates whether the data exists.
  * @param {string} className - The class name of the navigation item.
  */
-function removeNavItemIfNotExist(rootId, hasData, className) {
-  if (!hasData) {
-    const navItem = document.querySelector(`.${rootId} .${className}.nav-link`);
-    if (navItem) {
-      navItem.parentElement.remove();
-    }
-  }
-}
+// function removeNavItemIfNotExist(rootId, hasData, className) {
+//   if (!hasData) {
+//     const navItem = document.querySelector(`.${rootId} .${className}.nav-link`);
+//     if (navItem) {
+//       navItem.parentElement.remove();
+//     }
+//   }
+// }

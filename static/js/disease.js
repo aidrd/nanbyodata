@@ -14,12 +14,12 @@ import {
 import { switchingDisplayContents } from './diseaseSideNavigation.js';
 import { setLangChange } from './setLangChange.js';
 
-// get NANDO ID
+// // get NANDO ID
 const pathname = window.location.pathname;
 const nandoIndex = pathname.indexOf('NANDO:');
 const nandoId = pathname.slice(nandoIndex + 6);
 
-// for cache busting
+// // for cache busting
 const timestamp = Date.now();
 
 // external functions
@@ -32,86 +32,110 @@ setLangChange();
 
 (async () => {
   try {
-    const entryDataPromise = fetch(
-      'https://nanbyodata.jp/sparqlist/api/nanbyodata_get_overview_by_nando_id?nando_id=' +
-        nandoId +
-        `&timestamp=${timestamp}`,
-      {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      }
-    ).then((res) => res.json());
+    const timestamp = Date.now();
+    const pathname = window.location.pathname;
+    const nandoIndex = pathname.indexOf('NANDO:');
+    const nandoId = pathname.slice(nandoIndex + 6);
 
-    const entryData = await entryDataPromise;
+    // 外部関数の呼び出し
+    navToggle();
+    focusInput();
+    changePlaceholder();
+    popup();
+    breadcrumb(nandoId);
+    setLangChange();
 
+    // 関数 fetchData の定義
     async function fetchData(apiEndpoint) {
       const url = `https://nanbyodata.jp/sparqlist/api/${apiEndpoint}?nando_id=${nandoId}&timestamp=${timestamp}`;
-      const response = await fetch(url);
-      return response.json();
+      try {
+        const response = await fetch(url);
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return await response.json();
+      } catch (error) {
+        console.error('Error fetching data:', error.message);
+        return null;
+      }
     }
 
-    // get all data
-    const causalGeneData = await fetchData('nanbyodata_get_gene_by_nando_id');
-    const geneticTestingData = await fetchData('nanbyodata_get_gene_test');
-    const phenotypesData = await fetchData(
-      'nanbyodata_get_hpo_data_by_nando_id'
+    // 概要データの取得
+    fetchData('nanbyodata_get_overview_by_nando_id').then((entryData) => {
+      if (entryData) {
+        makeHeader(entryData);
+        makeExternalLinks(entryData);
+        makeAlternativeName(entryData);
+        makeInheritanceUris(entryData);
+        makeLinksList(entryData);
+        checkSummaryData(entryData);
+        makeDiseaseDefinition(entryData);
+        switchingDisplayContents('overview', entryData);
+        document.getElementById('content').style.display = 'block';
+      }
+    });
+
+    // 遺伝子データの取得
+    fetchData('nanbyodata_get_gene_by_nando_id').then((causalGeneData) => {
+      makeCausalGene(causalGeneData);
+    });
+
+    // 遺伝子検査データの取得
+    fetchData('nanbyodata_get_gene_test').then((geneticTestingData) => {
+      makeGeneticTesting(geneticTestingData);
+    });
+
+    // 表現型データの取得
+    fetchData('nanbyodata_get_hpo_data_by_nando_id').then((phenotypesData) => {
+      makePhenotypes(phenotypesData);
+    });
+
+    // 細胞情報の取得
+    fetchData('nanbyodata_get_riken_brc_cell_info_by_nando_id').then(
+      (cellData) => {
+        makeBioResource(cellData, null, null);
+      }
     );
-    // const cellData = await fetchData(
-    //   'nanbyodata_get_riken_brc_cell_info_by_nando_id'
-    // );
-    // const mouseData = await fetchData(
-    //   'nanbyodata_get_riken_brc_mouse_info_by_nando_id'
-    // );
-    // const dnaData = await fetchData(
-    //   'nanbyodata_get_riken_brc_dna_info_by_nando_id'
-    // );
-    const clinvarData = await fetchData('nanbyodata_get_variant_by_nando_id');
-    // TODO: add mgend data
+
+    // マウス情報の取得
+    fetchData('nanbyodata_get_riken_brc_mouse_info_by_nando_id').then(
+      (mouseData) => {
+        makeBioResource(null, mouseData, null);
+      }
+    );
+
+    // DNA情報の取得
+    fetchData('nanbyodata_get_riken_brc_dna_info_by_nando_id').then(
+      (dnaData) => {
+        makeBioResource(null, null, dnaData);
+      }
+    );
+
+    // 変異データの取得
+    fetchData('nanbyodata_get_variant_by_nando_id').then((clinvarData) => {
+      makeVariant(clinvarData, []);
+    });
+
     // const mgendData = await fetchData('');
-    const mgendData = [];
+    // const mgendData = [];
 
     // download datasets
-    const datasets = [
-      { name: 'Overview', data: entryData },
-      { name: 'Causal Genes', data: causalGeneData },
-      { name: 'Genetic Testing', data: geneticTestingData },
-      { name: 'Phenotypes', data: phenotypesData },
-      // { name: 'Cell', data: cellData },
-      // { name: 'Mouse', data: mouseData },
-      // { name: 'DNA', data: dnaData },
-      { name: 'Clinvar', data: clinvarData },
-    ];
+    // const datasets = [
+    //   { name: 'Overview', data: entryData },
+    //   { name: 'Causal Genes', data: causalGeneData },
+    //   { name: 'Genetic Testing', data: geneticTestingData },
+    //   { name: 'Phenotypes', data: phenotypesData },
+    // { name: 'Cell', data: cellData },
+    // { name: 'Mouse', data: mouseData },
+    // { name: 'DNA', data: dnaData },
+    //   { name: 'Clinvar', data: clinvarData },
+    // ];
 
-    downloadDatasets(nandoId, datasets);
+    // downloadDatasets(nandoId, datasets);
 
-    await Promise.all([
-      makeHeader(entryData),
-      makeExternalLinks(entryData),
-      makeAlternativeName(entryData),
-      makeInheritanceUris(entryData),
-      makeLinksList(entryData),
-      checkSummaryData(entryData),
-      makeDiseaseDefinition(entryData),
-      makeCausalGene(causalGeneData),
-      makeGeneticTesting(geneticTestingData),
-      makePhenotypes(phenotypesData),
-      // makeBioResource(cellData, mouseData, dnaData),
-      makeVariant(clinvarData, mgendData, entryData),
-    ]);
-
-    selectedItem();
-
-    if (window.location.hash) {
-      const hash = window.location.hash;
-      const hashId = hash.replace('#', '');
-      switchingDisplayContents(hashId, entryData);
-    } else {
-      switchingDisplayContents('overview', entryData);
-    }
+    // その他のデータ取得例も同様に追加可能
   } catch (error) {
-    console.error('error:', error);
+    console.error('Error:', error);
   }
 })();
 

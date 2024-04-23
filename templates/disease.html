@@ -95,9 +95,6 @@
       </div>
     </nav>
 
-    <!-- Loading Spinner -->
-    <div class="loading-spinner"></div>
-
     <div class="content-wrapper">
       <!-- Sidebar -->
       <aside id="sidebar">
@@ -112,32 +109,39 @@
           <h2 class="sidebar-title">目次</h2>
           <ul>
             <li><a href="#overview" class="nav-link overview selected">概要
-            <li><a href="#causal-genes" class="nav-link causal-genes">疾患原因遺伝子<span class="data-num"></span></a>
+            <li><a href="#causal-genes" class="nav-link causal-genes">疾患原因遺伝子<span class="data-num"></span><span
+                  class="loading-spinner -sidenav"></span></a>
             </li>
             <li><a href="#genetic-testing" class="nav-link genetic-testing">診療用遺伝学的検査情報<span
-                  class="data-num"></span></a>
+                  class="data-num"></span><span class="loading-spinner -sidenav"></span></a>
             </li>
-            <li><a href="#phenotypes" class="nav-link phenotypes">臨床的特徴<span class="data-num"></span></a>
+            <li><a href="#phenotypes" class="nav-link phenotypes">臨床的特徴<span class="data-num"></span><span
+                  class="loading-spinner -sidenav"></span></a>
             </li>
-            <!-- <li>
+            <li>
               <div class="bio-resource">難病特異的バイオリソース
                 <ul>
-                  <li><a href="#bio-resource" class="cell nav-link">細胞<span class="data-num"></span></a>
+                  <li><a href="#bio-resource" class="cell nav-link">細胞<span class="data-num"></span><span
+                        class="loading-spinner -sidenav -child"></span></a>
                   </li>
-                  <li><a href="#bio-resource" class="mouse nav-link">マウス<span class="data-num"></span></a>
+                  <li><a href="#bio-resource" class="mouse nav-link">マウス<span class="data-num"></span><span
+                        class="loading-spinner -sidenav -child"></span></a>
                   </li>
-                  <li><a href="#bio-resource" class="dna nav-link">DNA<span class="data-num"></span></a>
+                  <li><a href="#bio-resource" class="dna nav-link">DNA<span class="data-num"></span><span
+                        class="loading-spinner -sidenav -child"></span></a>
                   </li>
                 </ul>
               </div>
-            </li> -->
+            </li>
             <li>
               <div class="variant">バリアント
                 <ul>
-                  <li><a href="#variant" class="clinvar nav-link">ClinVar<span class="data-num"></span></a>
+                  <li><a href="#variant" class="clinvar nav-link">ClinVar<span class="data-num"></span><span
+                        class="loading-spinner -sidenav -child"></span></a>
                   </li>
-                  <li><a href="#variant" class="mgend nav-link">MGeND<span class="data-num"></span></a>
-                  </li>
+                  <!-- <li><a href="#variant" class="mgend nav-link">MGeND<span class="data-num"></span><span
+                        class="loading-spinner -sidenav -child"></span></a>
+                  </li> -->
                 </ul>
               </div>
             </li>
@@ -265,7 +269,7 @@
 
                 <div class="summary-header-actions">
                   <div class="summary-download">
-                    <button aria-controls="popup-download" aria-expanded="false" class="open-popup-btn">
+                    <button aria-controls="popup-download" disabled aria-expanded="false" class="open-popup-btn">
                       <span class="btn-text">Download</span>
                     </button>
                     <div class="popup-view" id="popup-download" aria-hidden="true" role="dialog"

@@ -1,4 +1,4 @@
-import { checkSummaryData } from "./disease.js";
+import { checkSummaryData } from './disease.js';
 
 export function makeSideNavigation(entryData) {
   const sideNavigation = document.getElementById('temp-side-navigation');
@@ -70,19 +70,23 @@ export function makeSideNavigation(entryData) {
   });
 
   // processing when tabs are switched
-  document.querySelectorAll('#bio-resource .tab-switch').forEach(function (tabSwitch) {
-    tabSwitch.addEventListener('change', function () {
-      const selectedTabId = this.id.replace('bio-resource-', '');
-      const tocItem = document.querySelector('.bio-resource a.' + selectedTabId);
-      document.querySelectorAll('a').forEach(function (item) {
-        item.classList.remove('selected');
+  document
+    .querySelectorAll('#bio-resource .tab-switch')
+    .forEach(function (tabSwitch) {
+      tabSwitch.addEventListener('change', function () {
+        const selectedTabId = this.id.replace('bio-resource-', '');
+        const tocItem = document.querySelector(
+          '.bio-resource a.' + selectedTabId
+        );
+        document.querySelectorAll('a').forEach(function (item) {
+          item.classList.remove('selected');
+        });
+        if (tocItem) {
+          tocItem.classList.add('selected');
+          window.location.hash = this.id;
+        }
       });
-      if (tocItem) {
-        tocItem.classList.add('selected');
-        window.location.hash = this.id;
-      }
     });
-  });
 
   document
     .querySelectorAll('#variant .tab-switch')
@@ -168,7 +172,6 @@ export function switchingDisplayContents(selectedItemId, entryData) {
   }
 }
 
-
 function toggleDisplay(selector, displayStyle = 'none') {
   const element = document.querySelector(selector);
   if (element) element.style.display = displayStyle;
@@ -179,8 +182,6 @@ function toggleClassForElements(selector, className, condition) {
     element.classList.toggle(className, condition(element));
   });
 }
-
-
 
 function prepareDataWrapper() {
   const dataWrapper = document.getElementById('data-wrapper');
