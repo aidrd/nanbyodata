@@ -135,8 +135,13 @@ def annotation_file(filename):
 @app.route('/disease/NANDO:<string:id_nando>', methods=['GET'])
 def REST_API_disease(id_nando=""):
     if request.method == 'GET':
-        onto = pronto.Ontology('/opt/services/case/app/nanbyodata/ontology/nando.obo')
-        breadcrumb_html = '<section><h3 class="breadcrumb-title">難病</h3>'
+        breadcrumb_html = ''
+        if get_locale() == "ja" or get_locale() == "ja_JP":
+            onto = pronto.Ontology('/opt/services/case/app/nanbyodata/ontology/nando.obo')
+            breadcrumb_html = '<section><h3 class="breadcrumb-title">難病</h3>'
+        else:
+            onto = pronto.Ontology('/opt/services/case/app/nanbyodata/ontology/nando.en.obo')
+            breadcrumb_html = '<section><h3 class="breadcrumb-title">Intractable disease</h3>'
         sup = list(reversed(list(onto[id_nando].superclasses())))
         for index, term in enumerate(sup):
             next_term_id = sup[index + 1].id if index < len(sup) - 1 else None
@@ -151,7 +156,11 @@ def REST_API_disease(id_nando=""):
         return render_template('disease.html', id_nando=id_nando, breadcrumb_list_html=breadcrumb_html, title=overview['title'], description=overview['description'])
 
 def make_selector_subclasses(onto, id_nando, next_term_id, index):
-    selected_disease_name = onto[next_term_id].name if next_term_id in onto else "下位疾患"
+    if get_locale() == "ja" or get_locale() == "ja_JP":
+        str_subclass = "下位疾患"
+    else:
+        str_subclass = "Subclass"
+    selected_disease_name = onto[next_term_id].name if next_term_id in onto else str_subclass
     html_selector = f'''
     <div class="breadcrumb-tree" style="--i: {index}">
         <div class="inner-tree">
