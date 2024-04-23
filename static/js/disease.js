@@ -362,11 +362,12 @@ function makeDiseaseDefinition(entryData) {
   const tabWrap = diseaseDefinition.querySelector(
     '#temp-disease-definition .tab-wrap'
   );
+  const currentLang = document.querySelector('.language-select').value;
 
   const items = [
     {
       class: 'mhlw',
-      existing: !!entryData.description,
+      existing: currentLang === 'en' ? false : !!entryData.description,
       desc: entryData.description,
       translate: false,
     },
