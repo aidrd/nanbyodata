@@ -137,13 +137,15 @@ function makeHeader(entryData) {
     });
 
   const labelJa = document.getElementById('temp-label-ja');
-  labelJa.innerHTML =
-    '<ruby>' +
-    entryData.label_ja +
-    '<rt>' +
-    entryData.ruby +
-    '</rt>' +
-    '</ruby>';
+  if (labelJa) {
+    labelJa.innerHTML =
+      '<ruby>' +
+      entryData.label_ja +
+      '<rt>' +
+      entryData.ruby +
+      '</rt>' +
+      '</ruby>';
+  }
 
   const labelEn = document.getElementById('temp-label-en');
   labelEn.textContent = entryData.label_en;

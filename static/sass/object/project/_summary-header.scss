@@ -56,9 +56,11 @@ Disease page right top */
       }
     }
 
-    > h2#temp-label-ja {
+    > h2#temp-label-ja,
+    h2#temp-label-en {
       font-weight: bold;
       padding-top: 25px;
+      font-size: 32px;
 
       ruby {
         font-size: var(--font-size-3xl);
