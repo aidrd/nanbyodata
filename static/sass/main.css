@@ -1490,14 +1490,18 @@ Disease page right top */
   font-weight: normal;
   vertical-align: middle;
 }
-.summary-header > .data-name > h2#temp-label-ja {
+.summary-header > .data-name > h2#temp-label-ja,
+.summary-header > .data-name h2#temp-label-en {
   font-weight: bold;
   padding-top: 25px;
+  font-size: 32px;
 }
-.summary-header > .data-name > h2#temp-label-ja ruby {
+.summary-header > .data-name > h2#temp-label-ja ruby,
+.summary-header > .data-name h2#temp-label-en ruby {
   font-size: var(--font-size-3xl);
 }
-.summary-header > .data-name > h2#temp-label-ja ruby rt {
+.summary-header > .data-name > h2#temp-label-ja ruby rt,
+.summary-header > .data-name h2#temp-label-en ruby rt {
   font-size: var(--font-size-xs);
   font-weight: normal;
 }
