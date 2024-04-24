@@ -246,7 +246,13 @@ function appendLinks(data, container, prefix = '') {
   if (data && data.length) {
     data.forEach((item, index) => {
       const dd = document.createElement('dd');
-      const a = createLinkElement(item.url || item.uri, prefix + item.id);
+      const currentLang = document.querySelector('.language-select').value;
+      let a;
+      if (currentLang === 'en' && item.id_en) {
+        a = createLinkElement(item.url || item.uri, prefix + item.id_en);
+      } else {
+        a = createLinkElement(item.url || item.uri, prefix + item.id);
+      }
       dd.classList.add('linked-item');
       dd.append(a);
       container.append(dd);
