@@ -1117,12 +1117,11 @@ header.search-area .intro-text .keyword a {
   background-color: var(--color-breadcrumb-hover);
 }
 #temp-side-navigation > ul > li .nav-link.-disabled {
-  background-color: rgba(128, 128, 128, 0.142);
   color: rgba(19, 41, 90, 0.2705882353);
   cursor: default;
 }
 #temp-side-navigation > ul > li .nav-link.-disabled:hover {
-  background-color: rgba(128, 128, 128, 0.142);
+  background-color: transparent;
 }
 #temp-side-navigation > ul > li .nav-link.selected:hover {
   background-color: rgba(22, 35, 78, 0.2);
@@ -1203,7 +1202,7 @@ header.search-area .intro-text .keyword a {
 }
 #temp-side-navigation > ul > li .bio-resource ul li .-disabled:hover,
 #temp-side-navigation > ul > li .variant ul li .-disabled:hover {
-  background-color: rgba(128, 128, 128, 0.142);
+  background-color: transparent;
 }
 #temp-side-navigation > ul > li .bio-resource ul li .selected,
 #temp-side-navigation > ul > li .variant ul li .selected {

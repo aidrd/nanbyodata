@@ -26,11 +26,10 @@
           background-color: var(--color-breadcrumb-hover);
         }
         &.-disabled {
-          background-color: rgba(128, 128, 128, 0.142);
           color: #13295a45;
           cursor: default;
           &:hover {
-            background-color: rgba(128, 128, 128, 0.142);
+            background-color: transparent;
           }
         }
         &.selected {
@@ -109,7 +108,7 @@
               background-color: var(--color-breadcrumb-hover);
             }
             .-disabled:hover {
-              background-color: rgba(128, 128, 128, 0.142);
+              background-color: transparent;
             }
             .selected {
               background-color: rgba(22, 35, 78, 0.2);
