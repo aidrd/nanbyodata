@@ -489,6 +489,8 @@ function checkExistingItem() {
     'mgend',
   ];
 
+  let found = false;
+
   for (let i = 0; i < items.length; i++) {
     const item = items[i];
     const element = document.querySelector(`.${item}`);
@@ -507,7 +509,14 @@ function checkExistingItem() {
           switchingDisplayContents(item);
       }
       element.classList.add('selected');
+      found = true;
       break;
     }
+  }
+
+  const retryCount = 0;
+  if (!found && retryCount < 5) {
+    console.log('No active items found, retrying...');
+    setTimeout(() => checkExistingItem(retryCount + 1), 3000);
   }
 }
