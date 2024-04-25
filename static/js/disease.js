@@ -59,19 +59,8 @@ setLangChange();
         makeLinksList(entryData);
         checkSummaryData(entryData);
         makeDiseaseDefinition(entryData);
-        switchingDisplayContents('overview', entryData);
-        selectedItem();
-
-        if (
-          document.querySelector('.summary-wrapper').style.display === 'none'
-        ) {
-          document.getElementById('content').style.display = 'block';
-        } else {
-          const navLink = document.querySelector('.nav-link.overview');
-          navLink.style.cursor = 'pointer';
-          navLink.classList.remove('-disabled');
-          document.getElementById('content').style.display = 'block';
-        }
+        updateOverviewLinkAndContentDisplay();
+        checkExistingItem();
       }
     });
 
@@ -121,6 +110,7 @@ setLangChange();
       makeMgend(mgendData);
     });
 
+    // TODO: add download logic
     // download datasets
     // const datasets = [
     //   { name: 'Overview', data: entryData },
@@ -347,13 +337,13 @@ function makeLinksList(entryData) {
 }
 
 export function checkSummaryData(entryData) {
-  const items = [
-    '.causal-genes',
-    '.genetic-testing',
-    '.phenotypes',
-    '.bio-resource',
-    '.variant',
-  ];
+  // const items = [
+  //   '.causal-genes',
+  //   '.genetic-testing',
+  //   '.phenotypes',
+  //   '.bio-resource',
+  //   '.variant',
+  // ];
   const summaryWrapper = document.querySelector('.summary-wrapper');
   const summaryNav = document.querySelector('.nav-link.overview');
   const diseaseDefinition = document.getElementById('temp-disease-definition');
@@ -374,14 +364,6 @@ export function checkSummaryData(entryData) {
       summaryWrapper.style = 'display: none;';
       summaryNav.style = 'display: none;';
       navBorderTop.style = 'border-top: none;';
-      for (const item of items) {
-        const cleanedItem = item.replace(/^\./, '');
-        const element = document.querySelector(item);
-        if (element) {
-          switchingDisplayContents(cleanedItem, entryData);
-          break;
-        }
-      }
       if (diseaseDefinition) {
         summaryNav.style = 'display: block;';
         navBorderTop.style = 'border-top: block;';
@@ -455,12 +437,53 @@ function makeDiseaseDefinition(entryData) {
   }
 }
 
-function selectedItem() {
-  const links = document.querySelectorAll('#temp-side-navigation .nav-link');
-  links.forEach((link) => {
-    link.addEventListener('click', () => {
-      links.forEach((l) => l.classList.remove('selected'));
-      link.classList.add('selected');
-    });
-  });
+function updateOverviewLinkAndContentDisplay() {
+  const navLink = document.querySelector('.nav-link.overview');
+  const loadingSpinner = navLink.querySelector('.loading-spinner');
+
+  if (document.querySelector('.summary-wrapper').style.display === 'none') {
+    document.getElementById('content').style.display = 'block';
+  } else {
+    navLink.style.cursor = 'pointer';
+    navLink.classList.remove('-disabled');
+    document.getElementById('content').style.display = 'block';
+  }
+
+  loadingSpinner.style.display = 'none';
+}
+
+function checkExistingItem() {
+  const items = [
+    'overview',
+    'causal-genes',
+    'genetic-testing',
+    'phenotypes',
+    'cell',
+    'mouse',
+    'dna',
+    'clinvar',
+    'mgend',
+  ];
+
+  for (let i = 0; i < items.length; i++) {
+    const item = items[i];
+    const element = document.querySelector(`.${item}`);
+    if (element && !element.classList.contains('-disabled')) {
+      switch (item) {
+        case 'cell':
+        case 'mouse':
+        case 'dna':
+          switchingDisplayContents('bio-resource');
+          break;
+        case 'clinvar':
+        case 'mgend':
+          switchingDisplayContents('variant');
+          break;
+        default:
+          switchingDisplayContents(item);
+      }
+      element.classList.add('selected');
+      break;
+    }
+  }
 }

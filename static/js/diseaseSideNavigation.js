@@ -80,8 +80,10 @@ export function makeSideNavigation() {
           item.classList.remove('selected');
         });
         if (tocItem) {
-          tocItem.classList.add('selected');
-          window.location.hash = this.id;
+          if (!tocItem.classList.contains('-disabled')) {
+            tocItem.classList.add('selected');
+            window.location.hash = this.id;
+          }
         }
       });
     });
@@ -96,8 +98,10 @@ export function makeSideNavigation() {
           item.classList.remove('selected');
         });
         if (tocItem) {
-          tocItem.classList.add('selected');
-          window.location.hash = this.id;
+          if (!tocItem.classList.contains('-disabled')) {
+            tocItem.classList.add('selected');
+            window.location.hash = this.id;
+          }
         }
       });
     });
@@ -116,68 +120,61 @@ export function switchingDisplayContents(selectedItemId) {
 
   // Hide all elements
   items.forEach((selector) => toggleDisplay(selector));
-
-  // Show selected items
-  switch (selectedItemId) {
-    case 'overview':
-      toggleDisplay('#overview', 'block');
-      ['temp-aliases', '.temp-wrapper', '#temp-disease-definition'].forEach(
-        (selector) => {
-          toggleDisplay(selector, 'block');
-        }
-      );
-      break;
-    case 'temp-disease-definition':
-    case 'causal-genes':
-    case 'genetic-testing':
-    case 'phenotypes':
-      prepareDataWrapper();
-      toggleDisplay(`#${selectedItemId}`, 'block');
-      toggleClassForElements('a', 'selected', (element) =>
-        element.classList.contains(selectedItemId)
-      );
-      break;
-    case 'bio-resource':
-    case 'bio-resource-cell':
-    case 'bio-resource-mouse':
-    case 'bio-resource-dna':
-      prepareDataWrapper();
-      window.scrollTo({
-        top: 0,
-        behavior: 'smooth',
-      });
-      toggleDisplay('#bio-resource', 'block');
-      let checkBoxBrc = document.getElementById(selectedItemId);
-      if (checkBoxBrc) checkBoxBrc.checked = true;
-      updateBioSelection('#bio-resource .tab-switch:checked');
-      break;
-    case 'variant':
-    case 'variant-clinvar':
-    case 'variant-mgend':
-      prepareDataWrapper();
-      window.scrollTo({
-        top: 0,
-        behavior: 'smooth',
-      });
-      toggleDisplay('#variant', 'block');
-      let checkBoxVariant = document.getElementById(selectedItemId);
-      if (checkBoxVariant) checkBoxVariant.checked = true;
-      updateVariantSelection('#variant .tab-switch:checked');
-      break;
-    default:
-      window.location.href = window.location.href.split('#')[0];
+  const currentItemEl = document.querySelector(`.${selectedItemId}`);
+  if (!currentItemEl.classList.contains('-disabled')) {
+    // Show selected items
+    switch (selectedItemId) {
+      case 'overview':
+        toggleDisplay('#overview', 'block');
+        ['temp-aliases', '.temp-wrapper', '#temp-disease-definition'].forEach(
+          (selector) => {
+            toggleDisplay(selector, 'block');
+          }
+        );
+        break;
+      case 'temp-disease-definition':
+      case 'causal-genes':
+      case 'genetic-testing':
+      case 'phenotypes':
+        prepareDataWrapper();
+        toggleDisplay(`#${selectedItemId}`, 'block');
+        break;
+      case 'bio-resource':
+      case 'bio-resource-cell':
+      case 'bio-resource-mouse':
+      case 'bio-resource-dna':
+        prepareDataWrapper();
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth',
+        });
+        toggleDisplay('#bio-resource', 'block');
+        let checkBoxBrc = document.getElementById(selectedItemId);
+        if (checkBoxBrc) checkBoxBrc.checked = true;
+        updateBioSelection('#bio-resource .tab-switch:checked');
+        break;
+      case 'variant':
+      case 'variant-clinvar':
+      case 'variant-mgend':
+        prepareDataWrapper();
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth',
+        });
+        toggleDisplay('#variant', 'block');
+        let checkBoxVariant = document.getElementById(selectedItemId);
+        if (checkBoxVariant) checkBoxVariant.checked = true;
+        updateVariantSelection('#variant .tab-switch:checked');
+        break;
+      default:
+        window.location.href = window.location.href.split('#')[0];
+    }
   }
 }
 
 function toggleDisplay(selector, displayStyle = 'none') {
   const element = document.querySelector(selector);
   if (element) element.style.display = displayStyle;
-}
-
-function toggleClassForElements(selector, className, condition) {
-  document.querySelectorAll(selector).forEach((element) => {
-    element.classList.toggle(className, condition(element));
-  });
 }
 
 function prepareDataWrapper() {
@@ -193,9 +190,6 @@ function updateBioSelection(selector) {
   if (checkedSwitch) {
     window.location.hash = checkedSwitch.id;
     const selectedId = checkedSwitch.id.replace('bio-resource-', '');
-    toggleClassForElements('a', 'selected', (element) =>
-      element.classList.contains(selectedId)
-    );
   }
 }
 
@@ -204,8 +198,5 @@ function updateVariantSelection(selector) {
   if (checkedSwitch) {
     window.location.hash = checkedSwitch.id;
     const selectedId = checkedSwitch.id.replace('variant-', '');
-    toggleClassForElements('a', 'selected', (element) =>
-      element.classList.contains(selectedId)
-    );
   }
 }

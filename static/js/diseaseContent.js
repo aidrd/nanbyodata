@@ -11,6 +11,8 @@ import {
   convertColumntoText,
 } from './paginationColumns.js';
 
+makeSideNavigation();
+
 // causalGene(疾患原因遺伝子)
 export function makeCausalGene(causalGeneData) {
   makeData(
@@ -19,7 +21,7 @@ export function makeCausalGene(causalGeneData) {
     'causal-genes-table',
     convertColumntoText(causalGeneColumns)
   );
-  if (causalGeneData.length > 0 && causalGeneData.length !== null) {
+  if (causalGeneData?.length > 0 && causalGeneData !== null) {
     const navLink = document.querySelector('.nav-link.causal-genes');
     navLink.style.cursor = 'pointer';
     navLink.classList.remove('-disabled');
@@ -34,7 +36,7 @@ export function makeGeneticTesting(geneticTestingData) {
     'genetic-testing-table',
     convertColumntoText(geneticTestingColumns)
   );
-  if (geneticTestingData.length > 0 && geneticTestingData.length !== null) {
+  if (geneticTestingData?.length > 0 && geneticTestingData !== null) {
     const navLink = document.querySelector('.nav-link.genetic-testing');
     navLink.style.cursor = 'pointer';
     navLink.classList.remove('-disabled');
@@ -50,7 +52,7 @@ export function makePhenotypes(phenotypesData) {
     en: convertColumntoText(phenotypesEnColumns),
   };
   makeData(phenotypesData, 'phenotypes', phenotypeLang, columns[currentLang]);
-  if (phenotypesData.length > 0 && phenotypesData.length !== null) {
+  if (phenotypesData?.length > 0 && phenotypesData !== null) {
     const navLink = document.querySelector('.nav-link.phenotypes');
     navLink.style.cursor = 'pointer';
     navLink.classList.remove('-disabled');
@@ -77,7 +79,7 @@ export function makeCell(cellData) {
   };
 
   processTabs(items, 'bio-resource', tabWrap);
-  if (cellData.length > 0 && cellData.length !== null) {
+  if (cellData?.length > 0 && cellData !== null) {
     const navLink = document.querySelector('.nav-link.cell');
     const bioResource = document.querySelector('.bio-resource');
     navLink.style.cursor = 'pointer';
@@ -105,7 +107,7 @@ export function makeMouse(mouseData) {
   };
 
   processTabs(items, 'bio-resource', tabWrap);
-  if (mouseData.length > 0 && mouseData.length !== null) {
+  if (mouseData?.length > 0 && mouseData !== null) {
     const navLink = document.querySelector('.nav-link.mouse');
     const bioResource = document.querySelector('.bio-resource');
     navLink.style.cursor = 'pointer';
@@ -133,7 +135,7 @@ export function makeDNA(dnaData) {
   };
 
   processTabs(items, 'bio-resource', tabWrap);
-  if (dnaData.length > 0 && dnaData.length !== null) {
+  if (dnaData?.length > 0 && dnaData !== null) {
     const navLink = document.querySelector('.nav-link.dna');
     const bioResource = document.querySelector('.bio-resource');
     navLink.style.cursor = 'pointer';
@@ -162,7 +164,7 @@ export function makeClinvar(clinvarData) {
   };
 
   processTabs(items, 'variant', tabWrap);
-  if (clinvarData.length > 0 && clinvarData.length !== null) {
+  if (clinvarData?.length > 0 && clinvarData !== null) {
     const navLink = document.querySelector('.nav-link.clinvar');
     const variant = document.querySelector('.variant');
     navLink.style.cursor = 'pointer';
@@ -190,7 +192,7 @@ export function makeMgend(mgendData) {
   };
 
   processTabs(items, 'variant', tabWrap);
-  if (mgendData.length > 0 && mgendData.length !== null) {
+  if (mgendData?.length > 0 && mgendData !== null) {
     const navLink = document.querySelector('.nav-link.mgend');
     const variant = document.querySelector('.variant');
     navLink.style.cursor = 'pointer';
@@ -212,7 +214,16 @@ function makeData(data, categoryName, tableId, columns) {
   const objectUrl = createObjectUrlFromData(data);
   updateElementWithTable(tableView, objectUrl, columns);
   updateDataNumElement(`#${categoryName}`, `.${categoryName}`, data.length);
-  makeSideNavigation();
+
+  const links = document.querySelectorAll('#temp-side-navigation .nav-link');
+  links.forEach((link) => {
+    link.addEventListener('click', () => {
+      if (!link.classList.contains('-disabled')) {
+        links.forEach((l) => l.classList.remove('selected'));
+        link.classList.add('selected');
+      }
+    });
+  });
 }
 
 /**
