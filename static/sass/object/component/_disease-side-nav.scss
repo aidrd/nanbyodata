@@ -51,6 +51,9 @@
       }
       .bio-resource,
       .variant {
+        &.-disabled {
+          color: #13295a45;
+        }
         color: var(--color-secondary);
         font-weight: bold;
         padding: 10px 0 20px 10px;

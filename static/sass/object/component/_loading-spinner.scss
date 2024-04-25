@@ -12,17 +12,14 @@
   animation: sp-anime 1s infinite linear;
   &.-sidenav {
     display: block;
-    top: 0;
+    top: -9px;
     border: 4px var(--color-white) solid;
     border-top: 4px var(--color-primary) solid;
-    right: 8px;
+    right: 0;
     left: unset;
     width: 20px;
     height: 20px;
     opacity: 0.5;
-    &.-child {
-      top: -5px;
-    }
   }
 }
 

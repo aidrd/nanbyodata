@@ -937,17 +937,14 @@ header.search-area .intro-text .keyword a {
 }
 .loading-spinner.-sidenav {
   display: block;
-  top: 0;
+  top: -9px;
   border: 4px var(--color-white) solid;
   border-top: 4px var(--color-primary) solid;
-  right: 8px;
+  right: 0;
   left: unset;
   width: 20px;
   height: 20px;
   opacity: 0.5;
-}
-.loading-spinner.-sidenav.-child {
-  top: -5px;
 }
 
 @keyframes sp-anime {
@@ -1142,6 +1139,10 @@ header.search-area .intro-text .keyword a {
   color: var(--color-secondary);
   font-weight: bold;
   padding: 10px 0 20px 10px;
+}
+#temp-side-navigation > ul > li .bio-resource.-disabled,
+#temp-side-navigation > ul > li .variant.-disabled {
+  color: rgba(19, 41, 90, 0.2705882353);
 }
 #temp-side-navigation > ul > li .bio-resource ul,
 #temp-side-navigation > ul > li .variant ul {

@@ -156,7 +156,7 @@
                 <span class="data-num"><span class="loading-spinner -sidenav"></span></span></a>
             </li>
             <li>
-              <div class="bio-resource">
+              <div class="bio-resource -disabled">
                 {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
                 難病特異的バイオリソース
                 {% else %}
@@ -169,7 +169,7 @@
                       {% else %}
                       Cell
                       {% endif %}
-                      <span class="data-num"><span class="loading-spinner -sidenav -child"></span></a>
+                      <span class="data-num"><span class="loading-spinner -sidenav"></span></a>
                   </li>
                   <li><a href="#bio-resource" class="mouse nav-link -disabled">
                       {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
@@ -177,27 +177,27 @@
                       {% else %}
                       Mouse
                       {% endif %}
-                      <span class="data-num"><span class="loading-spinner -sidenav -child"></span></span></a>
+                      <span class="data-num"><span class="loading-spinner -sidenav"></span></span></a>
                   </li>
-                  <li><a href="#bio-resource" class="dna nav-link -disabled">DNA<span class="data-num"></span><span
-                        class="loading-spinner -sidenav -child"></span></a>
+                  <li><a href="#bio-resource" class="dna nav-link -disabled">DNA<span class="data-num"><span
+                          class="loading-spinner -sidenav"></span></span></a>
                   </li>
                 </ul>
               </div>
             </li>
             <li>
-              <div class="variant">
+              <div class="variant -disabled">
                 {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
                 バリアント
                 {% else %}
                 Variants
                 {% endif %}
                 <ul>
-                  <li><a href="#variant" class="clinvar nav-link -disabled">ClinVar<span class="data-num"></span><span
-                        class="loading-spinner -sidenav -child"></span></a>
+                  <li><a href="#variant" class="clinvar nav-link -disabled">ClinVar<span class="data-num"><span
+                          class="loading-spinner -sidenav"></span></span></a>
                   </li>
-                  <li><a href="#variant" class="mgend nav-link -disabled">MGeND<span class="data-num"></span><span
-                        class="loading-spinner -sidenav -child"></span></a>
+                  <li><a href="#variant" class="mgend nav-link -disabled">MGeND<span class="data-num"><span
+                          class="loading-spinner -sidenav"></span></span></a>
                   </li>
                 </ul>
               </div>

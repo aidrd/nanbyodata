@@ -58,7 +58,8 @@ export function makePhenotypes(phenotypesData) {
 }
 
 // bioResource(難病特異的バイオリソース)
-export function makeBioResource(cellData, mouseData, dnaData) {
+// Cell
+export function makeCell(cellData) {
   const bioResource = document.getElementById('bio-resource');
   const tabWrap = bioResource.querySelector('.tab-wrap');
 
@@ -67,58 +68,83 @@ export function makeBioResource(cellData, mouseData, dnaData) {
     cellData,
     'cell'
   );
+
+  const items = {
+    id: 'cell',
+    columns: convertColumntoText(bioResourceCellColumns),
+    data: cellData,
+    object: cellDataset.dataObject,
+  };
+
+  processTabs(items, 'bio-resource', tabWrap);
+  if (cellData.length > 0 && cellData.length !== null) {
+    const navLink = document.querySelector('.nav-link.cell');
+    const bioResource = document.querySelector('.bio-resource');
+    navLink.style.cursor = 'pointer';
+    navLink.classList.remove('-disabled');
+    bioResource.classList.remove('-disabled');
+  }
+}
+
+// Mouse
+export function makeMouse(mouseData) {
+  const bioResource = document.getElementById('bio-resource');
+  const tabWrap = bioResource.querySelector('.tab-wrap');
+
   const mouseDataset = processDataAndRemoveNavItems(
     'bio-resource',
     mouseData,
     'mouse'
   );
+
+  const items = {
+    id: 'mouse',
+    columns: convertColumntoText(bioResourceMouseColumns),
+    data: mouseData,
+    object: mouseDataset.dataObject,
+  };
+
+  processTabs(items, 'bio-resource', tabWrap);
+  if (mouseData.length > 0 && mouseData.length !== null) {
+    const navLink = document.querySelector('.nav-link.mouse');
+    const bioResource = document.querySelector('.bio-resource');
+    navLink.style.cursor = 'pointer';
+    navLink.classList.remove('-disabled');
+    bioResource.classList.remove('-disabled');
+  }
+}
+
+// DNA
+export function makeDNA(dnaData) {
+  const bioResource = document.getElementById('bio-resource');
+  const tabWrap = bioResource.querySelector('.tab-wrap');
+
   const dnaDataset = processDataAndRemoveNavItems(
     'bio-resource',
     dnaData,
     'dna'
   );
 
-  const items = [
-    {
-      id: 'cell',
-      columns: convertColumntoText(bioResourceCellColumns),
-      data: cellData,
-      object: cellDataset.dataObject,
-    },
-    {
-      id: 'mouse',
-      columns: convertColumntoText(bioResourceMouseColumns),
-      data: mouseData,
-      object: mouseDataset.dataObject,
-    },
-    {
-      id: 'dna',
-      columns: convertColumntoText(bioResourceDnaColumns),
-      data: dnaData,
-      object: dnaDataset.dataObject,
-    },
-  ];
+  const items = {
+    id: 'dna',
+    columns: convertColumntoText(bioResourceDnaColumns),
+    data: dnaData,
+    object: dnaDataset.dataObject,
+  };
 
   processTabs(items, 'bio-resource', tabWrap);
-  if (cellData.length > 0 && cellData.length !== null) {
-    const navLink = document.querySelector('.nav-link.cell');
-    navLink.style.cursor = 'pointer';
-    navLink.classList.remove('-disabled');
-  }
-  if (mouseData.length > 0 && mouseData.length !== null) {
-    const navLink = document.querySelector('.nav-link.mouse');
-    navLink.style.cursor = 'pointer';
-    navLink.classList.remove('-disabled');
-  }
   if (dnaData.length > 0 && dnaData.length !== null) {
     const navLink = document.querySelector('.nav-link.dna');
+    const bioResource = document.querySelector('.bio-resource');
     navLink.style.cursor = 'pointer';
     navLink.classList.remove('-disabled');
+    bioResource.classList.remove('-disabled');
   }
 }
 
 // variant(バリアント)
-export function makeVariant(clinvarData, mgendData) {
+// Clinvar
+export function makeClinvar(clinvarData) {
   const variant = document.getElementById('variant');
   const tabWrap = variant.querySelector('.tab-wrap');
 
@@ -127,43 +153,50 @@ export function makeVariant(clinvarData, mgendData) {
     clinvarData,
     'clinvar'
   );
+
+  const items = {
+    id: 'clinvar',
+    columns: convertColumntoText(variantClinvarColumns),
+    data: clinvarData,
+    object: clinvarDataset.dataObject,
+  };
+
+  processTabs(items, 'variant', tabWrap);
+  if (clinvarData.length > 0 && clinvarData.length !== null) {
+    const navLink = document.querySelector('.nav-link.clinvar');
+    const variant = document.querySelector('.variant');
+    navLink.style.cursor = 'pointer';
+    navLink.classList.remove('-disabled');
+    variant.classList.remove('-disabled');
+  }
+}
+
+// Mgend
+export function makeMgend(mgendData) {
+  const variant = document.getElementById('variant');
+  const tabWrap = variant.querySelector('.tab-wrap');
+
   const mgendDataset = processDataAndRemoveNavItems(
     'variant',
     mgendData,
     'mgend'
   );
 
-  const items = [
-    {
-      id: 'clinvar',
-      columns: convertColumntoText(variantClinvarColumns),
-      data: clinvarData,
-      object: clinvarDataset.dataObject,
-    },
-    {
-      id: 'mgend',
-      columns: '',
-      data: mgendData,
-      object: mgendDataset.dataObject,
-    },
-  ];
+  const items = {
+    id: 'mgend',
+    columns: '',
+    data: mgendData,
+    object: mgendDataset.dataObject,
+  };
 
   processTabs(items, 'variant', tabWrap);
-  if (clinvarData.length > 0 && clinvarData.length !== null) {
-    const navLink = document.querySelector('.nav-link.clinvar');
-    navLink.style.cursor = 'pointer';
-    navLink.classList.remove('-disabled');
-  }
   if (mgendData.length > 0 && mgendData.length !== null) {
     const navLink = document.querySelector('.nav-link.mgend');
+    const variant = document.querySelector('.variant');
     navLink.style.cursor = 'pointer';
     navLink.classList.remove('-disabled');
+    variant.classList.remove('-disabled');
   }
-
-  // finish loading
-  // document.querySelector('.loading-spinner').style.display = 'none';
-  // document.getElementById('content').style.display = 'block';
-  // document.getElementById('sidebar').style.display = 'block';
 }
 
 /**
@@ -241,6 +274,11 @@ function updateDataNumElement(mainWrapperName, navWrapperName, dataLength) {
  * @param {HTMLElement} tabWrap - The tab wrapper element.
  */
 function processTabs(items, rootId, tabWrap) {
+  // Ensure items is always an array
+  if (!Array.isArray(items)) {
+    items = [items];
+  }
+
   let isFirstTab = true;
   items.forEach(({ id, columns, data, object }) => {
     const tableView = tabWrap.querySelector(`.${id}`);

@@ -8,8 +8,11 @@ import {
   makeCausalGene,
   makeGeneticTesting,
   makePhenotypes,
-  makeBioResource,
-  makeVariant,
+  makeCell,
+  makeMouse,
+  makeDNA,
+  makeClinvar,
+  makeMgend,
 } from './diseaseContent.js';
 import { switchingDisplayContents } from './diseaseSideNavigation.js';
 import { setLangChange } from './setLangChange.js';
@@ -32,7 +35,6 @@ setLangChange();
 
 (async () => {
   try {
-    // 関数 fetchData の定義
     async function fetchData(apiEndpoint) {
       const url = `https://nanbyodata.jp/sparqlist/api/${apiEndpoint}?nando_id=${nandoId}&timestamp=${timestamp}`;
       try {
@@ -47,7 +49,7 @@ setLangChange();
       }
     }
 
-    // 概要データの取得
+    // get Overview data
     fetchData('nanbyodata_get_overview_by_nando_id').then((entryData) => {
       if (entryData) {
         makeHeader(entryData);
@@ -73,49 +75,51 @@ setLangChange();
       }
     });
 
-    // 遺伝子データの取得
+    // get Causal Genes data
     fetchData('nanbyodata_get_gene_by_nando_id').then((causalGeneData) => {
       makeCausalGene(causalGeneData);
     });
 
-    // 遺伝子検査データの取得
+    // get Genetic Testing data
     fetchData('nanbyodata_get_gene_test').then((geneticTestingData) => {
       makeGeneticTesting(geneticTestingData);
     });
 
-    // 表現型データの取得
+    // get Phenotypes data
     fetchData('nanbyodata_get_hpo_data_by_nando_id').then((phenotypesData) => {
       makePhenotypes(phenotypesData);
     });
 
-    // 細胞情報の取得
+    // get Cell data
     fetchData('nanbyodata_get_riken_brc_cell_info_by_nando_id').then(
       (cellData) => {
-        makeBioResource(cellData, null, null);
+        makeCell(cellData);
       }
     );
 
-    // マウス情報の取得
+    // get Mouse data
     fetchData('nanbyodata_get_riken_brc_mouse_info_by_nando_id').then(
       (mouseData) => {
-        makeBioResource(null, mouseData, null);
+        makeMouse(mouseData);
       }
     );
 
-    // DNA情報の取得
+    // get DNA data
     fetchData('nanbyodata_get_riken_brc_dna_info_by_nando_id').then(
       (dnaData) => {
-        makeBioResource(null, null, dnaData);
+        makeDNA(dnaData);
       }
     );
 
-    // 変異データの取得
+    // get Clinvar data
     fetchData('nanbyodata_get_variant_by_nando_id').then((clinvarData) => {
-      makeVariant(clinvarData, []);
+      makeClinvar(clinvarData);
     });
 
-    // const mgendData = await fetchData('');
-    // const mgendData = [];
+    // TODO: get MGenD data (no api endpoint yet)
+    fetchData('nanbyodata_get_mgend_by_nando_id').then((mgendData) => {
+      makeMgend(mgendData);
+    });
 
     // download datasets
     // const datasets = [
