@@ -33,6 +33,19 @@ popup();
 breadcrumb(nandoId);
 setLangChange();
 
+const datasets = [
+  { name: 'Overview', data: null },
+  { name: 'Causal Genes', data: null },
+  { name: 'Genetic Testing', data: null },
+  { name: 'Phenotypes', data: null },
+  { name: 'Cell', data: null },
+  { name: 'Mouse', data: null },
+  { name: 'DNA', data: null },
+  { name: 'Clinvar', data: null },
+  // add MGenD data
+  // { name: 'Mgend', data: null },
+];
+
 (async () => {
   try {
     async function fetchData(apiEndpoint) {
@@ -61,28 +74,39 @@ setLangChange();
         makeDiseaseDefinition(entryData);
         updateOverviewLinkAndContentDisplay();
         checkExistingItem();
+        datasets.find((d) => d.name === 'Overview').data = entryData;
+        checkAndLogDatasets();
       }
     });
 
     // get Causal Genes data
     fetchData('nanbyodata_get_gene_by_nando_id').then((causalGeneData) => {
       makeCausalGene(causalGeneData);
+      datasets.find((d) => d.name === 'Causal Genes').data = causalGeneData;
+      checkAndLogDatasets();
     });
 
     // get Genetic Testing data
     fetchData('nanbyodata_get_gene_test').then((geneticTestingData) => {
       makeGeneticTesting(geneticTestingData);
+      datasets.find((d) => d.name === 'Genetic Testing').data =
+        geneticTestingData;
+      checkAndLogDatasets();
     });
 
     // get Phenotypes data
     fetchData('nanbyodata_get_hpo_data_by_nando_id').then((phenotypesData) => {
       makePhenotypes(phenotypesData);
+      datasets.find((d) => d.name === 'Phenotypes').data = phenotypesData;
+      checkAndLogDatasets();
     });
 
     // get Cell data
     fetchData('nanbyodata_get_riken_brc_cell_info_by_nando_id').then(
       (cellData) => {
         makeCell(cellData);
+        datasets.find((d) => d.name === 'Cell').data = cellData;
+        checkAndLogDatasets();
       }
     );
 
@@ -90,6 +114,8 @@ setLangChange();
     fetchData('nanbyodata_get_riken_brc_mouse_info_by_nando_id').then(
       (mouseData) => {
         makeMouse(mouseData);
+        datasets.find((d) => d.name === 'Mouse').data = mouseData;
+        checkAndLogDatasets();
       }
     );
 
@@ -97,39 +123,37 @@ setLangChange();
     fetchData('nanbyodata_get_riken_brc_dna_info_by_nando_id').then(
       (dnaData) => {
         makeDNA(dnaData);
+        datasets.find((d) => d.name === 'DNA').data = dnaData;
+        checkAndLogDatasets();
       }
     );
 
     // get Clinvar data
     fetchData('nanbyodata_get_variant_by_nando_id').then((clinvarData) => {
       makeClinvar(clinvarData);
+      datasets.find((d) => d.name === 'Clinvar').data = clinvarData;
+      checkAndLogDatasets();
     });
 
     // TODO: get MGenD data (no api endpoint yet)
-    fetchData('nanbyodata_get_mgend_by_nando_id').then((mgendData) => {
-      makeMgend(mgendData);
-    });
-
-    // TODO: add download logic
-    // download datasets
-    // const datasets = [
-    //   { name: 'Overview', data: entryData },
-    //   { name: 'Causal Genes', data: causalGeneData },
-    //   { name: 'Genetic Testing', data: geneticTestingData },
-    //   { name: 'Phenotypes', data: phenotypesData },
-    // { name: 'Cell', data: cellData },
-    // { name: 'Mouse', data: mouseData },
-    // { name: 'DNA', data: dnaData },
-    //   { name: 'Clinvar', data: clinvarData },
-    // ];
-
-    // downloadDatasets(nandoId, datasets);
-
-    // その他のデータ取得例も同様に追加可能
+    // fetchData('nanbyodata_get_mgend_by_nando_id').then((mgendData) => {
+    //   makeMgend(mgendData);
+    //   datasets.find((d) => d.name === 'MGenD').data = mgendData;
+    //   checkAndLogDatasets();
+    // });
   } catch (error) {
     console.error('Error:', error);
   }
 })();
+
+function checkAndLogDatasets() {
+  if (datasets.every((dataset) => dataset.data !== null)) {
+    downloadDatasets(nandoId, datasets);
+    document.querySelector(
+      '.summary-download > .open-popup-btn'
+    ).disabled = false;
+  }
+}
 
 function makeHeader(entryData) {
   const refNandoId = document.getElementById('temp-nando-id');
