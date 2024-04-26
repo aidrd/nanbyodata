@@ -65,11 +65,7 @@ export function makeCell(cellData) {
   const bioResource = document.getElementById('bio-resource');
   const tabWrap = bioResource.querySelector('.tab-wrap');
 
-  const cellDataset = processDataAndRemoveNavItems(
-    'bio-resource',
-    cellData,
-    'cell'
-  );
+  const cellDataset = processData(cellData);
 
   const items = {
     id: 'cell',
@@ -85,6 +81,10 @@ export function makeCell(cellData) {
     navLink.style.cursor = 'pointer';
     navLink.classList.remove('-disabled');
     bioResource.classList.remove('-disabled');
+  } else {
+    document.querySelector('#bio-resource-cell').remove();
+    document.querySelector('.tab-label.bio-resource-cell').remove();
+    document.querySelector('.tab-content.cell').remove();
   }
 }
 
@@ -93,11 +93,7 @@ export function makeMouse(mouseData) {
   const bioResource = document.getElementById('bio-resource');
   const tabWrap = bioResource.querySelector('.tab-wrap');
 
-  const mouseDataset = processDataAndRemoveNavItems(
-    'bio-resource',
-    mouseData,
-    'mouse'
-  );
+  const mouseDataset = processData(mouseData);
 
   const items = {
     id: 'mouse',
@@ -113,6 +109,10 @@ export function makeMouse(mouseData) {
     navLink.style.cursor = 'pointer';
     navLink.classList.remove('-disabled');
     bioResource.classList.remove('-disabled');
+  } else {
+    document.querySelector('#bio-resource-mouse').remove();
+    document.querySelector('.tab-label.bio-resource-mouse').remove();
+    document.querySelector('.tab-content.mouse').remove();
   }
 }
 
@@ -121,11 +121,7 @@ export function makeDNA(dnaData) {
   const bioResource = document.getElementById('bio-resource');
   const tabWrap = bioResource.querySelector('.tab-wrap');
 
-  const dnaDataset = processDataAndRemoveNavItems(
-    'bio-resource',
-    dnaData,
-    'dna'
-  );
+  const dnaDataset = processData(dnaData);
 
   const items = {
     id: 'dna',
@@ -141,6 +137,10 @@ export function makeDNA(dnaData) {
     navLink.style.cursor = 'pointer';
     navLink.classList.remove('-disabled');
     bioResource.classList.remove('-disabled');
+  } else {
+    document.querySelector('#bio-resource-dna').remove();
+    document.querySelector('.tab-label.bio-resource-dna').remove();
+    document.querySelector('.tab-content.dna').remove();
   }
 }
 
@@ -150,11 +150,7 @@ export function makeClinvar(clinvarData) {
   const variant = document.getElementById('variant');
   const tabWrap = variant.querySelector('.tab-wrap');
 
-  const clinvarDataset = processDataAndRemoveNavItems(
-    'variant',
-    clinvarData,
-    'clinvar'
-  );
+  const clinvarDataset = processData(clinvarData);
 
   const items = {
     id: 'clinvar',
@@ -170,6 +166,10 @@ export function makeClinvar(clinvarData) {
     navLink.style.cursor = 'pointer';
     navLink.classList.remove('-disabled');
     variant.classList.remove('-disabled');
+  } else {
+    document.querySelector('#variant-clinvar').remove();
+    document.querySelector('.tab-label.variant-clinvar').remove();
+    document.querySelector('.tab-content.clinvar').remove();
   }
 }
 
@@ -178,11 +178,7 @@ export function makeMgend(mgendData) {
   const variant = document.getElementById('variant');
   const tabWrap = variant.querySelector('.tab-wrap');
 
-  const mgendDataset = processDataAndRemoveNavItems(
-    'variant',
-    mgendData,
-    'mgend'
-  );
+  const mgendDataset = processData(mgendData);
 
   const items = {
     id: 'mgend',
@@ -198,6 +194,10 @@ export function makeMgend(mgendData) {
     navLink.style.cursor = 'pointer';
     navLink.classList.remove('-disabled');
     variant.classList.remove('-disabled');
+  } else {
+    document.querySelector('#variant-mgend').remove();
+    document.querySelector('.tab-label.variant-mgend').remove();
+    document.querySelector('.tab-content.mgend').remove();
   }
 }
 
@@ -298,7 +298,9 @@ function processTabs(items, rootId, tabWrap) {
       currentTab.checked = true;
       isFirstTab = false;
     }
-    updateElementWithTable(tableView, object, columns);
+    if (object !== null) {
+      updateElementWithTable(tableView, object, columns);
+    }
     updateDataNumElement(
       `.${rootId}-${id}`,
       `.${id}`,
@@ -307,18 +309,6 @@ function processTabs(items, rootId, tabWrap) {
   });
 }
 
-/**
- * Processes the provided data and removes navigation items if the data does not exist.
- * @param {string} rootId - The root ID of the elements.
- * @param {Array} data - The data to be processed.
- * @param {string} className - The class name of the navigation item.
- * @returns {Object} - An object containing information about the processed data.
- */
-function processDataAndRemoveNavItems(rootId, data, className) {
-  const processDataResult = processData(data);
-  // removeNavItemIfNotExist(rootId, processDataResult.hasData, className);
-  return processDataResult;
-}
 /**
  * Processes the provided data and checks if it exists.
  * @param {Array} data - The data to be processed.
@@ -333,17 +323,3 @@ function processData(data) {
   }
   return { hasData, dataObject };
 }
-/**
- * Removes the navigation item if the provided data does not exist.
- * @param {string} rootId - The root ID of the elements.
- * @param {boolean} hasData - Indicates whether the data exists.
- * @param {string} className - The class name of the navigation item.
- */
-// function removeNavItemIfNotExist(rootId, hasData, className) {
-//   if (!hasData) {
-//     const navItem = document.querySelector(`.${rootId} .${className}.nav-link`);
-//     if (navItem) {
-//       navItem.parentElement.remove();
-//     }
-//   }
-// }
