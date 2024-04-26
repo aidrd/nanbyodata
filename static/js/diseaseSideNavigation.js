@@ -11,8 +11,13 @@ export function makeSideNavigation() {
   ];
   const lis = sideNavigationUl.querySelectorAll('li');
   lis.forEach((li) => {
-    li.addEventListener('click', () => {
-      const id = li.querySelector('a').getAttribute('href').replace('#', '');
+    li.addEventListener('click', (event) => {
+      const link = li.querySelector('a');
+      if (link.classList.contains('-disabled')) {
+        event.preventDefault();
+        return;
+      }
+      const id = link.getAttribute('href').replace('#', '');
       switchingDisplayContents(id);
     });
   });
@@ -43,6 +48,10 @@ export function makeSideNavigation() {
 
   document.querySelectorAll('a[href="#bio-resource"]').forEach(function (aTag) {
     aTag.addEventListener('click', function (event) {
+      if (this.classList.contains('-disabled')) {
+        event.preventDefault();
+        return;
+      }
       event.preventDefault();
       const classList = this.classList[0];
       const selectName = 'bio-resource-' + classList;
@@ -56,6 +65,10 @@ export function makeSideNavigation() {
 
   document.querySelectorAll('a[href="#variant"]').forEach(function (aTag) {
     aTag.addEventListener('click', function (event) {
+      if (this.classList.contains('-disabled')) {
+        event.preventDefault();
+        return;
+      }
       event.preventDefault();
       const classList = this.classList[0];
       const selectName = 'variant-' + classList;
