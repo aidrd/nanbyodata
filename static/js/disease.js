@@ -73,9 +73,9 @@ const datasets = [
         checkSummaryData(entryData);
         makeDiseaseDefinition(entryData);
         updateOverviewLinkAndContentDisplay();
-        checkExistingItem();
         datasets.find((d) => d.name === 'Overview').data = entryData;
         checkAndLogDatasets();
+        checkExistingItem();
       }
     });
 
@@ -466,13 +466,11 @@ function updateOverviewLinkAndContentDisplay() {
   const loadingSpinner = navLink.querySelector('.loading-spinner');
 
   if (document.querySelector('.summary-wrapper').style.display === 'none') {
-    document.getElementById('content').style.display = 'block';
+    loadingSpinner.style.display = 'none';
   } else {
     navLink.style.cursor = 'pointer';
     navLink.classList.remove('-disabled');
-    document.getElementById('content').style.display = 'block';
   }
-
   loadingSpinner.style.display = 'none';
 }
 
@@ -509,6 +507,7 @@ function checkExistingItem() {
           switchingDisplayContents(item);
       }
       element.classList.add('selected');
+      document.getElementById('content').style.display = 'block';
       found = true;
       break;
     }
