@@ -19,6 +19,7 @@ export function makeSideNavigation() {
       }
       const id = link.getAttribute('href').replace('#', '');
       switchingDisplayContents(id);
+      document.getElementById('content').style.display = 'block';
     });
   });
 
@@ -202,7 +203,6 @@ function updateBioSelection(selector) {
   const checkedSwitch = document.querySelector(selector);
   if (checkedSwitch) {
     window.location.hash = checkedSwitch.id;
-    const selectedId = checkedSwitch.id.replace('bio-resource-', '');
   }
 }
 
@@ -210,6 +210,5 @@ function updateVariantSelection(selector) {
   const checkedSwitch = document.querySelector(selector);
   if (checkedSwitch) {
     window.location.hash = checkedSwitch.id;
-    const selectedId = checkedSwitch.id.replace('variant-', '');
   }
 }

@@ -48,6 +48,7 @@ const datasets = [
 
 (async () => {
   try {
+    const hash = window.location.hash.replace('#', '');
     async function fetchData(apiEndpoint) {
       const url = `https://nanbyodata.jp/sparqlist/api/${apiEndpoint}?nando_id=${nandoId}&timestamp=${timestamp}`;
       try {
@@ -75,7 +76,11 @@ const datasets = [
         updateOverviewLinkAndContentDisplay();
         datasets.find((d) => d.name === 'Overview').data = entryData;
         checkAndLogDatasets();
-        checkExistingItem();
+        if (hash) {
+          trySwitchingContent(hash);
+        } else {
+          checkExistingItem();
+        }
       }
     });
 
@@ -507,8 +512,68 @@ function checkExistingItem() {
   }
 
   const retryCount = 0;
-  if (!found && retryCount < 5) {
+  const maxRetries = 10;
+  if (!found && retryCount < maxRetries) {
     console.log('No active items found, retrying...');
     setTimeout(() => checkExistingItem(retryCount + 1), 3000);
+  }
+}
+
+function trySwitchingContent(hash, retries = 0) {
+  const maxRetries = 10;
+  let found = false;
+
+  const items = [
+    'overview',
+    'causal-genes',
+    'genetic-testing',
+    'phenotypes',
+    'bio-resource-cell',
+    'bio-resource-mouse',
+    'bio-resource-dna',
+    'variant-clinvar',
+    'variant-mgend',
+  ];
+
+  if (!items.includes(hash)) {
+    window.location.hash = '';
+    window.location.reload();
+    return;
+  }
+
+  let modifiedHash = hash;
+  switch (hash) {
+    case 'bio-resource-cell':
+    case 'bio-resource-mouse':
+    case 'bio-resource-dna':
+      modifiedHash = hash.substring('bio-resource-'.length);
+      break;
+    case 'variant-clinvar':
+    case 'variant-mgend':
+      modifiedHash = hash.substring('variant-'.length);
+      break;
+  }
+
+  const element = document.querySelector(`.${modifiedHash}`);
+  if (element && !element.classList.contains('-disabled')) found = true;
+
+  const alreadySelected = document.querySelector('.nav-link.selected');
+
+  if (found && (!alreadySelected || alreadySelected === element)) {
+    element.classList.add('selected');
+    switchingDisplayContents(hash);
+    document.getElementById('content').style.display = 'block';
+  } else if (!found && retries < maxRetries) {
+    console.log('No hash item found, retrying...');
+    setTimeout(() => {
+      trySwitchingContent(hash, retries + 1);
+    }, 3000);
+  } else {
+    if (alreadySelected) {
+      return;
+    } else {
+      window.location.hash = '';
+      window.location.reload();
+    }
   }
 }
