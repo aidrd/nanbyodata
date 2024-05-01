@@ -79,7 +79,11 @@ const datasets = [
         if (hash) {
           trySwitchingContent(hash);
         } else {
-          checkExistingItem();
+          switchingDisplayContents('overview');
+          const overviewEl = document.querySelector('.nav-link.overview');
+          overviewEl.classList.add('selected');
+          overviewEl.style.cursor = 'pointer';
+          document.getElementById('content').style.display = 'block';
         }
       }
     });
@@ -470,53 +474,6 @@ function updateOverviewLinkAndContentDisplay() {
     navLink.classList.remove('-disabled');
   }
   loadingSpinner.style.display = 'none';
-}
-
-function checkExistingItem() {
-  const items = [
-    'overview',
-    'causal-genes',
-    'genetic-testing',
-    'phenotypes',
-    'cell',
-    'mouse',
-    'dna',
-    'clinvar',
-    'mgend',
-  ];
-
-  let found = false;
-
-  for (let i = 0; i < items.length; i++) {
-    const item = items[i];
-    const element = document.querySelector(`.${item}`);
-    if (element && !element.classList.contains('-disabled')) {
-      switch (item) {
-        case 'cell':
-        case 'mouse':
-        case 'dna':
-          switchingDisplayContents(`bio-resource-${item}`);
-          break;
-        case 'clinvar':
-        case 'mgend':
-          switchingDisplayContents(`variant-${item}`);
-          break;
-        default:
-          switchingDisplayContents(item);
-      }
-      element.classList.add('selected');
-      document.getElementById('content').style.display = 'block';
-      found = true;
-      break;
-    }
-  }
-
-  const retryCount = 0;
-  const maxRetries = 10;
-  if (!found && retryCount < maxRetries) {
-    console.log('No active items found, retrying...');
-    setTimeout(() => checkExistingItem(retryCount + 1), 3000);
-  }
 }
 
 function trySwitchingContent(hash, retries = 0) {
