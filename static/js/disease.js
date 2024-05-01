@@ -361,13 +361,6 @@ function makeLinksList(entryData) {
 }
 
 export function checkSummaryData(entryData) {
-  // const items = [
-  //   '.causal-genes',
-  //   '.genetic-testing',
-  //   '.phenotypes',
-  //   '.bio-resource',
-  //   '.variant',
-  // ];
   const summaryWrapper = document.querySelector('.summary-wrapper');
   const summaryNav = document.querySelector('.nav-link.overview');
   const diseaseDefinition = document.getElementById('temp-disease-definition');
@@ -497,11 +490,11 @@ function checkExistingItem() {
         case 'cell':
         case 'mouse':
         case 'dna':
-          switchingDisplayContents('bio-resource');
+          switchingDisplayContents(`bio-resource-${item}`);
           break;
         case 'clinvar':
         case 'mgend':
-          switchingDisplayContents('variant');
+          switchingDisplayContents(`variant-${item}`);
           break;
         default:
           switchingDisplayContents(item);

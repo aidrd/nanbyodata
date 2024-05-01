@@ -290,14 +290,9 @@ function processTabs(items, rootId, tabWrap) {
     items = [items];
   }
 
-  let isFirstTab = true;
   items.forEach(({ id, columns, data, object }) => {
     const tableView = tabWrap.querySelector(`.${id}`);
     const currentTab = tabWrap.querySelector(`#${rootId}-${id}`);
-    if (currentTab && isFirstTab) {
-      currentTab.checked = true;
-      isFirstTab = false;
-    }
     if (object !== null) {
       updateElementWithTable(tableView, object, columns);
     }
