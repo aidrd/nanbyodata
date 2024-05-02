@@ -213,7 +213,11 @@ function makeData(data, categoryName, tableId, columns) {
   const tableView = container.querySelector(`#${tableId}`);
   const objectUrl = createObjectUrlFromData(data);
   updateElementWithTable(tableView, objectUrl, columns);
-  updateDataNumElement(`#${categoryName}`, `.${categoryName}`, data.length);
+  updateDataNumElement(
+    `#${categoryName}`,
+    `.${categoryName}`,
+    data === null ? 'error' : data.length
+  );
 
   const links = document.querySelectorAll('#temp-side-navigation .nav-link');
   links.forEach((link) => {

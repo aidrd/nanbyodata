@@ -1,50 +1,32 @@
 export function makeSideNavigation() {
   const sideNavigation = document.getElementById('temp-side-navigation');
-  const sideNavigationUl = sideNavigation.querySelector('ul');
+
   const items = [
     'overview',
     'causal-genes',
     'genetic-testing',
     'phenotypes',
-    'bio-resource',
-    'variant',
+    'cell',
+    'mouse',
+    'dna',
+    'clinvar',
+    'mgend',
   ];
-  const lis = sideNavigationUl.querySelectorAll('li');
-  lis.forEach((li) => {
-    li.addEventListener('click', (event) => {
-      const link = li.querySelector('a');
+
+  items.forEach((itemId) => {
+    const link = sideNavigation.querySelector(`.nav-link.${itemId}`);
+    if (!link) return;
+
+    link.addEventListener('click', (event) => {
       if (link.classList.contains('-disabled')) {
         event.preventDefault();
         return;
       }
+
       const id = link.getAttribute('href').replace('#', '');
       switchingDisplayContents(id);
       document.getElementById('content').style.display = 'block';
     });
-  });
-
-  items.forEach((id) => {
-    const liElement = document.getElementById(id);
-    if (!liElement) {
-      switch (id) {
-        case 'bio-resource':
-        case 'variant':
-          const elementToRemove = document.querySelector(`.${id}`);
-          if (elementToRemove && elementToRemove.parentNode) {
-            elementToRemove.parentNode.remove();
-          }
-          break;
-        default:
-          const anchorElement = document.querySelector(`[href="#${id}"]`);
-          if (anchorElement && anchorElement.parentElement) {
-            const liToRemove = anchorElement.parentElement;
-            if (liToRemove.parentNode) {
-              liToRemove.remove();
-            }
-          }
-          break;
-      }
-    }
   });
 
   document.querySelectorAll('a[href="#bio-resource"]').forEach(function (aTag) {
