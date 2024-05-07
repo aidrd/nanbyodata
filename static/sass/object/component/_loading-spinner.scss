@@ -10,6 +10,17 @@
   border-top: 4px var(--color-primary) solid;
   border-radius: 50%;
   animation: sp-anime 1s infinite linear;
+  &.-sidenav {
+    display: block;
+    top: -9px;
+    border: 4px var(--color-white) solid;
+    border-top: 4px var(--color-primary) solid;
+    right: 0;
+    left: unset;
+    width: 20px;
+    height: 20px;
+    opacity: 0.5;
+  }
 }
 
 @keyframes sp-anime {

@@ -17,6 +17,7 @@ Foundation
   --color-table-dash: #dcdcdc;
   --color-dataset-th: #94928d;
   --color-black: #444;
+  --color-white: #fff;
   --color-spinner-bg: #ddd;
   --color-summary-border: #c1c6d3;
   --color-summary-link: #90959b;
@@ -427,7 +428,6 @@ footer .container .footer__bottom .footer__lisence small:before {
   top: 76px;
 }
 .content-wrapper #sidebar {
-  display: none;
   position: fixed;
   overflow-y: auto;
   height: calc(100vh - 76px);
@@ -935,6 +935,17 @@ header.search-area .intro-text .keyword a {
   border-radius: 50%;
   animation: sp-anime 1s infinite linear;
 }
+.loading-spinner.-sidenav {
+  display: block;
+  top: -9px;
+  border: 4px var(--color-white) solid;
+  border-top: 4px var(--color-primary) solid;
+  right: 0;
+  left: unset;
+  width: 20px;
+  height: 20px;
+  opacity: 0.5;
+}
 
 @keyframes sp-anime {
   100% {
@@ -1092,14 +1103,25 @@ header.search-area .intro-text .keyword a {
   text-decoration: none;
   margin-bottom: -1px;
 }
-#temp-side-navigation > ul > li > a:not(.selected):hover {
-  background-color: var(--color-breadcrumb-hover);
-}
 #temp-side-navigation > ul > li .nav-link {
   margin: 0;
   margin-top: -1.5px;
   position: relative;
   color: var(--color-secondary);
+  cursor: default;
+}
+#temp-side-navigation > ul > li .nav-link:hover {
+  background-color: var(--color-breadcrumb-hover);
+}
+#temp-side-navigation > ul > li .nav-link.-disabled {
+  color: rgba(19, 41, 90, 0.2705882353);
+  cursor: default;
+}
+#temp-side-navigation > ul > li .nav-link.-disabled:hover {
+  background-color: transparent;
+}
+#temp-side-navigation > ul > li .nav-link.selected:hover {
+  background-color: rgba(22, 35, 78, 0.2);
 }
 #temp-side-navigation > ul > li .data-num {
   padding: 0 5px;
@@ -1114,10 +1136,13 @@ header.search-area .intro-text .keyword a {
 }
 #temp-side-navigation > ul > li .bio-resource,
 #temp-side-navigation > ul > li .variant {
-  cursor: pointer;
   color: var(--color-secondary);
   font-weight: bold;
   padding: 10px 0 20px 10px;
+}
+#temp-side-navigation > ul > li .bio-resource.-disabled,
+#temp-side-navigation > ul > li .variant.-disabled {
+  color: rgba(19, 41, 90, 0.2705882353);
 }
 #temp-side-navigation > ul > li .bio-resource ul,
 #temp-side-navigation > ul > li .variant ul {
@@ -1170,10 +1195,19 @@ header.search-area .intro-text .keyword a {
   padding-left: 10px;
   z-index: var(--zindex-disease-side-link);
   border-radius: var(--radius-small);
+  background-color: transparent;
 }
-#temp-side-navigation > ul > li .bio-resource ul li a:not(.selected):hover,
-#temp-side-navigation > ul > li .variant ul li a:not(.selected):hover {
+#temp-side-navigation > ul > li .bio-resource ul li a:hover,
+#temp-side-navigation > ul > li .variant ul li a:hover {
   background-color: var(--color-breadcrumb-hover);
+}
+#temp-side-navigation > ul > li .bio-resource ul li .-disabled:hover,
+#temp-side-navigation > ul > li .variant ul li .-disabled:hover {
+  background-color: transparent;
+}
+#temp-side-navigation > ul > li .bio-resource ul li .selected,
+#temp-side-navigation > ul > li .variant ul li .selected {
+  background-color: rgba(22, 35, 78, 0.2);
 }
 
 /* Link */

@@ -8,8 +8,10 @@ import {
   bioResourceMouseColumns,
   bioResourceDnaColumns,
   variantClinvarColumns,
-  convertColumntoText
+  convertColumntoText,
 } from './paginationColumns.js';
+
+makeSideNavigation();
 
 // causalGene(疾患原因遺伝子)
 export function makeCausalGene(causalGeneData) {
@@ -19,6 +21,11 @@ export function makeCausalGene(causalGeneData) {
     'causal-genes-table',
     convertColumntoText(causalGeneColumns)
   );
+  if (causalGeneData?.length > 0 && causalGeneData !== null) {
+    const navLink = document.querySelector('.nav-link.causal-genes');
+    navLink.style.cursor = 'pointer';
+    navLink.classList.remove('-disabled');
+  }
 }
 
 // geneticTesting(診療用遺伝学的検査情報)
@@ -29,6 +36,11 @@ export function makeGeneticTesting(geneticTestingData) {
     'genetic-testing-table',
     convertColumntoText(geneticTestingColumns)
   );
+  if (geneticTestingData?.length > 0 && geneticTestingData !== null) {
+    const navLink = document.querySelector('.nav-link.genetic-testing');
+    navLink.style.cursor = 'pointer';
+    navLink.classList.remove('-disabled');
+  }
 }
 
 // phenotypes(臨床的特徴)
@@ -40,96 +52,153 @@ export function makePhenotypes(phenotypesData) {
     en: convertColumntoText(phenotypesEnColumns),
   };
   makeData(phenotypesData, 'phenotypes', phenotypeLang, columns[currentLang]);
+  if (phenotypesData?.length > 0 && phenotypesData !== null) {
+    const navLink = document.querySelector('.nav-link.phenotypes');
+    navLink.style.cursor = 'pointer';
+    navLink.classList.remove('-disabled');
+  }
 }
 
 // bioResource(難病特異的バイオリソース)
-export function makeBioResource(cellData, mouseData, dnaData) {
+// Cell
+export function makeCell(cellData) {
   const bioResource = document.getElementById('bio-resource');
   const tabWrap = bioResource.querySelector('.tab-wrap');
 
-  const cellDataset = processDataAndRemoveNavItems(
-    'bio-resource',
-    cellData,
-    'cell'
-  );
-  const mouseDataset = processDataAndRemoveNavItems(
-    'bio-resource',
-    mouseData,
-    'mouse'
-  );
-  const dnaDataset = processDataAndRemoveNavItems(
-    'bio-resource',
-    dnaData,
-    'dna'
-  );
+  const cellDataset = processData(cellData);
 
-  const items = [
-    {
-      existing: cellDataset.hasData,
-      id: 'cell',
-      columns: convertColumntoText(bioResourceCellColumns),
-      data: cellData,
-      object: cellDataset.dataObject,
-    },
-    {
-      existing: mouseDataset.hasData,
-      id: 'mouse',
-      columns: convertColumntoText(bioResourceMouseColumns),
-      data: mouseData,
-      object: mouseDataset.dataObject,
-    },
-    {
-      existing: dnaDataset.hasData,
-      id: 'dna',
-      columns: convertColumntoText(bioResourceDnaColumns),
-      data: dnaData,
-      object: dnaDataset.dataObject,
-    },
-  ];
+  const items = {
+    id: 'cell',
+    columns: convertColumntoText(bioResourceCellColumns),
+    data: cellData,
+    object: cellDataset.dataObject,
+  };
 
   processTabs(items, 'bio-resource', tabWrap);
+  if (cellData?.length > 0 && cellData !== null) {
+    const navLink = document.querySelector('.nav-link.cell');
+    const bioResource = document.querySelector('.bio-resource');
+    navLink.style.cursor = 'pointer';
+    navLink.classList.remove('-disabled');
+    bioResource.classList.remove('-disabled');
+  } else {
+    document.querySelector('#bio-resource-cell').remove();
+    document.querySelector('.tab-label.bio-resource-cell').remove();
+    document.querySelector('.tab-content.cell').remove();
+  }
+}
+
+// Mouse
+export function makeMouse(mouseData) {
+  const bioResource = document.getElementById('bio-resource');
+  const tabWrap = bioResource.querySelector('.tab-wrap');
+
+  const mouseDataset = processData(mouseData);
+
+  const items = {
+    id: 'mouse',
+    columns: convertColumntoText(bioResourceMouseColumns),
+    data: mouseData,
+    object: mouseDataset.dataObject,
+  };
+
+  processTabs(items, 'bio-resource', tabWrap);
+  if (mouseData?.length > 0 && mouseData !== null) {
+    const navLink = document.querySelector('.nav-link.mouse');
+    const bioResource = document.querySelector('.bio-resource');
+    navLink.style.cursor = 'pointer';
+    navLink.classList.remove('-disabled');
+    bioResource.classList.remove('-disabled');
+  } else {
+    document.querySelector('#bio-resource-mouse').remove();
+    document.querySelector('.tab-label.bio-resource-mouse').remove();
+    document.querySelector('.tab-content.mouse').remove();
+  }
+}
+
+// DNA
+export function makeDNA(dnaData) {
+  const bioResource = document.getElementById('bio-resource');
+  const tabWrap = bioResource.querySelector('.tab-wrap');
+
+  const dnaDataset = processData(dnaData);
+
+  const items = {
+    id: 'dna',
+    columns: convertColumntoText(bioResourceDnaColumns),
+    data: dnaData,
+    object: dnaDataset.dataObject,
+  };
+
+  processTabs(items, 'bio-resource', tabWrap);
+  if (dnaData?.length > 0 && dnaData !== null) {
+    const navLink = document.querySelector('.nav-link.dna');
+    const bioResource = document.querySelector('.bio-resource');
+    navLink.style.cursor = 'pointer';
+    navLink.classList.remove('-disabled');
+    bioResource.classList.remove('-disabled');
+  } else {
+    document.querySelector('#bio-resource-dna').remove();
+    document.querySelector('.tab-label.bio-resource-dna').remove();
+    document.querySelector('.tab-content.dna').remove();
+  }
 }
 
 // variant(バリアント)
-export function makeVariant(clinvarData, mgendData, entryData) {
+// Clinvar
+export function makeClinvar(clinvarData) {
   const variant = document.getElementById('variant');
   const tabWrap = variant.querySelector('.tab-wrap');
 
-  const clinvarDataset = processDataAndRemoveNavItems(
-    'variant',
-    clinvarData,
-    'clinvar'
-  );
-  const mgendDataset = processDataAndRemoveNavItems(
-    'variant',
-    mgendData,
-    'mgend'
-  );
+  const clinvarDataset = processData(clinvarData);
 
-  const items = [
-    {
-      existing: clinvarDataset.hasData,
-      id: 'clinvar',
-      columns: convertColumntoText(variantClinvarColumns),
-      data: clinvarData,
-      object: clinvarDataset.dataObject,
-    },
-    {
-      existing: mgendDataset.hasData,
-      id: 'mgend',
-      columns: '',
-      data: mgendData,
-      object: mgendDataset.dataObject,
-    },
-  ];
+  const items = {
+    id: 'clinvar',
+    columns: convertColumntoText(variantClinvarColumns),
+    data: clinvarData,
+    object: clinvarDataset.dataObject,
+  };
 
   processTabs(items, 'variant', tabWrap);
+  if (clinvarData?.length > 0 && clinvarData !== null) {
+    const navLink = document.querySelector('.nav-link.clinvar');
+    const variant = document.querySelector('.variant');
+    navLink.style.cursor = 'pointer';
+    navLink.classList.remove('-disabled');
+    variant.classList.remove('-disabled');
+  } else {
+    document.querySelector('#variant-clinvar').remove();
+    document.querySelector('.tab-label.variant-clinvar').remove();
+    document.querySelector('.tab-content.clinvar').remove();
+  }
+}
 
-  makeSideNavigation(entryData);
-  // finish loading
-  document.querySelector('.loading-spinner').style.display = 'none';
-  document.getElementById('content').style.display = 'block';
-  document.getElementById('sidebar').style.display = 'block';
+// Mgend
+export function makeMgend(mgendData) {
+  const variant = document.getElementById('variant');
+  const tabWrap = variant.querySelector('.tab-wrap');
+
+  const mgendDataset = processData(mgendData);
+
+  const items = {
+    id: 'mgend',
+    columns: '',
+    data: mgendData,
+    object: mgendDataset.dataObject,
+  };
+
+  processTabs(items, 'variant', tabWrap);
+  if (mgendData?.length > 0 && mgendData !== null) {
+    const navLink = document.querySelector('.nav-link.mgend');
+    const variant = document.querySelector('.variant');
+    navLink.style.cursor = 'pointer';
+    navLink.classList.remove('-disabled');
+    variant.classList.remove('-disabled');
+  } else {
+    document.querySelector('#variant-mgend').remove();
+    document.querySelector('.tab-label.variant-mgend').remove();
+    document.querySelector('.tab-content.mgend').remove();
+  }
 }
 
 /**
@@ -141,14 +210,24 @@ export function makeVariant(clinvarData, mgendData, entryData) {
  */
 function makeData(data, categoryName, tableId, columns) {
   const container = document.getElementById(categoryName);
-  if (Array.isArray(data) && data.length === 0) {
-    container.remove();
-    return;
-  }
   const tableView = container.querySelector(`#${tableId}`);
   const objectUrl = createObjectUrlFromData(data);
   updateElementWithTable(tableView, objectUrl, columns);
-  updateDataNumElement(`#${categoryName}`, `.${categoryName}`, data.length);
+  updateDataNumElement(
+    `#${categoryName}`,
+    `.${categoryName}`,
+    data === null ? 'error' : data.length
+  );
+
+  const links = document.querySelectorAll('#temp-side-navigation .nav-link');
+  links.forEach((link) => {
+    link.addEventListener('click', () => {
+      if (!link.classList.contains('-disabled')) {
+        links.forEach((l) => l.classList.remove('selected'));
+        link.classList.add('selected');
+      }
+    });
+  });
 }
 
 /**
@@ -194,8 +273,12 @@ function updateDataNumElement(mainWrapperName, navWrapperName, dataLength) {
   const navContentNumberEl = document.querySelector(
     `${navWrapperName} .data-num`
   );
-  mainContentNumberEl.innerText = dataLength;
-  navContentNumberEl.innerText = dataLength;
+  const navLoadingSpinner = document.querySelector(
+    `${navWrapperName} .loading-spinner`
+  );
+  if (navLoadingSpinner) navLoadingSpinner.style.display = 'none';
+  if (mainContentNumberEl) mainContentNumberEl.innerText = dataLength;
+  if (navContentNumberEl) navContentNumberEl.innerText = dataLength;
 }
 
 // for BioResource & Variant
@@ -206,43 +289,25 @@ function updateDataNumElement(mainWrapperName, navWrapperName, dataLength) {
  * @param {HTMLElement} tabWrap - The tab wrapper element.
  */
 function processTabs(items, rootId, tabWrap) {
-  if (!items.some((item) => item.existing)) {
-    // If all tabs do not exist, remove the element
-    document.getElementById(rootId).remove();
-  } else {
-    let isFirstTab = true;
-    items.forEach(({ existing, id, columns, data, object }) => {
-      if (!existing) {
-        // If there is no data, remove the input, label, and div
-        document.getElementById(`${rootId}-${id}`).remove();
-        tabWrap.querySelector(`label.tab-label.${rootId}-${id}`).remove();
-        tabWrap.querySelector(`.tab-content.${id}`).remove();
-      } else {
-        const tableView = tabWrap.querySelector(`.${id}`);
-        const currentTab = tabWrap.querySelector(`#${rootId}-${id}`);
-        if (currentTab && isFirstTab) {
-          currentTab.checked = true;
-          isFirstTab = false;
-        }
-        updateElementWithTable(tableView, object, columns);
-        updateDataNumElement(`.${rootId}-${id}`, `.${id}`, data.length);
-      }
-    });
+  // Ensure items is always an array
+  if (!Array.isArray(items)) {
+    items = [items];
   }
+
+  items.forEach(({ id, columns, data, object }) => {
+    const tableView = tabWrap.querySelector(`.${id}`);
+    const currentTab = tabWrap.querySelector(`#${rootId}-${id}`);
+    if (object !== null) {
+      updateElementWithTable(tableView, object, columns);
+    }
+    updateDataNumElement(
+      `.${rootId}-${id}`,
+      `.${id}`,
+      data === null ? 'error' : data.length
+    );
+  });
 }
 
-/**
- * Processes the provided data and removes navigation items if the data does not exist.
- * @param {string} rootId - The root ID of the elements.
- * @param {Array} data - The data to be processed.
- * @param {string} className - The class name of the navigation item.
- * @returns {Object} - An object containing information about the processed data.
- */
-function processDataAndRemoveNavItems(rootId, data, className) {
-  const processDataResult = processData(data);
-  removeNavItemIfNotExist(rootId, processDataResult.hasData, className);
-  return processDataResult;
-}
 /**
  * Processes the provided data and checks if it exists.
  * @param {Array} data - The data to be processed.
@@ -256,18 +321,4 @@ function processData(data) {
     dataObject = createObjectUrlFromData(data);
   }
   return { hasData, dataObject };
-}
-/**
- * Removes the navigation item if the provided data does not exist.
- * @param {string} rootId - The root ID of the elements.
- * @param {boolean} hasData - Indicates whether the data exists.
- * @param {string} className - The class name of the navigation item.
- */
-function removeNavItemIfNotExist(rootId, hasData, className) {
-  if (!hasData) {
-    const navItem = document.querySelector(`.${rootId} .${className}.nav-link`);
-    if (navItem) {
-      navItem.parentElement.remove();
-    }
-  }
 }

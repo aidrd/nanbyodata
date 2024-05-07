@@ -8,18 +8,21 @@ import {
   makeCausalGene,
   makeGeneticTesting,
   makePhenotypes,
-  makeBioResource,
-  makeVariant,
+  makeCell,
+  makeMouse,
+  makeDNA,
+  makeClinvar,
+  makeMgend,
 } from './diseaseContent.js';
 import { switchingDisplayContents } from './diseaseSideNavigation.js';
 import { setLangChange } from './setLangChange.js';
 
-// get NANDO ID
+// // get NANDO ID
 const pathname = window.location.pathname;
 const nandoIndex = pathname.indexOf('NANDO:');
 const nandoId = pathname.slice(nandoIndex + 6);
 
-// for cache busting
+// // for cache busting
 const timestamp = Date.now();
 
 // external functions
@@ -30,90 +33,136 @@ popup();
 breadcrumb(nandoId);
 setLangChange();
 
+const datasets = [
+  { name: 'Overview', data: null },
+  { name: 'Causal Genes', data: null },
+  { name: 'Genetic Testing', data: null },
+  { name: 'Phenotypes', data: null },
+  { name: 'Cell', data: null },
+  { name: 'Mouse', data: null },
+  { name: 'DNA', data: null },
+  { name: 'Clinvar', data: null },
+  // add MGenD data
+  // { name: 'Mgend', data: null },
+];
+
 (async () => {
   try {
-    const entryDataPromise = fetch(
-      'https://nanbyodata.jp/sparqlist/api/nanbyodata_get_overview_by_nando_id?nando_id=' +
-        nandoId +
-        `&timestamp=${timestamp}`,
-      {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      }
-    ).then((res) => res.json());
-
-    const entryData = await entryDataPromise;
-
+    const hash = window.location.hash.replace('#', '');
     async function fetchData(apiEndpoint) {
       const url = `https://nanbyodata.jp/sparqlist/api/${apiEndpoint}?nando_id=${nandoId}&timestamp=${timestamp}`;
-      const response = await fetch(url);
-      return response.json();
+      try {
+        const response = await fetch(url);
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return await response.json();
+      } catch (error) {
+        console.error('Error fetching data:', error.message);
+        return null;
+      }
     }
 
-    // get all data
-    const causalGeneData = await fetchData('nanbyodata_get_gene_by_nando_id');
-    const geneticTestingData = await fetchData('nanbyodata_get_gene_test');
-    const phenotypesData = await fetchData(
-      'nanbyodata_get_hpo_data_by_nando_id'
+    // get Overview data
+    fetchData('nanbyodata_get_overview_by_nando_id').then((entryData) => {
+      if (entryData) {
+        makeHeader(entryData);
+        makeExternalLinks(entryData);
+        makeAlternativeName(entryData);
+        makeInheritanceUris(entryData);
+        makeLinksList(entryData);
+        checkSummaryData(entryData);
+        makeDiseaseDefinition(entryData);
+        updateOverviewLinkAndContentDisplay();
+        datasets.find((d) => d.name === 'Overview').data = entryData;
+        checkAndLogDatasets();
+        if (hash) {
+          trySwitchingContent(hash);
+        } else {
+          switchingDisplayContents('overview');
+          const overviewEl = document.querySelector('.nav-link.overview');
+          overviewEl.classList.add('selected');
+          overviewEl.style.cursor = 'pointer';
+          document.getElementById('content').style.display = 'block';
+        }
+      }
+    });
+
+    // get Causal Genes data
+    fetchData('nanbyodata_get_gene_by_nando_id').then((causalGeneData) => {
+      makeCausalGene(causalGeneData);
+      datasets.find((d) => d.name === 'Causal Genes').data = causalGeneData;
+      checkAndLogDatasets();
+    });
+
+    // get Genetic Testing data
+    fetchData('nanbyodata_get_gene_test').then((geneticTestingData) => {
+      makeGeneticTesting(geneticTestingData);
+      datasets.find((d) => d.name === 'Genetic Testing').data =
+        geneticTestingData;
+      checkAndLogDatasets();
+    });
+
+    // get Phenotypes data
+    fetchData('nanbyodata_get_hpo_data_by_nando_id').then((phenotypesData) => {
+      makePhenotypes(phenotypesData);
+      datasets.find((d) => d.name === 'Phenotypes').data = phenotypesData;
+      checkAndLogDatasets();
+    });
+
+    // get Cell data
+    fetchData('nanbyodata_get_riken_brc_cell_info_by_nando_id').then(
+      (cellData) => {
+        makeCell(cellData);
+        datasets.find((d) => d.name === 'Cell').data = cellData;
+        checkAndLogDatasets();
+      }
     );
-    const cellData = await fetchData(
-      'nanbyodata_get_riken_brc_cell_info_by_nando_id'
+
+    // get Mouse data
+    fetchData('nanbyodata_get_riken_brc_mouse_info_by_nando_id').then(
+      (mouseData) => {
+        makeMouse(mouseData);
+        datasets.find((d) => d.name === 'Mouse').data = mouseData;
+        checkAndLogDatasets();
+      }
     );
-    const mouseData = await fetchData(
-      'nanbyodata_get_riken_brc_mouse_info_by_nando_id'
+
+    // get DNA data
+    fetchData('nanbyodata_get_riken_brc_dna_info_by_nando_id').then(
+      (dnaData) => {
+        makeDNA(dnaData);
+        datasets.find((d) => d.name === 'DNA').data = dnaData;
+        checkAndLogDatasets();
+      }
     );
-    const dnaData = await fetchData(
-      'nanbyodata_get_riken_brc_dna_info_by_nando_id'
-    );
-    const clinvarData = await fetchData('nanbyodata_get_variant_by_nando_id');
-    // TODO: add mgend data
-    // const mgendData = await fetchData('');
-    const mgendData = [];
 
-    // download datasets
-    const datasets = [
-      { name: 'Overview', data: entryData },
-      { name: 'Causal Genes', data: causalGeneData },
-      { name: 'Genetic Testing', data: geneticTestingData },
-      { name: 'Phenotypes', data: phenotypesData },
-      { name: 'Cell', data: cellData },
-      { name: 'Mouse', data: mouseData },
-      { name: 'DNA', data: dnaData },
-      { name: 'Clinvar', data: clinvarData },
-    ];
+    // get Clinvar data
+    fetchData('nanbyodata_get_variant_by_nando_id').then((clinvarData) => {
+      makeClinvar(clinvarData);
+      datasets.find((d) => d.name === 'Clinvar').data = clinvarData;
+      checkAndLogDatasets();
+    });
 
-    downloadDatasets(nandoId, datasets);
-
-    await Promise.all([
-      makeHeader(entryData),
-      makeExternalLinks(entryData),
-      makeAlternativeName(entryData),
-      makeInheritanceUris(entryData),
-      makeLinksList(entryData),
-      checkSummaryData(entryData),
-      makeDiseaseDefinition(entryData),
-      makeCausalGene(causalGeneData),
-      makeGeneticTesting(geneticTestingData),
-      makePhenotypes(phenotypesData),
-      makeBioResource(cellData, mouseData, dnaData),
-      makeVariant(clinvarData, mgendData, entryData),
-    ]);
-
-    selectedItem();
-
-    if (window.location.hash) {
-      const hash = window.location.hash;
-      const hashId = hash.replace('#', '');
-      switchingDisplayContents(hashId, entryData);
-    } else {
-      switchingDisplayContents('overview', entryData);
-    }
+    // TODO: get MGenD data (no api endpoint yet)
+    // fetchData('nanbyodata_get_mgend_by_nando_id').then((mgendData) => {
+    //   makeMgend(mgendData);
+    //   datasets.find((d) => d.name === 'MGenD').data = mgendData;
+    //   checkAndLogDatasets();
+    // });
   } catch (error) {
-    console.error('error:', error);
+    console.error('Error:', error);
   }
 })();
+
+function checkAndLogDatasets() {
+  if (datasets.every((dataset) => dataset.data !== null)) {
+    downloadDatasets(nandoId, datasets);
+    document.querySelector(
+      '.summary-download > .open-popup-btn'
+    ).disabled = false;
+  }
+}
 
 function makeHeader(entryData) {
   const refNandoId = document.getElementById('temp-nando-id');
@@ -321,13 +370,6 @@ function makeLinksList(entryData) {
 }
 
 export function checkSummaryData(entryData) {
-  const items = [
-    '.causal-genes',
-    '.genetic-testing',
-    '.phenotypes',
-    '.bio-resource',
-    '.variant',
-  ];
   const summaryWrapper = document.querySelector('.summary-wrapper');
   const summaryNav = document.querySelector('.nav-link.overview');
   const diseaseDefinition = document.getElementById('temp-disease-definition');
@@ -348,14 +390,6 @@ export function checkSummaryData(entryData) {
       summaryWrapper.style = 'display: none;';
       summaryNav.style = 'display: none;';
       navBorderTop.style = 'border-top: none;';
-      for (const item of items) {
-        const cleanedItem = item.replace(/^\./, '');
-        const element = document.querySelector(item);
-        if (element) {
-          switchingDisplayContents(cleanedItem, entryData);
-          break;
-        }
-      }
       if (diseaseDefinition) {
         summaryNav.style = 'display: block;';
         navBorderTop.style = 'border-top: block;';
@@ -429,12 +463,74 @@ function makeDiseaseDefinition(entryData) {
   }
 }
 
-function selectedItem() {
-  const links = document.querySelectorAll('#temp-side-navigation .nav-link');
-  links.forEach((link) => {
-    link.addEventListener('click', () => {
-      links.forEach((l) => l.classList.remove('selected'));
-      link.classList.add('selected');
-    });
-  });
+function updateOverviewLinkAndContentDisplay() {
+  const navLink = document.querySelector('.nav-link.overview');
+  const loadingSpinner = navLink.querySelector('.loading-spinner');
+
+  if (document.querySelector('.summary-wrapper').style.display === 'none') {
+    loadingSpinner.style.display = 'none';
+  } else {
+    navLink.style.cursor = 'pointer';
+    navLink.classList.remove('-disabled');
+  }
+  loadingSpinner.style.display = 'none';
+}
+
+function trySwitchingContent(hash, retries = 0) {
+  const maxRetries = 10;
+  let found = false;
+
+  const items = [
+    'overview',
+    'causal-genes',
+    'genetic-testing',
+    'phenotypes',
+    'bio-resource-cell',
+    'bio-resource-mouse',
+    'bio-resource-dna',
+    'variant-clinvar',
+    'variant-mgend',
+  ];
+
+  if (!items.includes(hash)) {
+    window.location.hash = '';
+    window.location.reload();
+    return;
+  }
+
+  let modifiedHash = hash;
+  switch (hash) {
+    case 'bio-resource-cell':
+    case 'bio-resource-mouse':
+    case 'bio-resource-dna':
+      modifiedHash = hash.substring('bio-resource-'.length);
+      break;
+    case 'variant-clinvar':
+    case 'variant-mgend':
+      modifiedHash = hash.substring('variant-'.length);
+      break;
+  }
+
+  const element = document.querySelector(`.${modifiedHash}`);
+  if (element && !element.classList.contains('-disabled')) found = true;
+
+  const alreadySelected = document.querySelector('.nav-link.selected');
+
+  if (found && (!alreadySelected || alreadySelected === element)) {
+    element.classList.add('selected');
+    switchingDisplayContents(hash);
+    document.getElementById('content').style.display = 'block';
+  } else if (!found && retries < maxRetries) {
+    console.log('No hash item found, retrying...');
+    setTimeout(() => {
+      trySwitchingContent(hash, retries + 1);
+    }, 3000);
+  } else {
+    if (alreadySelected) {
+      return;
+    } else {
+      window.location.hash = '';
+      window.location.reload();
+    }
+  }
 }
