@@ -1436,6 +1436,92 @@ header.search-area .intro-text .keyword a {
   display: block;
 }
 
+/* style.css */
+.suggest-container {
+  width: 690px;
+  position: relative;
+}
+
+.suggest-input {
+  width: 100%;
+  border-radius: 30px;
+  padding: 10px 26px;
+  font-size: var(--font-size-medium);
+  font-family: Verdana;
+  background-color: #fff;
+  border: 1px solid #dfe1e5;
+  box-sizing: border-box;
+}
+
+.suggest-input:focus {
+  outline: none;
+}
+
+.suggest-box {
+  position: absolute;
+  width: 100%;
+  box-sizing: border-box;
+  top: 100%;
+  margin-top: -2px;
+  border: 1px solid #dfe1e5;
+  border-top: none;
+  background-color: #fff;
+  border-radius: 0 0 5px 5px;
+  z-index: 9999;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0);
+}
+
+.suggest-box-open {
+  border-radius: 30px 30px 0 0;
+}
+
+.hit-count {
+  padding: 6px 12px;
+  font-size: 0.8rem;
+  font-weight: bold;
+  color: #757575;
+}
+
+.suggestion-item {
+  padding: 6px 12px;
+  cursor: pointer;
+  display: flex;
+  gap: 5px;
+  font-family: Verdana;
+  font-size: 1rem;
+}
+
+.suggestion-item.selected {
+  background-color: #34508a; /* 選択時の背景色を設定 */
+  color: #212529; /* 選択時のテキスト色を調整 */
+}
+.suggestion-item.selected .label-id {
+  color: #fff;
+}
+.suggestion-item.selected .main-name {
+  color: #f2d2d7;
+}
+.suggestion-item.selected .synonyms {
+  color: #fff;
+}
+
+.main-name {
+  color: #3777b5;
+}
+
+.synonyms {
+  color: #000;
+}
+
+.suggestion-hint {
+  color: #f8516d;
+}
+
+.highlight {
+  font-weight: bold;
+  background-color: yellow;
+}
+
 /* -----------------------------------
 Project
 ----------------------------------- */
