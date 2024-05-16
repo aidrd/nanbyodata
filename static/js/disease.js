@@ -541,7 +541,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const inputBoxNanbyo = document.getElementById('inputBoxNanbyo');
 
   inputBoxNanbyo.addEventListener('input', () => {
-    keywordSuggest('inputBoxNanbyo', '/static/tsv/nando_sample.tsv', {
+    keywordSuggest('inputBoxNanbyo', '/static/tsv/NANDO.tsv', {
       api_url: 'http://localhost:5555/moshikashite_test_api?text=',
     });
   });
