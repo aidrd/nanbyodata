@@ -16,6 +16,7 @@ import {
 } from './diseaseContent.js';
 import { switchingDisplayContents } from './diseaseSideNavigation.js';
 import { setLangChange } from './setLangChange.js';
+import { keywordSuggest } from './keywordSuggest.js';
 
 // // get NANDO ID
 const pathname = window.location.pathname;
@@ -539,3 +540,19 @@ function trySwitchingContent(hash, retries = 0) {
     }
   }
 }
+
+// keyword suggest
+document.addEventListener('DOMContentLoaded', () => {
+  const inputBoxNanbyo = document.getElementById('inputBoxNanbyo');
+
+  inputBoxNanbyo.addEventListener('input', () => {
+    keywordSuggest('inputBoxNanbyo', '/static/tsv/nando_sample.tsv', {
+      api_url: 'http://localhost:5555/moshikashite_test_api?text=',
+    });
+  });
+
+  document.addEventListener('selectedLabel', function (event) {
+    const labelInfo = event.detail.labelInfo;
+    console.log('object', labelInfo);
+  });
+});
