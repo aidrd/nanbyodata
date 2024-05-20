@@ -1489,22 +1489,26 @@ header.search-area .intro-text .keyword a {
   padding: 6px 12px;
   cursor: pointer;
   display: flex;
-  gap: 5px;
+  gap: 25px;
   font-size: 1rem;
   line-height: 1.6;
 }
 
-.suggestion-item.selected {
-  background-color: #34508a; /* 選択時の背景色を設定 */
-  color: #212529; /* 選択時のテキスト色を調整 */
+.label-container {
+  align-content: center;
 }
-.suggestion-item.selected .label-id {
+
+.suggestion-item.-selected {
+  background-color: #34508a;
+  color: #212529;
+}
+.suggestion-item.-selected .label-id {
   color: #fff;
 }
-.suggestion-item.selected .main-name {
+.suggestion-item.-selected .main-name {
   color: #f2d2d7;
 }
-.suggestion-item.selected .synonyms {
+.suggestion-item.-selected .synonyms {
   color: #fff;
 }
 
@@ -1522,7 +1526,6 @@ header.search-area .intro-text .keyword a {
 
 .highlight {
   font-weight: bold;
-  background-color: yellow;
 }
 
 /* -----------------------------------
