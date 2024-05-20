@@ -57,9 +57,16 @@
               <img class="imgtitle" src="/static/img/NanbyoData_black_w.svg">
             </a>
           </h1>
+          {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
           <div class="suggest-container">
             <input type="text" id="inputBoxNanbyo" class="suggest-input" autocomplete="off" placeholder="難病名を入力">
           </div>
+          {% else %}
+          <div class="suggest-container">
+            <input type="text" id="inputBoxNanbyo" class="suggest-input" autocomplete="off"
+              placeholder="Type in disease name">
+          </div>
+          {% endif %}
           <!-- <div class="intro-text" id="intro-text_head">
             <div class="search" id="search_head">
               <div id="blank_head"></div>
