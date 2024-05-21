@@ -31,8 +31,8 @@
 
   <!-- TokenInput -->
   <script type="text/javascript" src="/static/js/jquery-3.3.1.min.js"></script>
-  <script type="text/javascript" src="/static/js/jquery.tokeninput.js"></script>
-  <script type="text/javascript" src="/static/js/tokeninput_disease.js"></script>
+  <!-- <script type="text/javascript" src="/static/js/jquery.tokeninput.js"></script> -->
+  <!-- <script type="text/javascript" src="/static/js/tokeninput_disease.js"></script> -->
 
   <script src="https://cdn.jsdelivr.net/npm/@webcomponents/webcomponentsjs@1.3.0/webcomponents-loader.js"
     crossorigin></script>
@@ -57,21 +57,18 @@
               <img class="imgtitle" src="/static/img/NanbyoData_black_w.svg">
             </a>
           </h1>
-          {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
-          <div class="suggest-container">
-            <input type="text" id="inputBoxNanbyo" class="suggest-input" autocomplete="off" placeholder="難病名を入力">
-          </div>
-          {% else %}
-          <div class="suggest-container">
-            <input type="text" id="inputBoxNanbyo" class="suggest-input" autocomplete="off"
-              placeholder="Type in disease name">
-          </div>
-          {% endif %}
-          <!-- <div class="intro-text" id="intro-text_head">
-            <div class="search" id="search_head">
-              <div id="blank_head"></div>
+          <div class="disease-smart-text-box">
+            {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
+            <div class="smart-text-box-container">
+              <input type="text" id="NANDO" class="smart-text-box-input" autocomplete="off" placeholder="難病名を入力">
             </div>
-          </div> -->
+            {% else %}
+            <div class="smart-text-box-container">
+              <input type="text" id="NANDO" class="smart-text-box-input" autocomplete="off"
+                placeholder="Type in disease name">
+            </div>
+            {% endif %}
+          </div>
         </div>
         <div class="navbar-right">
           <div class="rigth-wrapper">
