@@ -1,6 +1,5 @@
 import { navToggle } from './navigation.js';
 import { focusInput } from './focusInput.js';
-import { changePlaceholder } from './changePlaceholder.js';
 import { popup } from './popup.js';
 import { breadcrumb } from './breadcrumb.js';
 import { downloadDatasets } from './download.js';
@@ -16,7 +15,7 @@ import {
 } from './diseaseContent.js';
 import { switchingDisplayContents } from './diseaseSideNavigation.js';
 import { setLangChange } from './setLangChange.js';
-import { keywordSuggest } from './keywordSuggest.js';
+import { smartTextBox } from './smart_text_box.js';
 
 // // get NANDO ID
 const pathname = window.location.pathname;
@@ -29,7 +28,6 @@ const timestamp = Date.now();
 // external functions
 navToggle();
 focusInput();
-changePlaceholder();
 popup();
 breadcrumb(nandoId);
 setLangChange();
@@ -541,18 +539,13 @@ function trySwitchingContent(hash, retries = 0) {
   }
 }
 
-// keyword suggest
-document.addEventListener('DOMContentLoaded', () => {
-  const inputBoxNanbyo = document.getElementById('inputBoxNanbyo');
+// smart text box
 
-  inputBoxNanbyo.addEventListener('input', () => {
-    keywordSuggest('inputBoxNanbyo', '/static/tsv/NANDO.tsv', {
-      api_url: 'http://localhost:5555/moshikashite_test_api?text=',
-    });
-  });
+smartTextBox('NANDO', '/static/tsv/NANDO.tsv', {
+  api_url: '',
+});
 
-  document.addEventListener('selectedLabel', function (event) {
-    const labelInfo = event.detail.labelInfo;
-    console.log('object', labelInfo);
-  });
+document.addEventListener('selectedLabel', function (event) {
+  const labelInfo = event.detail.labelInfo;
+  console.log('object', labelInfo);
 });
