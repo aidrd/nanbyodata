@@ -5,7 +5,7 @@ FROM python:3.8
 WORKDIR /app
 
 # Pipfileをコピー
-COPY Pipfile Pipfile.lock /app/
+COPY Pipfile /app/
 
 # pipenvをインストールし、Pipfileに基づいて依存関係をインストール
 RUN pip install pipenv && \
