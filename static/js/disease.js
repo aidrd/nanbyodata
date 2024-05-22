@@ -547,5 +547,5 @@ smartTextBox('NANDO', '/static/tsv/NANDO.tsv', {
 
 document.addEventListener('selectedLabel', function (event) {
   const labelInfo = event.detail.labelInfo;
-  console.log('object', labelInfo);
+  window.location.href = `${location.origin}/disease/${labelInfo.ID}`;
 });
