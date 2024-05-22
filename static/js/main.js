@@ -12,12 +12,13 @@ if (window.location.pathname === '/epidemiology') {
 }
 
 // smart text box
+if (window.location.pathname === '/') {
+  smartTextBox('NANDO', '/static/tsv/NANDO.tsv', {
+    api_url: '',
+  });
 
-smartTextBox('NANDO', '/static/tsv/NANDO.tsv', {
-  api_url: '',
-});
-
-document.addEventListener('selectedLabel', function (event) {
-  const labelInfo = event.detail.labelInfo;
-  console.log('object', labelInfo);
-});
+  document.addEventListener('selectedLabel', function (event) {
+    const labelInfo = event.detail.labelInfo;
+    window.location.href = `${location.origin}/disease/${labelInfo.ID}`;
+  });
+}
