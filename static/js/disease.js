@@ -536,7 +536,7 @@ function trySwitchingContent(hash, retries = 0) {
 
 // smart text box
 
-smartTextBox('NANDO', '/static/tsv/NANDO.tsv', {
+smartTextBox('NANDO', '/static/tsv/NANDO_20240516.tsv', {
   api_url: '',
 });
 
