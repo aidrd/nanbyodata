@@ -13,7 +13,7 @@ if (window.location.pathname === '/epidemiology') {
 
 // smart text box
 if (window.location.pathname === '/') {
-  smartTextBox('NANDO', '/static/tsv/NANDO.tsv', {
+  smartTextBox('NANDO', '/static/tsv/NANDO_20240516.tsv', {
     api_url: '',
   });
 
