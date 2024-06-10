@@ -38,8 +38,8 @@
 
   <!-- TokenInput -->
   <script type="text/javascript" src="/static/js/jquery-3.6.0.min.js"></script>
-  <script type="text/javascript" src="/static/js/jquery.tokeninput.js"></script>
-  <script type="text/javascript" src="/static/js/tokeninput.js"></script>
+  <!-- <script type="text/javascript" src="/static/js/jquery.tokeninput.js"></script>
+  <script type="text/javascript" src="/static/js/tokeninput.js"></script> -->
 
   <!-- js -->
   <script type="text/javascript" src="/static/js/index.js" defer></script>
@@ -55,6 +55,18 @@
     <div class="page-layout">
       <header class="search-area">
         <div class="intro-text">
+          <div class="top-smart-text-box">
+            {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
+            <div class="smart-text-box-container">
+              <input type="text" id="NANDO" class="smart-text-box-input" autocomplete="off" placeholder="難病名を入力">
+            </div>
+            {% else %}
+            <div class="smart-text-box-container">
+              <input type="text" id="NANDO" class="smart-text-box-input" autocomplete="off"
+                placeholder="Type in disease name">
+            </div>
+            {% endif %}
+          </div>
           <p>ex&#41;</p>
           {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
           <div class="keyword"><a href="/disease/NANDO:2200053">ユーイング肉腫</a></div>
@@ -118,17 +130,18 @@
               <img src="/static/img/img_data_1.png" class="card-img-top" alt="難病オントロジーimg">
               <div class="card-body">
                 <img src="/static/img/icon_2_1.svg" class="illust" alt="難病オントロジーillust">
-		{% if get_locale() == "ja" or get_locale() == "ja_JP" %}
+                {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
                 <h3 class="card-title">難病オントロジー</h3>
                 <p class="card-text">難病オントロジー（Nanbyo Disease Ontology,
                   NANDO）は、難病に関する語彙、難病同士の関係、難病と他疾患リソースとの関連などを体系化したものです。難病オントロジーに基づき難病関連データを記述することにより、コンピュータを用いた処理やデータ共有が容易になります。
                 </p>
-		{% else %}
+                {% else %}
                 <h3 class="card-title">Nanbyo Disease Ontology</h3>
                 <p class="card-text">
-Nanbyo Disease Ontology (NANDO) with over 2700 terms which represent individual Nanbyo diseases in Japan.
+                  Nanbyo Disease Ontology (NANDO) with over 2700 terms which represent individual Nanbyo diseases in
+                  Japan.
                 </p>
-		{% endif %}
+                {% endif %}
                 <button type="button" class="btn btn-primary" data-toggle="modal"
                   data-target="#demoNormalModalA">Download</button>
               </div>
@@ -138,13 +151,13 @@ Nanbyo Disease Ontology (NANDO) with over 2700 terms which represent individual 
               <img src="/static/img/img_data_2.png" class="card-img-top" alt="難病ー遺伝子関連データimg">
               <div class="card-body">
                 <img src="/static/img/icon_2_2.svg" class="illust" alt="難病ー遺伝子関連データillust">
-		{% if get_locale() == "ja" or get_locale() == "ja_JP" %}
+                {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
                 <h3 class="card-title">難病ー遺伝子関連データ</h3>
                 <p class="card-text">各難病について、疾患原因として報告されている遺伝子を関連付けたデータを提供します。</p>
-		{% else %}
+                {% else %}
                 <h3 class="card-title">Nanbyo-Gene Associations</h3>
                 <p class="card-text">We provide the causative genes for each Nanbyo disease.</p>
-		{% endif %}
+                {% endif %}
                 <button type="button" class="btn btn-primary" data-toggle="modal"
                   data-target="#demoNormalModalB">Download</button>
               </div>
@@ -154,13 +167,14 @@ Nanbyo Disease Ontology (NANDO) with over 2700 terms which represent individual 
               <img src="/static/img/img_data_3.png" class="card-img-top" alt="難病ー症状関連データimg">
               <div class="card-body">
                 <img src="/static/img/icon_2_3.svg" class="illust" alt="難病ー症状関連データillust">
-		{% if get_locale() == "ja" or get_locale() == "ja_JP" %}
+                {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
                 <h3 class="card-title">難病ー症状関連データ</h3>
                 <p class="card-text">各難病について、報告されている症状をHuman Phenotype Ontology（HPO）を用いて関連付けたデータを提供します。</p>
-		{% else %}
+                {% else %}
                 <h3 class="card-title">Nanbyo-Phenotype Associations</h3>
-                <p class="card-text">We provide the phenotypes for each Nanbyo disease using the Human Phenotype Ontology (HPO).</p>
-		{% endif %}
+                <p class="card-text">We provide the phenotypes for each Nanbyo disease using the Human Phenotype
+                  Ontology (HPO).</p>
+                {% endif %}
                 <button type="button" class="btn btn-primary" data-toggle="modal"
                   data-target="#demoNormalModalC">Download</button>
               </div>
@@ -321,6 +335,7 @@ Nanbyo Disease Ontology (NANDO) with over 2700 terms which represent individual 
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
     integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
     </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
   <script type="module" src="/static/js/main.js"></script>
 </body>
 
