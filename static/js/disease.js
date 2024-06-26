@@ -89,14 +89,14 @@ const datasets = [
     });
 
     // get Causal Genes data
-    fetchData('nanbyodata_get_gene_by_nando_id').then((causalGeneData) => {
+    fetchData('nanbyodata_get_causal_gene_by_nando_id').then((causalGeneData) => {
       makeCausalGene(causalGeneData);
       datasets.find((d) => d.name === 'Causal Genes').data = causalGeneData;
       checkAndLogDatasets();
     });
 
     // get Genetic Testing data
-    fetchData('nanbyodata_get_gene_test').then((geneticTestingData) => {
+    fetchData('nanbyodata_get_genetic_test_by_nando_id').then((geneticTestingData) => {
       makeGeneticTesting(geneticTestingData);
       datasets.find((d) => d.name === 'Genetic Testing').data =
         geneticTestingData;
