@@ -42,8 +42,7 @@ const datasets = [
   { name: 'Mouse', data: null },
   { name: 'DNA', data: null },
   { name: 'Clinvar', data: null },
-  // add MGenD data
-  // { name: 'Mgend', data: null },
+  { name: 'MGeND', data: null },
 ];
 
 (async () => {
@@ -89,19 +88,23 @@ const datasets = [
     });
 
     // get Causal Genes data
-    fetchData('nanbyodata_get_causal_gene_by_nando_id').then((causalGeneData) => {
-      makeCausalGene(causalGeneData);
-      datasets.find((d) => d.name === 'Causal Genes').data = causalGeneData;
-      checkAndLogDatasets();
-    });
+    fetchData('nanbyodata_get_causal_gene_by_nando_id').then(
+      (causalGeneData) => {
+        makeCausalGene(causalGeneData);
+        datasets.find((d) => d.name === 'Causal Genes').data = causalGeneData;
+        checkAndLogDatasets();
+      }
+    );
 
     // get Genetic Testing data
-    fetchData('nanbyodata_get_genetic_test_by_nando_id').then((geneticTestingData) => {
-      makeGeneticTesting(geneticTestingData);
-      datasets.find((d) => d.name === 'Genetic Testing').data =
-        geneticTestingData;
-      checkAndLogDatasets();
-    });
+    fetchData('nanbyodata_get_genetic_test_by_nando_id').then(
+      (geneticTestingData) => {
+        makeGeneticTesting(geneticTestingData);
+        datasets.find((d) => d.name === 'Genetic Testing').data =
+          geneticTestingData;
+        checkAndLogDatasets();
+      }
+    );
 
     // get Phenotypes data
     fetchData('nanbyodata_get_hpo_data_by_nando_id').then((phenotypesData) => {
@@ -138,18 +141,20 @@ const datasets = [
     );
 
     // get Clinvar data
-    fetchData('nanbyodata_get_variant_by_nando_id').then((clinvarData) => {
-      makeClinvar(clinvarData);
-      datasets.find((d) => d.name === 'Clinvar').data = clinvarData;
+    fetchData('nanbyodata_get_clinvar_variant_by_nando_id').then(
+      (clinvarData) => {
+        makeClinvar(clinvarData);
+        datasets.find((d) => d.name === 'Clinvar').data = clinvarData;
+        checkAndLogDatasets();
+      }
+    );
+
+    // get MGenD data
+    fetchData('nanbyodata_get_mgend_variant_by_nando_id').then((mgendData) => {
+      makeMgend(mgendData);
+      datasets.find((d) => d.name === 'MGeND').data = mgendData;
       checkAndLogDatasets();
     });
-
-    // TODO: get MGenD data (no api endpoint yet)
-    // fetchData('nanbyodata_get_mgend_by_nando_id').then((mgendData) => {
-    //   makeMgend(mgendData);
-    //   datasets.find((d) => d.name === 'MGenD').data = mgendData;
-    //   checkAndLogDatasets();
-    // });
   } catch (error) {
     console.error('Error:', error);
   }
