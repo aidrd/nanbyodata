@@ -8,6 +8,7 @@ import {
   bioResourceMouseColumns,
   bioResourceDnaColumns,
   variantClinvarColumns,
+  variantMgendColumns,
   convertColumntoText,
 } from './paginationColumns.js';
 
@@ -182,7 +183,7 @@ export function makeMgend(mgendData) {
 
   const items = {
     id: 'mgend',
-    columns: '',
+    columns: convertColumntoText(variantMgendColumns),
     data: mgendData,
     object: mgendDataset.dataObject,
   };

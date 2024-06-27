@@ -128,6 +128,36 @@ export const variantClinvarColumns = [
   { id: 'mondo_id', label: 'MONDO_ID', link: 'mondo', target: '_bkank' },
 ];
 
+export const variantMgendColumns = [
+  { id: 'hgvs', label: 'HGVS' },
+  { id: 'significance', label: 'Interpretation', rowspan: 'true' },
+  { id: 'vtype', label: 'Variant type', rowspan: 'true' },
+  { id: 'ch', label: 'Chr', rowspan: 'true' },
+  { id: 'position', label: 'Position', rowspan: 'true' },
+  { id: 'genelabel', label: 'Gene_symbol', rowspan: 'true' },
+  {
+    id: 'hgncID',
+    label: 'HGNC ID',
+    link: 'hgncurl',
+    target: '_blank',
+    rowspan: 'true',
+  },
+  {
+    id: 'omim_id',
+    label: 'OMIM ID',
+    link: 'omim_url',
+    target: '_blank',
+    rowspan: 'true',
+  },
+  {
+    id: 'mondo_label',
+    label: 'MONDO',
+    link: 'mondo_url',
+    target: '_blank',
+    rowspan: 'true',
+  },
+];
+
 // Functions
 /**
  * Convert column to text formats.

@@ -17,9 +17,10 @@ export const drawEpidemiologyTable = () => {
  * @param {string} columns - The columns configuration for the table.
  */
 function updateElementWithTable(element, columns) {
+  const url = '/sparqlist/api/nanbyodata_get_stats_on_patient_number';
   element.innerHTML = `
     <togostanza-pagination-table
-      data-url="/sparqlist/api/nanbyodata_get_stats_on_patient_number"
+      data-url="${url}"
       data-type="json"
       custom-css-url="https://togostanza.github.io/togostanza-themes/contrib/nanbyodata.css"
       fixed-columns="1"
