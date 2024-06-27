@@ -8,11 +8,11 @@
       function () {
         var type = arguments[0];
         if (type == 'information') {
-          return 'https://nanbyodata.jp/information.cgi';
+          return '/information.cgi';
         } else if (type == 'link') {
-          return 'https://nanbyodata.jp/disease/';
+          return '/disease/';
         } else {
-          return 'https://nanbyodata.jp/tokeninput.cgi';
+          return '/tokeninput.cgi';
         }
       },
       { theme: 'facebook', placeholder: '難病名を入力' }

@@ -50,7 +50,7 @@ const datasets = [
   try {
     const hash = window.location.hash.replace('#', '');
     async function fetchData(apiEndpoint) {
-      const url = `https://nanbyodata.jp/sparqlist/api/${apiEndpoint}?nando_id=${nandoId}&timestamp=${timestamp}`;
+      const url = `/sparqlist/api/${apiEndpoint}?nando_id=${nandoId}&timestamp=${timestamp}`;
       try {
         const response = await fetch(url);
         if (!response.ok) {

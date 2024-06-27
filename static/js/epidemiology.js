@@ -19,7 +19,7 @@ export const drawEpidemiologyTable = () => {
 function updateElementWithTable(element, columns) {
   element.innerHTML = `
     <togostanza-pagination-table
-      data-url="https://nanbyodata.jp/sparqlist/api/nanbyodata_get_stats_on_patient_number"
+      data-url="/sparqlist/api/nanbyodata_get_stats_on_patient_number"
       data-type="json"
       custom-css-url="https://togostanza.github.io/togostanza-themes/contrib/nanbyodata.css"
       fixed-columns="1"

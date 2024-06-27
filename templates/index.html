@@ -118,17 +118,18 @@
               <img src="/static/img/img_data_1.png" class="card-img-top" alt="難病オントロジーimg">
               <div class="card-body">
                 <img src="/static/img/icon_2_1.svg" class="illust" alt="難病オントロジーillust">
-		{% if get_locale() == "ja" or get_locale() == "ja_JP" %}
+                {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
                 <h3 class="card-title">難病オントロジー</h3>
                 <p class="card-text">難病オントロジー（Nanbyo Disease Ontology,
                   NANDO）は、難病に関する語彙、難病同士の関係、難病と他疾患リソースとの関連などを体系化したものです。難病オントロジーに基づき難病関連データを記述することにより、コンピュータを用いた処理やデータ共有が容易になります。
                 </p>
-		{% else %}
+                {% else %}
                 <h3 class="card-title">Nanbyo Disease Ontology</h3>
                 <p class="card-text">
-Nanbyo Disease Ontology (NANDO) with over 2700 terms which represent individual Nanbyo diseases in Japan.
+                  Nanbyo Disease Ontology (NANDO) with over 2700 terms which represent individual Nanbyo diseases in
+                  Japan.
                 </p>
-		{% endif %}
+                {% endif %}
                 <button type="button" class="btn btn-primary" data-toggle="modal"
                   data-target="#demoNormalModalA">Download</button>
               </div>
@@ -138,13 +139,13 @@ Nanbyo Disease Ontology (NANDO) with over 2700 terms which represent individual 
               <img src="/static/img/img_data_2.png" class="card-img-top" alt="難病ー遺伝子関連データimg">
               <div class="card-body">
                 <img src="/static/img/icon_2_2.svg" class="illust" alt="難病ー遺伝子関連データillust">
-		{% if get_locale() == "ja" or get_locale() == "ja_JP" %}
+                {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
                 <h3 class="card-title">難病ー遺伝子関連データ</h3>
                 <p class="card-text">各難病について、疾患原因として報告されている遺伝子を関連付けたデータを提供します。</p>
-		{% else %}
+                {% else %}
                 <h3 class="card-title">Nanbyo-Gene Associations</h3>
                 <p class="card-text">We provide the causative genes for each Nanbyo disease.</p>
-		{% endif %}
+                {% endif %}
                 <button type="button" class="btn btn-primary" data-toggle="modal"
                   data-target="#demoNormalModalB">Download</button>
               </div>
@@ -154,13 +155,14 @@ Nanbyo Disease Ontology (NANDO) with over 2700 terms which represent individual 
               <img src="/static/img/img_data_3.png" class="card-img-top" alt="難病ー症状関連データimg">
               <div class="card-body">
                 <img src="/static/img/icon_2_3.svg" class="illust" alt="難病ー症状関連データillust">
-		{% if get_locale() == "ja" or get_locale() == "ja_JP" %}
+                {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
                 <h3 class="card-title">難病ー症状関連データ</h3>
                 <p class="card-text">各難病について、報告されている症状をHuman Phenotype Ontology（HPO）を用いて関連付けたデータを提供します。</p>
-		{% else %}
+                {% else %}
                 <h3 class="card-title">Nanbyo-Phenotype Associations</h3>
-                <p class="card-text">We provide the phenotypes for each Nanbyo disease using the Human Phenotype Ontology (HPO).</p>
-		{% endif %}
+                <p class="card-text">We provide the phenotypes for each Nanbyo disease using the Human Phenotype
+                  Ontology (HPO).</p>
+                {% endif %}
                 <button type="button" class="btn btn-primary" data-toggle="modal"
                   data-target="#demoNormalModalC">Download</button>
               </div>
@@ -195,19 +197,19 @@ Nanbyo Disease Ontology (NANDO) with over 2700 terms which represent individual 
               </tr>
               <tr>
                 <td>2023-11-28</td>
-                <td><a href="https://nanbyodata.jp/ontology/current_release/nando.ttl">Turtle</a></td>
+                <td><a href="/ontology/current_release/nando.ttl">Turtle</a></td>
                 <td>2.7MB</td>
                 <td>2023-11-28</td>
               </tr>
               <tr>
                 <td>2023-11-28</td>
-                <td><a href="https://nanbyodata.jp/ontology/current_release/nando.rdf">RDF/XML</a></td>
+                <td><a href="/ontology/current_release/nando.rdf">RDF/XML</a></td>
                 <td>3.6MB</td>
                 <td>2023-11-28</td>
               </tr>
               <tr>
                 <td>2023-11-28</td>
-                <td><a href="https://nanbyodata.jp/ontology/current_release/nando.xlsx">Excel(.xlsx)</a></td>
+                <td><a href="/ontology/current_release/nando.xlsx">Excel(.xlsx)</a></td>
                 <td>265KB</td>
                 <td>2023-11-28</td>
               </tr>
@@ -242,13 +244,13 @@ Nanbyo Disease Ontology (NANDO) with over 2700 terms which represent individual 
               </tr>
               <tr>
                 <td>1.0.1</td>
-                <td><a href="https://nanbyodata.jp/annotation/nanbyo-gene-associations.json">JSON</a></td>
+                <td><a href="/annotation/nanbyo-gene-associations.json">JSON</a></td>
                 <td>75KB</td>
                 <td>2021-08-05</td>
               </tr>
               <tr>
                 <td>1.0.1</td>
-                <td><a href="https://nanbyodata.jp/annotation/nanbyo-gene-associations.tsv">TSV</a></td>
+                <td><a href="/annotation/nanbyo-gene-associations.tsv">TSV</a></td>
                 <td>69KB</td>
                 <td>2021-08-05</td>
               </tr>
@@ -283,13 +285,13 @@ Nanbyo Disease Ontology (NANDO) with over 2700 terms which represent individual 
               </tr>
               <tr>
                 <td>1.0.1</td>
-                <td><a href="https://nanbyodata.jp/annotation/nanbyo-phenotype-associations.json">JSON</a></td>
+                <td><a href="/annotation/nanbyo-phenotype-associations.json">JSON</a></td>
                 <td>942KB</td>
                 <td>2021-08-05</td>
               </tr>
               <tr>
                 <td>1.0.1</td>
-                <td><a href="https://nanbyodata.jp/annotation/nanbyo-phenotype-associations.tsv">TSV</a></td>
+                <td><a href="/annotation/nanbyo-phenotype-associations.tsv">TSV</a></td>
                 <td>1.3MB</td>
                 <td>2021-08-05</td>
               </tr>
