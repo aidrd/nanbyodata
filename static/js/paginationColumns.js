@@ -112,7 +112,7 @@ export const variantClinvarColumns = [
     id: 'Clinvar_id',
     label: 'Clinvar_ID',
     link: 'Clinvar_link',
-    target: '_bkank',
+    target: '_blank',
   },
   { id: 'title', label: 'HGVS' },
   { id: 'Interpretation', label: 'Interpretation' },
@@ -123,9 +123,21 @@ export const variantClinvarColumns = [
     id: 'MedGen_id',
     label: 'MedGen_ID',
     link: 'MedGen_link',
-    target: '_bkank',
+    target: '_blank',
   },
-  { id: 'mondo_id', label: 'MONDO_ID', link: 'mondo', target: '_bkank' },
+  { id: 'mondo_id', label: 'MONDO_ID', link: 'mondo', target: '_blank' },
+];
+
+export const variantMgendColumns = [
+  { id: 'hgvs', label: 'HGVS' },
+  { id: 'significance', label: 'Interpretation' },
+  { id: 'vtype', label: 'Variant type' },
+  { id: 'ch', label: 'Chr' },
+  { id: 'position', label: 'Position' },
+  { id: 'genelabel', label: 'Gene_symbol' },
+  { id: 'hgncID', label: 'HGNC ID', link: 'hgncurl', target: '_blank' },
+  { id: 'omim_id', label: 'OMIM ID', link: 'omim_url', target: '_blank' },
+  { id: 'mondo_label', label: 'MONDO', link: 'mondo_url', target: '_blank' },
 ];
 
 // Functions

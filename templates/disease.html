@@ -85,6 +85,9 @@
               <li class="nav-item">
                 <a class="nav-link" href="/about_nando">ABOUT</a>
               </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/api">API</a>
+              </li>
               <!--li class="nav-item">
                 <a class="nav-link" href="/datasets">DATASETS</a>
               </li-->
@@ -204,9 +207,9 @@
                   <li><a href="#variant" class="clinvar nav-link -disabled">ClinVar<span class="data-num"><span
                           class="loading-spinner -sidenav"></span></span></a>
                   </li>
-                  <!-- <li><a href="#variant" class="mgend nav-link -disabled">MGeND<span class="data-num"><span
+                  <li><a href="#variant" class="mgend nav-link -disabled">MGeND<span class="data-num"><span
                           class="loading-spinner -sidenav"></span></span></a>
-                  </li> -->
+                  </li>
                 </ul>
               </div>
             </li>
@@ -218,7 +221,6 @@
       <script type="module" src="https://togostanza.github.io/metastanza/pagination-table.js" async></script>
 
       <div id="content">
-        <!-- togostanza-nando_entry_v2 -->
         <main>
           <style>
             togostanza-pagination-table {
@@ -610,6 +612,8 @@
                 <small>
                   &nbsp;From&nbsp;
                   <a href="https://grch38.togovar.org/" target="_blank" rel="noopener noreferrer">TogoVar</a>
+                  ,&nbsp;
+                  <a href="https://mgend.ncgm.go.jp/" target="_blank" rel="noopener noreferrer">MGeND</a>
                 </small>
               </h4>
 
@@ -620,19 +624,17 @@
                 </label>
                 <div class="tab-content clinvar"></div>
 
-                <!-- <input type="radio" name="variant" class="tab-switch" id="variant-mgend" />
+                <input type="radio" name="variant" class="tab-switch" id="variant-mgend" />
                 <label class="tab-label variant-mgend" for="variant-mgend">
                   MGeND<span class="data-num"></span>
                 </label>
-                <div class="tab-content mgend"></div> -->
+                <div class="tab-content mgend"></div>
 
                 <span class="tab-label -flex"></span>
               </div>
             </div>
-
           </div>
         </main>
-        <!-- /togostanza-nando_entry_v2 -->
       </div>
     </div>
 

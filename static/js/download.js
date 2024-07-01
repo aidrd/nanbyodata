@@ -7,6 +7,7 @@ import {
   bioResourceMouseColumns,
   bioResourceDnaColumns,
   variantClinvarColumns,
+  variantMgendColumns,
 } from './paginationColumns.js';
 
 export const downloadDatasets = (nandoId, datasets) => {
@@ -20,48 +21,49 @@ export const downloadDatasets = (nandoId, datasets) => {
   }
 
   function prepareDatasets() {
-    const convertedDatasets = Object.values(datasets)
-      .map(({ name, data }) => {
-        switch (name) {
-          case 'Overview':
-            return { name, data };
-          case 'Causal Genes':
-            return { name, data: reconstructionData(causalGeneColumns, data) };
-          case 'Genetic Testing':
-            return {
-              name,
-              data: reconstructionData(geneticTestingColumns, data),
-            };
-          case 'Phenotypes':
-            const currentLang =
-              document.querySelector('.language-select').value;
-            const currentColumns =
-              currentLang === 'ja' ? phenotypesJaColumns : phenotypesEnColumns;
-            return { name, data: reconstructionData(currentColumns, data) };
-          case 'Cell':
-            return {
-              name,
-              data: reconstructionData(bioResourceCellColumns, data),
-            };
-          case 'Mouse':
-            return {
-              name,
-              data: reconstructionData(bioResourceMouseColumns, data),
-            };
-          case 'DNA':
-            return {
-              name,
-              data: reconstructionData(bioResourceDnaColumns, data),
-            };
-          case 'Clinvar':
-            return {
-              name,
-              data: reconstructionData(variantClinvarColumns, data),
-            };
-          case 'MGeND':
-            return;
-        }
-      })
+    const convertedDatasets = Object.values(datasets).map(({ name, data }) => {
+      switch (name) {
+        case 'Overview':
+          return { name, data };
+        case 'Causal Genes':
+          return { name, data: reconstructionData(causalGeneColumns, data) };
+        case 'Genetic Testing':
+          return {
+            name,
+            data: reconstructionData(geneticTestingColumns, data),
+          };
+        case 'Phenotypes':
+          const currentLang = document.querySelector('.language-select').value;
+          const currentColumns =
+            currentLang === 'ja' ? phenotypesJaColumns : phenotypesEnColumns;
+          return { name, data: reconstructionData(currentColumns, data) };
+        case 'Cell':
+          return {
+            name,
+            data: reconstructionData(bioResourceCellColumns, data),
+          };
+        case 'Mouse':
+          return {
+            name,
+            data: reconstructionData(bioResourceMouseColumns, data),
+          };
+        case 'DNA':
+          return {
+            name,
+            data: reconstructionData(bioResourceDnaColumns, data),
+          };
+        case 'Clinvar':
+          return {
+            name,
+            data: reconstructionData(variantClinvarColumns, data),
+          };
+        case 'MGeND':
+          return {
+            name,
+            data: reconstructionData(variantMgendColumns, data),
+          };
+      }
+    });
 
     return convertedDatasets;
   }
@@ -90,7 +92,7 @@ export const downloadDatasets = (nandoId, datasets) => {
       'Genetic Testing': [],
       Phenotypes: [],
       'Bio Resource': ['Cell', 'Mouse', 'DNA'],
-      Variant: ['Clinvar'],
+      Variant: ['Clinvar', 'MGeND'],
     };
     // 初期jsonData作成
     const jsonData = Object.fromEntries(
