@@ -11,5 +11,5 @@ services:
       - .:/app
     environment:
       - UWSGI_INI=uwsgi/uwsgi.ini
-      # [TODO] sparqlist uri, virtuoso EP? etc..
+      - BASE_URI=${BASE_URI:-https://nanbyodata.jp/}
     # [TODO] user $UID:$GID 
