@@ -1,14 +1,18 @@
 import { navToggle } from './navigation.js';
 import { focusInput } from './focusInput.js';
 import { setLangChange } from './setLangChange.js';
-import { drawEpidemiologyTable } from './epidemiology.js';
+import {
+  drawDesignatedIntractableDiseaseColumnsTable,
+  drawPediatricChronicSpecificDiseaseColumnsTable,
+} from './epidemiology.js';
 import { smartTextBox } from './smart_text_box.js';
 
 navToggle();
 focusInput();
 setLangChange();
 if (window.location.pathname === '/epidemiology') {
-  drawEpidemiologyTable();
+  drawDesignatedIntractableDiseaseColumnsTable();
+  drawPediatricChronicSpecificDiseaseColumnsTable();
 }
 
 // smart text box
