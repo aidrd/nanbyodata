@@ -1,5 +1,6 @@
 // Epidemiology
-export const epidemiologyJaColumns = [
+// 指定難病
+export const designatedIntractableDiseaseJaColumns = [
   { id: 'nando', label: 'NANDO ID' },
   { id: 'label', label: '疾患名', link: 's', target: '_blank' },
   { id: 'number', label: '告知番号', align: 'center' },
@@ -13,7 +14,7 @@ export const epidemiologyJaColumns = [
   { id: 'num_of_2022', label: '2022年', type: 'number' },
 ];
 
-export const epidemiologyEnColumns = [
+export const designatedIntractableDiseaseEnColumns = [
   { id: 'nando', label: 'NANDO ID' },
   { id: 'label_en', label: 'Disease name', link: 's', target: '_blank' },
   { id: 'number', label: 'Notification number', align: 'center' },
@@ -25,6 +26,27 @@ export const epidemiologyEnColumns = [
   { id: 'num_of_2020', label: '2020', type: 'number' },
   { id: 'num_of_2021', label: '2021', type: 'number' },
   { id: 'num_of_2022', label: '2022', type: 'number' },
+];
+
+// 小児慢性
+export const pediatricChronicSpecificDiseaseJaColumns = [
+  { id: 'nando', label: 'NANDO ID' },
+  { id: 'label', label: '疾患名', link: 's', target: '_blank' },
+  { id: 'number', label: '告知番号', align: 'center' },
+  { id: 'num_of_2015', label: '2015年', type: 'number' },
+  { id: 'num_of_2016', label: '2016年', type: 'number' },
+  { id: 'num_of_2017', label: '2017年', type: 'number' },
+  { id: 'num_of_2018', label: '2018年', type: 'number' },
+];
+
+export const pediatricChronicSpecificDiseaseEnColumns = [
+  { id: 'nando', label: 'NANDO ID' },
+  { id: 'label_en', label: 'Disease name', link: 's', target: '_blank' },
+  { id: 'number', label: 'Notification number', align: 'center' },
+  { id: 'num_of_2015', label: '2015', type: 'number' },
+  { id: 'num_of_2016', label: '2016', type: 'number' },
+  { id: 'num_of_2017', label: '2017', type: 'number' },
+  { id: 'num_of_2018', label: '2018', type: 'number' },
 ];
 
 // Disease
