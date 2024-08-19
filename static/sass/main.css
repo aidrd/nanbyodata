@@ -474,6 +474,8 @@ footer .container .footer__bottom .footer__lisence small:before {
   position: relative;
   padding-left: 15px;
   margin-bottom: 15px;
+  display: flex;
+  align-items: center;
 }
 .content-wrapper #content #data-wrapper .temp-title::before {
   content: "";
@@ -487,8 +489,6 @@ footer .container .footer__bottom .footer__lisence small:before {
   font-size: var(--font-size-base);
   padding: 0 5px;
   line-height: 1.5;
-  position: absolute;
-  margin-top: 6px;
   margin-left: 5px;
   min-width: 22px;
 }
