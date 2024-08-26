@@ -489,7 +489,7 @@ footer .container .footer__bottom .footer__lisence small:before {
   font-size: var(--font-size-base);
   padding: 0 5px;
   line-height: 1.5;
-  margin-left: 5px;
+  margin: 0 5px;
   min-width: 22px;
 }
 .content-wrapper #content #data-wrapper #temp-disease-definition .tab-content {
