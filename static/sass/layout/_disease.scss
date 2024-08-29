@@ -53,6 +53,8 @@
         position: relative;
         padding-left: 15px;
         margin-bottom: 15px;
+        display: flex;
+        align-items: center;
 
         &::before {
           content: '';
@@ -66,9 +68,7 @@
           font-size: var(--font-size-base);
           padding: 0 5px;
           line-height: 1.5;
-          position: absolute;
-          margin-top: 6px;
-          margin-left: 5px;
+          margin: 0 5px;
           min-width: 22px;
         }
       }

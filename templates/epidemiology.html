@@ -120,11 +120,33 @@
       </header>
       <div class="contents-wrapper">
         {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
-        <h3 class="content-title">指定難病：疾患別患者数</h3>
+        <h3 class="content-title">疾患別患者数</h3>
         {% else %}
-        <h3 class="content-title">Designated intractable disease: Number of patients for each disease</h3>
+        <h3 class="content-title">Number of patients for each disease</h3>
         {% endif %}
-        <div id="epidemiology-table"></div>
+        <div class="tab-wrap">
+          <input type="radio" name="disease-number" class="tab-switch" id="designated-intractable-disease" checked />
+          {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
+          <label class="tab-label" for="designated-intractable-disease">指定難病</label>
+          {% else %}
+          <label class="tab-label" for="designated-intractable-disease">Designated Intractable Diseases</label>
+          {% endif %}
+          <div class="tab-content designated-intractable-disease">
+            <div id="designated-intractable-disease-table"></div>
+          </div>
+
+          <input type="radio" name="disease-number" class="tab-switch" id="pediatric-chronic-specific-disease" />
+          {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
+          <label class="tab-label" for="pediatric-chronic-specific-disease">小児慢性特定疾病</label>
+          {% else %}
+          <label class="tab-label" for="pediatric-chronic-specific-disease">Specific Pediatric Chronic Diseases</label>
+          {% endif %}
+          <div class="tab-content pediatric-chronic-specific-disease">
+            <div id="pediatric-chronic-specific-disease-table"></div>
+          </div>
+
+          <span class="tab-label -flex"></span>
+        </div>
       </div>
     </div>
 
