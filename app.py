@@ -182,7 +182,7 @@ def make_selector_subclasses(onto, id_nando, next_term_id, index):
     return html_selector
 
 def get_overview(id_nando):
-    url = f'/sparqlist/api/nanbyodata_get_overview_by_nando_id?nando_id={id_nando}'
+    url = f'https://nanbyodata.jp/sparqlist/api/nanbyodata_get_overview_by_nando_id?nando_id={id_nando}'
     response = requests.get(url)
     overview = response.json()
     title = overview.get('label_ja') or overview.get('label_en', '')
