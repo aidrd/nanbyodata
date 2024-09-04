@@ -10,4 +10,15 @@ services:
     environment:
       - UWSGI_INI=uwsgi/uwsgi.ini
       - BASE_URI=${BASE_URI:-https://nanbyodata.jp/}
-    # [TODO] user $UID:$GID 
+  nginx:
+    container_name: nanbyodata-nginx
+    image: nginx:1.27.1
+    ports:
+      - ${NGINX_PORT:-8888}:80
+    volumes:
+      - ./nginx_for_dev.conf:/etc/nginx/nginx.conf:ro
+
+networks:
+  default:
+    name: nanbyodata_dev
+    external: true
