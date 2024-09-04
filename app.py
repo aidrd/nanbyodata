@@ -3,7 +3,6 @@
 from flask import Flask, session, render_template, request, redirect, url_for, jsonify, make_response, send_from_directory
 import os
 import re
-import MySQLdb
 import json
 import sys
 import datetime
@@ -14,7 +13,7 @@ import pronto
 from io import StringIO, BytesIO
 import csv
 # https://blog.capilano-fw.com/?p=398
-from flask_babel import gettext,Babel
+from flask_babel import Babel
 from flask_cors import CORS
 import markdown2
 import requests
@@ -24,10 +23,9 @@ app = Flask(__name__)
 CORS(app)
 
 app.secret_key = 'nanbyodata0824'
+app.config['BASE_URI'] = os.getenv('BASE_URI', 'https://nanbyodata.jp/')
 
 # https://github.com/shibacow/flask_babel_sample/blob/master/srv.py
-babel = Babel(app)
-@babel.localeselector
 def get_locale():
     if 'lang' not in session:
         session['lang'] = request.accept_languages.best_match(['ja', 'ja_JP', 'en'])
@@ -36,16 +34,13 @@ def get_locale():
     return session.get('lang', 'en')
 app.jinja_env.globals.update(get_locale=get_locale)
 
+# flask の　@babel.localeselector
+# https://stackoverflow.com/questions/75229322/flask-babel-get-locale-seems-to-be-not-working
+babel = Babel(app, locale_selector=get_locale)
+
 # debug
 app.debug = True
 
-#####
-# DB設定
-app.config.from_pyfile('config.cfg')
-db_sock = app.config['DBSOCK']
-db_name = app.config['DBNAME']
-db_user = app.config['DBUSER']
-db_pw   = app.config['DBPW']
 
 
 #####
@@ -137,10 +132,10 @@ def REST_API_disease(id_nando=""):
     if request.method == 'GET':
         breadcrumb_html = ''
         if get_locale() == "ja" or get_locale() == "ja_JP":
-            onto = pronto.Ontology('/opt/services/case/app/nanbyodata/ontology/nando.obo')
+            onto = pronto.Ontology('./ontology/nando.obo')
             breadcrumb_html = '<section><h3 class="breadcrumb-title">難病</h3>'
         else:
-            onto = pronto.Ontology('/opt/services/case/app/nanbyodata/ontology/nando.en.obo')
+            onto = pronto.Ontology('./ontology/nando.en.obo')
             breadcrumb_html = '<section><h3 class="breadcrumb-title">Intractable disease</h3>'
         sup = list(reversed(list(onto[id_nando].superclasses())))
         for index, term in enumerate(sup):
@@ -182,7 +177,7 @@ def make_selector_subclasses(onto, id_nando, next_term_id, index):
     return html_selector
 
 def get_overview(id_nando):
-    url = f'/sparqlist/api/nanbyodata_get_overview_by_nando_id?nando_id={id_nando}'
+    url = f"{app.config['BASE_URI']}/sparqlist/api/nanbyodata_get_overview_by_nando_id?nando_id={id_nando}"
     response = requests.get(url)
     overview = response.json()
     title = overview.get('label_ja') or overview.get('label_en', '')
