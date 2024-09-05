@@ -31,7 +31,11 @@ def get_locale():
         session['lang'] = request.accept_languages.best_match(['ja', 'ja_JP', 'en'])
     if request.args.get('lang'):
         session['lang'] = request.args.get('lang')
-    return session.get('lang', 'en')
+    locale = session.get('lang', 'en')
+    if locale not in ['ja', 'ja_JP', 'en']:
+        locale = 'en'
+
+    return locale
 app.jinja_env.globals.update(get_locale=get_locale)
 
 # flask の　@babel.localeselector
@@ -203,6 +207,8 @@ def load_news_content(filename):
 
 def get_news_info():
     locale = get_locale()
+    if locale is None:
+        locale = 'en'
     path = os.path.join("posts", locale)
     md_files = [f for f in os.listdir(path) if f.endswith(".md")]
 
