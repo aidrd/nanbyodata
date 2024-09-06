@@ -1,0 +1,24 @@
+services:
+  app:
+    container_name: ${CONTAINER_NAME:-nanbyodata-app}
+    image: ${IMAGE_NAME:-nanbyodata-app}
+    build: .
+    ports:
+      - ${PORT:-8000}:8000
+    volumes:
+      - .:/app
+    environment:
+      - UWSGI_INI=uwsgi/uwsgi.ini
+      - BASE_URI=${BASE_URI:-https://nanbyodata.jp/}
+  nginx:
+    container_name: nanbyodata-nginx
+    image: nginx:1.27.1
+    ports:
+      - ${NGINX_PORT:-8888}:80
+    volumes:
+      - ./nginx_for_dev.conf:/etc/nginx/nginx.conf:ro
+
+networks:
+  default:
+    name: nanbyodata_dev
+    external: true
