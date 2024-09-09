@@ -11,6 +11,7 @@ Foundation
   --color-secondary: #13295a;
   --color-font: #696969;
   --color-background-gray: #dadede;
+  --color-button-background: #efefef;
   --color-blue: #495aff;
   --color-link: #004098;
   --color-table-border: #c0c0c0;
@@ -1269,6 +1270,7 @@ header.search-area .intro-text .keyword a {
   gap: 4px;
   border: 1px solid var(--color-summary-border);
   border-radius: var(--radius-base);
+  background-color: var(--color-button-background);
 }
 .summary-header-actions .open-popup-btn:focus {
   outline: none;
