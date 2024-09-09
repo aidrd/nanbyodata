@@ -428,7 +428,6 @@ footer .container .footer__bottom .footer__lisence small:before {
   top: 76px;
 }
 .content-wrapper #sidebar {
-  position: fixed;
   overflow-y: auto;
   height: calc(100vh - 76px);
   width: 270px;
@@ -449,12 +448,12 @@ footer .container .footer__bottom .footer__lisence small:before {
 }
 .content-wrapper #content {
   position: fixed;
+  top: 76px;
   left: 270px;
   overflow-y: auto;
   height: calc(100vh - 76px);
   width: calc(100% - 270px);
   padding: var(--spacing-disease-content);
-  z-index: -1;
   display: none;
 }
 .content-wrapper #content #data-wrapper {
