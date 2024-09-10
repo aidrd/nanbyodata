@@ -5,7 +5,7 @@ import {
   drawDesignatedIntractableDiseaseColumnsTable,
   drawPediatricChronicSpecificDiseaseColumnsTable,
 } from './epidemiology.js';
-import { smartTextBox } from './smart_text_box.js';
+import { smartBox } from './smart_box.js';
 
 navToggle();
 focusInput();
@@ -15,14 +15,14 @@ if (window.location.pathname === '/epidemiology') {
   drawPediatricChronicSpecificDiseaseColumnsTable();
 }
 
-// smart text box
+// smart box
 if (window.location.pathname === '/') {
-  smartTextBox('NANDO', '/static/tsv/NANDO_20240516.tsv', {
+  smartBox('NANDO', '/static/tsv/NANDO_20240516.tsv', {
     api_url: '',
   });
 
   document.addEventListener('selectedLabel', function (event) {
     const labelInfo = event.detail.labelInfo;
-    window.location.href = `${location.origin}/disease/${labelInfo.ID}`;
+    window.location.href = `${location.origin}/disease/${labelInfo.id}`;
   });
 }
