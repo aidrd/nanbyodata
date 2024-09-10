@@ -1,12 +1,12 @@
-// based on smart text box scss file, with some changes for NanbyoData
+// based on smart box scss file, with some changes for NanbyoData
 
-.smart-text-box-container {
+.smart-box-container {
   position: relative;
   width: 690px;
   font-family: Verdana;
   text-align: left;
 
-  > .smart-text-box-input {
+  > .smart-box-input {
     width: 100%;
     box-sizing: border-box;
     border-radius: 30px;
@@ -108,12 +108,12 @@
 }
 
 // top page
-.top-smart-text-box {
+.top-smart-box {
   display: flex;
   justify-content: center;
   margin: 10px auto 20px;
 
-  .smart-text-box-container {
+  .smart-box-container {
     width: 580px;
   }
 }
