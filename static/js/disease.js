@@ -15,7 +15,7 @@ import {
 } from './diseaseContent.js';
 import { switchingDisplayContents } from './diseaseSideNavigation.js';
 import { setLangChange } from './setLangChange.js';
-import { smartTextBox } from './smart_text_box.js';
+import { smartBox } from './smart_box.js';
 
 // // get NANDO ID
 const pathname = window.location.pathname;
@@ -539,13 +539,13 @@ function trySwitchingContent(hash, retries = 0) {
   }
 }
 
-// smart text box
+// smart box
 
-smartTextBox('NANDO', '/static/tsv/NANDO_20240516.tsv', {
+smartBox('NANDO', '/static/tsv/NANDO_20240516.tsv', {
   api_url: '',
 });
 
 document.addEventListener('selectedLabel', function (event) {
   const labelInfo = event.detail.labelInfo;
-  window.location.href = `${location.origin}/disease/${labelInfo.ID}`;
+  window.location.href = `${location.origin}/disease/${labelInfo.id}`;
 });
