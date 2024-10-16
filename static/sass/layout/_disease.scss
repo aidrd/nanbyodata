@@ -72,6 +72,27 @@
         }
       }
 
+      .sub-title {
+        font-size: var(--font-size-xl);
+        border-radius: var(--radius-base);
+        color: var(--color-secondary);
+        white-space: nowrap;
+        font-weight: bold;
+        position: relative;
+        padding-left: 15px;
+        display: flex;
+        align-items: center;
+
+        &::before {
+          content: '';
+          position: absolute;
+          left: 1px;
+          width: 10px;
+          height: 10px;
+          background-color: var(--color-secondary);
+        }
+      }
+
       #temp-disease-definition {
         .tab-content {
           text-align: justify;

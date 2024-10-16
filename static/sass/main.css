@@ -492,6 +492,25 @@ footer .container .footer__bottom .footer__lisence small:before {
   margin: 0 5px;
   min-width: 22px;
 }
+.content-wrapper #content #data-wrapper .sub-title {
+  font-size: var(--font-size-xl);
+  border-radius: var(--radius-base);
+  color: var(--color-secondary);
+  white-space: nowrap;
+  font-weight: bold;
+  position: relative;
+  padding-left: 15px;
+  display: flex;
+  align-items: center;
+}
+.content-wrapper #content #data-wrapper .sub-title::before {
+  content: "";
+  position: absolute;
+  left: 1px;
+  width: 10px;
+  height: 10px;
+  background-color: var(--color-secondary);
+}
 .content-wrapper #content #data-wrapper #temp-disease-definition .tab-content {
   text-align: justify;
 }
@@ -1634,23 +1653,14 @@ Disease page right top */
 }
 
 /* Summary wrapper */
-.summary-wrapper {
-  padding: var(--spacing-inner-box);
-  border-radius: var(--radius-base);
-  background-color: var(--color-primary-opacity2);
-}
 .summary-wrapper #temp-aliases .inheritance-uris,
-.summary-wrapper .temp-wrapper .inheritance-uris {
-  display: flex;
-}
-.summary-wrapper #temp-aliases .inheritance-uris > dl > dt,
-.summary-wrapper .temp-wrapper .inheritance-uris > dl > dt {
-  font-weight: bold;
-}
 .summary-wrapper .properties {
   display: flex;
   flex-wrap: wrap;
   gap: 5px;
+}
+.summary-wrapper .aliases {
+  padding-bottom: 15px;
 }
 .summary-wrapper .aliases > dl {
   margin: 0 0 4px;
@@ -1665,6 +1675,8 @@ Disease page right top */
 }
 .summary-wrapper .aliases > dl > dt {
   font-weight: bold;
+  font-size: 12px;
+  color: var(--color-secondary);
 }
 .summary-wrapper .aliases > dl > dd {
   margin-inline-start: 0;
