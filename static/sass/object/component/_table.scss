@@ -34,7 +34,8 @@
     }
   }
   .feedback-cell {
-    gap: 10px;
-    display: flex;
+    a {
+      margin-right: 10px;
+    }
   }
 }
