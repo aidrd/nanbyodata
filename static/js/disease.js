@@ -69,6 +69,7 @@ const datasets = [
         makeAlternativeName(entryData);
         makeInheritanceUris(entryData);
         makeLinksList(entryData);
+        makeLinkedItem(entryData);
         checkSummaryData(entryData);
         makeDiseaseDefinition(entryData);
         updateOverviewLinkAndContentDisplay();
@@ -464,6 +465,208 @@ function makeDiseaseDefinition(entryData) {
         content.append(translationLink);
       }
     });
+  }
+}
+
+// TODO: fix api
+async function fetchNandoData(entryData, item, content) {
+  try {
+    const response = await fetch(
+      `${item.apiUrl}?nando_id=${entryData.nando_id}`
+    );
+    const data = await response.json();
+
+    if (data.length === 0) {
+      console.error('No data available');
+      return;
+    }
+
+    // 既存のテーブルを削除
+    const existingTable = content.querySelector('table');
+    if (existingTable) {
+      existingTable.remove();
+    }
+
+    // 新しいdivを生成してクラス名を設定
+    const tableWrapper = document.createElement('div');
+    tableWrapper.classList.add('table-contents');
+
+    // 新しいテーブルを生成
+    const table = document.createElement('table');
+    table.classList.add('table');
+
+    // 渡されたlabelsを使ってヘッダー行を生成
+    const headerRow = document.createElement('tr');
+    item.labels.forEach((label) => {
+      const th = document.createElement('th');
+      th.textContent = label; // 固定のラベルを設定
+      headerRow.appendChild(th);
+    });
+    // Feedback列を追加
+    const feedbackTh = document.createElement('th');
+    feedbackTh.textContent = 'Feedback';
+    headerRow.appendChild(feedbackTh);
+    table.appendChild(headerRow);
+
+    // 取得したデータをtableの行として追加
+    data.forEach((itemData) => {
+      const row = document.createElement('tr');
+      item.keys.forEach((key) => {
+        const cell = document.createElement('td');
+
+        // 特定のkey（original_diseaseとmodified_disease）にはリンクを設定
+        if (
+          key === 'original_disease' &&
+          item.keys.includes('modified_disease')
+        ) {
+          const link = document.createElement('a');
+          link.href = itemData['original_disease']; // original_diseaseをリンク先に設定
+          link.textContent = itemData['modified_disease']; // 表示名はmodified_disease
+          link.target = '_blank'; // 新しいタブで開く
+          cell.appendChild(link);
+        } else {
+          // その他のデータをそのまま表示
+          cell.textContent = itemData[key];
+        }
+        row.appendChild(cell);
+      });
+
+      // Feedback列にアイコンを追加
+      const feedbackCell = document.createElement('td');
+      feedbackCell.innerHTML = `
+        <a href="#" class="good-icon" title="Good"><i class="far fa-thumbs-up"></i></a>
+        <a href="#" class="bad-icon" title="Bad"><i class="far fa-thumbs-down"></i></a>
+        <a href="mailto:feedback@example.com" class="email-icon" title="Send Feedback"><i class="far fa-envelope"></i></a>
+      `;
+      row.appendChild(feedbackCell);
+
+      table.appendChild(row);
+    });
+
+    // contentにtableを追加
+    content.appendChild(table);
+
+    // tableをdivの中に追加
+    tableWrapper.appendChild(table);
+
+    // contentにdivごとtableを追加
+    content.appendChild(tableWrapper);
+
+    // アイコンクリックイベントを追加
+    table.querySelectorAll('.good-icon').forEach((icon) => {
+      icon.addEventListener('click', (e) => {
+        e.preventDefault();
+        alert('Good feedback received!');
+      });
+    });
+
+    table.querySelectorAll('.bad-icon').forEach((icon) => {
+      icon.addEventListener('click', (e) => {
+        e.preventDefault();
+        alert('Bad feedback received!');
+      });
+    });
+
+    table.querySelectorAll('.email-icon').forEach((icon) => {
+      icon.addEventListener('click', (e) => {
+        // メールリンクの処理はデフォルトの動作に任せる
+        alert('Email icon clicked!');
+      });
+    });
+  } catch (error) {
+    console.error('Error fetching data:', error);
+  }
+}
+
+async function makeLinkedItem(entryData) {
+  const linkedItems = document.getElementById('temp-linked-items');
+  const tabWrap = linkedItems.querySelector('.tab-wrap');
+
+  const items = [
+    {
+      class: 'omim',
+      existing: true,
+      labels: [
+        'MONDO ID',
+        'MONDO Label (JA)',
+        'MONDO Label (EN)',
+        'MONDO URL',
+        'OMIM URL',
+        'OMIM ID',
+      ], // OMIM用のラベル
+      keys: [
+        'mondo_id',
+        'mondo_label_ja',
+        'mondo_label_en',
+        'mondo_url',
+        'original_disease',
+        'modified_disease',
+      ], // OMIM用のキー
+      apiUrl: 'https://dev-nanbyodata.dbcls.jp/sparqlist/api/test-nando-omim', // OMIM用のAPI
+    },
+    {
+      class: 'orphanet',
+      existing: false,
+      labels: ['Orphanet ID', 'Name', 'Disorder', 'URL'], // Orphanet用のラベル
+      keys: ['orphanet_id', 'name', 'disorder', 'url'], // Orphanet用のキー
+      apiUrl: 'https://example.com/orphanet-api', // Orphanet用のAPI（仮）
+    },
+    {
+      class: 'monarch-initiative',
+      existing: true,
+      labels: ['MONDO ID', 'MONDO Label (JA)', 'MONDO Label (EN)', 'URL'], // Monarch Initiative用のラベル
+      keys: ['mondo_id', 'mondo_label_ja', 'mondo_label_en', 'mondo_url'], // Monarch Initiative用のキー
+      apiUrl:
+        'https://dev-nanbyodata.dbcls.jp/sparqlist/api/test_nando_link_mond', // Monarch Initiative用のAPI
+    },
+    {
+      class: 'medgen',
+      existing: false,
+      labels: ['MedGen ID', 'Name', 'Disorder', 'URL'], // MedGen用のラベル
+      keys: ['medgen_id', 'name', 'disorder', 'url'], // MedGen用のキー
+      apiUrl: 'https://example.com/medgen-api', // MedGen用のAPI（仮）
+    },
+    {
+      class: 'kegg-disease',
+      existing: false,
+      labels: ['KEGG Disease ID', 'Disease Name', 'Pathway', 'URL'], // KEGG Disease用のラベル
+      keys: ['kegg_disease_id', 'disease_name', 'pathway', 'url'], // KEGG Disease用のキー
+      apiUrl: 'https://example.com/kegg-disease-api', // KEGG Disease用のAPI（仮）
+    },
+  ];
+
+  if (items.every((item) => !item.existing)) {
+    linkedItems.remove();
+  } else {
+    let isFirstTab = true;
+
+    for (const item of items) {
+      if (!item.existing) {
+        const input = document.getElementById(`linked-item-${item.class}`);
+
+        // inputが存在するか確認
+        if (input) {
+          const label = input.nextElementSibling;
+
+          // nextElementSiblingが存在するか確認
+          if (label) {
+            label.remove();
+          }
+          input.remove();
+        }
+      } else {
+        const content = tabWrap.querySelector(`.${item.class}`);
+
+        // APIを叩いてデータを取得し、ラベルとキーに応じたテーブルを生成する
+        await fetchNandoData(entryData, item, content);
+
+        const currentTab = tabWrap.querySelector(`#linked-item-${item.class}`);
+        if (currentTab && isFirstTab) {
+          currentTab.checked = true; // 初期値で最初のタブを選択
+          isFirstTab = false; // 最初のタブのみ選択するためフラグをfalseに設定
+        }
+      }
+    }
   }
 }
 
