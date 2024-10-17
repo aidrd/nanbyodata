@@ -72,6 +72,7 @@ const datasets = [
         // makeLinksList(entryData);
         makeLinkedItem(entryData);
         addChartToDiv(entryData);
+        addPaginationTableToDiv(entryData);
         checkSummaryData(entryData);
         makeDiseaseDefinition(entryData);
         updateOverviewLinkAndContentDisplay();
@@ -589,7 +590,7 @@ async function makeLinkedItem(entryData) {
   const items = [
     {
       class: 'omim',
-      existing: true,
+      existing: false,
       labels: [
         'MONDO ID',
         'MONDO Label (JA)',
@@ -683,7 +684,7 @@ function addChartToDiv(entryData) {
     const chartElement = document.createElement('togostanza-linechart');
     chartElement.setAttribute(
       'data-url',
-      `https://dev-nanbyodata.dbcls.jp/sparqlist/api/takatsuki_test_20240322?nando_id=nando:1200003`
+      `https://dev-nanbyodata.dbcls.jp/sparqlist/api/takatsuki_test_20240322?nando_id=nando:${entryData.nando_id}`
     );
     chartElement.setAttribute('data-type', 'json');
     chartElement.setAttribute('category', 'year');
@@ -715,6 +716,60 @@ function addChartToDiv(entryData) {
 
     // targetDivにチャートとスクリプトを追加
     targetDiv.appendChild(chartElement);
+    targetDiv.appendChild(scriptElement);
+  }
+}
+
+// TODO: Subclass
+function addPaginationTableToDiv(entryData) {
+  const targetDiv = document.getElementById('temp-sub-class');
+
+  if (targetDiv) {
+    // togostanza-pagination-table要素を作成
+    const tableElement = document.createElement('togostanza-pagination-table');
+    tableElement.setAttribute(
+      'data-url',
+      `https://dev-nanbyodata.dbcls.jp/sparqlist/api/test_get_nandoID?nando_id=${entryData.nando_id}`
+    );
+    tableElement.setAttribute('data-type', 'json');
+    tableElement.setAttribute('data-unavailable_message', 'No data found.');
+    tableElement.setAttribute('custom-css-url', '');
+    tableElement.setAttribute('width', '');
+    tableElement.setAttribute('fixed-columns', '1');
+    tableElement.setAttribute('padding', '0px');
+    tableElement.setAttribute('page-size-option', '10,20,50,100');
+    tableElement.setAttribute('page-slider', 'true');
+    tableElement.setAttribute(
+      'columns',
+      `[{
+        "id": "nando_label",
+        "label": "Subclass(JA)",
+        "escape": false,
+        "line-clamp": 2
+      },
+      {
+        "id": "nando_englabel",
+        "label": "Subclass(En)",
+        "escape": false,
+        "line-clamp": 2
+      },
+      {
+        "id": "id",
+        "label": "Notification Number",
+        "escape": true,
+        "line-clamp": 1
+      }]`
+    );
+
+    // スクリプト要素を動的に作成して挿入
+    const scriptElement = document.createElement('script');
+    scriptElement.type = 'module';
+    scriptElement.src =
+      'https://togostanza.github.io/metastanza/pagination-table.js';
+    scriptElement.async = true;
+
+    // targetDivにテーブルとスクリプトを追加
+    targetDiv.appendChild(tableElement);
     targetDiv.appendChild(scriptElement);
   }
 }
