@@ -480,9 +480,14 @@ async function fetchNandoData(entryData, item, content) {
     );
     const data = await response.json();
 
-    if (data.length === 0) {
-      console.error('No data available');
-      return;
+    // データがnull、undefined、空配列、空オブジェクトの場合、falseを返す
+    if (
+      !data ||
+      (Array.isArray(data) && data.length === 0) ||
+      (typeof data === 'object' && Object.keys(data).length === 0)
+    ) {
+      console.error('No data available from API:', item.apiUrl);
+      return false; // データがない場合、falseを返す
     }
 
     // 既存のテーブルを削除
@@ -504,7 +509,7 @@ async function fetchNandoData(entryData, item, content) {
     const headerRow = document.createElement('tr');
     item.labels.forEach((label) => {
       const th = document.createElement('th');
-      th.textContent = label; // 固定のラベルを設定
+      th.textContent = label.label; // 固定のラベルを設定
       headerRow.appendChild(th);
     });
 
@@ -524,16 +529,30 @@ async function fetchNandoData(entryData, item, content) {
       item.keys.forEach((key) => {
         const cell = document.createElement('td');
 
-        // 特定のkey（original_diseaseとmodified_disease）にはリンクを設定
-        if (
-          key === 'original_disease' &&
-          item.keys.includes('modified_disease')
-        ) {
+        // labels配列から一致するkeyを探し、typeが"url"であればリンクを作成
+        const field = item.labels.find(
+          (labelItem) => labelItem.content === key
+        );
+
+        // modified_diseaseを表示し、original_diseaseをリンク先にするケース
+        if (field && field.type === 'url' && field.hrefKey) {
           const link = document.createElement('a');
-          link.href = itemData['original_disease']; // original_diseaseをリンク先に設定
-          link.textContent = itemData['modified_disease']; // 表示名はmodified_disease
+          link.href = itemData[field.hrefKey]; // href用のキーからリンク先を生成
+          link.textContent = itemData[key]; // ラベルとして表示するデータ
           link.target = '_blank'; // 新しいタブで開く
           cell.appendChild(link);
+        } else if (field && field.content === 'property') {
+          // propertyの値から"#"以降を抽出してマッチング
+          const propertyValue = itemData[key];
+          const matchType = propertyValue.split('#')[1]; // #以降を抽出
+
+          if (matchType === 'closeMatch') {
+            cell.textContent = 'Close Match';
+          } else if (matchType === 'exactMatch') {
+            cell.textContent = 'Exact Match';
+          } else {
+            cell.textContent = matchType || propertyValue; // その他はそのまま表示
+          }
         } else {
           // その他のデータをそのまま表示
           cell.textContent = itemData[key];
@@ -583,8 +602,11 @@ async function fetchNandoData(entryData, item, content) {
         alert('Email icon clicked!');
       });
     });
+
+    return true; // データがある場合、trueを返す
   } catch (error) {
     console.error('Error fetching data:', error);
+    return false; // エラーが発生した場合、falseを返す
   }
 }
 
@@ -595,86 +617,119 @@ async function makeLinkedItem(entryData) {
   const items = [
     {
       class: 'omim',
-      existing: true,
       labels: [
-        'MONDO ID',
-        'MONDO Label (JA)',
-        'MONDO Label (EN)',
-        'OMIM URL',
-        'OMIM ID',
-        'Link Type',
-      ], // OMIM用のラベル
+        {
+          label: 'OMIM ID',
+          content: 'modified_disease',
+          type: 'url',
+          hrefKey: 'original_disease',
+        },
+        { label: 'MONDO Label (JA)', content: 'mondo_label_ja' },
+        { label: 'MONDO Label (EN)', content: 'mondo_label_en' },
+        { label: 'Link Type', content: 'property' },
+      ],
       keys: [
-        'mondo_id',
+        'modified_disease',
         'mondo_label_ja',
         'mondo_label_en',
-        'original_disease',
-        'modified_disease',
         'property',
-      ], // OMIM用のキー
-      apiUrl: 'https://dev-nanbyodata.dbcls.jp/sparqlist/api/test-nando-omim', // OMIM用のAPI
+      ],
+      apiUrl: 'https://dev-nanbyodata.dbcls.jp/sparqlist/api/test-nando-omim',
     },
     {
       class: 'orphanet',
-      existing: false,
-      labels: ['Orphanet ID', 'Name', 'Disorder', 'URL'], // Orphanet用のラベル
-      keys: ['orphanet_id', 'name', 'disorder', 'url'], // Orphanet用のキー
-      apiUrl: 'https://example.com/orphanet-api', // Orphanet用のAPI（仮）
+      labels: [
+        {
+          label: 'Orphanet ID',
+          content: 'orphanet_id',
+          type: 'url',
+          hrefKey: 'orphanet_url',
+        },
+        { label: 'Name', content: 'name' },
+        { label: 'Disorder', content: 'disorder' },
+        { label: 'Link Type', content: 'property' },
+      ],
+      keys: ['orphanet_id', 'name', 'disorder', 'property'],
+      apiUrl:
+        'https://dev-nanbyodata.dbcls.jp/sparqlist/api/test-nando-orphanet',
     },
     {
       class: 'monarch-initiative',
-      existing: true,
-      labels: ['MONDO ID', 'MONDO Label (JA)', 'MONDO Label (EN)', 'Link Type'], // Monarch Initiative用のラベル
-      keys: ['mondo_id', 'mondo_label_ja', 'mondo_label_en', 'property'], // Monarch Initiative用のキー
+      labels: [
+        {
+          label: 'MONDO ID',
+          content: 'mondo_id',
+          type: 'url',
+          hrefKey: 'mondo_url',
+        },
+        { label: 'MONDO Label (JA)', content: 'mondo_label_ja' },
+        { label: 'MONDO Label (EN)', content: 'mondo_label_en' },
+        { label: 'Link Type', content: 'property' },
+      ],
+      keys: ['mondo_id', 'mondo_label_ja', 'mondo_label_en', 'property'],
       apiUrl:
-        'https://dev-nanbyodata.dbcls.jp/sparqlist/api/test_nando_link_mond', // Monarch Initiative用のAPI
+        'https://dev-nanbyodata.dbcls.jp/sparqlist/api/test_nando_link_mond',
     },
     {
       class: 'medgen',
-      existing: false,
-      labels: ['MedGen ID', 'Name', 'Disorder', 'URL'], // MedGen用のラベル
-      keys: ['medgen_id', 'name', 'disorder', 'url'], // MedGen用のキー
-      apiUrl: 'https://example.com/medgen-api', // MedGen用のAPI（仮）
+      labels: [
+        {
+          label: 'MedGen ID',
+          content: 'medgen_id',
+          type: 'url',
+          hrefKey: 'medgen_url',
+        },
+        { label: 'Name', content: 'name' },
+        { label: 'Disorder', content: 'disorder' },
+        { label: 'Link Type', content: 'property' },
+      ],
+      keys: ['medgen_id', 'name', 'disorder', 'property'],
+      apiUrl: 'https://dev-nanbyodata.dbcls.jp/sparqlist/api/test-nando-medgen',
     },
     {
       class: 'kegg-disease',
-      existing: false,
-      labels: ['KEGG Disease ID', 'Disease Name', 'Pathway', 'URL'], // KEGG Disease用のラベル
-      keys: ['kegg_disease_id', 'disease_name', 'pathway', 'url'], // KEGG Disease用のキー
-      apiUrl: 'https://example.com/kegg-disease-api', // KEGG Disease用のAPI（仮）
+      labels: [
+        {
+          label: 'KEGG Disease ID',
+          content: 'kegg_disease_id',
+          type: 'url',
+          hrefKey: 'kegg_url',
+        },
+        { label: 'Disease Name', content: 'disease_name' },
+        { label: 'Pathway', content: 'pathway' },
+        { label: 'Link Type', content: 'property' },
+      ],
+      keys: ['kegg_disease_id', 'disease_name', 'pathway', 'property'],
+      apiUrl: 'https://dev-nanbyodata.dbcls.jp/sparqlist/api/test-nando-kegg',
     },
   ];
 
-  if (items.every((item) => !item.existing)) {
-    linkedItems.remove();
-  } else {
-    let isFirstTab = true;
+  let isFirstTab = true;
 
-    for (const item of items) {
-      if (!item.existing) {
-        const input = document.getElementById(`linked-item-${item.class}`);
+  for (const item of items) {
+    const content = tabWrap.querySelector(`.${item.class}`);
 
-        // inputが存在するか確認
-        if (input) {
-          const label = input.nextElementSibling;
+    // APIを叩いてデータを取得し、ラベルとキーに応じたテーブルを生成する
+    const exists = await fetchNandoData(entryData, item, content);
+    console.log(exists);
 
-          // nextElementSiblingが存在するか確認
-          if (label) {
-            label.remove();
-          }
-          input.remove();
+    if (!exists) {
+      // データが存在しない場合、タブとその内容を削除
+      const input = document.getElementById(`linked-item-${item.class}`);
+
+      if (input) {
+        const label = input.nextElementSibling;
+        if (label) {
+          label.remove();
         }
-      } else {
-        const content = tabWrap.querySelector(`.${item.class}`);
-
-        // APIを叩いてデータを取得し、ラベルとキーに応じたテーブルを生成する
-        await fetchNandoData(entryData, item, content);
-
-        const currentTab = tabWrap.querySelector(`#linked-item-${item.class}`);
-        if (currentTab && isFirstTab) {
-          currentTab.checked = true; // 初期値で最初のタブを選択
-          isFirstTab = false; // 最初のタブのみ選択するためフラグをfalseに設定
-        }
+        input.remove();
+      }
+    } else {
+      // 初回のタブをアクティブに設定
+      const currentTab = tabWrap.querySelector(`#linked-item-${item.class}`);
+      if (currentTab && isFirstTab) {
+        currentTab.checked = true; // 初期値で最初のタブを選択
+        isFirstTab = false; // 最初のタブのみ選択するためフラグをfalseに設定
       }
     }
   }
