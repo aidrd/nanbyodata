@@ -696,7 +696,7 @@ function addChartToDiv(entryData) {
     const chartElement = document.createElement('togostanza-linechart');
     chartElement.setAttribute(
       'data-url',
-      `https://dev-nanbyodata.dbcls.jp/sparqlist/api/takatsuki_test_20240322?nando_id=nando:${entryData.nando_id}`
+      `https://dev-nanbyodata.dbcls.jp/sparqlist/api/takatsuki_test_20240322?nando_id=${entryData.nando_id}`
     );
     chartElement.setAttribute('data-type', 'json');
     chartElement.setAttribute('axis-x-key', 'year');
@@ -744,8 +744,8 @@ function addPaginationTableToDiv(entryData) {
     tableElement.setAttribute('width', '');
     tableElement.setAttribute('fixed-columns', '1');
     tableElement.setAttribute('padding', '0px');
-    tableElement.setAttribute('page-size-option', '10,20,50,100');
-    tableElement.setAttribute('page-slider', 'true');
+    tableElement.setAttribute('page-size-option', '100');
+    tableElement.setAttribute('page-slider', 'false');
     tableElement.setAttribute(
       'columns',
       `[{
