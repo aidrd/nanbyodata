@@ -499,18 +499,24 @@ async function fetchNandoData(entryData, item, content) {
     const table = document.createElement('table');
     table.classList.add('table');
 
-    // 渡されたlabelsを使ってヘッダー行を生成
+    // theadを作成
+    const thead = document.createElement('thead');
     const headerRow = document.createElement('tr');
     item.labels.forEach((label) => {
       const th = document.createElement('th');
       th.textContent = label; // 固定のラベルを設定
       headerRow.appendChild(th);
     });
+
     // Feedback列を追加
     const feedbackTh = document.createElement('th');
     feedbackTh.textContent = 'Feedback';
     headerRow.appendChild(feedbackTh);
-    table.appendChild(headerRow);
+    thead.appendChild(headerRow);
+    table.appendChild(thead); // theadをテーブルに追加
+
+    // tbodyを作成
+    const tbody = document.createElement('tbody');
 
     // 取得したデータをtableの行として追加
     data.forEach((itemData) => {
@@ -545,8 +551,10 @@ async function fetchNandoData(entryData, item, content) {
       `;
       row.appendChild(feedbackCell);
 
-      table.appendChild(row);
+      tbody.appendChild(row); // tbodyに行を追加
     });
+
+    table.appendChild(tbody); // tbodyをテーブルに追加
 
     // テーブルをdivに追加
     tableWrapper.appendChild(table);
