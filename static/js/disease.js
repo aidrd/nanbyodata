@@ -71,6 +71,7 @@ const datasets = [
         // TODO: remove makeLinksList
         // makeLinksList(entryData);
         makeLinkedItem(entryData);
+        addChartToDiv(entryData);
         checkSummaryData(entryData);
         makeDiseaseDefinition(entryData);
         updateOverviewLinkAndContentDisplay();
@@ -670,6 +671,51 @@ async function makeLinkedItem(entryData) {
         }
       }
     }
+  }
+}
+
+// TODO: Num of Patients
+function addChartToDiv(entryData) {
+  const targetDiv = document.getElementById('temp-num-of-patients');
+
+  if (targetDiv) {
+    // togostanza-linechart要素を作成
+    const chartElement = document.createElement('togostanza-linechart');
+    chartElement.setAttribute(
+      'data-url',
+      `https://dev-nanbyodata.dbcls.jp/sparqlist/api/takatsuki_test_20240322?nando_id=nando:1200003`
+    );
+    chartElement.setAttribute('data-type', 'json');
+    chartElement.setAttribute('category', 'year');
+    chartElement.setAttribute('value', 'num_of_patients');
+    chartElement.setAttribute('category-title', 'Year');
+    chartElement.setAttribute('value-title', 'Num of Patients');
+    chartElement.setAttribute('width', '400');
+    chartElement.setAttribute('height', '200');
+    chartElement.setAttribute('padding', '50');
+    chartElement.setAttribute('legend', 'true');
+    chartElement.setAttribute('xgrid', 'false');
+    chartElement.setAttribute('ygrid', 'true');
+    chartElement.setAttribute('xtick', 'false');
+    chartElement.setAttribute('ytick', 'true');
+    chartElement.setAttribute('xlabel-angle', '0');
+    chartElement.setAttribute('ylabel-angle', '0');
+    chartElement.setAttribute('xlabel-padding', '5');
+    chartElement.setAttribute('ylabel-padding', '5');
+    chartElement.setAttribute('xtitle-padding', '10');
+    chartElement.setAttribute('ytitle-padding', '10');
+    chartElement.setAttribute('xaxis-placement', 'bottom');
+    chartElement.setAttribute('yaxis-placement', 'left');
+
+    // スクリプト要素を動的に作成して挿入
+    const scriptElement = document.createElement('script');
+    scriptElement.type = 'module';
+    scriptElement.src = 'https://togostanza.github.io/metastanza/linechart.js';
+    scriptElement.async = true;
+
+    // targetDivにチャートとスクリプトを追加
+    targetDiv.appendChild(chartElement);
+    targetDiv.appendChild(scriptElement);
   }
 }
 
