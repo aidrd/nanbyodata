@@ -510,7 +510,7 @@ async function fetchNandoData(entryData, item, content) {
 
     // Feedback列を追加
     const feedbackTh = document.createElement('th');
-    feedbackTh.textContent = 'Feedback';
+    feedbackTh.textContent = 'Feedback(*)';
     headerRow.appendChild(feedbackTh);
     thead.appendChild(headerRow);
     table.appendChild(thead); // theadをテーブルに追加
