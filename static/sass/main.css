@@ -427,6 +427,9 @@ footer .container .footer__bottom .footer__lisence small:before {
 #overview .overview-wrapper {
   padding: 0 10px;
 }
+#overview .temp-wrapper .inheritance-uris {
+  padding-bottom: 15px;
+}
 
 .content-wrapper {
   position: relative;
@@ -1663,12 +1666,6 @@ Disease page right top */
 }
 
 /* Summary wrapper */
-.summary-wrapper #temp-aliases .inheritance-uris,
-.summary-wrapper .properties {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 5px;
-}
 .summary-wrapper .aliases {
   padding-bottom: 15px;
 }

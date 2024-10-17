@@ -1,12 +1,5 @@
 /* Summary wrapper */
 .summary-wrapper {
-  #temp-aliases .inheritance-uris,
-  .properties {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 5px;
-  }
-
   .aliases {
     padding-bottom: 15px;
     > dl {

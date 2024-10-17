@@ -323,10 +323,14 @@ function appendLinks(data, container, prefix = '') {
 
 function makeInheritanceUris(entryData) {
   const inheritanceUris = document.querySelector('.inheritance-uri');
+  const inheritanceSubTitle = document.querySelector(
+    '.sub-title.-inheritance-uri'
+  );
   if (entryData.inheritance_uris) {
     appendLinks(entryData.inheritance_uris, inheritanceUris);
   } else {
     inheritanceUris.remove();
+    inheritanceSubTitle.remove();
   }
 }
 
@@ -663,7 +667,6 @@ async function makeLinkedItem(entryData) {
 
     // APIを叩いてデータを取得し、ラベルとキーに応じたテーブルを生成する
     const exists = await fetchNandoData(entryData, item, content);
-    console.log(exists);
 
     if (!exists) {
       // データが存在しない場合、タブとその内容を削除
