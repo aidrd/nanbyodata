@@ -39,6 +39,9 @@
     overflow: hidden;
     display: none;
     line-height: 2;
+    p {
+      text-align: right;
+    }
   }
 
   .tab-switch {

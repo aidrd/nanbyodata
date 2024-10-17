@@ -1450,6 +1450,9 @@ header.search-area .intro-text .keyword a {
   display: none;
   line-height: 2;
 }
+.tab-wrap .tab-content p {
+  text-align: right;
+}
 .tab-wrap .tab-switch {
   display: none;
 }

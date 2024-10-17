@@ -548,14 +548,11 @@ async function fetchNandoData(entryData, item, content) {
       table.appendChild(row);
     });
 
-    // contentにtableを追加
-    content.appendChild(table);
-
-    // tableをdivの中に追加
+    // テーブルをdivに追加
     tableWrapper.appendChild(table);
 
-    // contentにdivごとtableを追加
-    content.appendChild(tableWrapper);
+    // contentにtableWrapperをpタグの前に追加
+    content.prepend(tableWrapper); // テーブルを最初に追加する
 
     // アイコンクリックイベントを追加
     table.querySelectorAll('.good-icon').forEach((icon) => {
