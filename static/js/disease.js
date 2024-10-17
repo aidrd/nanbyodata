@@ -590,22 +590,22 @@ async function makeLinkedItem(entryData) {
   const items = [
     {
       class: 'omim',
-      existing: false,
+      existing: true,
       labels: [
         'MONDO ID',
         'MONDO Label (JA)',
         'MONDO Label (EN)',
-        'MONDO URL',
         'OMIM URL',
         'OMIM ID',
+        'Link Type',
       ], // OMIM用のラベル
       keys: [
         'mondo_id',
         'mondo_label_ja',
         'mondo_label_en',
-        'mondo_url',
         'original_disease',
         'modified_disease',
+        'property',
       ], // OMIM用のキー
       apiUrl: 'https://dev-nanbyodata.dbcls.jp/sparqlist/api/test-nando-omim', // OMIM用のAPI
     },
@@ -619,8 +619,8 @@ async function makeLinkedItem(entryData) {
     {
       class: 'monarch-initiative',
       existing: true,
-      labels: ['MONDO ID', 'MONDO Label (JA)', 'MONDO Label (EN)', 'URL'], // Monarch Initiative用のラベル
-      keys: ['mondo_id', 'mondo_label_ja', 'mondo_label_en', 'mondo_url'], // Monarch Initiative用のキー
+      labels: ['MONDO ID', 'MONDO Label (JA)', 'MONDO Label (EN)', 'Link Type'], // Monarch Initiative用のラベル
+      keys: ['mondo_id', 'mondo_label_ja', 'mondo_label_en', 'property'], // Monarch Initiative用のキー
       apiUrl:
         'https://dev-nanbyodata.dbcls.jp/sparqlist/api/test_nando_link_mond', // Monarch Initiative用のAPI
     },
