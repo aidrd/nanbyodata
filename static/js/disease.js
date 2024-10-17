@@ -250,11 +250,6 @@ function makeExternalLinks(entryData) {
       element.remove();
     }
   });
-
-  const allFalse = items.every((item) => item.existing === false);
-  if (allFalse) {
-    document.getElementById('temp-data-summary').style.borderBottom = 'none';
-  }
 }
 
 function makeAlternativeName(entryData) {
@@ -285,6 +280,10 @@ function makeAlternativeName(entryData) {
     });
   } else {
     altLabelEn.remove();
+  }
+
+  if (!(entryData.alt_label_ja || entryData.alt_label_en)) {
+    document.querySelector('.sub-title.-alt-label').remove();
   }
 }
 
@@ -393,6 +392,7 @@ function makeDiseaseDefinition(entryData) {
 
   if (items.every((item) => !item.existing)) {
     diseaseDefinition.remove();
+    document.querySelector('.sub-title.-disease-definition').remove();
   } else {
     let isFirstTab = true;
 
@@ -665,11 +665,9 @@ async function makeLinkedItem(entryData) {
   for (const item of items) {
     const content = tabWrap.querySelector(`.${item.class}`);
 
-    // APIを叩いてデータを取得し、ラベルとキーに応じたテーブルを生成する
     const exists = await fetchNandoData(entryData, item, content);
 
     if (!exists) {
-      // データが存在しない場合、タブとその内容を削除
       const input = document.getElementById(`linked-item-${item.class}`);
 
       if (input) {
@@ -680,11 +678,10 @@ async function makeLinkedItem(entryData) {
         input.remove();
       }
     } else {
-      // 初回のタブをアクティブに設定
       const currentTab = tabWrap.querySelector(`#linked-item-${item.class}`);
       if (currentTab && isFirstTab) {
-        currentTab.checked = true; // 初期値で最初のタブを選択
-        isFirstTab = false; // 最初のタブのみ選択するためフラグをfalseに設定
+        currentTab.checked = true;
+        isFirstTab = false;
       }
     }
   }
