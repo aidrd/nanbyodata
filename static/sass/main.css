@@ -424,6 +424,10 @@ footer .container .footer__bottom .footer__lisence small:before {
 }
 
 /* ---------- Disease Page ---------- */
+#overview .overview-wrapper {
+  padding: 0 10px;
+}
+
 .content-wrapper {
   position: relative;
   top: 76px;
