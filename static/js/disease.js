@@ -17,12 +17,12 @@ import { switchingDisplayContents } from './diseaseSideNavigation.js';
 import { setLangChange } from './setLangChange.js';
 import { smartBox } from './smart_box.js';
 
-// // get NANDO ID
+// get NANDO ID
 const pathname = window.location.pathname;
 const nandoIndex = pathname.indexOf('NANDO:');
 const nandoId = pathname.slice(nandoIndex + 6);
 
-// // for cache busting
+// for cache busting
 const timestamp = Date.now();
 
 // external functions
@@ -68,8 +68,6 @@ const datasets = [
         makeExternalLinks(entryData);
         makeAlternativeName(entryData);
         makeInheritanceUris(entryData);
-        // TODO: remove makeLinksList
-        // makeLinksList(entryData);
         makeLinkedItem(entryData);
         addChartToDiv(entryData);
         addPaginationTableToDiv(entryData);
@@ -331,52 +329,6 @@ function makeInheritanceUris(entryData) {
     inheritanceUris.remove();
   }
 }
-
-// TODO: remove makeLinksList
-// function makeLinksList(entryData) {
-//   const linksListProperties = document.querySelector('.properties');
-//   const omim = linksListProperties.querySelector('.omim');
-//   const orphanet = linksListProperties.querySelector('.orphanet');
-//   const medgen = linksListProperties.querySelector('.medgen');
-//   const mondos = linksListProperties.querySelector('.mondos');
-//   const kegg = linksListProperties.querySelector('.kegg');
-//   const urdbms = linksListProperties.querySelector('.urdbms');
-
-//   appendLinks(entryData.db_xrefs?.omim, omim);
-//   appendLinks(entryData.db_xrefs?.orphanet, orphanet, 'ORPHA:');
-
-//   if (entryData.medgen_id) {
-//     const dd = document.createElement('dd');
-//     const a = createLinkElement(entryData.medgen_uri, entryData.medgen_id);
-//     dd.classList.add('linked-item');
-//     dd.append(a);
-//     medgen.append(dd);
-//   } else {
-//     medgen.remove();
-//   }
-
-//   appendLinks(entryData.mondos, mondos);
-
-//   if (entryData.kegg) {
-//     const dd = document.createElement('dd');
-//     const a = createLinkElement(entryData.kegg.url, entryData.kegg.id);
-//     dd.classList.add('linked-item');
-//     dd.append(a);
-//     kegg.append(dd);
-//   } else {
-//     kegg.remove();
-//   }
-
-//   if (entryData.urdbms) {
-//     const dd = document.createElement('dd');
-//     const a = createLinkElement(entryData.urdbms.url, entryData.urdbms.id);
-//     dd.classList.add('linked-item');
-//     dd.append(a);
-//     urdbms.append(dd);
-//   } else {
-//     urdbms.remove();
-//   }
-// }
 
 export function checkSummaryData(entryData) {
   const summaryWrapper = document.querySelector('.summary-wrapper');
@@ -747,31 +699,26 @@ function addChartToDiv(entryData) {
       `https://dev-nanbyodata.dbcls.jp/sparqlist/api/takatsuki_test_20240322?nando_id=nando:${entryData.nando_id}`
     );
     chartElement.setAttribute('data-type', 'json');
-    chartElement.setAttribute('category', 'year');
-    chartElement.setAttribute('value', 'num_of_patients');
-    chartElement.setAttribute('category-title', 'Year');
-    chartElement.setAttribute('value-title', 'Num of Patients');
-    chartElement.setAttribute('width', '400');
-    chartElement.setAttribute('height', '200');
-    chartElement.setAttribute('padding', '50');
-    chartElement.setAttribute('legend', 'true');
-    chartElement.setAttribute('xgrid', 'false');
-    chartElement.setAttribute('ygrid', 'true');
-    chartElement.setAttribute('xtick', 'false');
-    chartElement.setAttribute('ytick', 'true');
-    chartElement.setAttribute('xlabel-angle', '0');
-    chartElement.setAttribute('ylabel-angle', '0');
-    chartElement.setAttribute('xlabel-padding', '5');
-    chartElement.setAttribute('ylabel-padding', '5');
-    chartElement.setAttribute('xtitle-padding', '10');
-    chartElement.setAttribute('ytitle-padding', '10');
-    chartElement.setAttribute('xaxis-placement', 'bottom');
-    chartElement.setAttribute('yaxis-placement', 'left');
+    chartElement.setAttribute('axis-x-key', 'year');
+    chartElement.setAttribute('axis-x-scale', 'ordinal');
+    chartElement.setAttribute('axis-x-placement', 'bottom');
+    chartElement.setAttribute('axis-x-title', 'Year');
+    chartElement.setAttribute('axis-x-title_padding', '32');
+    chartElement.setAttribute('axis-x-ticks_label_angle', '0');
+    chartElement.setAttribute('axis-y-key', 'num_of_patients');
+    chartElement.setAttribute('axis-y-scale', 'linear');
+    chartElement.setAttribute('axis-y-placement', 'left');
+    chartElement.setAttribute('axis-y-title', 'Num of Patients');
+    chartElement.setAttribute('axis-y-title_padding', '40');
+    chartElement.setAttribute('axis-y-ticks_label_angle', '0');
+    chartElement.setAttribute('point_size', '5');
+    chartElement.setAttribute('legend-title', 'Year');
 
     // スクリプト要素を動的に作成して挿入
     const scriptElement = document.createElement('script');
     scriptElement.type = 'module';
-    scriptElement.src = 'https://togostanza.github.io/metastanza/linechart.js';
+    scriptElement.src =
+      'https://togostanza.github.io/metastanza-devel/linechart.js';
     scriptElement.async = true;
 
     // targetDivにチャートとスクリプトを追加
