@@ -939,6 +939,10 @@ header.search-area .intro-text .keyword a {
 .table-contents .table a:visited {
   color: var(--color-black);
 }
+.table-contents .feedback-cell {
+  gap: 10px;
+  display: flex;
+}
 
 /* ---------- Disease Page ---------- */
 /* Loading Spinner */

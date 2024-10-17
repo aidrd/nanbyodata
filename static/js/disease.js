@@ -68,7 +68,8 @@ const datasets = [
         makeExternalLinks(entryData);
         makeAlternativeName(entryData);
         makeInheritanceUris(entryData);
-        makeLinksList(entryData);
+        // TODO: remove makeLinksList
+        // makeLinksList(entryData);
         makeLinkedItem(entryData);
         checkSummaryData(entryData);
         makeDiseaseDefinition(entryData);
@@ -329,50 +330,51 @@ function makeInheritanceUris(entryData) {
   }
 }
 
-function makeLinksList(entryData) {
-  const linksListProperties = document.querySelector('.properties');
-  const omim = linksListProperties.querySelector('.omim');
-  const orphanet = linksListProperties.querySelector('.orphanet');
-  const medgen = linksListProperties.querySelector('.medgen');
-  const mondos = linksListProperties.querySelector('.mondos');
-  const kegg = linksListProperties.querySelector('.kegg');
-  const urdbms = linksListProperties.querySelector('.urdbms');
+// TODO: remove makeLinksList
+// function makeLinksList(entryData) {
+//   const linksListProperties = document.querySelector('.properties');
+//   const omim = linksListProperties.querySelector('.omim');
+//   const orphanet = linksListProperties.querySelector('.orphanet');
+//   const medgen = linksListProperties.querySelector('.medgen');
+//   const mondos = linksListProperties.querySelector('.mondos');
+//   const kegg = linksListProperties.querySelector('.kegg');
+//   const urdbms = linksListProperties.querySelector('.urdbms');
 
-  appendLinks(entryData.db_xrefs?.omim, omim);
-  appendLinks(entryData.db_xrefs?.orphanet, orphanet, 'ORPHA:');
+//   appendLinks(entryData.db_xrefs?.omim, omim);
+//   appendLinks(entryData.db_xrefs?.orphanet, orphanet, 'ORPHA:');
 
-  if (entryData.medgen_id) {
-    const dd = document.createElement('dd');
-    const a = createLinkElement(entryData.medgen_uri, entryData.medgen_id);
-    dd.classList.add('linked-item');
-    dd.append(a);
-    medgen.append(dd);
-  } else {
-    medgen.remove();
-  }
+//   if (entryData.medgen_id) {
+//     const dd = document.createElement('dd');
+//     const a = createLinkElement(entryData.medgen_uri, entryData.medgen_id);
+//     dd.classList.add('linked-item');
+//     dd.append(a);
+//     medgen.append(dd);
+//   } else {
+//     medgen.remove();
+//   }
 
-  appendLinks(entryData.mondos, mondos);
+//   appendLinks(entryData.mondos, mondos);
 
-  if (entryData.kegg) {
-    const dd = document.createElement('dd');
-    const a = createLinkElement(entryData.kegg.url, entryData.kegg.id);
-    dd.classList.add('linked-item');
-    dd.append(a);
-    kegg.append(dd);
-  } else {
-    kegg.remove();
-  }
+//   if (entryData.kegg) {
+//     const dd = document.createElement('dd');
+//     const a = createLinkElement(entryData.kegg.url, entryData.kegg.id);
+//     dd.classList.add('linked-item');
+//     dd.append(a);
+//     kegg.append(dd);
+//   } else {
+//     kegg.remove();
+//   }
 
-  if (entryData.urdbms) {
-    const dd = document.createElement('dd');
-    const a = createLinkElement(entryData.urdbms.url, entryData.urdbms.id);
-    dd.classList.add('linked-item');
-    dd.append(a);
-    urdbms.append(dd);
-  } else {
-    urdbms.remove();
-  }
-}
+//   if (entryData.urdbms) {
+//     const dd = document.createElement('dd');
+//     const a = createLinkElement(entryData.urdbms.url, entryData.urdbms.id);
+//     dd.classList.add('linked-item');
+//     dd.append(a);
+//     urdbms.append(dd);
+//   } else {
+//     urdbms.remove();
+//   }
+// }
 
 export function checkSummaryData(entryData) {
   const summaryWrapper = document.querySelector('.summary-wrapper');
@@ -533,6 +535,7 @@ async function fetchNandoData(entryData, item, content) {
 
       // Feedback列にアイコンを追加
       const feedbackCell = document.createElement('td');
+      feedbackCell.classList.add('feedback-cell');
       feedbackCell.innerHTML = `
         <a href="#" class="good-icon" title="Good"><i class="far fa-thumbs-up"></i></a>
         <a href="#" class="bad-icon" title="Bad"><i class="far fa-thumbs-down"></i></a>
