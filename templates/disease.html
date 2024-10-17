@@ -448,197 +448,221 @@
                 <!-- TODO:追加 -->
 
                 <h5 class="sub-title">リンク一覧</h5>
-                <div id="temp-linked-items">
-                  <div class="tab-wrap">
-                    <input type="radio" name="linked-items" class="tab-switch" id="linked-item-omim" />
-                    <label class="tab-label" for="linked-item-omim">OMIM</label>
-                    <div class="tab-content omim">
-                    </div>
-
-                    <input type="radio" name="linked-items" class="tab-switch" id="linked-item-orphanet" />
-                    <label class="tab-label" for="linked-item-orphanet">Orphanet</label>
-                    <div class="tab-content orphanet">
-                    </div>
-
-                    <input type="radio" name="linked-items" class="tab-switch" id="linked-item-monarch-initiative" />
-                    <label class="tab-label" for="linked-item-monarch-initiative">Monarch Initiative</label>
-                    <div class="tab-content monarch-initiative">
-                    </div>
-
-                    <input type="radio" name="linked-items" class="tab-switch" id="linked-item-medgen" />
-                    <label class="tab-label" for="linked-item-medgen">MedGen</label>
-                    <div class="tab-content medgen">
-                    </div>
-
-                    <input type="radio" name="linked-items" class="tab-switch" id="linked-item-kegg-disease" />
-                    <label class="tab-label" for="linked-item-kegg-disease">KEGG Disease</label>
-                    <div class="tab-content kegg-disease">
-                    </div>
-
-                    <span class="tab-label -flex"></span>
-                  </div>
-                </div>
-
-                <h5 class="sub-title">疾患定義</h5>
-                <div id="temp-disease-definition">
-                  <div class="tab-wrap">
-                    <input type="radio" name="disease-definition" class="tab-switch" id="disease-mhlw" />
-                    <label class="tab-label" for="disease-mhlw"><small>from&nbsp;</small>MHLW</label>
-                    <div class="tab-content mhlw">
-                    </div>
-
-                    <input type="radio" name="disease-definition" class="tab-switch" id="disease-monarch-initiative" />
-                    <label class="tab-label" for="disease-monarch-initiative"><small>from&nbsp;</small>Monarch
-                      Initiative</label>
-                    <div class="tab-content monarch-initiative">
-                    </div>
-
-                    <input type="radio" name="disease-definition" class="tab-switch" id="disease-medgen" />
-                    <label class="tab-label" for="disease-medgen"><small>from&nbsp;</small>MedGen</label>
-                    <div class="tab-content medgen">
-                    </div>
-
-                    <span class="tab-label -flex"></span>
-                  </div>
-                </div>
-                <h5 class="sub-title">患者統計情報</h5>
-                <h5 class="sub-title">下位疾患</h5>
+                <!-- <div class="properties" id="#dev-edit-html">
+                    <dl class="linked-items omim">
+                      <dt>OMIM</dt>
+                    </dl>
+                    <dl class="linked-items orphanet">
+                      <dt>Orphanet</dt>
+                    </dl>
+                    <dl class="linked-items medgen">
+                      <dt>MedGen</dt>
+                    </dl>
+                    <dl class="linked-items mondos">
+                      <dt>Monarch Initiative</dt>
+                    </dl>
+                    <dl class="linked-items kegg">
+                      <dt>KEGG Disease</dt>
+                    </dl>
+                    <dl class="linked-items urdbms">
+                      <dt>UR-DBMS</dt>
+                    </dl>
+                  </div> -->
               </div>
+              <!-- TODO:追加 -->
 
-              <div id="causal-genes" open="">
-                <h4 class="temp-title">
-                  {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
-                  疾患原因遺伝子
-                  {% else %}
-                  Causal Genes
-                  {% endif %}
-                  <span class="data-num"></span>
-                  <small>
-                    &nbsp;from&nbsp;
-                    <a href="https://www.ncbi.nlm.nih.gov/medgen/" target="_blank" rel="noopener noreferrer">MedGen</a>
-                    ,&nbsp;
-                    <a href="https://www.orphadata.com/" target="_blank" rel="noopener noreferrer">Orphadata</a>
-                    ,&nbsp;
-                    <a href="https://thegencc.org/" target="_blank" rel="noopener noreferrer">GenCC</a>
-                  </small>
-                </h4>
-                <div id="causal-genes-table"></div>
-              </div>
 
-              <div id="genetic-testing" open="">
-                <h4 class="temp-title">
-                  {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
-                  診療用遺伝学的検査情報
-                  {% else %}
-                  Genetic Testings
-                  {% endif %}
-                  <span class="data-num"></span>
-                  <small>
-                    &nbsp;from&nbsp;
-                    <a href="http://www.kentaikensa.jp/" target="_blank" rel="noopener noreferrer">
-                      {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
-                      日本人類遺伝学会
-                      {% else %}
-                      The Japan Society of Human Genetics
-                      {% endif %}
-                    </a>
-                  </small>
-                </h4>
-                <div id="genetic-testing-table"></div>
-              </div>
-
-              <div id="phenotypes" open="">
-                <h4 class="temp-title">
-                  {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
-                  臨床的特徴
-                  {% else %}
-                  Clinical Features
-                  {% endif %}
-                  <span class="data-num"></span>
-                  <small>
-                    &nbsp;from&nbsp;
-                    <a href="https://hpo.jax.org/app/" target="_blank" rel="noopener noreferrer">HPO</a>
-                  </small>
-                </h4>
-                <div id="phenotype-ja"></div>
-                <div id="phenotype-en"></div>
-              </div>
-
-              <div id="bio-resource" open="">
-                <h4 class="temp-title">
-                  {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
-                  難病特異的バイオリソース
-                  {% else %}
-                  Bioresources
-                  {% endif %}
-                  <small>
-                    &nbsp;from&nbsp;
-                    <a href="https://web.brc.riken.jp/" target="_blank" rel="noopener noreferrer">Riken BRC</a>
-                  </small>
-                </h4>
-
+              <div id="temp-linked-items">
                 <div class="tab-wrap">
-                  <input type="radio" name="specific-brc" class="tab-switch" id="bio-resource-cell" />
-                  <label class="tab-label bio-resource-cell" for="bio-resource-cell">
-                    {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
-                    細胞
-                    {% else %}
-                    Cell
-                    {% endif %}
-                    <span class="data-num"></span></label>
-                  <div class="tab-content cell"></div>
+                  <input type="radio" name="linked-items" class="tab-switch" id="linked-item-omim" />
+                  <label class="tab-label" for="linked-item-omim">OMIM</label>
+                  <div class="tab-content omim">
+                  </div>
 
-                  <input type="radio" name="specific-brc" class="tab-switch" id="bio-resource-mouse" />
-                  <label class="tab-label bio-resource-mouse" for="bio-resource-mouse">
-                    {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
-                    マウス
-                    {% else %}
-                    Mouse
-                    {% endif %}
-                    <span class="data-num"></span></label>
-                  <div class="tab-content mouse"></div>
+                  <input type="radio" name="linked-items" class="tab-switch" id="linked-item-orphanet" />
+                  <label class="tab-label" for="linked-item-orphanet">Orphanet</label>
+                  <div class="tab-content orphanet">
+                  </div>
 
-                  <input type="radio" name="specific-brc" class="tab-switch" id="bio-resource-dna" />
-                  <label class="tab-label bio-resource-dna" for="bio-resource-dna">DNA<span
-                      class="data-num"></span></label>
-                  <div class="tab-content dna"></div>
+                  <input type="radio" name="linked-items" class="tab-switch" id="linked-item-monarch-initiative" />
+                  <label class="tab-label" for="linked-item-monarch-initiative">Monarch Initiative</label>
+                  <div class="tab-content monarch-initiative">
+                  </div>
+
+                  <input type="radio" name="linked-items" class="tab-switch" id="linked-item-medgen" />
+                  <label class="tab-label" for="linked-item-medgen">MedGen</label>
+                  <div class="tab-content medgen">
+                  </div>
+
+                  <input type="radio" name="linked-items" class="tab-switch" id="linked-item-kegg-disease" />
+                  <label class="tab-label" for="linked-item-kegg-disease">KEGG Disease</label>
+                  <div class="tab-content kegg-disease">
+                  </div>
 
                   <span class="tab-label -flex"></span>
                 </div>
               </div>
 
-              <div id="variant" open="">
-                <h4 class="temp-title">
-                  {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
-                  バリアント
-                  {% else %}
-                  Variants
-                  {% endif %}
-                  <small>
-                    &nbsp;from&nbsp;
-                    <a href="https://grch38.togovar.org/" target="_blank" rel="noopener noreferrer">TogoVar</a>
-                    ,&nbsp;
-                    <a href="https://mgend.ncgm.go.jp/" target="_blank" rel="noopener noreferrer">MGeND</a>
-                  </small>
-                </h4>
-
+              <h5 class="sub-title">疾患定義</h5>
+              <div id="temp-disease-definition">
                 <div class="tab-wrap">
-                  <input type="radio" name="variant" class="tab-switch" id="variant-clinvar" />
-                  <label class="tab-label variant-clinvar" for="variant-clinvar">
-                    ClinVar<span class="data-num"></span>
-                  </label>
-                  <div class="tab-content clinvar"></div>
+                  <input type="radio" name="disease-definition" class="tab-switch" id="disease-mhlw" />
+                  <label class="tab-label" for="disease-mhlw"><small>from&nbsp;</small>MHLW</label>
+                  <div class="tab-content mhlw">
+                  </div>
 
-                  <input type="radio" name="variant" class="tab-switch" id="variant-mgend" />
-                  <label class="tab-label variant-mgend" for="variant-mgend">
-                    MGeND<span class="data-num"></span>
-                  </label>
-                  <div class="tab-content mgend"></div>
+                  <input type="radio" name="disease-definition" class="tab-switch" id="disease-monarch-initiative" />
+                  <label class="tab-label" for="disease-monarch-initiative"><small>from&nbsp;</small>Monarch
+                    Initiative</label>
+                  <div class="tab-content monarch-initiative">
+                  </div>
+
+                  <input type="radio" name="disease-definition" class="tab-switch" id="disease-medgen" />
+                  <label class="tab-label" for="disease-medgen"><small>from&nbsp;</small>MedGen</label>
+                  <div class="tab-content medgen">
+                  </div>
 
                   <span class="tab-label -flex"></span>
                 </div>
+              </div>
+              <h5 class="sub-title">患者統計情報</h5>
+              <h5 class="sub-title">下位疾患</h5>
+            </div>
+
+            <div id="causal-genes" open="">
+              <h4 class="temp-title">
+                {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
+                疾患原因遺伝子
+                {% else %}
+                Causal Genes
+                {% endif %}
+                <span class="data-num"></span>
+                <small>
+                  &nbsp;from&nbsp;
+                  <a href="https://www.ncbi.nlm.nih.gov/medgen/" target="_blank" rel="noopener noreferrer">MedGen</a>
+                  ,&nbsp;
+                  <a href="https://www.orphadata.com/" target="_blank" rel="noopener noreferrer">Orphadata</a>
+                  ,&nbsp;
+                  <a href="https://thegencc.org/" target="_blank" rel="noopener noreferrer">GenCC</a>
+                </small>
+              </h4>
+              <div id="causal-genes-table"></div>
+            </div>
+
+            <div id="genetic-testing" open="">
+              <h4 class="temp-title">
+                {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
+                診療用遺伝学的検査情報
+                {% else %}
+                Genetic Testings
+                {% endif %}
+                <span class="data-num"></span>
+                <small>
+                  &nbsp;from&nbsp;
+                  <a href="http://www.kentaikensa.jp/" target="_blank" rel="noopener noreferrer">
+                    {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
+                    日本人類遺伝学会
+                    {% else %}
+                    The Japan Society of Human Genetics
+                    {% endif %}
+                  </a>
+                </small>
+              </h4>
+              <div id="genetic-testing-table"></div>
+            </div>
+
+            <div id="phenotypes" open="">
+              <h4 class="temp-title">
+                {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
+                臨床的特徴
+                {% else %}
+                Clinical Features
+                {% endif %}
+                <span class="data-num"></span>
+                <small>
+                  &nbsp;from&nbsp;
+                  <a href="https://hpo.jax.org/app/" target="_blank" rel="noopener noreferrer">HPO</a>
+                </small>
+              </h4>
+              <div id="phenotype-ja"></div>
+              <div id="phenotype-en"></div>
+            </div>
+
+            <div id="bio-resource" open="">
+              <h4 class="temp-title">
+                {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
+                難病特異的バイオリソース
+                {% else %}
+                Bioresources
+                {% endif %}
+                <small>
+                  &nbsp;from&nbsp;
+                  <a href="https://web.brc.riken.jp/" target="_blank" rel="noopener noreferrer">Riken BRC</a>
+                </small>
+              </h4>
+
+              <div class="tab-wrap">
+                <input type="radio" name="specific-brc" class="tab-switch" id="bio-resource-cell" />
+                <label class="tab-label bio-resource-cell" for="bio-resource-cell">
+                  {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
+                  細胞
+                  {% else %}
+                  Cell
+                  {% endif %}
+                  <span class="data-num"></span></label>
+                <div class="tab-content cell"></div>
+
+                <input type="radio" name="specific-brc" class="tab-switch" id="bio-resource-mouse" />
+                <label class="tab-label bio-resource-mouse" for="bio-resource-mouse">
+                  {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
+                  マウス
+                  {% else %}
+                  Mouse
+                  {% endif %}
+                  <span class="data-num"></span></label>
+                <div class="tab-content mouse"></div>
+
+                <input type="radio" name="specific-brc" class="tab-switch" id="bio-resource-dna" />
+                <label class="tab-label bio-resource-dna" for="bio-resource-dna">DNA<span
+                    class="data-num"></span></label>
+                <div class="tab-content dna"></div>
+
+                <span class="tab-label -flex"></span>
               </div>
             </div>
+
+            <div id="variant" open="">
+              <h4 class="temp-title">
+                {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
+                バリアント
+                {% else %}
+                Variants
+                {% endif %}
+                <small>
+                  &nbsp;from&nbsp;
+                  <a href="https://grch38.togovar.org/" target="_blank" rel="noopener noreferrer">TogoVar</a>
+                  ,&nbsp;
+                  <a href="https://mgend.ncgm.go.jp/" target="_blank" rel="noopener noreferrer">MGeND</a>
+                </small>
+              </h4>
+
+              <div class="tab-wrap">
+                <input type="radio" name="variant" class="tab-switch" id="variant-clinvar" />
+                <label class="tab-label variant-clinvar" for="variant-clinvar">
+                  ClinVar<span class="data-num"></span>
+                </label>
+                <div class="tab-content clinvar"></div>
+
+                <input type="radio" name="variant" class="tab-switch" id="variant-mgend" />
+                <label class="tab-label variant-mgend" for="variant-mgend">
+                  MGeND<span class="data-num"></span>
+                </label>
+                <div class="tab-content mgend"></div>
+
+                <span class="tab-label -flex"></span>
+              </div>
+            </div>
+          </div>
         </main>
       </div>
     </div>
