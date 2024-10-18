@@ -38,8 +38,8 @@
 
   <!-- TokenInput -->
   <script type="text/javascript" src="/static/js/jquery-3.6.0.min.js"></script>
-  <script type="text/javascript" src="/static/js/jquery.tokeninput.js"></script>
-  <script type="text/javascript" src="/static/js/tokeninput.js"></script>
+  <!-- <script type="text/javascript" src="/static/js/jquery.tokeninput.js"></script>
+  <script type="text/javascript" src="/static/js/tokeninput.js"></script> -->
 
   <!-- js -->
   <script type="text/javascript" src="/static/js/index.js" defer></script>
@@ -55,6 +55,18 @@
     <div class="page-layout">
       <header class="search-area">
         <div class="intro-text">
+          <div class="top-smart-box">
+            {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
+            <div class="smart-box-container">
+              <input type="text" id="NANDO" class="smart-box-input" autocomplete="off" placeholder="難病名を入力">
+            </div>
+            {% else %}
+            <div class="smart-box-container">
+              <input type="text" id="NANDO" class="smart-box-input" autocomplete="off"
+                placeholder="Type in disease name">
+            </div>
+            {% endif %}
+          </div>
           <p>ex&#41;</p>
           {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
           <div class="keyword"><a href="/disease/NANDO:2200053">ユーイング肉腫</a></div>
@@ -323,6 +335,7 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
     integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
     </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
   <script type="module" src="/static/js/main.js"></script>
 </body>
 

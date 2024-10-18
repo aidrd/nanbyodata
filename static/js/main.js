@@ -1,13 +1,28 @@
 import { navToggle } from './navigation.js';
 import { focusInput } from './focusInput.js';
-import { changePlaceholder } from './changePlaceholder.js';
 import { setLangChange } from './setLangChange.js';
-import { drawEpidemiologyTable } from './epidemiology.js';
+import {
+  drawDesignatedIntractableDiseaseColumnsTable,
+  drawPediatricChronicSpecificDiseaseColumnsTable,
+} from './epidemiology.js';
+import { smartBox } from './smart_box.js';
 
 navToggle();
 focusInput();
-changePlaceholder();
 setLangChange();
 if (window.location.pathname === '/epidemiology') {
-  drawEpidemiologyTable();
+  drawDesignatedIntractableDiseaseColumnsTable();
+  drawPediatricChronicSpecificDiseaseColumnsTable();
+}
+
+// smart box
+if (window.location.pathname === '/') {
+  smartBox('NANDO', '/static/tsv/NANDO_20240516.tsv', {
+    api_url: '',
+  });
+
+  document.addEventListener('selectedLabel', function (event) {
+    const labelInfo = event.detail.labelInfo;
+    window.location.href = `${location.origin}/disease/${labelInfo.id}`;
+  });
 }
