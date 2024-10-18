@@ -782,13 +782,13 @@ function addPaginationTableToDiv(entryData) {
     tableElement.setAttribute(
       'columns',
       `[{
-        "id": "nando_label",
+        "id": "label",
         "label": "Subclass(JA)",
         "escape": false,
         "line-clamp": 2
       },
       {
-        "id": "nando_englabel",
+        "id": "engLabel",
         "label": "Subclass(En)",
         "escape": false,
         "line-clamp": 2
@@ -797,7 +797,9 @@ function addPaginationTableToDiv(entryData) {
         "id": "id",
         "label": "Notification Number",
         "escape": true,
-        "line-clamp": 1
+        "line-clamp": 1,
+        "link": "idurl",
+        "target": "_blank"
       }]`
     );
 
