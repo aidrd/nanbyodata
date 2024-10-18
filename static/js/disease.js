@@ -596,6 +596,7 @@ async function makeLinkedItem(entryData) {
         { label: 'MONDO Label (JA)', content: 'mondo_label_ja2' },
         { label: 'MONDO Label (EN)', content: 'mondo_label_en2' },
         { label: 'Parent', content: 'parent' },
+        // { label: 'Link Type', content: 'property' },
       ],
       keys: ['id', 'mondo_label_ja2', 'mondo_label_en2', 'parent'],
       apiUrl: 'https://dev-nanbyodata.dbcls.jp/sparqlist/api/test-nando-omim',
@@ -612,6 +613,7 @@ async function makeLinkedItem(entryData) {
         { label: 'MONDO Label (JA)', content: 'mondo_label_ja2' },
         { label: 'MONDO Label (EN)', content: 'mondo_label_en2' },
         { label: 'Parent', content: 'parent' },
+        // { label: 'Link Type', content: 'property' },
       ],
       keys: ['id', 'mondo_label_ja2', 'mondo_label_en2', 'parent'],
       apiUrl: 'https://dev-nanbyodata.dbcls.jp/sparqlist/api/link-mondo-ordo',
@@ -628,6 +630,7 @@ async function makeLinkedItem(entryData) {
         { label: 'MONDO Label (JA)', content: 'mondo_label_ja' },
         { label: 'MONDO Label (EN)', content: 'mondo_label_en' },
         { label: 'Parent', content: 'parent' },
+        // { label: 'Link Type', content: 'property' },
       ],
       keys: ['id', 'mondo_label_ja', 'mondo_label_en', 'parent'],
       apiUrl:
@@ -773,6 +776,7 @@ function addChartToDiv(entryData) {
       chartElement.setAttribute('axis-y-title', 'Num of Patients');
       chartElement.setAttribute('legend-title', 'Category');
       chartElement.setAttribute('tooltips-key', 'num_of_patients');
+      chartElement.setAttribute('grouping-key', 'group');
     } else {
       // Line チャートを作成
       chartElement = document.createElement('togostanza-linechart');
@@ -796,6 +800,7 @@ function addChartToDiv(entryData) {
       chartElement.setAttribute('point_size', '5');
       chartElement.setAttribute('legend-title', 'Year');
       chartElement.setAttribute('tooltips-key', 'num_of_patients');
+      chartElement.setAttribute('grouping-key', 'group');
     }
 
     // スクリプトを動的に作成して追加
