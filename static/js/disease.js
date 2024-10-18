@@ -579,6 +579,7 @@ async function fetchNandoData(entryData, item, content) {
 async function makeLinkedItem(entryData) {
   const linkedItems = document.getElementById('temp-linked-items');
   const tabWrap = linkedItems.querySelector('.tab-wrap');
+  const selectGraphType = document.getElementById('linked-items-graph');
 
   const items = [
     {
@@ -607,17 +608,16 @@ async function makeLinkedItem(entryData) {
       labels: [
         {
           label: 'Orphanet ID',
-          content: 'orphanet_id',
-          type: 'url',
-          hrefKey: 'orphanet_url',
+          content: 'id',
+          type: 'url', // original_disease に対応したリンクを作成
+          hrefKey: 'original_disease',
         },
-        { label: 'Name', content: 'name' },
-        { label: 'Disorder', content: 'disorder' },
-        { label: 'Link Type', content: 'property' },
+        { label: 'MONDO Label (JA)', content: 'mondo_label_ja' },
+        { label: 'MONDO Label (EN)', content: 'mondo_label_en' },
+        { label: 'Parent', content: 'parent' },
       ],
-      keys: ['orphanet_id', 'name', 'disorder', 'property'],
-      apiUrl:
-        'https://dev-nanbyodata.dbcls.jp/sparqlist/api/test-nando-orphanet',
+      keys: ['id', 'mondo_label_ja', 'mondo_label_en', 'parent'],
+      apiUrl: 'https://dev-nanbyodata.dbcls.jp/sparqlist/api/link-mondo-ordo',
     },
     {
       class: 'monarch-initiative',
@@ -674,17 +674,13 @@ async function makeLinkedItem(entryData) {
 
   for (const item of items) {
     const content = tabWrap.querySelector(`.${item.class}`);
-
     const exists = await fetchNandoData(entryData, item, content);
 
     if (!exists) {
       const input = document.getElementById(`linked-item-${item.class}`);
-
       if (input) {
         const label = input.nextElementSibling;
-        if (label) {
-          label.remove();
-        }
+        if (label) label.remove();
         input.remove();
       }
     } else {
@@ -693,7 +689,60 @@ async function makeLinkedItem(entryData) {
         currentTab.checked = true;
         isFirstTab = false;
       }
+
+      // 初期表示としてテーブルを表示
+      addTableOrTree(content, item, 'table', entryData);
+
+      // セレクトボックス変更時に表示形式を切り替える
+      selectGraphType.addEventListener('change', function () {
+        const displayType = this.value;
+        addTableOrTree(content, item, displayType, entryData);
+      });
     }
+  }
+}
+
+function addTableOrTree(content, item, displayType, entryData) {
+  content.innerHTML = ''; // 既存の内容をクリア
+
+  if (displayType === 'table') {
+    // テーブルを生成 (fetchNandoData関数を利用)
+    fetchNandoData(entryData, item, content);
+
+    // フィードバックメッセージを表示
+    const feedbackMessage = document.createElement('p');
+    feedbackMessage.textContent =
+      '*リンクに関するフィードバックをお待ちしております.';
+    content.appendChild(feedbackMessage);
+  } else if (displayType === 'tree') {
+    // ツリー表示
+    const treeElement = document.createElement('togostanza-tree');
+    treeElement.setAttribute('data-url', item.apiUrl);
+    treeElement.setAttribute('data-type', 'json');
+    treeElement.setAttribute('sort-key', 'id');
+    treeElement.setAttribute('sort-order', 'ascending');
+    treeElement.setAttribute('graph-layout', 'horizontal');
+    treeElement.setAttribute('node-label-key', 'id');
+    treeElement.setAttribute('node-label-margin', '8');
+    treeElement.setAttribute('node-size-key', 'size');
+    treeElement.setAttribute('node-size-min', '8');
+    treeElement.setAttribute('node-size-max', '8');
+    treeElement.setAttribute('node-color-key', 'color');
+    treeElement.setAttribute('node-color-group', 'group');
+    treeElement.setAttribute('node-color-blend', 'normal');
+    treeElement.setAttribute('tooltips-key', 'name');
+    treeElement.setAttribute('togostanza-custom_css_url', '');
+
+    treeElement.style.setProperty('--togostanza-canvas-height', '600px');
+
+    // スクリプト要素を動的に追加してツリーを有効化
+    const scriptElement = document.createElement('script');
+    scriptElement.type = 'module';
+    scriptElement.src = 'https://togostanza.github.io/metastanza-devel/tree.js';
+    scriptElement.async = true;
+
+    content.appendChild(treeElement);
+    content.appendChild(scriptElement);
   }
 }
 
