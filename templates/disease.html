@@ -419,7 +419,7 @@
               {% endif %}
               <!-- TODO:追加 -->
               <div class="overview-wrapper">
-                <section>
+                <section class="overview-section">
                   <h5 class="sub-title -alt-label">別疾患名</h5>
                   <div class="summary-wrapper">
                     <div id="temp-aliases">
@@ -434,7 +434,7 @@
                     </div>
                 </section>
                 <!-- TODO:追加 -->
-                <section>
+                <section class="overview-section">
                   <h5 class="sub-title -inheritance-uri">遺伝形式</h5>
                   <div class="temp-wrapper">
                     <div class="inheritance-uris">
@@ -446,12 +446,15 @@
                   </div>
                 </section>
 
-                <section>
-                  <h5 class="sub-title">リンク一覧</h5>
-
-                  <!-- TODO:追加 -->
-
-
+                <!-- TODO:追加 -->
+                <section class="overview-section">
+                  <div class="sub-title-wrapper">
+                    <h5 class="sub-title">リンク一覧</h5>
+                    <select name="link-graph" id="link-graph">
+                      <option value="table" selected>Table</option>
+                      <option value="tree">Tree</option>
+                    </select>
+                  </div>
                   <div id="temp-linked-items">
                     <div class="tab-wrap">
                       <input type="radio" name="linked-items" class="tab-switch" id="linked-item-omim" />
@@ -489,7 +492,7 @@
                   </div>
                 </section>
 
-                <section>
+                <section class="overview-section">
                   <h5 class="sub-title -disease-definition">疾患定義</h5>
                   <div id="temp-disease-definition">
                     <div class="tab-wrap">
@@ -514,14 +517,25 @@
                     </div>
                   </div>
                 </section>
-                <section>
-                  <h5 class="sub-title">患者統計情報</h5>
+                <section class="overview-section">
+                  <div class="sub-title-wrapper">
+                    <h5 class="sub-title">患者統計情報</h5>
+                    <select name="num-of-patients-graph" id="num-of-patients-graph">
+                      <option value="line" selected>Line</option>
+                      <option value="bar">Bar</option>
+                    </select>
+                  </div>
                   <div id="temp-num-of-patients">
-
                   </div>
                 </section>
-                <section>
-                  <h5 class="sub-title -sub-class">下位疾患</h5>
+                <section overview-section>
+                  <div class="sub-title-wrapper">
+                    <h5 class="sub-title -sub-class">下位疾患</h5>
+                    <select name="sub-class-graph" id="sub-class-graph">
+                      <option value="table" selected>Table</option>
+                      <option value="tree">Tree</option>
+                    </select>
+                  </div>
                   <div id="temp-sub-class"></div>
                 </section>
               </div>

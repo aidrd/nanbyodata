@@ -74,6 +74,12 @@ const datasets = [
         checkSummaryData(entryData);
         makeDiseaseDefinition(entryData);
         updateOverviewLinkAndContentDisplay();
+        const chartTypeSelect = document.getElementById(
+          'num-of-patients-graph'
+        );
+        chartTypeSelect.addEventListener('change', function () {
+          addChartToDiv(entryData);
+        });
         datasets.find((d) => d.name === 'Overview').data = entryData;
         checkAndLogDatasets();
         if (hash) {
@@ -321,7 +327,7 @@ function appendLinks(data, container, prefix = '') {
 }
 
 function makeInheritanceUris(entryData) {
-  const inheritanceUris = document.querySelector('.inheritance-uri');
+  const inheritanceUris = document.querySelector('.inheritance-uris');
   const inheritanceSubTitle = document.querySelector(
     '.sub-title.-inheritance-uri'
   );
@@ -688,40 +694,67 @@ async function makeLinkedItem(entryData) {
 }
 
 // TODO: Num of Patients
+// チャート描画関数
 function addChartToDiv(entryData) {
   const targetDiv = document.getElementById('temp-num-of-patients');
+  const chartTypeSelect = document.getElementById('num-of-patients-graph');
+  const selectedChartType = chartTypeSelect ? chartTypeSelect.value : 'line';
 
   if (targetDiv) {
-    // togostanza-linechart要素を作成
-    const chartElement = document.createElement('togostanza-linechart');
-    chartElement.setAttribute(
-      'data-url',
-      `https://dev-nanbyodata.dbcls.jp/sparqlist/api/takatsuki_test_20240322?nando_id=${entryData.nando_id}`
-    );
-    chartElement.setAttribute('data-type', 'json');
-    chartElement.setAttribute('axis-x-key', 'year');
-    chartElement.setAttribute('axis-x-scale', 'ordinal');
-    chartElement.setAttribute('axis-x-placement', 'bottom');
-    chartElement.setAttribute('axis-x-title', 'Year');
-    chartElement.setAttribute('axis-x-title_padding', '32');
-    chartElement.setAttribute('axis-x-ticks_label_angle', '0');
-    chartElement.setAttribute('axis-y-key', 'num_of_patients');
-    chartElement.setAttribute('axis-y-scale', 'linear');
-    chartElement.setAttribute('axis-y-placement', 'left');
-    chartElement.setAttribute('axis-y-title', 'Num of Patients');
-    chartElement.setAttribute('axis-y-title_padding', '40');
-    chartElement.setAttribute('axis-y-ticks_label_angle', '0');
-    chartElement.setAttribute('point_size', '5');
-    chartElement.setAttribute('legend-title', 'Year');
+    targetDiv.innerHTML = ''; // 既存のチャートをクリア
 
-    // スクリプト要素を動的に作成して挿入
+    let chartElement;
+    if (selectedChartType === 'bar') {
+      // Bar チャートを作成
+      chartElement = document.createElement('togostanza-barchart');
+      chartElement.setAttribute(
+        'data-url',
+        `https://dev-nanbyodata.dbcls.jp/sparqlist/api/takatsuki_test_20240322?nando_id=${entryData.nando_id}`
+      );
+      chartElement.setAttribute('data-type', 'json');
+      chartElement.setAttribute('axis-x-key', 'year');
+      chartElement.setAttribute('axis-x-placement', 'bottom');
+      chartElement.setAttribute('axis-x-title', 'Year');
+      chartElement.setAttribute('axis-x-title_padding', '45');
+      chartElement.setAttribute('axis-y-title_padding', '45');
+      chartElement.setAttribute('axis-x-ticks_label_angle', '-45');
+      chartElement.setAttribute('axis-y-key', 'num_of_patients');
+      chartElement.setAttribute('axis-y-placement', 'left');
+      chartElement.setAttribute('axis-y-title', 'Num of Patients');
+      chartElement.setAttribute('legend-title', 'Category');
+      chartElement.setAttribute('tooltips-key', 'num_of_patients');
+    } else {
+      // Line チャートを作成
+      chartElement = document.createElement('togostanza-linechart');
+      chartElement.setAttribute(
+        'data-url',
+        `https://dev-nanbyodata.dbcls.jp/sparqlist/api/takatsuki_test_20240322?nando_id=${entryData.nando_id}`
+      );
+      chartElement.setAttribute('data-type', 'json');
+      chartElement.setAttribute('axis-x-key', 'year');
+      chartElement.setAttribute('axis-x-scale', 'ordinal');
+      chartElement.setAttribute('axis-x-placement', 'bottom');
+      chartElement.setAttribute('axis-x-title', 'Year');
+      chartElement.setAttribute('axis-x-title_padding', '32');
+      chartElement.setAttribute('axis-x-ticks_label_angle', '0');
+      chartElement.setAttribute('axis-y-key', 'num_of_patients');
+      chartElement.setAttribute('axis-y-scale', 'linear');
+      chartElement.setAttribute('axis-y-placement', 'left');
+      chartElement.setAttribute('axis-y-title', 'Num of Patients');
+      chartElement.setAttribute('axis-y-title_padding', '40');
+      chartElement.setAttribute('axis-y-ticks_label_angle', '0');
+      chartElement.setAttribute('point_size', '5');
+      chartElement.setAttribute('legend-title', 'Year');
+      chartElement.setAttribute('tooltips-key', 'num_of_patients');
+    }
+
+    // スクリプトを動的に作成して追加
     const scriptElement = document.createElement('script');
     scriptElement.type = 'module';
-    scriptElement.src =
-      'https://togostanza.github.io/metastanza-devel/linechart.js';
+    scriptElement.src = `https://togostanza.github.io/metastanza-devel/${selectedChartType}chart.js`;
     scriptElement.async = true;
 
-    // targetDivにチャートとスクリプトを追加
+    // チャートとスクリプトを targetDiv に追加
     targetDiv.appendChild(chartElement);
     targetDiv.appendChild(scriptElement);
   }

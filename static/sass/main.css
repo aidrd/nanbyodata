@@ -430,6 +430,9 @@ footer .container .footer__bottom .footer__lisence small:before {
 #overview .temp-wrapper .inheritance-uris {
   padding-bottom: 15px;
 }
+#overview .overview-section {
+  padding-bottom: 15px;
+}
 
 .content-wrapper {
   position: relative;
@@ -498,6 +501,11 @@ footer .container .footer__bottom .footer__lisence small:before {
   line-height: 1.5;
   margin: 0 5px;
   min-width: 22px;
+}
+.content-wrapper #content #data-wrapper .sub-title-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 .content-wrapper #content #data-wrapper .sub-title {
   font-size: var(--font-size-xl);
@@ -1666,9 +1674,6 @@ Disease page right top */
 }
 
 /* Summary wrapper */
-.summary-wrapper .aliases {
-  padding-bottom: 15px;
-}
 .summary-wrapper .aliases > dl {
   margin: 0 0 4px;
   border-radius: var(--radius-base);

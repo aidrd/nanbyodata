@@ -7,6 +7,9 @@
       padding-bottom: 15px;
     }
   }
+  .overview-section {
+    padding-bottom: 15px;
+  }
 }
 
 .content-wrapper {
@@ -83,6 +86,11 @@
         }
       }
 
+      .sub-title-wrapper {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
       .sub-title {
         font-size: var(--font-size-xl);
         border-radius: var(--radius-base);
