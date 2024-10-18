@@ -428,6 +428,7 @@ footer .container .footer__bottom .footer__lisence small:before {
   padding: 0 10px;
 }
 #overview .temp-wrapper .inheritance-uris {
+  display: flex;
   padding-bottom: 15px;
 }
 #overview .overview-section {

@@ -596,9 +596,9 @@ async function makeLinkedItem(entryData) {
         { label: 'MONDO Label (JA)', content: 'mondo_label_ja2' },
         { label: 'MONDO Label (EN)', content: 'mondo_label_en2' },
         { label: 'Parent', content: 'parent' },
-        // { label: 'Link Type', content: 'property' },
+        { label: 'Link Type', content: 'property' },
       ],
-      keys: ['id', 'mondo_label_ja2', 'mondo_label_en2', 'parent'],
+      keys: ['id', 'mondo_label_ja2', 'mondo_label_en2', 'parent', 'property'],
       apiUrl: 'https://dev-nanbyodata.dbcls.jp/sparqlist/api/test-nando-omim',
     },
     {
@@ -613,9 +613,9 @@ async function makeLinkedItem(entryData) {
         { label: 'MONDO Label (JA)', content: 'mondo_label_ja2' },
         { label: 'MONDO Label (EN)', content: 'mondo_label_en2' },
         { label: 'Parent', content: 'parent' },
-        // { label: 'Link Type', content: 'property' },
+        { label: 'Link Type', content: 'property' },
       ],
-      keys: ['id', 'mondo_label_ja2', 'mondo_label_en2', 'parent'],
+      keys: ['id', 'mondo_label_ja2', 'mondo_label_en2', 'parent', 'property'],
       apiUrl: 'https://dev-nanbyodata.dbcls.jp/sparqlist/api/link-mondo-ordo',
     },
     {
@@ -630,9 +630,9 @@ async function makeLinkedItem(entryData) {
         { label: 'MONDO Label (JA)', content: 'mondo_label_ja' },
         { label: 'MONDO Label (EN)', content: 'mondo_label_en' },
         { label: 'Parent', content: 'parent' },
-        // { label: 'Link Type', content: 'property' },
+        { label: 'Link Type', content: 'property' },
       ],
-      keys: ['id', 'mondo_label_ja', 'mondo_label_en', 'parent'],
+      keys: ['id', 'mondo_label_ja', 'mondo_label_en', 'parent', 'property'],
       apiUrl:
         'https://dev-nanbyodata.dbcls.jp/sparqlist/api/test_nando_link_mond',
     },
@@ -733,7 +733,13 @@ function addTableOrTree(content, item, displayType, entryData) {
     treeElement.setAttribute('tooltips-key', 'name');
     treeElement.setAttribute('togostanza-custom_css_url', '');
 
-    treeElement.style.setProperty('--togostanza-canvas-height', '600px');
+    treeElement.style.setProperty(
+      '--togostanza-theme-series_0_color',
+      '#29697a'
+    );
+    treeElement.style.setProperty('--togostanza-fonts-font_size_primary', '14');
+    treeElement.style.setProperty('--togostanza-canvas-height', '200px');
+    treeElement.style.setProperty('--togostanza-canvas-width', '1000px');
 
     // スクリプト要素を動的に追加してツリーを有効化
     const scriptElement = document.createElement('script');
@@ -747,38 +753,55 @@ function addTableOrTree(content, item, displayType, entryData) {
 }
 
 // TODO: Num of Patients
-// チャート描画関数
 function addChartToDiv(entryData) {
   const targetDiv = document.getElementById('temp-num-of-patients');
   const chartTypeSelect = document.getElementById('num-of-patients-graph');
   const selectedChartType = chartTypeSelect ? chartTypeSelect.value : 'line';
 
   if (targetDiv) {
-    targetDiv.innerHTML = ''; // 既存のチャートをクリア
+    targetDiv.innerHTML = ''; // Clear existing chart
 
     let chartElement;
     if (selectedChartType === 'bar') {
-      // Bar チャートを作成
+      // Create Bar Chart
       chartElement = document.createElement('togostanza-barchart');
       chartElement.setAttribute(
         'data-url',
         `https://dev-nanbyodata.dbcls.jp/sparqlist/api/takatsuki_test_20240322?nando_id=${entryData.nando_id}`
       );
       chartElement.setAttribute('data-type', 'json');
-      chartElement.setAttribute('axis-x-key', 'year');
-      chartElement.setAttribute('axis-x-placement', 'bottom');
-      chartElement.setAttribute('axis-x-title', 'Year');
-      chartElement.setAttribute('axis-x-title_padding', '45');
-      chartElement.setAttribute('axis-y-title_padding', '45');
-      chartElement.setAttribute('axis-x-ticks_label_angle', '-45');
-      chartElement.setAttribute('axis-y-key', 'num_of_patients');
-      chartElement.setAttribute('axis-y-placement', 'left');
-      chartElement.setAttribute('axis-y-title', 'Num of Patients');
-      chartElement.setAttribute('legend-title', 'Category');
-      chartElement.setAttribute('tooltips-key', 'num_of_patients');
-      chartElement.setAttribute('grouping-key', 'group');
+      chartElement.setAttribute('category', 'year');
+      chartElement.setAttribute('value', 'num_of_patients');
+      chartElement.setAttribute('category-title', 'Year');
+      chartElement.setAttribute('value-title', 'Num of Patients');
+      chartElement.setAttribute('chart-type', 'stacked');
+      chartElement.setAttribute('width', '800');
+      chartElement.setAttribute('height', '600');
+      chartElement.setAttribute('legend', 'true');
+      chartElement.setAttribute('xaxis-placement', 'bottom');
+      chartElement.setAttribute('yaxis-placement', 'left');
+      chartElement.setAttribute('xlabel-padding', '10');
+      chartElement.setAttribute('ylabel-padding', '5');
+      chartElement.setAttribute('xlabel-alignment', 'center');
+      chartElement.setAttribute('ylabel-alignment', 'right');
+
+      chartElement.setAttribute('padding-inner', '.8');
+      chartElement.setAttribute('padding-outer', '.5');
+      chartElement.setAttribute('bar-width', '0.8');
+      chartElement.setAttribute('legend-title', 'Categories');
+      chartElement.setAttribute('xgrid', 'false');
+      chartElement.setAttribute('ygrid', 'true');
+      chartElement.setAttribute('xtick', 'false');
+      chartElement.setAttribute('ytick', 'true');
+      chartElement.setAttribute('xlabel-max-width', '200');
+      chartElement.setAttribute('ylabel-max-width', '200');
+      chartElement.setAttribute('xlabel-alignment', 'center');
+      chartElement.setAttribute('ylabel-alignment', 'right');
+      // Apply custom styles
+      chartElement.style.setProperty('--togostanza-series-0-color', '#29697a');
+      chartElement.style.setProperty('--togostanza-label-font-size', '14');
     } else {
-      // Line チャートを作成
+      // Create Line Chart
       chartElement = document.createElement('togostanza-linechart');
       chartElement.setAttribute(
         'data-url',
@@ -789,27 +812,47 @@ function addChartToDiv(entryData) {
       chartElement.setAttribute('axis-x-scale', 'ordinal');
       chartElement.setAttribute('axis-x-placement', 'bottom');
       chartElement.setAttribute('axis-x-title', 'Year');
-      chartElement.setAttribute('axis-x-title_padding', '32');
+      chartElement.setAttribute('axis-x-title_padding', '40');
       chartElement.setAttribute('axis-x-ticks_label_angle', '0');
       chartElement.setAttribute('axis-y-key', 'num_of_patients');
       chartElement.setAttribute('axis-y-scale', 'linear');
       chartElement.setAttribute('axis-y-placement', 'left');
       chartElement.setAttribute('axis-y-title', 'Num of Patients');
-      chartElement.setAttribute('axis-y-title_padding', '40');
+      chartElement.setAttribute('axis-y-title_padding', '50');
       chartElement.setAttribute('axis-y-ticks_label_angle', '0');
-      chartElement.setAttribute('point_size', '5');
+      chartElement.setAttribute('point_size', '10');
       chartElement.setAttribute('legend-title', 'Year');
       chartElement.setAttribute('tooltips-key', 'num_of_patients');
       chartElement.setAttribute('grouping-key', 'group');
+      chartElement.style.setProperty(
+        '--togostanza-theme-series_0_color',
+        '#29697a'
+      );
+      chartElement.style.setProperty(
+        '-togostanza-fonts-font_size_primary',
+        '14'
+      );
+      chartElement.style.setProperty(
+        '--togostanza-fonts-font_size_secondary',
+        '14'
+      );
+
+      // Apply custom styles for line chart
+      chartElement.style.setProperty('--togostanza-canvas-height', '600');
+      chartElement.style.setProperty('--togostanza-canvas-width', '1000');
     }
 
-    // スクリプトを動的に作成して追加
+    // Create and add the script dynamically
     const scriptElement = document.createElement('script');
     scriptElement.type = 'module';
-    scriptElement.src = `https://togostanza.github.io/metastanza-devel/${selectedChartType}chart.js`;
+    if (selectedChartType === 'bar') {
+      scriptElement.src = `https://togostanza.github.io/metastanza/barchart.js`;
+    } else {
+      scriptElement.src = `https://togostanza.github.io/metastanza-devel/linechart.js`;
+    }
     scriptElement.async = true;
 
-    // チャートとスクリプトを targetDiv に追加
+    // Add chart and script to targetDiv
     targetDiv.appendChild(chartElement);
     targetDiv.appendChild(scriptElement);
   }
@@ -821,10 +864,9 @@ function addContentToDiv(entryData) {
   const chartTypeSelect = document.getElementById('sub-class-graph');
   const selectedChartType = chartTypeSelect ? chartTypeSelect.value : 'table';
   if (targetDiv) {
-    targetDiv.innerHTML = ''; // 既存の内容をクリア
+    targetDiv.innerHTML = '';
 
     if (selectedChartType === 'table') {
-      // Tableを表示
       const tableElement = document.createElement(
         'togostanza-pagination-table'
       );
@@ -864,18 +906,16 @@ function addContentToDiv(entryData) {
         }]`
       );
 
-      // スクリプト要素を動的に作成して挿入
       const scriptElement = document.createElement('script');
       scriptElement.type = 'module';
       scriptElement.src =
         'https://togostanza.github.io/metastanza/pagination-table.js';
       scriptElement.async = true;
 
-      // targetDivにテーブルとスクリプトを追加
       targetDiv.appendChild(tableElement);
       targetDiv.appendChild(scriptElement);
     } else if (selectedChartType === 'tree') {
-      // Treeを表示
+      const currentLang = document.querySelector('.language-select').value;
       const treeElement = document.createElement('togostanza-tree');
       treeElement.setAttribute(
         'data-url',
@@ -885,7 +925,10 @@ function addContentToDiv(entryData) {
       treeElement.setAttribute('sort-key', 'id');
       treeElement.setAttribute('sort-order', 'ascending');
       treeElement.setAttribute('graph-layout', 'horizontal');
-      treeElement.setAttribute('node-label-key', 'id');
+      treeElement.setAttribute(
+        'node-label-key',
+        currentLang === 'ja' ? 'label' : 'engLabel'
+      );
       treeElement.setAttribute('node-label-margin', '8');
       treeElement.setAttribute('node-size-key', 'size');
       treeElement.setAttribute('node-size-min', '8');
@@ -896,16 +939,24 @@ function addContentToDiv(entryData) {
       treeElement.setAttribute('tooltips-key', 'name');
       treeElement.setAttribute('togostanza-custom_css_url', '');
 
-      treeElement.style.setProperty('--togostanza-canvas-height', '600px');
+      treeElement.style.setProperty(
+        '--togostanza-fonts-font_size_primary',
+        '14'
+      );
+      treeElement.style.setProperty('--togostanza-canvas-height', '1000px');
+      treeElement.style.setProperty('--togostanza-canvas-width', '1000px');
 
-      // スクリプト要素を動的に作成して挿入
+      treeElement.style.setProperty(
+        '--togostanza-theme-series_0_color',
+        '#29697a'
+      );
+
       const scriptElement = document.createElement('script');
       scriptElement.type = 'module';
       scriptElement.src =
         'https://togostanza.github.io/metastanza-devel/tree.js';
       scriptElement.async = true;
 
-      // targetDivにツリーとスクリプトを追加
       targetDiv.appendChild(treeElement);
       targetDiv.appendChild(scriptElement);
     }
