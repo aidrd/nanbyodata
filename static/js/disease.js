@@ -456,6 +456,8 @@ async function fetchNandoData(entryData, item, content) {
       return false; // データがない場合、falseを返す
     }
 
+    const filteredData = data.filter((itemData) => itemData.displayid);
+
     // 既存のテーブルを削除
     const existingTable = content.querySelector('table');
     if (existingTable) {
@@ -490,7 +492,7 @@ async function fetchNandoData(entryData, item, content) {
     const tbody = document.createElement('tbody');
 
     // 取得したデータをtableの行として追加
-    data.forEach((itemData) => {
+    filteredData.forEach((itemData) => {
       const row = document.createElement('tr');
       item.keys.forEach((key) => {
         const cell = document.createElement('td');
@@ -587,20 +589,15 @@ async function makeLinkedItem(entryData) {
       labels: [
         {
           label: 'OMIM ID',
-          content: 'modified_disease',
+          content: 'id',
           type: 'url',
           hrefKey: 'original_disease',
         },
-        { label: 'MONDO Label (JA)', content: 'mondo_label_ja' },
-        { label: 'MONDO Label (EN)', content: 'mondo_label_en' },
-        { label: 'Link Type', content: 'property' },
+        { label: 'MONDO Label (JA)', content: 'mondo_label_ja2' },
+        { label: 'MONDO Label (EN)', content: 'mondo_label_en2' },
+        { label: 'Parent', content: 'parent' },
       ],
-      keys: [
-        'modified_disease',
-        'mondo_label_ja',
-        'mondo_label_en',
-        'property',
-      ],
+      keys: ['id', 'mondo_label_ja2', 'mondo_label_en2', 'parent'],
       apiUrl: 'https://dev-nanbyodata.dbcls.jp/sparqlist/api/test-nando-omim',
     },
     {
@@ -609,14 +606,14 @@ async function makeLinkedItem(entryData) {
         {
           label: 'Orphanet ID',
           content: 'id',
-          type: 'url', // original_disease に対応したリンクを作成
+          type: 'url',
           hrefKey: 'original_disease',
         },
-        { label: 'MONDO Label (JA)', content: 'mondo_label_ja' },
-        { label: 'MONDO Label (EN)', content: 'mondo_label_en' },
+        { label: 'MONDO Label (JA)', content: 'mondo_label_ja2' },
+        { label: 'MONDO Label (EN)', content: 'mondo_label_en2' },
         { label: 'Parent', content: 'parent' },
       ],
-      keys: ['id', 'mondo_label_ja', 'mondo_label_en', 'parent'],
+      keys: ['id', 'mondo_label_ja2', 'mondo_label_en2', 'parent'],
       apiUrl: 'https://dev-nanbyodata.dbcls.jp/sparqlist/api/link-mondo-ordo',
     },
     {
@@ -624,15 +621,15 @@ async function makeLinkedItem(entryData) {
       labels: [
         {
           label: 'MONDO ID',
-          content: 'mondo_id',
+          content: 'id',
           type: 'url',
           hrefKey: 'mondo_url',
         },
         { label: 'MONDO Label (JA)', content: 'mondo_label_ja' },
         { label: 'MONDO Label (EN)', content: 'mondo_label_en' },
-        { label: 'Link Type', content: 'property' },
+        { label: 'Parent', content: 'parent' },
       ],
-      keys: ['mondo_id', 'mondo_label_ja', 'mondo_label_en', 'property'],
+      keys: ['id', 'mondo_label_ja', 'mondo_label_en', 'parent'],
       apiUrl:
         'https://dev-nanbyodata.dbcls.jp/sparqlist/api/test_nando_link_mond',
     },
