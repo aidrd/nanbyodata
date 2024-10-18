@@ -69,7 +69,6 @@
     a owl:Class ;
     rdfs:label "Obsolete class"@en, "obsolete class"@ja ;
     rdfs:subClassOf owl:Thing ;
-    rdfs:subClassof <http://nanbyodata.jp/ontology/NANDO_0000002> ;
     owl:deprecated true ;
     skos:prefLabel "obsolete class"@ja .
 
@@ -10161,7 +10160,7 @@
     a owl:Class ;
     rdfs:label "obsolete Hepatic glycogen storage disease type I-III-VI-IX"@en, "obsolete かんがたとうげんびょう1-3-6-9がた"@ja-Hira, "obsolete 肝型糖原病Ⅰ-Ⅲ-Ⅵ-Ⅸ型"@ja ;
     rdfs:subClassOf <http://nanbyodata.jp/ontology/NANDO_1200838> ;
-    rdfs:subClassof <http://nanbyodata.jp/ontology/NANDO_0000002> ;
+    rdfs:subClassOf <http://nanbyodata.jp/ontology/NANDO_0000002> ;
     owl:deprecated true ;
     skos:prefLabel "obsolete 肝型糖原病Ⅰ-Ⅲ-Ⅵ-Ⅸ型"@ja .
 
@@ -10648,7 +10647,7 @@
     a owl:Class ;
     rdfs:label "obsolete Lymphangiomatosis"@en, "obsolete りんぱかんしゅしょう"@ja-Hira, "obsolete リンパ管腫症"@ja ;
     rdfs:subClassOf <http://nanbyodata.jp/ontology/NANDO_1200878> ;
-    rdfs:subClassof <http://nanbyodata.jp/ontology/NANDO_0000002> ;
+    rdfs:subClassOf <http://nanbyodata.jp/ontology/NANDO_0000002> ;
     owl:deprecated true ;
     skos:altLabel "Generalized lymphatic anomaly"@en ;
     skos:prefLabel "obsolete リンパ管腫症"@ja .
@@ -10658,7 +10657,7 @@
     a owl:Class ;
     rdfs:label "obsolete Gorham disease"@en, "obsolete ごーはむびょう"@ja-Hira, "obsolete ゴーハム病"@ja ;
     rdfs:subClassOf <http://nanbyodata.jp/ontology/NANDO_1200878> ;
-    rdfs:subClassof <http://nanbyodata.jp/ontology/NANDO_0000002> ;
+    rdfs:subClassOf <http://nanbyodata.jp/ontology/NANDO_0000002> ;
     owl:deprecated true ;
     skos:altLabel "Gorham-Stout disease"@en ;
     skos:prefLabel "obsolete ゴーハム病"@ja .
@@ -12330,7 +12329,7 @@
     a owl:Class ;
     rdfs:label "obsolete Micro-deletion syndrome and other syndromes"@en, "obsolete びさいけっしつしょうこうぐんとうしょうこうぐん"@ja-Hira, "obsolete 微細欠失症候群等症候群"@ja ;
     rdfs:subClassOf <http://nanbyodata.jp/ontology/NANDO_1200957> ;
-    rdfs:subClassof <http://nanbyodata.jp/ontology/NANDO_0000002> ;
+    rdfs:subClassOf <http://nanbyodata.jp/ontology/NANDO_0000002> ;
     owl:deprecated true ;
     skos:prefLabel "obsolete 微細欠失症候群等症候群"@ja .
 
@@ -12840,7 +12839,7 @@
     dcterms:identifier "NANDO:1201067" ;
     a owl:Class ;
     rdfs:label "Nodular lymphocyte predominance Hodgkin lymphoma"@en, "obsolete 結節性リンパ球優位型ホジキンリンパ腫"@ja, "けっそくせいりんぱきゅうゆういがたほじきんりんぱしゅ"@ja-Hira ;
-    rdfs:subClassof <http://nanbyodata.jp/ontology/NANDO_0000002> ;
+    rdfs:subClassOf <http://nanbyodata.jp/ontology/NANDO_0000002> ;
     owl:deprecated true ;
     skos:altLabel "NLPHL"@en, "Nodular lymphocyte predominance Hodgkin's lymphoma"@en, "結節性リンパ球優位型Hodgkinリンパ腫"@ja ;
     skos:prefLabel "obsolete 結節性リンパ球優位型ホジキンリンパ腫"@ja .
@@ -14993,7 +14992,7 @@
     a owl:Class ;
     rdfs:label "Inherited glycosylphosphatidylinositol deficiency"@en, "obsolete 先天性グリコシルホスファチジルイノシトール欠損症"@ja, "せんてんせいぐりこしるほすふぁちじるいのしとーるけっそんしょう"@ja-Hira ;
     rdfs:subClassOf <http://nanbyodata.jp/ontology/NANDO_2100214> ;
-    rdfs:subClassof <http://nanbyodata.jp/ontology/NANDO_0000002> ;
+    rdfs:subClassOf <http://nanbyodata.jp/ontology/NANDO_0000002> ;
     owl:deprecated true ;
     skos:altLabel "IGD"@en, "先天性GPI欠損"@ja ;
     skos:prefLabel "obsolete 先天性グリコシルホスファチジルイノシトール欠損症"@ja .
@@ -16848,7 +16847,7 @@
     a owl:Class ;
     rdfs:label "Primitive neuroectodermal tumour of the central nervous system"@en, "obsolete 中枢神経系原始神経外胚葉性腫瘍"@ja, "ちゅうすうしんけいけいげんししんけいがいはいようせいしゅよう"@ja-Hira ;
     rdfs:subClassOf <http://nanbyodata.jp/ontology/NANDO_2200099> ;
-    rdfs:subClassof <http://nanbyodata.jp/ontology/NANDO_0000002> ;
+    rdfs:subClassOf <http://nanbyodata.jp/ontology/NANDO_0000002> ;
     owl:deprecated true ;
     skos:altLabel "Central nervous system primitive neuroectodermal tumor"@en ;
     skos:prefLabel "obsolete 中枢神経系原始神経外胚葉性腫瘍"@ja .
@@ -17981,7 +17980,7 @@
     a owl:Class ;
     rdfs:label "obsolete bronchial stenosis and bronchomalacia"@en, "obsolete きかんしきょうさくしょう・なんかしょう"@ja-Hira, "obsolete 気管支狭窄症・軟化症"@ja ;
     rdfs:subClassOf <http://nanbyodata.jp/ontology/NANDO_2200189> ;
-    rdfs:subClassof <http://nanbyodata.jp/ontology/NANDO_0000002> ;
+    rdfs:subClassOf <http://nanbyodata.jp/ontology/NANDO_0000002> ;
     owl:deprecated true ;
     skos:prefLabel "obsolete 気管支狭窄症・軟化症"@ja .
 
