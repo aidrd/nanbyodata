@@ -141,7 +141,8 @@ def REST_API_disease(id_nando=""):
         else:
             onto = pronto.Ontology('./ontology/nando.en.obo')
             breadcrumb_html = '<section><h3 class="breadcrumb-title">Intractable disease</h3>'
-        sup = list(reversed(list(onto[id_nando].superclasses())))
+        #sup = list(reversed(list(onto[id_nando].superclasses())))
+        sup = list(reversed(list(onto["NANDO:"+id_nando].superclasses())))
         for index, term in enumerate(sup):
             next_term_id = sup[index + 1].id if index < len(sup) - 1 else None
             term_subclasses = (list(onto[term.id].subclasses(with_self=False, distance=1)))
