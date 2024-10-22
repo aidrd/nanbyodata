@@ -1,6 +1,6 @@
 export const breadcrumb = (nandoId) => {
   const selectTreeBox = document.querySelector(
-    `.wrapper[data-value="${nandoId}"] > .select-option`
+    `.wrapper[data-value="NANDO:${nandoId}"] > .select-option`
   );
   if (selectTreeBox) {
     selectTreeBox.style.backgroundColor = 'rgba(22, 35, 78, 0.2)';
@@ -13,7 +13,7 @@ export const breadcrumb = (nandoId) => {
       .querySelector('.select-option');
     selectOption.textContent = selectedLi.textContent;
     if (selectedLi.dataset.value !== nandoId) {
-      window.location.href = `/disease/NANDO:${selectedLi.dataset.value}`;
+      window.location.href = `/disease/${selectedLi.dataset.value}`;
     }
   }
 
