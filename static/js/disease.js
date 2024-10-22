@@ -627,8 +627,8 @@ async function makeLinkedItem(entryData) {
           type: 'url',
           hrefKey: 'mondo_url',
         },
-        { label: 'MONDO Label (JA)', content: 'mondo_label_ja' },
-        { label: 'MONDO Label (EN)', content: 'mondo_label_en' },
+        { label: 'MONDO Label (JA)', content: 'mondo_label_ja2' },
+        { label: 'MONDO Label (EN)', content: 'mondo_label_en2' },
         { label: 'Parent', content: 'parent' },
         { label: 'Link Type', content: 'property' },
       ],
@@ -703,7 +703,8 @@ async function makeLinkedItem(entryData) {
 }
 
 function addTableOrTree(content, item, displayType, entryData) {
-  content.innerHTML = ''; // 既存の内容をクリア
+  // 既存の内容をクリアする
+  content.innerHTML = '';
 
   if (displayType === 'table') {
     // テーブルを生成 (fetchNandoData関数を利用)
@@ -715,8 +716,20 @@ function addTableOrTree(content, item, displayType, entryData) {
       '*リンクに関するフィードバックをお待ちしております.';
     content.appendChild(feedbackMessage);
   } else if (displayType === 'tree') {
-    // ツリー表示
+    // 既存のツリー要素を明示的に削除
+    const existingTree = content.querySelector('togostanza-tree');
+    if (existingTree) {
+      existingTree.remove();
+    }
+
+    // ツリー表示用の新しい要素を作成
     const treeElement = document.createElement('togostanza-tree');
+
+    // ユニークなIDを設定
+    const uniqueTreeId = `tree-${item.class}-${Date.now()}`;
+    treeElement.setAttribute('id', uniqueTreeId);
+
+    // APIからツリーのデータを取得し、ツリーを構築する
     treeElement.setAttribute('data-url', item.apiUrl);
     treeElement.setAttribute('data-type', 'json');
     treeElement.setAttribute('sort-key', 'id');
@@ -733,6 +746,7 @@ function addTableOrTree(content, item, displayType, entryData) {
     treeElement.setAttribute('tooltips-key', 'name');
     treeElement.setAttribute('togostanza-custom_css_url', '');
 
+    // カスタムスタイルを適用
     treeElement.style.setProperty(
       '--togostanza-theme-series_0_color',
       '#29697a'
@@ -741,12 +755,13 @@ function addTableOrTree(content, item, displayType, entryData) {
     treeElement.style.setProperty('--togostanza-canvas-height', '200px');
     treeElement.style.setProperty('--togostanza-canvas-width', '1000px');
 
-    // スクリプト要素を動的に追加してツリーを有効化
+    // ツリーを有効化するためのスクリプトを動的に追加
     const scriptElement = document.createElement('script');
     scriptElement.type = 'module';
     scriptElement.src = 'https://togostanza.github.io/metastanza-devel/tree.js';
     scriptElement.async = true;
 
+    // content要素にツリーとスクリプトを追加
     content.appendChild(treeElement);
     content.appendChild(scriptElement);
   }
@@ -775,7 +790,7 @@ function addChartToDiv(entryData) {
       chartElement.setAttribute('category-title', 'Year');
       chartElement.setAttribute('value-title', 'Num of Patients');
       chartElement.setAttribute('chart-type', 'stacked');
-      chartElement.setAttribute('width', '800');
+      chartElement.setAttribute('width', '900');
       chartElement.setAttribute('height', '600');
       chartElement.setAttribute('legend', 'true');
       chartElement.setAttribute('xaxis-placement', 'bottom');
