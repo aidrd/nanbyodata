@@ -226,8 +226,8 @@ async function fetchLinksTable(entryData, item, content) {
     );
     const data = await response.json();
 
-    if (response.status !== 200) {
-      return {};
+    if (response.status !== 200 || data.length === 0) {
+      return false;
     }
 
     const filteredData = data.filter((itemData) => itemData.displayid);
