@@ -418,7 +418,11 @@
               <!-- TODO:追加 -->
               <div class="overview-wrapper">
                 <section class="overview-section">
+                  {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
                   <h5 class="sub-title -alt-label">別疾患名</h5>
+                  {% else %}
+                  <h5 class="sub-title -alt-label">Synonyms</h5>
+                  {% endif %}
                   <div class="summary-wrapper">
                     <div id="temp-aliases">
                       <div class="aliases">
@@ -433,7 +437,11 @@
                 </section>
                 <!-- TODO:追加 -->
                 <section class="overview-section">
+                  {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
                   <h5 class="sub-title -inheritance-uri">遺伝形式</h5>
+                  {% else %}
+                  <h5 class="sub-title -inheritance-uri">Modes of inheritance</h5>
+                  {% endif %}
                   <div class="temp-wrapper">
                     <div class="inheritance-uris">
                       <dl class="linked-items inheritance-uri">
@@ -447,7 +455,11 @@
                 <!-- TODO:追加 -->
                 <section class="overview-section">
                   <div class="sub-title-wrapper">
+                    {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
                     <h5 class="sub-title">リンク一覧</h5>
+                    {% else %}
+                    <h5 class="sub-title">List of links</h5>
+                    {% endif %}
                     <select name="linked-items-graph" id="linked-items-graph">
                       <option value="table" selected>Table</option>
                       <option value="tree">Tree</option>
@@ -491,7 +503,11 @@
                 </section>
 
                 <section class="overview-section">
+                  {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
                   <h5 class="sub-title -disease-definition">疾患定義</h5>
+                  {% else %}
+                  <h5 class="sub-title -disease-definition">Disease Definition</h5>
+                  {% endif %}
                   <div id="temp-disease-definition">
                     <div class="tab-wrap">
                       <input type="radio" name="disease-definition" class="tab-switch" id="disease-mhlw" />
@@ -517,7 +533,11 @@
                 </section>
                 <section class="overview-section">
                   <div class="sub-title-wrapper">
+                    {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
                     <h5 class="sub-title">患者統計情報</h5>
+                    {% else %}
+                    <h5 class="sub-title">Patient Statistics</h5>
+                    {% endif %}
                     <select name="num-of-patients-graph" id="num-of-patients-graph">
                       <option value="bar" selected>Bar</option>
                       <option value="line">Line</option>
@@ -528,7 +548,11 @@
                 </section>
                 <section overview-section>
                   <div class="sub-title-wrapper">
+                    {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
                     <h5 class="sub-title -sub-class">下位疾患</h5>
+                    {% else %}
+                    <h5 class="sub-title -sub-class">Subclass</h5>
+                    {% endif %}
                     <select name="sub-class-graph" id="sub-class-graph">
                       <option value="table" selected>Table</option>
                       <option value="tree">Tree</option>
