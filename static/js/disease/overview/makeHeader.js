@@ -1,5 +1,5 @@
 export function makeHeader(entryData) {
-  const nandoId = entryData.nandoId;
+  const nandoId = entryData.nando_id;
   const refNandoId = document.getElementById('temp-nando-id');
   refNandoId.textContent = nandoId;
 
