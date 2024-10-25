@@ -2,8 +2,9 @@ export async function makeLinkedList(entryData) {
   const linkedItems = document.getElementById('temp-linked-items');
   const tabWrap = linkedItems.querySelector('.tab-wrap');
   const selectGraphType = document.getElementById('linked-items-graph');
+  const currentLang = document.querySelector('.language-select').value;
 
-  const items = [
+  const jaItems = [
     {
       class: 'omim',
       labels: [
@@ -90,8 +91,93 @@ export async function makeLinkedList(entryData) {
     },
   ];
 
+  const enItems = [
+    {
+      class: 'omim',
+      labels: [
+        {
+          label: 'OMIM ID',
+          content: 'id',
+          type: 'url',
+          hrefKey: 'original_disease',
+        },
+        { label: 'MONDO Label (EN)', content: 'mondo_label_en2' },
+        { label: 'Parent', content: 'parent' },
+        { label: 'Link Type', content: 'property' },
+      ],
+      keys: ['id', 'mondo_label_en2', 'parent', 'property'],
+      apiUrl: 'https://dev-nanbyodata.dbcls.jp/sparqlist/api/test-nando-omim',
+    },
+    {
+      class: 'orphanet',
+      labels: [
+        {
+          label: 'Orphanet ID',
+          content: 'id',
+          type: 'url',
+          hrefKey: 'original_disease',
+        },
+        { label: 'MONDO Label (EN)', content: 'mondo_label_en2' },
+        { label: 'Parent', content: 'parent' },
+        { label: 'Link Type', content: 'property' },
+      ],
+      keys: ['id', 'mondo_label_en2', 'parent', 'property'],
+      apiUrl: 'https://dev-nanbyodata.dbcls.jp/sparqlist/api/link-mondo-ordo',
+    },
+    {
+      class: 'monarch-initiative',
+      labels: [
+        {
+          label: 'MONDO ID',
+          content: 'id',
+          type: 'url',
+          hrefKey: 'mondo_url',
+        },
+        { label: 'MONDO Label (EN)', content: 'mondo_label_en2' },
+        { label: 'Parent', content: 'parent' },
+        { label: 'Link Type', content: 'property' },
+      ],
+      keys: ['id', 'mondo_label_en', 'parent', 'property'],
+      apiUrl:
+        'https://dev-nanbyodata.dbcls.jp/sparqlist/api/test_nando_link_mond',
+    },
+    {
+      class: 'medgen',
+      labels: [
+        {
+          label: 'MedGen ID',
+          content: 'medgen_id',
+          type: 'url',
+          hrefKey: 'medgen_url',
+        },
+        { label: 'Name', content: 'name' },
+        { label: 'Disorder', content: 'disorder' },
+        { label: 'Link Type', content: 'property' },
+      ],
+      keys: ['medgen_id', 'name', 'disorder', 'property'],
+      apiUrl: 'https://dev-nanbyodata.dbcls.jp/sparqlist/api/test-nando-medgen',
+    },
+    {
+      class: 'kegg-disease',
+      labels: [
+        {
+          label: 'KEGG Disease ID',
+          content: 'kegg_disease_id',
+          type: 'url',
+          hrefKey: 'kegg_url',
+        },
+        { label: 'Disease Name', content: 'disease_name' },
+        { label: 'Pathway', content: 'pathway' },
+        { label: 'Link Type', content: 'property' },
+      ],
+      keys: ['kegg_disease_id', 'disease_name', 'pathway', 'property'],
+      apiUrl: 'https://dev-nanbyodata.dbcls.jp/sparqlist/api/test-nando-kegg',
+    },
+  ];
+
   let isFirstTab = true;
 
+  const items = currentLang === 'ja' ? jaItems : enItems;
   for (const item of items) {
     const content = tabWrap.querySelector(`.${item.class}`);
     const exists = await fetchLinksTable(entryData, item, content);
@@ -139,17 +225,9 @@ async function fetchLinksTable(entryData, item, content) {
       `${item.apiUrl}?nando_id=${entryData.nando_id}`
     );
     const data = await response.json();
-    console.log(content);
-    console.log(data);
 
-    // データがnull、undefined、空配列、空オブジェクトの場合、falseを返す
-    if (
-      !data ||
-      (Array.isArray(data) && data.length === 0) ||
-      (typeof data === 'object' && Object.keys(data).length === 0)
-    ) {
-      console.error('No data available from API:', item.apiUrl);
-      return false; // データがない場合、falseを返す
+    if (response.status !== 200) {
+      return {};
     }
 
     const filteredData = data.filter((itemData) => itemData.displayid);
@@ -298,7 +376,10 @@ function addTableOrTree(content, item, displayType, entryData) {
         : 'We welcome feedback on the links.';
 
     // テーブルの下に <p> 要素を追加
-    content.appendChild(feedbackMessage);
+    const isFeedBackMessage = content.querySelector('p');
+    if (!isFeedBackMessage) {
+      content.appendChild(feedbackMessage);
+    }
   } else if (displayType === 'tree') {
     overviewSection.style.paddingBottom = '15px'; // 元に戻す
     const uniqueTreeId = `tree-${item.class}`;
