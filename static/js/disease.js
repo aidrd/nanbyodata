@@ -685,85 +685,90 @@ async function makeLinkedItem(entryData) {
       }
     } else {
       const currentTab = tabWrap.querySelector(`#linked-item-${item.class}`);
+
+      // 初回のタブをチェック
       if (currentTab && isFirstTab) {
         currentTab.checked = true;
         isFirstTab = false;
+        addTableOrTree(content, item, 'table', entryData); // 初期表示はテーブル
       }
 
-      // 初期表示としてテーブルを表示
-      addTableOrTree(content, item, 'table', entryData);
+      // タブのクリックイベントを追加
+      currentTab.addEventListener('change', function () {
+        if (this.checked) {
+          // タブがアクティブになったときにテーブルまたはツリーを表示
+          const displayType = selectGraphType.value || 'table'; // 選択された形式に従う
+          addTableOrTree(content, item, displayType, entryData);
+        }
+      });
 
       // セレクトボックス変更時に表示形式を切り替える
       selectGraphType.addEventListener('change', function () {
         const displayType = this.value;
-        addTableOrTree(content, item, displayType, entryData);
+        if (currentTab.checked) {
+          addTableOrTree(content, item, displayType, entryData);
+        }
       });
     }
   }
 }
 
 function addTableOrTree(content, item, displayType, entryData) {
-  // 既存の内容をクリアする
-  content.innerHTML = '';
+  // 既存のツリーを削除する
+  const existingTree = content.querySelector('togostanza-tree');
+  if (existingTree) {
+    existingTree.remove(); // 既存のツリーを削除
+  }
 
   if (displayType === 'table') {
-    // テーブルを生成 (fetchNandoData関数を利用)
     fetchNandoData(entryData, item, content);
-
-    // フィードバックメッセージを表示
-    const feedbackMessage = document.createElement('p');
-    feedbackMessage.textContent =
-      '*リンクに関するフィードバックをお待ちしております.';
-    content.appendChild(feedbackMessage);
   } else if (displayType === 'tree') {
-    // 既存のツリー要素を明示的に削除
-    const existingTree = content.querySelector('togostanza-tree');
-    if (existingTree) {
-      existingTree.remove();
-    }
+    // ユニークなIDを作成
+    const uniqueTreeId = `tree-${item.class}`;
 
-    // ツリー表示用の新しい要素を作成
-    const treeElement = document.createElement('togostanza-tree');
+    content.innerHTML = `
+      <togostanza-tree 
+        id="${uniqueTreeId}" 
+        data-url="${item.apiUrl}" 
+        data-type="json" 
+        sort-key="id" 
+        sort-order="ascending" 
+        graph-layout="horizontal" 
+        node-label-key="id" 
+        node-label-margin="8" 
+        node-size-key="size" 
+        node-size-min="8" 
+        node-size-max="8" 
+        node-color-key="color" 
+        node-color-group="group" 
+        node-color-blend="normal" 
+        tooltips-key="name"
+        togostanza-custom_css_url="">
+      </togostanza-tree>
+    `;
 
-    // ユニークなIDを設定
-    const uniqueTreeId = `tree-${item.class}-${Date.now()}`;
-    treeElement.setAttribute('id', uniqueTreeId);
+    // DOMに要素が追加された後にスクリプトを実行するため、setTimeoutを使う
+    setTimeout(() => {
+      const scriptElement = document.createElement('script');
+      scriptElement.type = 'module';
+      scriptElement.src =
+        'https://togostanza.github.io/metastanza-devel/tree.js';
+      scriptElement.async = true;
 
-    // APIからツリーのデータを取得し、ツリーを構築する
-    treeElement.setAttribute('data-url', item.apiUrl);
-    treeElement.setAttribute('data-type', 'json');
-    treeElement.setAttribute('sort-key', 'id');
-    treeElement.setAttribute('sort-order', 'ascending');
-    treeElement.setAttribute('graph-layout', 'horizontal');
-    treeElement.setAttribute('node-label-key', 'id');
-    treeElement.setAttribute('node-label-margin', '8');
-    treeElement.setAttribute('node-size-key', 'size');
-    treeElement.setAttribute('node-size-min', '8');
-    treeElement.setAttribute('node-size-max', '8');
-    treeElement.setAttribute('node-color-key', 'color');
-    treeElement.setAttribute('node-color-group', 'group');
-    treeElement.setAttribute('node-color-blend', 'normal');
-    treeElement.setAttribute('tooltips-key', 'name');
-    treeElement.setAttribute('togostanza-custom_css_url', '');
+      content.appendChild(scriptElement);
 
-    // カスタムスタイルを適用
-    treeElement.style.setProperty(
-      '--togostanza-theme-series_0_color',
-      '#29697a'
-    );
-    treeElement.style.setProperty('--togostanza-fonts-font_size_primary', '14');
-    treeElement.style.setProperty('--togostanza-canvas-height', '200px');
-    treeElement.style.setProperty('--togostanza-canvas-width', '1000px');
-
-    // ツリーを有効化するためのスクリプトを動的に追加
-    const scriptElement = document.createElement('script');
-    scriptElement.type = 'module';
-    scriptElement.src = 'https://togostanza.github.io/metastanza-devel/tree.js';
-    scriptElement.async = true;
-
-    // content要素にツリーとスクリプトを追加
-    content.appendChild(treeElement);
-    content.appendChild(scriptElement);
+      const treeElement = document.getElementById(uniqueTreeId);
+      treeElement.style.setProperty(
+        '--togostanza-theme-series_0_color',
+        '#29697a'
+      );
+      treeElement.style.setProperty(
+        '--togostanza-fonts-font_size_primary',
+        '14'
+      );
+      treeElement.style.setProperty('--togostanza-canvas-height', '200px');
+      treeElement.style.setProperty('--togostanza-canvas-width', '1000px');
+    }, 0);
   }
 }
 
