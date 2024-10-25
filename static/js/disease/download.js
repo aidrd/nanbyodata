@@ -8,7 +8,7 @@ import {
   bioResourceDnaColumns,
   variantClinvarColumns,
   variantMgendColumns,
-} from '../components/paginationColumns.js';
+} from '../utils/paginationColumns.js';
 
 export const downloadDatasets = (nandoId, datasets) => {
   function prepareDataToDownload(format) {

@@ -1,11 +1,11 @@
-import { navToggle } from './components/navigation.js';
-import { focusInput } from './components/focusInput.js';
-import { setLangChange } from './components/setLangChange.js';
+import { navToggle } from './utils/navigation.js';
+import { focusInput } from './utils/focusInput.js';
+import { setLangChange } from './utils/setLangChange.js';
 import {
   drawDesignatedIntractableDiseaseColumnsTable,
   drawPediatricChronicSpecificDiseaseColumnsTable,
 } from './epidemiology/epidemiology.js';
-import { smartBox } from './components/smart_box.js';
+import { smartBox } from './utils/smart_box.js';
 
 navToggle();
 focusInput();

@@ -4,7 +4,7 @@ import {
   pediatricChronicSpecificDiseaseJaColumns,
   pediatricChronicSpecificDiseaseEnColumns,
   convertColumntoText,
-} from '../components/paginationColumns.js';
+} from '../utils/paginationColumns.js';
 
 export const drawDesignatedIntractableDiseaseColumnsTable = async () => {
   await drawColumnsTable(
