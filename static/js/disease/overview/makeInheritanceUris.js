@@ -3,10 +3,12 @@ export function makeInheritanceUris(entryData) {
   const inheritanceSubTitle = document.querySelector(
     '.sub-title.-inheritance-uri'
   );
+  const tempWrapper = document.querySelector('.temp-wrapper');
+  const overviewSection = tempWrapper.closest('.overview-section');
   if (entryData.inheritance_uris) {
     appendLinks(entryData.inheritance_uris, inheritanceUris);
   } else {
-    inheritanceUris.remove();
+    overviewSection.remove();
     inheritanceSubTitle.remove();
   }
 }

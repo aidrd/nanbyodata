@@ -275,15 +275,32 @@ async function fetchLinksTable(entryData, item, content) {
 }
 
 function addTableOrTree(content, item, displayType, entryData) {
+  const currentLang = document.querySelector('.language-select').value;
   // 既存のツリーを削除する
   const existingTree = content.querySelector('togostanza-tree');
   if (existingTree) {
-    existingTree.remove(); // 既存のツリーを削除
+    existingTree.remove();
   }
 
+  // overviewSectionのpaddingを変更
+  const overviewSection = content.closest('.overview-section');
   if (displayType === 'table') {
+    overviewSection.style.paddingBottom = '0';
+
+    // テーブルを生成
     fetchLinksTable(entryData, item, content);
+
+    // メッセージを表示する <p> 要素を作成
+    const feedbackMessage = document.createElement('p');
+    feedbackMessage.textContent =
+      currentLang === 'ja'
+        ? '*リンクに関するフィードバックをお待ちしております.'
+        : 'We welcome feedback on the links.';
+
+    // テーブルの下に <p> 要素を追加
+    content.appendChild(feedbackMessage);
   } else if (displayType === 'tree') {
+    overviewSection.style.paddingBottom = '15px'; // 元に戻す
     const uniqueTreeId = `tree-${item.class}`;
 
     content.innerHTML = `

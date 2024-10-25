@@ -88,9 +88,12 @@
       }
 
       .sub-title-wrapper {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
+        margin-bottom: 10px;
+        &.-select {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+        }
       }
       .sub-title {
         font-size: var(--font-size-xl);
@@ -102,6 +105,7 @@
         padding-left: 15px;
         display: flex;
         align-items: center;
+        margin-bottom: 0;
 
         &::before {
           content: '';
