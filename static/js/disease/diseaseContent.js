@@ -9,8 +9,8 @@ import {
   bioResourceDnaColumns,
   variantClinvarColumns,
   variantMgendColumns,
-  convertColumntoText,
-} from '../utils/paginationColumns.js';
+  convertColumnToText,
+} from '../utils/stanzaColumns.js';
 
 makeSideNavigation();
 
@@ -20,7 +20,7 @@ export function makeCausalGene(causalGeneData) {
     causalGeneData,
     'causal-genes',
     'causal-genes-table',
-    convertColumntoText(causalGeneColumns)
+    convertColumnToText(causalGeneColumns)
   );
   if (causalGeneData?.length > 0 && causalGeneData !== null) {
     const navLink = document.querySelector('.nav-link.causal-genes');
@@ -35,7 +35,7 @@ export function makeGeneticTesting(geneticTestingData) {
     geneticTestingData,
     'genetic-testing',
     'genetic-testing-table',
-    convertColumntoText(geneticTestingColumns)
+    convertColumnToText(geneticTestingColumns)
   );
   if (geneticTestingData?.length > 0 && geneticTestingData !== null) {
     const navLink = document.querySelector('.nav-link.genetic-testing');
@@ -49,8 +49,8 @@ export function makePhenotypes(phenotypesData) {
   const currentLang = document.querySelector('.language-select').value;
   const phenotypeLang = currentLang === 'ja' ? 'phenotype-ja' : 'phenotype-en';
   const columns = {
-    ja: convertColumntoText(phenotypesJaColumns),
-    en: convertColumntoText(phenotypesEnColumns),
+    ja: convertColumnToText(phenotypesJaColumns),
+    en: convertColumnToText(phenotypesEnColumns),
   };
   makeData(phenotypesData, 'phenotypes', phenotypeLang, columns[currentLang]);
   if (phenotypesData?.length > 0 && phenotypesData !== null) {
@@ -70,7 +70,7 @@ export function makeCell(cellData) {
 
   const items = {
     id: 'cell',
-    columns: convertColumntoText(bioResourceCellColumns),
+    columns: convertColumnToText(bioResourceCellColumns),
     data: cellData,
     object: cellDataset.dataObject,
   };
@@ -98,7 +98,7 @@ export function makeMouse(mouseData) {
 
   const items = {
     id: 'mouse',
-    columns: convertColumntoText(bioResourceMouseColumns),
+    columns: convertColumnToText(bioResourceMouseColumns),
     data: mouseData,
     object: mouseDataset.dataObject,
   };
@@ -126,7 +126,7 @@ export function makeDNA(dnaData) {
 
   const items = {
     id: 'dna',
-    columns: convertColumntoText(bioResourceDnaColumns),
+    columns: convertColumnToText(bioResourceDnaColumns),
     data: dnaData,
     object: dnaDataset.dataObject,
   };
@@ -155,7 +155,7 @@ export function makeClinvar(clinvarData) {
 
   const items = {
     id: 'clinvar',
-    columns: convertColumntoText(variantClinvarColumns),
+    columns: convertColumnToText(variantClinvarColumns),
     data: clinvarData,
     object: clinvarDataset.dataObject,
   };
@@ -183,7 +183,7 @@ export function makeMgend(mgendData) {
 
   const items = {
     id: 'mgend',
-    columns: convertColumntoText(variantMgendColumns),
+    columns: convertColumnToText(variantMgendColumns),
     data: mgendData,
     object: mgendDataset.dataObject,
   };

@@ -1,15 +1,45 @@
-export function makeSubClass(entryData) {
+import {
+  subclassTableEnColumns,
+  subclassTableJaColumns,
+  convertColumnToText,
+} from '../../utils/stanzaColumns.js';
+
+export async function makeSubClass(entryData) {
   const targetDiv = document.getElementById('temp-sub-class');
   const chartTypeSelect = document.getElementById('sub-class-graph');
   const selectedChartType = chartTypeSelect ? chartTypeSelect.value : 'table';
 
+  async function fetchDataFromUrl(url) {
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    return await response.json();
+  }
+
+  async function subclassFetchData() {
+    return await fetchDataFromUrl(
+      `/sparqlist/api/test_get_nandoID?nando_id=${entryData.nando_id}`
+    );
+  }
+
+  // データ取得とオブジェクトURLの生成
+  const data = await subclassFetchData();
+  const objectUrl = createObjectUrlFromData(data);
+  const currentLang = document.querySelector('.language-select').value;
+
+  function createObjectUrlFromData(data) {
+    const blob = new Blob([JSON.stringify(data)], { type: 'application/json' });
+    return URL.createObjectURL(blob);
+  }
+
   if (targetDiv) {
-    targetDiv.innerHTML = '';
+    targetDiv.innerHTML = ''; // 既存内容をクリア
 
     if (selectedChartType === 'table') {
       targetDiv.innerHTML = `
         <togostanza-pagination-table
-          data-url="https://dev-nanbyodata.dbcls.jp/sparqlist/api/test_get_nandoID?nando_id=${entryData.nando_id}"
+          data-url="${objectUrl}"
           data-type="json"
           data-unavailable_message="No data found."
           custom-css-url=""
@@ -18,30 +48,14 @@ export function makeSubClass(entryData) {
           padding="0px"
           page-size-option="100"
           page-slider="false"
-          columns='[{
-            "id": "label",
-            "label": "Subclass(JA)",
-            "escape": false,
-            "line-clamp": 2
-          },
-          {
-            "id": "engLabel",
-            "label": "Subclass(En)",
-            "escape": false,
-            "line-clamp": 2
-          },
-          {
-            "id": "id",
-            "label": "Notification Number",
-            "escape": true,
-            "line-clamp": 1,
-            "link": "idurl",
-            "target": "_blank"
-          }]'
+          columns='${
+            currentLang === 'ja'
+              ? convertColumnToText(subclassTableJaColumns)
+              : convertColumnToText(subclassTableEnColumns)
+          }'
         ></togostanza-pagination-table>
       `;
 
-      // script を動的に追加
       const scriptElement = document.createElement('script');
       scriptElement.type = 'module';
       scriptElement.src =
@@ -52,9 +66,7 @@ export function makeSubClass(entryData) {
       const currentLang = document.querySelector('.language-select').value;
       targetDiv.innerHTML = `
         <togostanza-tree
-          data-url="https://dev-nanbyodata.dbcls.jp/sparqlist/api/test_get_nandoID?nando_id=${
-            entryData.nando_id
-          }"
+          data-url="${objectUrl}"
           data-type="json"
           sort-key="id"
           sort-order="ascending"
@@ -78,7 +90,6 @@ export function makeSubClass(entryData) {
         ></togostanza-tree>
       `;
 
-      // script を動的に追加
       const scriptElement = document.createElement('script');
       scriptElement.type = 'module';
       scriptElement.src =

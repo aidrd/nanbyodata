@@ -3,8 +3,8 @@ import {
   designatedIntractableDiseaseEnColumns,
   pediatricChronicSpecificDiseaseJaColumns,
   pediatricChronicSpecificDiseaseEnColumns,
-  convertColumntoText,
-} from '../utils/paginationColumns.js';
+  convertColumnToText,
+} from '../utils/stanzaColumns.js';
 
 export const drawDesignatedIntractableDiseaseColumnsTable = async () => {
   await drawColumnsTable(
@@ -40,7 +40,7 @@ const drawColumnsTable = async (
 
   try {
     const data = await fetchDataFunc();
-    updateElementWithTable(tableView, convertColumntoText(columns), data);
+    updateElementWithTable(tableView, convertColumnToText(columns), data);
   } catch (error) {
     console.error('Error fetching data:', error);
   }
