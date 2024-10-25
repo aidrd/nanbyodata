@@ -1,6 +1,6 @@
-import { navToggle } from './navigation.js';
-import { focusInput } from './focusInput.js';
-import { popup } from './popup.js';
+import { navToggle } from '../components/navigation.js';
+import { focusInput } from '../components/focusInput.js';
+import { popup } from '../components/popup.js';
 import { breadcrumb } from './breadcrumb.js';
 import { downloadDatasets } from './download.js';
 import {
@@ -14,8 +14,8 @@ import {
   makeMgend,
 } from './diseaseContent.js';
 import { switchingDisplayContents } from './diseaseSideNavigation.js';
-import { setLangChange } from './setLangChange.js';
-import { smartBox } from './smart_box.js';
+import { setLangChange } from '../components/setLangChange.js';
+import { smartBox } from '../components/smart_box.js';
 
 // get NANDO ID
 const pathname = window.location.pathname;

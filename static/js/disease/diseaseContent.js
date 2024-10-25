@@ -10,7 +10,7 @@ import {
   variantClinvarColumns,
   variantMgendColumns,
   convertColumntoText,
-} from './paginationColumns.js';
+} from '../components/paginationColumns.js';
 
 makeSideNavigation();
 
