@@ -25,19 +25,25 @@ export async function makeSubClass(entryData) {
 
   // データ取得とオブジェクトURLの生成
   const data = await subclassFetchData();
-  const objectUrl = createObjectUrlFromData(data);
-  const currentLang = document.querySelector('.language-select').value;
+  if (data.length <= 1) {
+    const overviewSection = targetDiv.closest('.overview-section');
+    overviewSection.remove();
+  } else {
+    const objectUrl = createObjectUrlFromData(data);
+    const currentLang = document.querySelector('.language-select').value;
 
-  function createObjectUrlFromData(data) {
-    const blob = new Blob([JSON.stringify(data)], { type: 'application/json' });
-    return URL.createObjectURL(blob);
-  }
+    function createObjectUrlFromData(data) {
+      const blob = new Blob([JSON.stringify(data)], {
+        type: 'application/json',
+      });
+      return URL.createObjectURL(blob);
+    }
 
-  if (targetDiv) {
-    targetDiv.innerHTML = ''; // 既存内容をクリア
+    if (targetDiv) {
+      targetDiv.innerHTML = ''; // 既存内容をクリア
 
-    if (selectedChartType === 'table') {
-      targetDiv.innerHTML = `
+      if (selectedChartType === 'table') {
+        targetDiv.innerHTML = `
         <togostanza-pagination-table
           data-url="${objectUrl}"
           data-type="json"
@@ -56,15 +62,15 @@ export async function makeSubClass(entryData) {
         ></togostanza-pagination-table>
       `;
 
-      const scriptElement = document.createElement('script');
-      scriptElement.type = 'module';
-      scriptElement.src =
-        'https://togostanza.github.io/metastanza/pagination-table.js';
-      scriptElement.async = true;
-      targetDiv.appendChild(scriptElement);
-    } else if (selectedChartType === 'tree') {
-      const currentLang = document.querySelector('.language-select').value;
-      targetDiv.innerHTML = `
+        const scriptElement = document.createElement('script');
+        scriptElement.type = 'module';
+        scriptElement.src =
+          'https://togostanza.github.io/metastanza/pagination-table.js';
+        scriptElement.async = true;
+        targetDiv.appendChild(scriptElement);
+      } else if (selectedChartType === 'tree') {
+        const currentLang = document.querySelector('.language-select').value;
+        targetDiv.innerHTML = `
         <togostanza-tree
           data-url="${objectUrl}"
           data-type="json"
@@ -90,12 +96,13 @@ export async function makeSubClass(entryData) {
         ></togostanza-tree>
       `;
 
-      const scriptElement = document.createElement('script');
-      scriptElement.type = 'module';
-      scriptElement.src =
-        'https://togostanza.github.io/metastanza-devel/tree.js';
-      scriptElement.async = true;
-      targetDiv.appendChild(scriptElement);
+        const scriptElement = document.createElement('script');
+        scriptElement.type = 'module';
+        scriptElement.src =
+          'https://togostanza.github.io/metastanza-devel/tree.js';
+        scriptElement.async = true;
+        targetDiv.appendChild(scriptElement);
+      }
     }
   }
 }
