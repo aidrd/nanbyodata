@@ -47,14 +47,12 @@ const drawColumnsTable = async (
 };
 
 async function designatedIntractableDiseaseFetchData() {
-  // TODO: fix url
   return await fetchDataFromUrl(
     '/sparqlist/api/nanbyodata_get_stats_on_patient_number_shitei'
   );
 }
 
 async function pediatricChronicSpecificDiseaseFetchData() {
-  // TODO: fix url
   return await fetchDataFromUrl(
     '/sparqlist/api/nanbyodata_get_stats_on_patient_number_shoman'
   );
