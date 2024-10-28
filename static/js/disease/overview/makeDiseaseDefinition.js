@@ -28,7 +28,9 @@ export function makeDiseaseDefinition(entryData) {
 
   if (items.every((item) => !item.existing)) {
     diseaseDefinition.remove();
-    document.querySelector('.sub-title.-disease-definition').remove();
+    const subTitle = document.querySelector('.sub-title.-disease-definition');
+    const overviewSection = subTitle.closest('.overview-section');
+    overviewSection.remove();
   } else {
     let isFirstTab = true;
 

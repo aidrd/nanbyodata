@@ -29,6 +29,8 @@ export function makeAlternativeName(entryData) {
   }
 
   if (!(entryData.alt_label_ja || entryData.alt_label_en)) {
-    document.querySelector('.sub-title.-alt-label').remove();
+    const subTitle = document.querySelector('.sub-title.-alt-label');
+    const overviewSection = subTitle.closest('.overview-section');
+    overviewSection.remove();
   }
 }
