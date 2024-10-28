@@ -3,7 +3,9 @@ import {
   linkedListJaColumns,
 } from '../../utils/stanzaColumns.js';
 
-export async function makeLinkedList(entryData, linkedListData) {
+import { createObjectUrlFromData } from '../../utils/stanzaUtils.js';
+
+export async function makeLinkedList(linkedListData) {
   const linkedItems = document.getElementById('temp-linked-items');
   const tabWrap = linkedItems.querySelector('.tab-wrap');
   const selectGraphType = document.getElementById('linked-items-graph');
@@ -31,7 +33,7 @@ export async function makeLinkedList(entryData, linkedListData) {
       if (currentTab && isFirstTab) {
         currentTab.checked = true;
         isFirstTab = false;
-        addTableOrTree(content, item, 'table', entryData); // 初期表示はテーブル
+        addTableOrTree(content, item, 'table', linkedListData); // 初期表示はテーブル
       }
 
       // タブのクリックイベントを追加
@@ -39,7 +41,7 @@ export async function makeLinkedList(entryData, linkedListData) {
         if (this.checked) {
           // タブがアクティブになったときにテーブルまたはツリーを表示
           const displayType = selectGraphType.value || 'table'; // 選択された形式に従う
-          addTableOrTree(content, item, displayType, entryData);
+          addTableOrTree(content, item, displayType, linkedListData);
         }
       });
 
@@ -47,7 +49,7 @@ export async function makeLinkedList(entryData, linkedListData) {
       selectGraphType.addEventListener('change', function () {
         const displayType = this.value;
         if (currentTab.checked) {
-          addTableOrTree(content, item, displayType, entryData);
+          addTableOrTree(content, item, displayType, linkedListData);
         }
       });
     }
@@ -176,7 +178,7 @@ function makeLinksTable(item, content, linkedListData) {
   return true; // データがある場合、trueを返す
 }
 
-function addTableOrTree(content, item, displayType, entryData, linkedListData) {
+function addTableOrTree(content, item, displayType, linkedListData) {
   const currentLang = document.querySelector('.language-select').value;
 
   // 既存のテーブル、ツリー、pタグを取得
@@ -193,7 +195,7 @@ function addTableOrTree(content, item, displayType, entryData, linkedListData) {
     feedbackMessage.textContent =
       currentLang === 'ja'
         ? '*リンクに関するフィードバックをお待ちしております.'
-        : 'We welcome feedback on the links.';
+        : '*We welcome feedback on the links.';
     content.appendChild(feedbackMessage);
   }
 
@@ -203,7 +205,7 @@ function addTableOrTree(content, item, displayType, entryData, linkedListData) {
 
     // テーブルの表示・非表示を切り替え
     if (table) {
-      table.style.display = 'block';
+      table.style.display = 'table';
     } else {
       makeLinksTable(item, content, linkedListData);
     }
@@ -232,12 +234,11 @@ function addTableOrTree(content, item, displayType, entryData, linkedListData) {
       tree.style.display = 'block';
     } else {
       const uniqueTreeId = `tree-${item.class}`;
-      const apiUrl = new URL(item.apiUrl, window.location.origin);
-      apiUrl.searchParams.set('nando_id', entryData.nando_id);
+      const objectUrl = createObjectUrlFromData(linkedListData[item.class]);
       content.innerHTML += `
         <togostanza-tree 
           id="${uniqueTreeId}" 
-          data-url="${apiUrl}" 
+          data-url="${objectUrl}" 
           data-type="json" 
           sort-key="id" 
           sort-order="ascending" 
@@ -277,9 +278,4 @@ function addTableOrTree(content, item, displayType, entryData, linkedListData) {
       }, 0);
     }
   }
-}
-
-function createObjectUrlFromData(data) {
-  const blob = new Blob([JSON.stringify(data)], { type: 'application/json' });
-  return URL.createObjectURL(blob);
 }

@@ -102,7 +102,7 @@ const datasets = [
         makeExternalLinks(entryData);
         makeAlternativeName(entryData);
         makeInheritanceUris(entryData);
-        makeLinkedList(entryData, linkedListData);
+        makeLinkedList(linkedListData);
         makeNumOfPatients(entryData);
         makeSubClass(entryData);
         checkSummaryData(entryData);
