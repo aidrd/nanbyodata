@@ -362,26 +362,25 @@ function addTableOrTree(content, item, displayType, entryData) {
 
   // overviewSectionのpaddingを変更
   const overviewSection = content.closest('.overview-section');
+
   if (displayType === 'table') {
-    overviewSection.style.paddingBottom = '0';
+    // テーブルが既に存在するか確認
+    if (!content.querySelector('table')) {
+      // テーブルが存在しない場合のみ生成
+      overviewSection.style.paddingBottom = '0';
+      fetchLinksTable(entryData, item, content);
 
-    // テーブルを生成
-    fetchLinksTable(entryData, item, content);
-
-    // メッセージを表示する <p> 要素を作成
-    const feedbackMessage = document.createElement('p');
-    feedbackMessage.textContent =
-      currentLang === 'ja'
-        ? '*リンクに関するフィードバックをお待ちしております.'
-        : 'We welcome feedback on the links.';
-
-    // テーブルの下に <p> 要素を追加
-    const isFeedBackMessage = content.querySelector('p');
-    if (!isFeedBackMessage) {
-      content.appendChild(feedbackMessage);
+      if (!content.querySelector('p')) {
+        const feedbackMessage = document.createElement('p');
+        feedbackMessage.textContent =
+          currentLang === 'ja'
+            ? '*リンクに関するフィードバックをお待ちしております.'
+            : 'We welcome feedback on the links.';
+        content.appendChild(feedbackMessage);
+      }
     }
   } else if (displayType === 'tree') {
-    overviewSection.style.paddingBottom = '15px'; // 元に戻す
+    overviewSection.style.paddingBottom = '15px';
     const uniqueTreeId = `tree-${item.class}`;
 
     content.innerHTML = `
@@ -405,14 +404,12 @@ function addTableOrTree(content, item, displayType, entryData) {
       </togostanza-tree>
     `;
 
-    // DOMに要素が追加された後にスクリプトを実行するため、setTimeoutを使う
     setTimeout(() => {
       const scriptElement = document.createElement('script');
       scriptElement.type = 'module';
       scriptElement.src =
         'https://togostanza.github.io/metastanza-devel/tree.js';
       scriptElement.async = true;
-
       content.appendChild(scriptElement);
 
       const treeElement = document.getElementById(uniqueTreeId);
