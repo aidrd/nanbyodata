@@ -220,7 +220,6 @@ export const linkedListJaColumns = [
       { label: 'Link Type', content: 'property' },
     ],
     keys: ['id', 'mondo_label_ja2', 'mondo_label_en2', 'parent', 'property'],
-    apiUrl: '/sparqlist/api/test-nando-omim',
   },
   {
     class: 'orphanet',
@@ -237,7 +236,6 @@ export const linkedListJaColumns = [
       { label: 'Link Type', content: 'property' },
     ],
     keys: ['id', 'mondo_label_ja2', 'mondo_label_en2', 'parent', 'property'],
-    apiUrl: '/sparqlist/api/link-mondo-ordo',
   },
   {
     class: 'monarch-initiative',
@@ -254,7 +252,6 @@ export const linkedListJaColumns = [
       { label: 'Link Type', content: 'property' },
     ],
     keys: ['id', 'mondo_label_ja', 'mondo_label_en', 'parent', 'property'],
-    apiUrl: '/sparqlist/api/test_nando_link_mond',
   },
   {
     class: 'medgen',
@@ -270,7 +267,6 @@ export const linkedListJaColumns = [
       { label: 'Link Type', content: 'property' },
     ],
     keys: ['medgen_id', 'name', 'disorder', 'property'],
-    apiUrl: '/sparqlist/api/test-nando-medgen',
   },
   {
     class: 'kegg-disease',
@@ -286,7 +282,6 @@ export const linkedListJaColumns = [
       { label: 'Link Type', content: 'property' },
     ],
     keys: ['kegg_disease_id', 'disease_name', 'pathway', 'property'],
-    apiUrl: '/sparqlist/api/test-nando-kegg',
   },
 ];
 
@@ -305,7 +300,6 @@ export const linkedListEnColumns = [
       { label: 'Link Type', content: 'property' },
     ],
     keys: ['id', 'mondo_label_en2', 'parent', 'property'],
-    apiUrl: '/sparqlist/api/test-nando-omim',
   },
   {
     class: 'orphanet',
@@ -321,7 +315,6 @@ export const linkedListEnColumns = [
       { label: 'Link Type', content: 'property' },
     ],
     keys: ['id', 'mondo_label_en2', 'parent', 'property'],
-    apiUrl: '/sparqlist/api/link-mondo-ordo',
   },
   {
     class: 'monarch-initiative',
@@ -337,7 +330,6 @@ export const linkedListEnColumns = [
       { label: 'Link Type', content: 'property' },
     ],
     keys: ['id', 'mondo_label_en', 'parent', 'property'],
-    apiUrl: '/sparqlist/api/test_nando_link_mond',
   },
   {
     class: 'medgen',
@@ -353,7 +345,6 @@ export const linkedListEnColumns = [
       { label: 'Link Type', content: 'property' },
     ],
     keys: ['medgen_id', 'name', 'disorder', 'property'],
-    apiUrl: '/sparqlist/api/test-nando-medgen',
   },
   {
     class: 'kegg-disease',
@@ -369,7 +360,6 @@ export const linkedListEnColumns = [
       { label: 'Link Type', content: 'property' },
     ],
     keys: ['kegg_disease_id', 'disease_name', 'pathway', 'property'],
-    apiUrl: '/sparqlist/api/test-nando-kegg',
   },
 ];
 

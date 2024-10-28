@@ -7,14 +7,24 @@ import { createObjectUrlFromData } from '../../utils/stanzaUtils.js';
 
 export async function makeLinkedList(linkedListData) {
   const linkedItems = document.getElementById('temp-linked-items');
+  const overviewSection = linkedItems.closest('.overview-section');
   const tabWrap = linkedItems.querySelector('.tab-wrap');
   const selectGraphType = document.getElementById('linked-items-graph');
   const currentLang = document.querySelector('.language-select').value;
 
-  let isFirstTab = true;
+  // linkedListDataが全て空の場合にoverviewSectionを削除
+  const hasData = Object.values(linkedListData).some(
+    (dataArray) => Array.isArray(dataArray) && dataArray.length > 0
+  );
+  if (!hasData) {
+    overviewSection.remove();
+    return;
+  }
 
+  let isFirstTab = true;
   const items =
     currentLang === 'ja' ? linkedListJaColumns : linkedListEnColumns;
+
   for (const item of items) {
     const content = tabWrap.querySelector(`.${item.class}`);
     const exists = makeLinksTable(item, content, linkedListData);
