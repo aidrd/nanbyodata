@@ -1,104 +1,121 @@
-export function makeNumOfPatients(entryData) {
-  const targetDiv = document.getElementById('temp-num-of-patients');
+import { createObjectUrlFromData } from '../../utils/stanzaUtils.js';
+
+export function makeNumOfPatients(data) {
   const chartTypeSelect = document.getElementById('num-of-patients-graph');
-  const selectedChartType = chartTypeSelect ? chartTypeSelect.value : 'line';
+  if (chartTypeSelect) {
+    chartTypeSelect.addEventListener('change', function () {
+      toggleChartDisplay(chartTypeSelect.value);
+    });
+  }
 
-  if (targetDiv) {
-    // Clear existing chart and script
-    targetDiv.innerHTML = '';
+  // 初回呼び出し
+  initializeCharts(data);
+  toggleChartDisplay(chartTypeSelect ? chartTypeSelect.value : 'line');
+}
 
-    const chartSrc =
-      selectedChartType === 'bar'
-        ? 'https://togostanza.github.io/metastanza/barchart.js'
-        : 'https://togostanza.github.io/metastanza-devel/linechart.js';
+function initializeCharts(data) {
+  const targetDiv = document.getElementById('temp-num-of-patients');
+  if (!targetDiv) return;
 
-    const chartHtml = `
-      <${
-        selectedChartType === 'bar'
-          ? 'togostanza-barchart'
-          : 'togostanza-linechart'
-      }
-        data-url="https://dev-nanbyodata.dbcls.jp/sparqlist/api/takatsuki_test_20240322?nando_id=${
-          entryData.nando_id
-        }"
-        ${
-          selectedChartType === 'bar'
-            ? `
-            data-type="json"
-            category="year"
-            value="num_of_patients"
-            category-title="Year"
-            value-title="Num of Patients"
-            chart-type="stacked"
-            width="900"
-            height="400"
-            legend="true"
-            xaxis-placement="bottom"
-            yaxis-placement="left"
-            xlabel-padding="10"
-            ylabel-padding="5"
-            xlabel-alignment="center"
-            ylabel-alignment="right"
-            padding-inner=".8"
-            padding-outer=".5"
-            bar-width="0.8"
-            legend-title="Categories"
-            xgrid="false"
-            ygrid="true"
-            xtick="false"
-            ytick="true"
-            xlabel-max-width="200"
-            ylabel-max-width="200"
-          `
-            : `
-            data-type="json"
-            axis-x-key="year"
-            axis-x-scale="ordinal"
-            axis-x-placement="bottom"
-            axis-x-title="Year"
-            axis-x-title_padding="40"
-            axis-x-ticks_label_angle="0"
-            axis-y-key="num_of_patients"
-            axis-y-scale="linear"
-            axis-y-placement="left"
-            axis-y-title="Num of Patients"
-            axis-y-title_padding="50"
-            axis-y-ticks_label_angle="0"
-            point_size="10"
-            legend-title="Year"
-            tooltips-key="num_of_patients"
-            grouping-key="group"
-          `
-        }
-        style="
-          --togostanza-series-0-color: #29697a;
-          --togostanza-label-font-size: 14;
-          ${
-            selectedChartType === 'line'
-              ? `
-            --togostanza-canvas-height: 400;
-            --togostanza-canvas-width: 1000;
-            --togostanza-fonts-font_size_primary: 14;
-            --togostanza-fonts-font_size_secondary: 14;
-          `
-              : ''
-          }
-      "></${
-        selectedChartType === 'bar'
-          ? 'togostanza-barchart'
-          : 'togostanza-linechart'
-      }>
-    `;
+  const objectUrl = createObjectUrlFromData(data);
+  if (!objectUrl) {
+    console.error('Error: objectUrl is undefined or invalid.');
+    return;
+  }
 
-    targetDiv.innerHTML = chartHtml;
+  // チャート HTML を一度に挿入
+  targetDiv.innerHTML = `
+    <togostanza-barchart
+      data-url="${objectUrl}"
+      data-type="json"
+      category="year"
+      value="num_of_patients"
+      category-title="Year"
+      value-title="Num of Patients"
+      chart-type="stacked"
+      width="900"
+      height="400"
+      legend="true"
+      xaxis-placement="bottom"
+      yaxis-placement="left"
+      xlabel-padding="10"
+      ylabel-padding="5"
+      xlabel-alignment="center"
+      ylabel-alignment="right"
+      padding-inner=".8"
+      padding-outer=".5"
+      bar-width="0.8"
+      legend-title="Categories"
+      xgrid="false"
+      ygrid="true"
+      xtick="false"
+      ytick="true"
+      xlabel-max-width="200"
+      ylabel-max-width="200"
+      style="display: none;">
+    </togostanza-barchart>
 
-    // Create and add the script dynamically
-    const scriptElement = document.createElement('script');
-    scriptElement.type = 'module';
-    scriptElement.src = chartSrc;
-    scriptElement.async = true;
+    <togostanza-linechart
+      data-url="${objectUrl}"
+      data-type="json"
+      axis-x-key="year"
+      axis-x-scale="ordinal"
+      axis-x-placement="bottom"
+      axis-x-title="Year"
+      axis-x-title_padding="40"
+      axis-x-ticks_label_angle="0"
+      axis-y-key="num_of_patients"
+      axis-y-scale="linear"
+      axis-y-placement="left"
+      axis-y-title="Num of Patients"
+      axis-y-title_padding="60"
+      axis-y-ticks_label_angle="0"
+      point_size="10"
+      legend-title="Year"
+      tooltips-key="num_of_patients"
+      grouping-key="group"
+      style="display: none;">
+    </togostanza-linechart>
+  `;
 
-    // Add the script to the targetDiv
-    targetDiv.appendChild(scriptElement);
+  // カスタムスタイルを適用
+  const barChart = targetDiv.querySelector('togostanza-barchart');
+  const lineChart = targetDiv.querySelector('togostanza-linechart');
+
+  if (barChart) {
+    barChart.style.setProperty('--togostanza-series-0-color', '#29697a');
+    barChart.style.setProperty('--togostanza-label-font-size', '14');
+  }
+
+  if (lineChart) {
+    lineChart.style.setProperty('--togostanza-series-0-color', '#29697a');
+    lineChart.style.setProperty('--togostanza-canvas-height', '460');
+    lineChart.style.setProperty('--togostanza-canvas-width', '970');
+    lineChart.style.setProperty('--togostanza-fonts-font_size_secondary', '14');
+  }
+
+  // スクリプト追加
+  addScript('https://togostanza.github.io/metastanza/barchart.js');
+  addScript('https://togostanza.github.io/metastanza-devel/linechart.js');
+}
+
+function addScript(src) {
+  const scriptElement = document.createElement('script');
+  scriptElement.type = 'module';
+  scriptElement.src = src;
+  scriptElement.async = true;
+  document.body.appendChild(scriptElement);
+}
+
+function toggleChartDisplay(selectedChartType) {
+  const barChart = document.querySelector('togostanza-barchart');
+  const lineChart = document.querySelector('togostanza-linechart');
+
+  if (selectedChartType === 'bar') {
+    barChart.style.display = 'block';
+    lineChart.style.display = 'none';
+  } else {
+    barChart.style.display = 'none';
+    lineChart.style.display = 'block';
   }
 }

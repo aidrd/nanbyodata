@@ -72,9 +72,8 @@ const datasets = [
       }
     }
 
-    let linkedListData;
-
-    // get Overview data
+    // Overview
+    // リンク一覧のデータ
     await Promise.all([
       fetchData('test-nando-omim'),
       fetchData('link-mondo-ordo'),
@@ -83,16 +82,27 @@ const datasets = [
       fetchData('test-nando-kegg'),
     ])
       .then(([omimData, orphanetData, monarchData, medgenData, keggData]) => {
-        linkedListData = {
+        const linkedListData = {
           omim: omimData,
           orphanet: orphanetData,
           'monarch-initiative': monarchData,
           medgen: medgenData,
           'kegg-disease': keggData,
         };
+        makeLinkedList(linkedListData);
       })
       .catch((error) => {
-        console.error('Error:', error); // エラーハンドリング
+        console.error('Error:', error);
+      });
+
+    // 疾患統計情報のデータ
+    fetchData('takatsuki_test_20240322?nando_id')
+      .then((response) => {
+        const numOfPatientsData = response;
+        makeNumOfPatients(numOfPatientsData);
+      })
+      .catch((error) => {
+        console.error('Error:', error);
       });
 
     // get Overview data
@@ -102,18 +112,11 @@ const datasets = [
         makeExternalLinks(entryData);
         makeAlternativeName(entryData);
         makeInheritanceUris(entryData);
-        makeLinkedList(linkedListData);
-        makeNumOfPatients(entryData);
         makeSubClass(entryData);
         checkSummaryData(entryData);
         makeDiseaseDefinition(entryData);
         updateOverviewDisplay();
-        const numOfPatientsSelect = document.getElementById(
-          'num-of-patients-graph'
-        );
-        numOfPatientsSelect.addEventListener('change', function () {
-          makeNumOfPatients(entryData);
-        });
+
         const subClassSelect = document.getElementById('sub-class-graph');
         subClassSelect.addEventListener('change', function () {
           makeSubClass(entryData);
