@@ -65,7 +65,7 @@ function makeLinksTable(item, content, linkedListData) {
   // 既存のテーブルを削除
   const existingTable = content.querySelector('table');
   if (existingTable) {
-    existingTable.remove();
+    existingTable.style.display = 'none';
   }
 
   // 新しいdivを生成してクラス名を設定
@@ -178,77 +178,104 @@ function makeLinksTable(item, content, linkedListData) {
 
 function addTableOrTree(content, item, displayType, entryData, linkedListData) {
   const currentLang = document.querySelector('.language-select').value;
-  // 既存のツリーを削除する
-  const existingTree = content.querySelector('togostanza-tree');
-  if (existingTree) {
-    existingTree.remove();
-  }
+
+  // 既存のテーブル、ツリー、pタグを取得
+  const table = content.querySelector('table');
+  const tree = content.querySelector('togostanza-tree');
+  let feedbackMessage = content.querySelector('p');
 
   // overviewSectionのpaddingを変更
   const overviewSection = content.closest('.overview-section');
 
-  if (displayType === 'table') {
-    // テーブルが既に存在するか確認
-    if (!content.querySelector('table')) {
-      // テーブルが存在しない場合のみ生成
-      overviewSection.style.paddingBottom = '0';
-      makeLinksTable(item, content, linkedListData);
+  // pタグが存在しない場合は生成
+  if (!feedbackMessage) {
+    feedbackMessage = document.createElement('p');
+    feedbackMessage.textContent =
+      currentLang === 'ja'
+        ? '*リンクに関するフィードバックをお待ちしております.'
+        : 'We welcome feedback on the links.';
+    content.appendChild(feedbackMessage);
+  }
 
-      if (!content.querySelector('p')) {
-        const feedbackMessage = document.createElement('p');
-        feedbackMessage.textContent =
-          currentLang === 'ja'
-            ? '*リンクに関するフィードバックをお待ちしております.'
-            : 'We welcome feedback on the links.';
-        content.appendChild(feedbackMessage);
-      }
+  if (displayType === 'table') {
+    // テーブル表示の設定
+    overviewSection.style.paddingBottom = '0';
+
+    // テーブルの表示・非表示を切り替え
+    if (table) {
+      table.style.display = 'block';
+    } else {
+      makeLinksTable(item, content, linkedListData);
+    }
+
+    // pタグを表示
+    feedbackMessage.style.display = 'block';
+
+    // ツリーを非表示
+    if (tree) {
+      tree.style.display = 'none';
     }
   } else if (displayType === 'tree') {
+    // ツリー表示の設定
     overviewSection.style.paddingBottom = '15px';
-    const uniqueTreeId = `tree-${item.class}`;
-    const apiUrl = new URL(item.apiUrl, window.location.origin);
-    apiUrl.searchParams.set('nando_id', entryData.nando_id);
-    content.innerHTML = `
-      <togostanza-tree 
-        id="${uniqueTreeId}" 
-        data-url="${apiUrl}" 
-        data-type="json" 
-        sort-key="id" 
-        sort-order="ascending" 
-        graph-layout="horizontal" 
-        node-label-key="id" 
-        node-label-margin="8" 
-        node-size-key="size" 
-        node-size-min="8" 
-        node-size-max="8" 
-        node-color-key="color" 
-        node-color-group="group" 
-        node-color-blend="normal" 
-        tooltips-key="name"
-        togostanza-custom_css_url="">
-      </togostanza-tree>
-    `;
 
-    setTimeout(() => {
-      const scriptElement = document.createElement('script');
-      scriptElement.type = 'module';
-      scriptElement.src =
-        'https://togostanza.github.io/metastanza-devel/tree.js';
-      scriptElement.async = true;
-      content.appendChild(scriptElement);
+    // テーブルを非表示
+    if (table) {
+      table.style.display = 'none';
+    }
 
-      const treeElement = document.getElementById(uniqueTreeId);
-      treeElement.style.setProperty(
-        '--togostanza-theme-series_0_color',
-        '#29697a'
-      );
-      treeElement.style.setProperty(
-        '--togostanza-fonts-font_size_primary',
-        '14'
-      );
-      treeElement.style.setProperty('--togostanza-canvas-height', '200px');
-      treeElement.style.setProperty('--togostanza-canvas-width', '1000px');
-    }, 0);
+    // pタグを非表示
+    feedbackMessage.style.display = 'none';
+
+    // ツリーの表示・非表示を切り替え
+    if (tree) {
+      tree.style.display = 'block';
+    } else {
+      const uniqueTreeId = `tree-${item.class}`;
+      const apiUrl = new URL(item.apiUrl, window.location.origin);
+      apiUrl.searchParams.set('nando_id', entryData.nando_id);
+      content.innerHTML += `
+        <togostanza-tree 
+          id="${uniqueTreeId}" 
+          data-url="${apiUrl}" 
+          data-type="json" 
+          sort-key="id" 
+          sort-order="ascending" 
+          graph-layout="horizontal" 
+          node-label-key="id" 
+          node-label-margin="8" 
+          node-size-key="size" 
+          node-size-min="8" 
+          node-size-max="8" 
+          node-color-key="color" 
+          node-color-group="group" 
+          node-color-blend="normal" 
+          tooltips-key="name"
+          togostanza-custom_css_url="">
+        </togostanza-tree>
+      `;
+
+      setTimeout(() => {
+        const scriptElement = document.createElement('script');
+        scriptElement.type = 'module';
+        scriptElement.src =
+          'https://togostanza.github.io/metastanza-devel/tree.js';
+        scriptElement.async = true;
+        content.appendChild(scriptElement);
+
+        const treeElement = document.getElementById(uniqueTreeId);
+        treeElement.style.setProperty(
+          '--togostanza-theme-series_0_color',
+          '#29697a'
+        );
+        treeElement.style.setProperty(
+          '--togostanza-fonts-font_size_primary',
+          '14'
+        );
+        treeElement.style.setProperty('--togostanza-canvas-height', '200px');
+        treeElement.style.setProperty('--togostanza-canvas-width', '1000px');
+      }, 0);
+    }
   }
 }
 
