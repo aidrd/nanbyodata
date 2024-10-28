@@ -72,6 +72,29 @@ const datasets = [
       }
     }
 
+    let linkedListData;
+
+    // get Overview data
+    await Promise.all([
+      fetchData('test-nando-omim'),
+      fetchData('link-mondo-ordo'),
+      fetchData('test_nando_link_mond'),
+      fetchData('test-nando-medgen'),
+      fetchData('test-nando-kegg'),
+    ])
+      .then(([omimData, orphanetData, monarchData, medgenData, keggData]) => {
+        linkedListData = {
+          omim: omimData,
+          orphanet: orphanetData,
+          'monarch-initiative': monarchData,
+          medgen: medgenData,
+          'kegg-disease': keggData,
+        };
+      })
+      .catch((error) => {
+        console.error('Error:', error); // エラーハンドリング
+      });
+
     // get Overview data
     fetchData('nanbyodata_get_overview_by_nando_id').then((entryData) => {
       if (entryData) {
@@ -79,7 +102,7 @@ const datasets = [
         makeExternalLinks(entryData);
         makeAlternativeName(entryData);
         makeInheritanceUris(entryData);
-        makeLinkedList(entryData);
+        makeLinkedList(entryData, linkedListData);
         makeNumOfPatients(entryData);
         makeSubClass(entryData);
         checkSummaryData(entryData);

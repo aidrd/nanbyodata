@@ -3,7 +3,7 @@ import {
   linkedListJaColumns,
 } from '../../utils/stanzaColumns.js';
 
-export async function makeLinkedList(entryData) {
+export async function makeLinkedList(entryData, linkedListData) {
   const linkedItems = document.getElementById('temp-linked-items');
   const tabWrap = linkedItems.querySelector('.tab-wrap');
   const selectGraphType = document.getElementById('linked-items-graph');
@@ -15,7 +15,7 @@ export async function makeLinkedList(entryData) {
     currentLang === 'ja' ? linkedListJaColumns : linkedListEnColumns;
   for (const item of items) {
     const content = tabWrap.querySelector(`.${item.class}`);
-    const exists = await fetchLinksTable(entryData, item, content);
+    const exists = makeLinksTable(item, content, linkedListData);
 
     if (!exists) {
       const input = document.getElementById(`linked-item-${item.class}`);
@@ -54,141 +54,129 @@ export async function makeLinkedList(entryData) {
   }
 }
 
-async function fetchLinksTable(entryData, item, content) {
-  try {
-    const response = await fetch(
-      `${item.apiUrl}?nando_id=${entryData.nando_id}`
-    );
-    const data = await response.json();
+function makeLinksTable(item, content, linkedListData) {
+  const data = linkedListData[item.class];
+  if (!data || data.length === 0) {
+    return false;
+  }
 
-    if (response.status !== 200 || data.length === 0) {
-      return false;
-    }
+  const filteredData = data.filter((itemData) => itemData.displayid);
 
-    const filteredData = data.filter((itemData) => itemData.displayid);
+  // 既存のテーブルを削除
+  const existingTable = content.querySelector('table');
+  if (existingTable) {
+    existingTable.remove();
+  }
 
-    // 既存のテーブルを削除
-    const existingTable = content.querySelector('table');
-    if (existingTable) {
-      existingTable.remove();
-    }
+  // 新しいdivを生成してクラス名を設定
+  const tableWrapper = document.createElement('div');
+  tableWrapper.classList.add('table-contents');
 
-    // 新しいdivを生成してクラス名を設定
-    const tableWrapper = document.createElement('div');
-    tableWrapper.classList.add('table-contents');
+  // 新しいテーブルを生成
+  const table = document.createElement('table');
+  table.classList.add('table');
 
-    // 新しいテーブルを生成
-    const table = document.createElement('table');
-    table.classList.add('table');
+  // theadを作成
+  const thead = document.createElement('thead');
+  const headerRow = document.createElement('tr');
+  item.labels.forEach((label) => {
+    const th = document.createElement('th');
+    th.textContent = label.label; // 固定のラベルを設定
+    headerRow.appendChild(th);
+  });
 
-    // theadを作成
-    const thead = document.createElement('thead');
-    const headerRow = document.createElement('tr');
-    item.labels.forEach((label) => {
-      const th = document.createElement('th');
-      th.textContent = label.label; // 固定のラベルを設定
-      headerRow.appendChild(th);
+  // Feedback列を追加
+  const feedbackTh = document.createElement('th');
+  feedbackTh.textContent = 'Feedback(*)';
+  headerRow.appendChild(feedbackTh);
+  thead.appendChild(headerRow);
+  table.appendChild(thead); // theadをテーブルに追加
+
+  // tbodyを作成
+  const tbody = document.createElement('tbody');
+
+  // 取得したデータをtableの行として追加
+  filteredData.forEach((itemData) => {
+    const row = document.createElement('tr');
+    item.keys.forEach((key) => {
+      const cell = document.createElement('td');
+
+      // labels配列から一致するkeyを探し、typeが"url"であればリンクを作成
+      const field = item.labels.find((labelItem) => labelItem.content === key);
+
+      // modified_diseaseを表示し、original_diseaseをリンク先にするケース
+      if (field && field.type === 'url' && field.hrefKey) {
+        const link = document.createElement('a');
+        link.href = itemData[field.hrefKey]; // href用のキーからリンク先を生成
+        link.textContent = itemData[key]; // ラベルとして表示するデータ
+        link.target = '_blank'; // 新しいタブで開く
+        cell.appendChild(link);
+      } else if (field && field.content === 'property') {
+        // propertyの値から"#"以降を抽出してマッチング
+        const propertyValue = itemData[key];
+        const matchType = propertyValue.split('#')[1]; // #以降を抽出
+
+        if (matchType === 'closeMatch') {
+          cell.textContent = 'Close Match';
+        } else if (matchType === 'exactMatch') {
+          cell.textContent = 'Exact Match';
+        } else {
+          cell.textContent = matchType || propertyValue; // その他はそのまま表示
+        }
+      } else {
+        // その他のデータをそのまま表示
+        cell.textContent = itemData[key];
+      }
+      row.appendChild(cell);
     });
 
-    // Feedback列を追加
-    const feedbackTh = document.createElement('th');
-    feedbackTh.textContent = 'Feedback(*)';
-    headerRow.appendChild(feedbackTh);
-    thead.appendChild(headerRow);
-    table.appendChild(thead); // theadをテーブルに追加
-
-    // tbodyを作成
-    const tbody = document.createElement('tbody');
-
-    // 取得したデータをtableの行として追加
-    filteredData.forEach((itemData) => {
-      const row = document.createElement('tr');
-      item.keys.forEach((key) => {
-        const cell = document.createElement('td');
-
-        // labels配列から一致するkeyを探し、typeが"url"であればリンクを作成
-        const field = item.labels.find(
-          (labelItem) => labelItem.content === key
-        );
-
-        // modified_diseaseを表示し、original_diseaseをリンク先にするケース
-        if (field && field.type === 'url' && field.hrefKey) {
-          const link = document.createElement('a');
-          link.href = itemData[field.hrefKey]; // href用のキーからリンク先を生成
-          link.textContent = itemData[key]; // ラベルとして表示するデータ
-          link.target = '_blank'; // 新しいタブで開く
-          cell.appendChild(link);
-        } else if (field && field.content === 'property') {
-          // propertyの値から"#"以降を抽出してマッチング
-          const propertyValue = itemData[key];
-          const matchType = propertyValue.split('#')[1]; // #以降を抽出
-
-          if (matchType === 'closeMatch') {
-            cell.textContent = 'Close Match';
-          } else if (matchType === 'exactMatch') {
-            cell.textContent = 'Exact Match';
-          } else {
-            cell.textContent = matchType || propertyValue; // その他はそのまま表示
-          }
-        } else {
-          // その他のデータをそのまま表示
-          cell.textContent = itemData[key];
-        }
-        row.appendChild(cell);
-      });
-
-      // Feedback列にアイコンを追加
-      const feedbackCell = document.createElement('td');
-      feedbackCell.classList.add('feedback-cell');
-      feedbackCell.innerHTML = `
+    // Feedback列にアイコンを追加
+    const feedbackCell = document.createElement('td');
+    feedbackCell.classList.add('feedback-cell');
+    feedbackCell.innerHTML = `
         <a href="#" class="good-icon" title="Good"><i class="far fa-thumbs-up"></i></a>
         <a href="#" class="bad-icon" title="Bad"><i class="far fa-thumbs-down"></i></a>
         <a href="mailto:feedback@example.com" class="email-icon" title="Send Feedback"><i class="far fa-envelope"></i></a>
       `;
-      row.appendChild(feedbackCell);
+    row.appendChild(feedbackCell);
 
-      tbody.appendChild(row); // tbodyに行を追加
+    tbody.appendChild(row); // tbodyに行を追加
+  });
+
+  table.appendChild(tbody); // tbodyをテーブルに追加
+
+  // テーブルをdivに追加
+  tableWrapper.appendChild(table);
+
+  // contentにtableWrapperをpタグの前に追加
+  content.prepend(tableWrapper); // テーブルを最初に追加する
+
+  // アイコンクリックイベントを追加
+  table.querySelectorAll('.good-icon').forEach((icon) => {
+    icon.addEventListener('click', (e) => {
+      e.preventDefault();
+      alert('Good feedback received!');
     });
+  });
 
-    table.appendChild(tbody); // tbodyをテーブルに追加
-
-    // テーブルをdivに追加
-    tableWrapper.appendChild(table);
-
-    // contentにtableWrapperをpタグの前に追加
-    content.prepend(tableWrapper); // テーブルを最初に追加する
-
-    // アイコンクリックイベントを追加
-    table.querySelectorAll('.good-icon').forEach((icon) => {
-      icon.addEventListener('click', (e) => {
-        e.preventDefault();
-        alert('Good feedback received!');
-      });
+  table.querySelectorAll('.bad-icon').forEach((icon) => {
+    icon.addEventListener('click', (e) => {
+      e.preventDefault();
+      alert('Bad feedback received!');
     });
+  });
 
-    table.querySelectorAll('.bad-icon').forEach((icon) => {
-      icon.addEventListener('click', (e) => {
-        e.preventDefault();
-        alert('Bad feedback received!');
-      });
+  table.querySelectorAll('.email-icon').forEach((icon) => {
+    icon.addEventListener('click', (e) => {
+      // メールリンクの処理はデフォルトの動作に任せる
+      alert('Email icon clicked!');
     });
+  });
 
-    table.querySelectorAll('.email-icon').forEach((icon) => {
-      icon.addEventListener('click', (e) => {
-        // メールリンクの処理はデフォルトの動作に任せる
-        alert('Email icon clicked!');
-      });
-    });
-
-    return true; // データがある場合、trueを返す
-  } catch (error) {
-    console.error('Error fetching data:', error);
-    return false; // エラーが発生した場合、falseを返す
-  }
+  return true; // データがある場合、trueを返す
 }
 
-function addTableOrTree(content, item, displayType, entryData) {
-  console.log(item);
+function addTableOrTree(content, item, displayType, entryData, linkedListData) {
   const currentLang = document.querySelector('.language-select').value;
   // 既存のツリーを削除する
   const existingTree = content.querySelector('togostanza-tree');
@@ -204,7 +192,7 @@ function addTableOrTree(content, item, displayType, entryData) {
     if (!content.querySelector('table')) {
       // テーブルが存在しない場合のみ生成
       overviewSection.style.paddingBottom = '0';
-      fetchLinksTable(entryData, item, content);
+      makeLinksTable(item, content, linkedListData);
 
       if (!content.querySelector('p')) {
         const feedbackMessage = document.createElement('p');
@@ -262,4 +250,9 @@ function addTableOrTree(content, item, displayType, entryData) {
       treeElement.style.setProperty('--togostanza-canvas-width', '1000px');
     }, 0);
   }
+}
+
+function createObjectUrlFromData(data) {
+  const blob = new Blob([JSON.stringify(data)], { type: 'application/json' });
+  return URL.createObjectURL(blob);
 }
