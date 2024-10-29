@@ -5,7 +5,7 @@ import {
 
 import { createObjectUrlFromData } from '../../utils/stanzaUtils.js';
 
-export async function makeLinkedList(linkedListData) {
+export async function makeLinkedList(linkedListData, nandoId) {
   const linkedItems = document.getElementById('temp-linked-items');
   const overviewSection = linkedItems.closest('.overview-section');
   const tabWrap = linkedItems.querySelector('.tab-wrap');
@@ -27,7 +27,7 @@ export async function makeLinkedList(linkedListData) {
 
   for (const item of items) {
     const content = tabWrap.querySelector(`.${item.class}`);
-    const exists = makeLinksTable(item, content, linkedListData);
+    const exists = makeLinksTable(item, content, linkedListData, nandoId);
 
     if (!exists) {
       const input = document.getElementById(`linked-item-${item.class}`);
@@ -66,7 +66,7 @@ export async function makeLinkedList(linkedListData) {
   }
 }
 
-function makeLinksTable(item, content, linkedListData) {
+function makeLinksTable(item, content, linkedListData, nandoId) {
   const data = linkedListData[item.class];
   if (!data || data.length === 0) {
     return false;
@@ -80,69 +80,56 @@ function makeLinksTable(item, content, linkedListData) {
     existingTable.style.display = 'none';
   }
 
-  // 新しいdivを生成してクラス名を設定
   const tableWrapper = document.createElement('div');
   tableWrapper.classList.add('table-contents');
 
-  // 新しいテーブルを生成
   const table = document.createElement('table');
   table.classList.add('table');
 
-  // theadを作成
   const thead = document.createElement('thead');
   const headerRow = document.createElement('tr');
   item.labels.forEach((label) => {
     const th = document.createElement('th');
-    th.textContent = label.label; // 固定のラベルを設定
+    th.textContent = label.label;
     headerRow.appendChild(th);
   });
 
-  // Feedback列を追加
   const feedbackTh = document.createElement('th');
   feedbackTh.textContent = 'Feedback(*)';
   headerRow.appendChild(feedbackTh);
   thead.appendChild(headerRow);
-  table.appendChild(thead); // theadをテーブルに追加
+  table.appendChild(thead);
 
-  // tbodyを作成
   const tbody = document.createElement('tbody');
 
-  // 取得したデータをtableの行として追加
   filteredData.forEach((itemData) => {
     const row = document.createElement('tr');
     item.keys.forEach((key) => {
       const cell = document.createElement('td');
 
-      // labels配列から一致するkeyを探し、typeが"url"であればリンクを作成
       const field = item.labels.find((labelItem) => labelItem.content === key);
 
-      // modified_diseaseを表示し、original_diseaseをリンク先にするケース
       if (field && field.type === 'url' && field.hrefKey) {
         const link = document.createElement('a');
-        link.href = itemData[field.hrefKey]; // href用のキーからリンク先を生成
-        link.textContent = itemData[key]; // ラベルとして表示するデータ
-        link.target = '_blank'; // 新しいタブで開く
+        link.href = itemData[field.hrefKey];
+        link.textContent = itemData[key];
+        link.target = '_blank';
         cell.appendChild(link);
       } else if (field && field.content === 'property') {
-        // propertyの値から"#"以降を抽出してマッチング
         const propertyValue = itemData[key];
-        const matchType = propertyValue.split('#')[1]; // #以降を抽出
-
-        if (matchType === 'closeMatch') {
-          cell.textContent = 'Close Match';
-        } else if (matchType === 'exactMatch') {
-          cell.textContent = 'Exact Match';
-        } else {
-          cell.textContent = matchType || propertyValue; // その他はそのまま表示
-        }
+        const matchType = propertyValue.split('#')[1];
+        cell.textContent =
+          matchType === 'closeMatch'
+            ? 'Close Match'
+            : matchType === 'exactMatch'
+            ? 'Exact Match'
+            : propertyValue;
       } else {
-        // その他のデータをそのまま表示
         cell.textContent = itemData[key];
       }
       row.appendChild(cell);
     });
 
-    // Feedback列にアイコンを追加
     const feedbackCell = document.createElement('td');
     feedbackCell.classList.add('feedback-cell');
     feedbackCell.innerHTML = `
@@ -152,54 +139,53 @@ function makeLinksTable(item, content, linkedListData) {
       `;
     row.appendChild(feedbackCell);
 
-    tbody.appendChild(row); // tbodyに行を追加
+    feedbackCell.querySelector('.good-icon').addEventListener('click', (e) => {
+      e.preventDefault();
+      sendFeedback('GOOD', `NANDO:${nandoId}`, itemData.displayid);
+    });
+
+    feedbackCell.querySelector('.bad-icon').addEventListener('click', (e) => {
+      e.preventDefault();
+      sendFeedback('BAD', `NANDO:${nandoId}`, itemData.displayid);
+    });
+
+    tbody.appendChild(row);
   });
 
-  table.appendChild(tbody); // tbodyをテーブルに追加
-
-  // テーブルをdivに追加
+  table.appendChild(tbody);
   tableWrapper.appendChild(table);
+  content.prepend(tableWrapper);
 
-  // contentにtableWrapperをpタグの前に追加
-  content.prepend(tableWrapper); // テーブルを最初に追加する
+  return true;
+}
 
-  // アイコンクリックイベントを追加
-  table.querySelectorAll('.good-icon').forEach((icon) => {
-    icon.addEventListener('click', (e) => {
-      e.preventDefault();
-      alert('Good feedback received!');
+function sendFeedback(type, idFrom, idTo) {
+  const url = `/feedback?id_from=${idFrom}&id_to=${idTo}&type=${type}`;
+
+  fetch(url, {
+    method: 'GET',
+  })
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error('Error while sending feedback.');
+      }
+      alert(`${type} feedback received.`);
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+      alert('Error while sending feedback.');
     });
-  });
-
-  table.querySelectorAll('.bad-icon').forEach((icon) => {
-    icon.addEventListener('click', (e) => {
-      e.preventDefault();
-      alert('Bad feedback received!');
-    });
-  });
-
-  table.querySelectorAll('.email-icon').forEach((icon) => {
-    icon.addEventListener('click', (e) => {
-      // メールリンクの処理はデフォルトの動作に任せる
-      alert('Email icon clicked!');
-    });
-  });
-
-  return true; // データがある場合、trueを返す
 }
 
 function addTableOrTree(content, item, displayType, linkedListData) {
   const currentLang = document.querySelector('.language-select').value;
 
-  // 既存のテーブル、ツリー、pタグを取得
   const table = content.querySelector('table');
   const tree = content.querySelector('togostanza-tree');
   let feedbackMessage = content.querySelector('p');
 
-  // overviewSectionのpaddingを変更
   const overviewSection = content.closest('.overview-section');
 
-  // pタグが存在しない場合は生成
   if (!feedbackMessage) {
     feedbackMessage = document.createElement('p');
     feedbackMessage.textContent =
@@ -210,36 +196,28 @@ function addTableOrTree(content, item, displayType, linkedListData) {
   }
 
   if (displayType === 'table') {
-    // テーブル表示の設定
     overviewSection.style.paddingBottom = '0';
 
-    // テーブルの表示・非表示を切り替え
     if (table) {
       table.style.display = 'table';
     } else {
-      makeLinksTable(item, content, linkedListData);
+      makeLinksTable(item, content, linkedListData, nandoId);
     }
 
-    // pタグを表示
     feedbackMessage.style.display = 'block';
 
-    // ツリーを非表示
     if (tree) {
       tree.style.display = 'none';
     }
   } else if (displayType === 'tree') {
-    // ツリー表示の設定
     overviewSection.style.paddingBottom = '15px';
 
-    // テーブルを非表示
     if (table) {
       table.style.display = 'none';
     }
 
-    // pタグを非表示
     feedbackMessage.style.display = 'none';
 
-    // ツリーの表示・非表示を切り替え
     if (tree) {
       tree.style.display = 'block';
     } else {

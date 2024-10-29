@@ -89,7 +89,7 @@ const datasets = [
           medgen: medgenData,
           'kegg-disease': keggData,
         };
-        makeLinkedList(linkedListData);
+        makeLinkedList(linkedListData, nandoId);
       })
       .catch((error) => {
         console.error('Error:', error);
