@@ -96,10 +96,20 @@ const datasets = [
       });
 
     // 疾患統計情報のデータ
-    fetchData('takatsuki_test_20240322?nando_id')
+    fetchData('takatsuki_test_20240322')
       .then((response) => {
         const numOfPatientsData = response;
         makeNumOfPatients(numOfPatientsData);
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
+
+    // 下位疾患データ
+    fetchData('test_get_nandoID')
+      .then((response) => {
+        const subClassData = response;
+        makeSubClass(subClassData);
       })
       .catch((error) => {
         console.error('Error:', error);
@@ -112,15 +122,10 @@ const datasets = [
         makeExternalLinks(entryData);
         makeAlternativeName(entryData);
         makeInheritanceUris(entryData);
-        makeSubClass(entryData);
         checkSummaryData(entryData);
         makeDiseaseDefinition(entryData);
         updateOverviewDisplay();
 
-        const subClassSelect = document.getElementById('sub-class-graph');
-        subClassSelect.addEventListener('change', function () {
-          makeSubClass(entryData);
-        });
         datasets.find((d) => d.name === 'Overview').data = entryData;
         checkAndLogDatasets();
         if (hash) {
