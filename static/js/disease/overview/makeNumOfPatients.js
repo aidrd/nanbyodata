@@ -2,6 +2,13 @@ import { createObjectUrlFromData } from '../../utils/stanzaUtils.js';
 
 export function makeNumOfPatients(data) {
   const chartTypeSelect = document.getElementById('num-of-patients-graph');
+  // データの確認と処理
+  if (data.length <= 1) {
+    const overviewSection = chartTypeSelect.closest('.overview-section');
+    overviewSection.remove();
+    return;
+  }
+
   if (chartTypeSelect) {
     chartTypeSelect.addEventListener('change', function () {
       toggleChartDisplay(chartTypeSelect.value);
