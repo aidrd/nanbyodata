@@ -6,6 +6,8 @@ import {
 
 import { createObjectUrlFromData } from '../../utils/stanzaUtils.js';
 
+import { calcTreeLength } from '../../utils/calcTreeDepth.js';
+
 let isTableLoaded = false;
 let isTreeLoaded = false;
 
@@ -69,6 +71,9 @@ export async function makeSubClass(data) {
     } else if (chartType === 'tree') {
       tableView.style.display = 'none';
 
+      // Calc Tree Depth
+      const treeDepth = calcTreeLength(data);
+
       // 初回表示時のみツリーの内容を生成
       if (!isTreeLoaded) {
         treeView.innerHTML = `
@@ -90,8 +95,8 @@ export async function makeSubClass(data) {
             togostanza-custom_css_url=""
             style="
               --togostanza-fonts-font_size_primary: 14;
-              --togostanza-canvas-height: 1000px;
-              --togostanza-canvas-width: 1000px;
+              --togostanza-canvas-height: ${treeDepth.maxLength * 100}px;
+              --togostanza-canvas-width: ${treeDepth.maxDepth * 500}px;
               --togostanza-theme-series_0_color: #29697a;
             "
           ></togostanza-tree>

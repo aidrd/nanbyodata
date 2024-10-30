@@ -5,6 +5,8 @@ import {
 
 import { createObjectUrlFromData } from '../../utils/stanzaUtils.js';
 
+import { calcTreeLength } from '../../utils/calcTreeDepth.js';
+
 export async function makeLinkedList(linkedListData, nandoId) {
   const linkedItems = document.getElementById('temp-linked-items');
   const overviewSection = linkedItems.closest('.overview-section');
@@ -223,6 +225,7 @@ function addTableOrTree(content, item, displayType, linkedListData) {
     } else {
       const uniqueTreeId = `tree-${item.class}`;
       const objectUrl = createObjectUrlFromData(linkedListData[item.class]);
+      const treeDepth = calcTreeLength(linkedListData[item.class]);
       content.innerHTML += `
         <togostanza-tree 
           id="${uniqueTreeId}" 
@@ -261,8 +264,14 @@ function addTableOrTree(content, item, displayType, linkedListData) {
           '--togostanza-fonts-font_size_primary',
           '14'
         );
-        treeElement.style.setProperty('--togostanza-canvas-height', '200px');
-        treeElement.style.setProperty('--togostanza-canvas-width', '1000px');
+        treeElement.style.setProperty(
+          '--togostanza-canvas-height',
+          `${treeDepth.maxLength * 100} px`
+        );
+        treeElement.style.setProperty(
+          '--togostanza-canvas-width',
+          `${treeDepth.maxDepth * 500} px`
+        );
       }, 0);
     }
   }

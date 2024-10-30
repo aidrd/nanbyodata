@@ -81,7 +81,7 @@ function initializeCharts(data) {
       legend-title="Year"
       tooltips-key="num_of_patients"
       grouping-key="group"
-      style="display: none;">
+      >
     </togostanza-linechart>
   `;
 
@@ -95,7 +95,7 @@ function initializeCharts(data) {
   }
 
   if (lineChart) {
-    lineChart.style.setProperty('--togostanza-series-0-color', '#29697a');
+    lineChart.style.setProperty('--togostanza-theme-series_0_color', '#29697a');
     lineChart.style.setProperty('--togostanza-canvas-height', '460');
     lineChart.style.setProperty('--togostanza-canvas-width', '970');
     lineChart.style.setProperty('--togostanza-fonts-font_size_secondary', '14');
