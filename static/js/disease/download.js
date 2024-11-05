@@ -11,6 +11,8 @@ import {
 } from '../utils/stanzaColumns.js';
 
 export const downloadDatasets = (nandoId, datasets) => {
+  // TODO: remove console.log
+  console.log(datasets);
   function prepareDataToDownload(format) {
     if (format === 'json') {
       return JSON.stringify(prepareJsonData(), null, 2);
@@ -24,6 +26,10 @@ export const downloadDatasets = (nandoId, datasets) => {
     const convertedDatasets = Object.values(datasets).map(({ name, data }) => {
       switch (name) {
         case 'Overview':
+          return { name, data };
+        case 'Synonyms':
+          return { name, data };
+        case 'Disease Definition':
           return { name, data };
         case 'Causal Genes':
           return { name, data: reconstructionData(causalGeneColumns, data) };
@@ -64,6 +70,7 @@ export const downloadDatasets = (nandoId, datasets) => {
           };
       }
     });
+    console.log(convertedDatasets);
 
     return convertedDatasets;
   }
@@ -88,6 +95,12 @@ export const downloadDatasets = (nandoId, datasets) => {
   function prepareJsonData() {
     const categoryMappings = {
       Overview: [],
+      // TODO: fix below contents
+      Synonyms: [],
+      // Overview/List of links:['OMIM', 'Orphanet', 'Monarch Initiative', 'MedGen', 'KEGG Disease'],
+      'Disease Definition': [],
+      // Overview/Patient Statistics:[],
+      // Overview/Subclass:[],
       'Causal Genes': [],
       'Genetic Testing': [],
       Phenotypes: [],
@@ -117,12 +130,23 @@ export const downloadDatasets = (nandoId, datasets) => {
     let txtData = '';
 
     Object.entries(jsonData).forEach(([categoryName, categoryData]) => {
-      if (categoryName === 'Overview') {
-        txtData += `-- ${categoryName} --\n`;
-        processObject(categoryData, '');
-        txtData += '\n';
-      } else {
-        processCategory(categoryName, categoryData);
+      switch (categoryName) {
+        case 'Overview':
+          txtData += `-- ${categoryName} --\n`;
+          processObject(categoryData, '');
+          txtData += '\n';
+          break;
+
+        case 'Synonyms':
+        case 'Disease Definition':
+          txtData += `-- Overview/${categoryName} --\n`;
+          processObject(categoryData, '');
+          txtData += '\n';
+          break;
+
+        default:
+          processCategory(categoryName, categoryData);
+          break;
       }
     });
 

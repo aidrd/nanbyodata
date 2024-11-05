@@ -45,6 +45,15 @@ setLangChange();
 
 const datasets = [
   { name: 'Overview', data: null },
+  { name: 'Synonyms', data: null },
+  // { name: 'OMIM', data: null },
+  // { name: 'Orphanet', data: null },
+  // { name: 'Monarch Initiative', data: null },
+  // { name: 'MedGen', data: null },
+  // { name: 'KEGG Disease', data: null },
+  { name: 'Disease Definition', data: null },
+  // { name: 'Patient Statistics', data: null },
+  // { name: 'Subclass', data: null },
   { name: 'Causal Genes', data: null },
   { name: 'Genetic Testing', data: null },
   { name: 'Phenotypes', data: null },
@@ -74,6 +83,7 @@ const datasets = [
 
     // Overview
     // リンク一覧のデータ
+    // TODO: change api endpoint to get all links
     await Promise.all([
       fetchData('test-nando-omim'),
       fetchData('link-mondo-ordo'),
@@ -126,7 +136,36 @@ const datasets = [
         makeDiseaseDefinition(entryData);
         updateOverviewDisplay();
 
-        datasets.find((d) => d.name === 'Overview').data = entryData;
+        // remove unnecessary overview data
+        const {
+          alt_label_en,
+          alt_label_ja,
+          description,
+          mondo_decs,
+          medgen_definition,
+          kegg,
+          mondos,
+          db_xrefs,
+          medgen_id,
+          medgen_uri,
+          urdbms,
+          ...filteredOverviewData
+        } = entryData;
+
+        datasets.find((d) => d.name === 'Overview').data = filteredOverviewData;
+
+        datasets.find((d) => d.name === 'Synonyms').data = {
+          alt_label_en,
+          alt_label_ja,
+        };
+
+        datasets.find((d) => d.name === 'Disease Definition').data = {
+          description,
+          mondo_decs,
+          medgen_definition,
+        };
+
+        datasets;
         checkAndLogDatasets();
         if (hash) {
           trySwitchingContent(hash);
@@ -267,7 +306,7 @@ function trySwitchingContent(hash, retries = 0) {
     switchingDisplayContents(hash);
     document.getElementById('content').style.display = 'block';
   } else if (!found && retries < maxRetries) {
-    console.log('No hash item found, retrying...');
+    console.error('No hash item found, retrying...');
     setTimeout(() => {
       trySwitchingContent(hash, retries + 1);
     }, 3000);
