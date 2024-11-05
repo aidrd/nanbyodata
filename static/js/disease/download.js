@@ -81,6 +81,8 @@ export const downloadDatasets = (nandoId, datasets) => {
           };
         case 'Disease Definition':
           return { name, data };
+        case 'Patient Statistics':
+          return { name, data };
         case 'Causal Genes':
           return { name, data: reconstructionData(causalGeneColumns, data) };
         case 'Genetic Testing':
@@ -195,7 +197,7 @@ export const downloadDatasets = (nandoId, datasets) => {
         'KEGG Disease',
       ],
       'Disease Definition': [],
-      // Overview/Patient Statistics:[],
+      'Patient Statistics': [],
       // Overview/Subclass:[],
       'Causal Genes': [],
       'Genetic Testing': [],
@@ -240,6 +242,9 @@ export const downloadDatasets = (nandoId, datasets) => {
           txtData += '\n';
           break;
 
+        case 'Patient Statistics':
+          processCategory(`Overview/${categoryName}`, categoryData);
+          break;
         default:
           processCategory(categoryName, categoryData);
           break;

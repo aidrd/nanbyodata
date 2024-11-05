@@ -54,7 +54,7 @@ const datasets = [
   // TODO: temporary value
   { name: 'KEGG Disease', data: [] },
   { name: 'Disease Definition', data: null },
-  // { name: 'Patient Statistics', data: null },
+  { name: 'Patient Statistics', data: null },
   // { name: 'Subclass', data: null },
   { name: 'Causal Genes', data: null },
   { name: 'Genetic Testing', data: null },
@@ -110,8 +110,9 @@ const datasets = [
         datasets.find((d) => d.name === 'Orphanet').data = orphanetData;
         datasets.find((d) => d.name === 'Monarch Initiative').data =
           monarchData;
-        datasets.find((d) => d.name === 'MedGen').data = medgenData;
-        datasets.find((d) => d.name === 'KEGG Disease').data = keggData;
+        //TODO: temporary comment out
+        // datasets.find((d) => d.name === 'MedGen').data = medgenData;
+        // datasets.find((d) => d.name === 'KEGG Disease').data = keggData;
         checkAndLogDatasets();
       })
       .catch((error) => {
@@ -123,6 +124,9 @@ const datasets = [
       .then((response) => {
         const numOfPatientsData = response;
         makeNumOfPatients(numOfPatientsData);
+        datasets.find((d) => d.name === 'Patient Statistics').data =
+          numOfPatientsData;
+        checkAndLogDatasets();
       })
       .catch((error) => {
         console.error('Error:', error);
@@ -167,16 +171,29 @@ const datasets = [
 
         datasets.find((d) => d.name === 'Overview').data = filteredOverviewData;
 
-        datasets.find((d) => d.name === 'Synonyms').data = {
-          alt_label_en,
-          alt_label_ja,
-        };
+        const synonymsData = Object.fromEntries(
+          Object.entries({ alt_label_en, alt_label_ja }).filter(
+            ([_, v]) => v != null
+          )
+        );
 
-        datasets.find((d) => d.name === 'Disease Definition').data = {
-          description,
-          mondo_decs,
-          medgen_definition,
-        };
+        const definitionData = Object.fromEntries(
+          Object.entries({ description, mondo_decs, medgen_definition }).filter(
+            ([_, v]) => v != null
+          )
+        );
+
+        const synonymsDataset = datasets.find((d) => d.name === 'Synonyms');
+        if (Object.keys(synonymsData).length > 0) {
+          synonymsDataset.data = synonymsData;
+        }
+
+        const definitionDataset = datasets.find(
+          (d) => d.name === 'Disease Definition'
+        );
+        if (Object.keys(definitionData).length > 0) {
+          definitionDataset.data = definitionData;
+        }
 
         datasets;
         checkAndLogDatasets();
