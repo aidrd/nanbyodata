@@ -1,12 +1,12 @@
 export function makeInheritanceUris(entryData) {
-  const inheritanceUris = document.querySelector('.inheritance-uris');
+  const inheritanceUri = document.querySelector('.inheritance-uri');
   const inheritanceSubTitle = document.querySelector(
     '.sub-title.-inheritance-uri'
   );
   const tempWrapper = document.querySelector('.temp-wrapper');
   const overviewSection = tempWrapper.closest('.overview-section');
   if (entryData.inheritance_uris) {
-    appendLinks(entryData.inheritance_uris, inheritanceUris);
+    appendLinks(entryData.inheritance_uris, inheritanceUri);
   } else {
     overviewSection.remove();
     inheritanceSubTitle.remove();
