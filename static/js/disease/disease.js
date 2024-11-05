@@ -46,11 +46,13 @@ setLangChange();
 const datasets = [
   { name: 'Overview', data: null },
   { name: 'Synonyms', data: null },
-  // { name: 'OMIM', data: null },
-  // { name: 'Orphanet', data: null },
-  // { name: 'Monarch Initiative', data: null },
-  // { name: 'MedGen', data: null },
-  // { name: 'KEGG Disease', data: null },
+  { name: 'OMIM', data: null },
+  { name: 'Orphanet', data: null },
+  { name: 'Monarch Initiative', data: null },
+  // TODO: temporary value
+  { name: 'MedGen', data: [] },
+  // TODO: temporary value
+  { name: 'KEGG Disease', data: [] },
   { name: 'Disease Definition', data: null },
   // { name: 'Patient Statistics', data: null },
   // { name: 'Subclass', data: null },
@@ -88,18 +90,29 @@ const datasets = [
       fetchData('test-nando-omim'),
       fetchData('link-mondo-ordo'),
       fetchData('test_nando_link_mond'),
-      fetchData('test-nando-medgen'),
-      fetchData('test-nando-kegg'),
+      // TODO: temporary comment out
+      // fetchData('test-nando-medgen'),
+      // fetchData('test-nando-kegg'),
     ])
-      .then(([omimData, orphanetData, monarchData, medgenData, keggData]) => {
+      .then(([omimData, orphanetData, monarchData]) => {
+        // TODO: change to [omimData, orphanetData, monarchData, medgenData, keggData]
         const linkedListData = {
           omim: omimData,
           orphanet: orphanetData,
           'monarch-initiative': monarchData,
-          medgen: medgenData,
-          'kegg-disease': keggData,
+          //TODO: temporary value
+          medgen: [],
+          //TODO: temporary value
+          'kegg-disease': [],
         };
         makeLinkedList(linkedListData, nandoId);
+        datasets.find((d) => d.name === 'OMIM').data = omimData;
+        datasets.find((d) => d.name === 'Orphanet').data = orphanetData;
+        datasets.find((d) => d.name === 'Monarch Initiative').data =
+          monarchData;
+        datasets.find((d) => d.name === 'MedGen').data = medgenData;
+        datasets.find((d) => d.name === 'KEGG Disease').data = keggData;
+        checkAndLogDatasets();
       })
       .catch((error) => {
         console.error('Error:', error);
@@ -253,6 +266,7 @@ const datasets = [
 })();
 
 function checkAndLogDatasets() {
+  console.log(datasets);
   if (datasets.every((dataset) => dataset.data !== null)) {
     downloadDatasets(nandoId, datasets);
     document.querySelector(

@@ -1,7 +1,7 @@
 import {
   linkedListEnColumns,
   linkedListJaColumns,
-} from '../../utils/stanzaColumns.js';
+} from '../../utils/linkedListColumns.js';
 
 import { createObjectUrlFromData } from '../../utils/stanzaUtils.js';
 

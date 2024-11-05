@@ -1,4 +1,8 @@
 import {
+  linkedListJaColumns,
+  linkedListEnColumns,
+} from '../utils/linkedListColumns.js';
+import {
   causalGeneColumns,
   geneticTestingColumns,
   phenotypesJaColumns,
@@ -29,6 +33,47 @@ export const downloadDatasets = (nandoId, datasets) => {
           return { name, data };
         case 'Synonyms':
           return { name, data };
+        case 'OMIM':
+          return {
+            name,
+            data: reconstructLinkedListData(linkedListJaColumns, 'omim', data),
+          };
+        case 'Orphanet':
+          return {
+            name,
+            data: reconstructLinkedListData(
+              linkedListJaColumns,
+              'orphanet',
+              data
+            ),
+          };
+        case 'Monarch Initiative':
+          return {
+            name,
+            data: reconstructLinkedListData(
+              linkedListJaColumns,
+              'monarch-initiative',
+              data
+            ),
+          };
+        case 'MedGen':
+          return {
+            name,
+            data: reconstructLinkedListData(
+              linkedListJaColumns,
+              'medgen',
+              data
+            ),
+          };
+        case 'KEGG Disease':
+          return {
+            name,
+            data: reconstructLinkedListData(
+              linkedListJaColumns,
+              'kegg-disease',
+              data
+            ),
+          };
         case 'Disease Definition':
           return { name, data };
         case 'Causal Genes':
@@ -92,12 +137,59 @@ export const downloadDatasets = (nandoId, datasets) => {
     });
   }
 
+  // Processing of linkedList only
+  function reconstructLinkedListData(columnsArray, className, data) {
+    const columns = columnsArray.find((col) => col.class === className);
+
+    if (!columns) {
+      console.error(`Class "${className}" not found in columns array.`);
+      return [];
+    }
+
+    return data
+      .filter((d) => d.displayid)
+      .map((d) => {
+        const reducedData = {};
+
+        for (const [key, value] of Object.entries(d)) {
+          const column = columns.labels.find((label) => label.content === key);
+
+          if (column) {
+            if (column.label === 'Link Type') {
+              const matchType = value.split('#')[1];
+              reducedData[column.label] =
+                matchType === 'closeMatch'
+                  ? 'Close Match'
+                  : matchType === 'exactMatch'
+                  ? 'Exact Match'
+                  : value;
+            } else {
+              reducedData[column.label] = value;
+            }
+          }
+        }
+
+        const orderedData = {};
+        for (const column of columns.labels) {
+          orderedData[column.label] = reducedData[column.label] || '';
+        }
+
+        return orderedData;
+      });
+  }
+
   function prepareJsonData() {
     const categoryMappings = {
       Overview: [],
       // TODO: fix below contents
       Synonyms: [],
-      // Overview/List of links:['OMIM', 'Orphanet', 'Monarch Initiative', 'MedGen', 'KEGG Disease'],
+      'Overview/List of links': [
+        'OMIM',
+        'Orphanet',
+        'Monarch Initiative',
+        'MedGen',
+        'KEGG Disease',
+      ],
       'Disease Definition': [],
       // Overview/Patient Statistics:[],
       // Overview/Subclass:[],
