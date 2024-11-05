@@ -1,15 +1,9 @@
 #overview {
   .overview-wrapper {
-    padding: 0 10px;
-  }
-  .temp-wrapper {
-    .inheritance-uris {
-      display: flex;
-      padding-bottom: 15px;
-    }
+    padding-left: 17px;
   }
   .overview-section {
-    padding-bottom: 15px;
+    padding-bottom: 20px;
   }
 }
 
@@ -66,7 +60,7 @@
         font-weight: 600;
         position: relative;
         padding-left: 15px;
-        margin-bottom: 15px;
+        margin-bottom: 20px;
         display: flex;
         align-items: center;
 
