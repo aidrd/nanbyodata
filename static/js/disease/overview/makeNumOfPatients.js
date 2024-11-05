@@ -66,11 +66,12 @@ function initializeCharts(data) {
       data-url="${objectUrl}"
       data-type="json"
       axis-x-key="year"
-      axis-x-scale="ordinal"
+      axis-x-scale="linear"
       axis-x-placement="bottom"
       axis-x-title="Year"
       axis-x-title_padding="40"
       axis-x-ticks_label_angle="0"
+      axis-x-ticks_interval="1"
       axis-y-key="num_of_patients"
       axis-y-scale="linear"
       axis-y-placement="left"
@@ -98,6 +99,7 @@ function initializeCharts(data) {
     lineChart.style.setProperty('--togostanza-theme-series_0_color', '#29697a');
     lineChart.style.setProperty('--togostanza-canvas-height', '460');
     lineChart.style.setProperty('--togostanza-canvas-width', '970');
+    lineChart.style.setProperty('--togostanza-canvas-padding', '20');
     lineChart.style.setProperty('--togostanza-fonts-font_size_secondary', '14');
   }
 
