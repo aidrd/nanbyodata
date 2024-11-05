@@ -137,7 +137,9 @@ function makeLinksTable(item, content, linkedListData, nandoId) {
     feedbackCell.innerHTML = `
         <a href="#" class="good-icon" title="Good"><i class="far fa-thumbs-up"></i></a>
         <a href="#" class="bad-icon" title="Bad"><i class="far fa-thumbs-down"></i></a>
-        <a href="mailto:feedback@example.com" class="email-icon" title="Send Feedback"><i class="far fa-envelope"></i></a>
+        <a href="mailto:fujiwara@dbcls.rois.ac.jp?cc=takatter@dbcls.rois.ac.jp,shin@dbcls.rois.ac.jp&subject=Feedback%20on%20NanbyoData&body=NANDO:${nandoId}%20-%20${itemData.displayid}" class="email-icon" title="Send Feedback">
+          <i class="far fa-envelope"></i>
+        </a>
       `;
     row.appendChild(feedbackCell);
 
@@ -162,6 +164,7 @@ function makeLinksTable(item, content, linkedListData, nandoId) {
 }
 
 function sendFeedback(type, idFrom, idTo) {
+  // TODO: Cannot test locally with a relative link
   const url = `/feedback?id_from=${idFrom}&id_to=${idTo}&type=${type}`;
 
   fetch(url, {
