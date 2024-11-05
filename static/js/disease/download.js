@@ -13,11 +13,11 @@ import {
   variantClinvarColumns,
   variantMgendColumns,
   numOfPatientsColumns,
+  subclassTableJaColumns,
+  subclassTableEnColumns,
 } from '../utils/stanzaColumns.js';
 
 export const downloadDatasets = (nandoId, datasets) => {
-  // TODO: remove console.log
-  console.log(datasets);
   const currentLang = document.querySelector('.language-select').value;
   function prepareDataToDownload(format) {
     if (format === 'json') {
@@ -34,6 +34,8 @@ export const downloadDatasets = (nandoId, datasets) => {
         case 'Overview':
           return { name, data };
         case 'Synonyms':
+          return { name, data };
+        case 'Modes of Inheritance':
           return { name, data };
         case 'OMIM':
           return {
@@ -84,6 +86,16 @@ export const downloadDatasets = (nandoId, datasets) => {
           return { name, data };
         case 'Patient Statistics':
           return { name, data: reconstructionData(numOfPatientsColumns, data) };
+        case 'Subclass':
+          return {
+            name,
+            data: reconstructionData(
+              currentLang === 'ja'
+                ? subclassTableJaColumns
+                : subclassTableEnColumns,
+              data
+            ),
+          };
         case 'Causal Genes':
           return { name, data: reconstructionData(causalGeneColumns, data) };
         case 'Genetic Testing':
@@ -122,7 +134,6 @@ export const downloadDatasets = (nandoId, datasets) => {
           };
       }
     });
-    console.log(convertedDatasets);
 
     return convertedDatasets;
   }
@@ -190,7 +201,8 @@ export const downloadDatasets = (nandoId, datasets) => {
       Overview: [],
       // TODO: fix below contents
       Synonyms: [],
-      'Overview/List of links': [
+      'Modes of Inheritance': [],
+      'Overview/List of Links': [
         'OMIM',
         'Orphanet',
         'Monarch Initiative',
@@ -199,7 +211,7 @@ export const downloadDatasets = (nandoId, datasets) => {
       ],
       'Disease Definition': [],
       'Patient Statistics': [],
-      // Overview/Subclass:[],
+      Subclass: [],
       'Causal Genes': [],
       'Genetic Testing': [],
       Phenotypes: [],
@@ -238,12 +250,14 @@ export const downloadDatasets = (nandoId, datasets) => {
 
         case 'Synonyms':
         case 'Disease Definition':
+        case 'Modes of Inheritance':
           txtData += `-- Overview/${categoryName} --\n`;
           processObject(categoryData, '');
           txtData += '\n';
           break;
 
         case 'Patient Statistics':
+        case 'Subclass':
           processCategory(`Overview/${categoryName}`, categoryData);
           break;
         default:

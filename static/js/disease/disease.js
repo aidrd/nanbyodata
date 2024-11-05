@@ -46,6 +46,7 @@ setLangChange();
 const datasets = [
   { name: 'Overview', data: null },
   { name: 'Synonyms', data: null },
+  { name: 'Modes of Inheritance', data: null },
   { name: 'OMIM', data: null },
   { name: 'Orphanet', data: null },
   { name: 'Monarch Initiative', data: null },
@@ -55,7 +56,7 @@ const datasets = [
   { name: 'KEGG Disease', data: [] },
   { name: 'Disease Definition', data: null },
   { name: 'Patient Statistics', data: null },
-  // { name: 'Subclass', data: null },
+  { name: 'Subclass', data: null },
   { name: 'Causal Genes', data: null },
   { name: 'Genetic Testing', data: null },
   { name: 'Phenotypes', data: null },
@@ -120,6 +121,7 @@ const datasets = [
       });
 
     // 疾患統計情報のデータ
+    // TODO: change api endpoint
     fetchData('takatsuki_test_20240322')
       .then((response) => {
         const numOfPatientsData = response;
@@ -133,10 +135,13 @@ const datasets = [
       });
 
     // 下位疾患データ
+    // TODO: change api endpoint
     fetchData('test_get_nandoID')
       .then((response) => {
         const subClassData = response;
         makeSubClass(subClassData);
+        datasets.find((d) => d.name === 'Subclass').data = subClassData;
+        checkAndLogDatasets();
       })
       .catch((error) => {
         console.error('Error:', error);
@@ -157,28 +162,38 @@ const datasets = [
         const {
           alt_label_en,
           alt_label_ja,
-          description,
-          mondo_decs,
-          medgen_definition,
+          inheritance_uris,
           kegg,
           mondos,
           db_xrefs,
           medgen_id,
           medgen_uri,
           urdbms,
+          description,
+          mondo_decs,
+          medgen_definition,
           ...filteredOverviewData
         } = entryData;
 
         datasets.find((d) => d.name === 'Overview').data = filteredOverviewData;
 
-        const synonymsData = Object.fromEntries(
-          Object.entries({ alt_label_en, alt_label_ja }).filter(
-            ([_, v]) => v != null
-          )
+        // 遺伝形式ダウンロードデータの用意
+        const inheritanceUrisData = Object.fromEntries(
+          Object.entries({ inheritance_uris }).filter(([_, v]) => v != null)
         );
 
-        const definitionData = Object.fromEntries(
-          Object.entries({ description, mondo_decs, medgen_definition }).filter(
+        const inheritanceUrisDataset = datasets.find(
+          (d) => d.name === 'Modes of Inheritance'
+        );
+        if (Object.keys(inheritanceUrisData).length > 0) {
+          inheritanceUrisDataset.data = inheritanceUrisData;
+        } else {
+          inheritanceUrisDataset.data = {};
+        }
+
+        // 別疾患名ダウンロードデータの用意
+        const synonymsData = Object.fromEntries(
+          Object.entries({ alt_label_en, alt_label_ja }).filter(
             ([_, v]) => v != null
           )
         );
@@ -186,17 +201,28 @@ const datasets = [
         const synonymsDataset = datasets.find((d) => d.name === 'Synonyms');
         if (Object.keys(synonymsData).length > 0) {
           synonymsDataset.data = synonymsData;
+        } else {
+          synonymsDataset.data = {};
         }
+
+        // 疾患定義ダウンロードデータの用意
+        const definitionData = Object.fromEntries(
+          Object.entries({ description, mondo_decs, medgen_definition }).filter(
+            ([_, v]) => v != null
+          )
+        );
 
         const definitionDataset = datasets.find(
           (d) => d.name === 'Disease Definition'
         );
         if (Object.keys(definitionData).length > 0) {
           definitionDataset.data = definitionData;
+        } else {
+          definitionDataset.data = {};
         }
 
-        datasets;
         checkAndLogDatasets();
+
         if (hash) {
           trySwitchingContent(hash);
         } else {
@@ -283,7 +309,6 @@ const datasets = [
 })();
 
 function checkAndLogDatasets() {
-  console.log(datasets);
   if (datasets.every((dataset) => dataset.data !== null)) {
     downloadDatasets(nandoId, datasets);
     document.querySelector(
