@@ -17,6 +17,7 @@ import {
 export const downloadDatasets = (nandoId, datasets) => {
   // TODO: remove console.log
   console.log(datasets);
+  const currentLang = document.querySelector('.language-select').value;
   function prepareDataToDownload(format) {
     if (format === 'json') {
       return JSON.stringify(prepareJsonData(), null, 2);
@@ -36,13 +37,17 @@ export const downloadDatasets = (nandoId, datasets) => {
         case 'OMIM':
           return {
             name,
-            data: reconstructLinkedListData(linkedListJaColumns, 'omim', data),
+            data: reconstructLinkedListData(
+              currentLang === 'ja' ? linkedListJaColumns : linkedListEnColumns,
+              'omim',
+              data
+            ),
           };
         case 'Orphanet':
           return {
             name,
             data: reconstructLinkedListData(
-              linkedListJaColumns,
+              currentLang === 'ja' ? linkedListJaColumns : linkedListEnColumns,
               'orphanet',
               data
             ),
@@ -51,7 +56,7 @@ export const downloadDatasets = (nandoId, datasets) => {
           return {
             name,
             data: reconstructLinkedListData(
-              linkedListJaColumns,
+              currentLang === 'ja' ? linkedListJaColumns : linkedListEnColumns,
               'monarch-initiative',
               data
             ),
@@ -60,7 +65,7 @@ export const downloadDatasets = (nandoId, datasets) => {
           return {
             name,
             data: reconstructLinkedListData(
-              linkedListJaColumns,
+              currentLang === 'ja' ? linkedListJaColumns : linkedListEnColumns,
               'medgen',
               data
             ),
@@ -69,7 +74,7 @@ export const downloadDatasets = (nandoId, datasets) => {
           return {
             name,
             data: reconstructLinkedListData(
-              linkedListJaColumns,
+              currentLang === 'ja' ? linkedListJaColumns : linkedListEnColumns,
               'kegg-disease',
               data
             ),
@@ -84,7 +89,6 @@ export const downloadDatasets = (nandoId, datasets) => {
             data: reconstructionData(geneticTestingColumns, data),
           };
         case 'Phenotypes':
-          const currentLang = document.querySelector('.language-select').value;
           const currentColumns =
             currentLang === 'ja' ? phenotypesJaColumns : phenotypesEnColumns;
           return { name, data: reconstructionData(currentColumns, data) };
