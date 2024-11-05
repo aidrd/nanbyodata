@@ -203,6 +203,12 @@ export const subclassTableEnColumns = [
   },
 ];
 
+// only use download
+export const numOfPatientsColumns = [
+  { id: 'year', label: 'Year' },
+  { id: 'num_of_patients', label: 'Num of Patients' },
+];
+
 // Functions
 /**
  * Convert column to text formats.

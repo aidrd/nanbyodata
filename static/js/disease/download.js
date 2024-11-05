@@ -12,6 +12,7 @@ import {
   bioResourceDnaColumns,
   variantClinvarColumns,
   variantMgendColumns,
+  numOfPatientsColumns,
 } from '../utils/stanzaColumns.js';
 
 export const downloadDatasets = (nandoId, datasets) => {
@@ -82,7 +83,7 @@ export const downloadDatasets = (nandoId, datasets) => {
         case 'Disease Definition':
           return { name, data };
         case 'Patient Statistics':
-          return { name, data };
+          return { name, data: reconstructionData(numOfPatientsColumns, data) };
         case 'Causal Genes':
           return { name, data: reconstructionData(causalGeneColumns, data) };
         case 'Genetic Testing':
