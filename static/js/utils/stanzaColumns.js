@@ -178,7 +178,7 @@ export const subclassTableJaColumns = [
   },
   {
     id: 'id',
-    label: 'Notification Number',
+    label: 'NANDO ID',
     escape: true,
     'line-clamp': 1,
     link: 'idurl',
@@ -195,7 +195,7 @@ export const subclassTableEnColumns = [
   },
   {
     id: 'id',
-    label: 'Notification Number',
+    label: 'NANDO ID',
     escape: true,
     'line-clamp': 1,
     link: 'idurl',
