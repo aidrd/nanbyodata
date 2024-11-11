@@ -30,6 +30,8 @@ function initializeCharts(data) {
     return;
   }
 
+  const stanzaWidth = data.length * 100;
+
   targetDiv.innerHTML = `
     <togostanza-barchart
       data-url="${objectUrl}"
@@ -39,7 +41,7 @@ function initializeCharts(data) {
       category-title="Year"
       value-title="Num of Patients"
       chart-type="stacked"
-      width="${data.length * 110}"
+      width="${stanzaWidth}"
       height="400"
       legend="true"
       xaxis-placement="bottom"
@@ -97,10 +99,7 @@ function initializeCharts(data) {
   if (lineChart) {
     lineChart.style.setProperty('--togostanza-theme-series_0_color', '#29697a');
     lineChart.style.setProperty('--togostanza-canvas-height', '460');
-    lineChart.style.setProperty(
-      '--togostanza-canvas-width',
-      `${data.length * 100}`
-    );
+    lineChart.style.setProperty('--togostanza-canvas-width', `${stanzaWidth}`);
     lineChart.style.setProperty('--togostanza-canvas-padding', '15');
     lineChart.style.setProperty('--togostanza-fonts-font_size_secondary', '14');
   }
