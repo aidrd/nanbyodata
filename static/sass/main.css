@@ -185,6 +185,9 @@ Layout
 .navbar ul.navbar-nav a.nav-link:hover {
   color: var(--color-nav-hover);
 }
+.navbar ul.navbar-nav a.nav-link:focus {
+  color: var(--color-nav-hover);
+}
 .navbar ul.navbar-nav a.nav-link button.btn-TOS {
   width: 100%;
   padding: 0;
@@ -265,6 +268,29 @@ Layout
 }
 #diseaseNav .wrapper .navbar-right ul.navbar-nav {
   padding-top: 15px;
+}
+
+/* Dropdown */
+.dropdown-menu {
+  position: absolute;
+  background-color: var(--color-primary);
+  padding: 10px;
+  border-radius: 0;
+  border: 1px solid white;
+  list-style: none;
+  top: 25px;
+}
+.dropdown-menu li {
+  margin: 0;
+  padding: 5px 0;
+}
+.dropdown-menu li .dropdown-item {
+  color: white;
+  text-decoration: none;
+}
+.dropdown-menu li .dropdown-item:hover {
+  color: var(--color-nav-hover);
+  background-color: var(--color-primary);
 }
 
 /* Footer */

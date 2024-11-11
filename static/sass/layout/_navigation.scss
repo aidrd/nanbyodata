@@ -55,6 +55,10 @@
         color: var(--color-nav-hover);
       }
 
+      &:focus {
+        color: var(--color-nav-hover);
+      }
+
       button.btn-TOS {
         width: 100%;
         padding: 0;
@@ -154,6 +158,32 @@
 
       ul.navbar-nav {
         padding-top: 15px;
+      }
+    }
+  }
+}
+
+/* Dropdown */
+.dropdown-menu {
+  position: absolute;
+  background-color: var(--color-primary);
+  padding: 10px;
+  border-radius: 0;
+  border: 1px solid white;
+  list-style: none;
+  top: 25px;
+
+  li {
+    margin: 0;
+    padding: 5px 0;
+
+    .dropdown-item {
+      color: white;
+      text-decoration: none;
+
+      &:hover {
+        color: var(--color-nav-hover);
+        background-color: var(--color-primary);
       }
     }
   }
