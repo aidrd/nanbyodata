@@ -9,7 +9,7 @@
       <div class="flex">
         <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
           data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
-          aria-label="Toggle navigation" onclick="toggleNavMenu()">
+          aria-label="Toggle navigation">
           <i class=" fas fa-bars"></i>
         </button>
         <select class="language-select">
@@ -23,7 +23,7 @@
             <a class="nav-link" href="/about_nando">ABOUT</a>
           </li>
           <li class="nav-item dropdown">
-            <a class="nav-link" href="javascript:void(0);" onclick="toggleDropdown()">
+            <a class="nav-link" href="javascript:void(0);">
               DATA <i id="dropdownIcon" class="fas fa-angle-down"></i>
             </a>
             <ul class="dropdown-menu" id="dropdownMenu" style="display: none;">
@@ -53,70 +53,3 @@
     </div>
   </div>
 </nav>
-
-<style>
-  .dropdown-menu {
-    position: absolute;
-    background-color: var(--color-primary);
-    padding: 10px;
-    border-radius: 0;
-    border: 1px solid white;
-    list-style: none;
-    top: 25px;
-
-    li {
-      margin: 0;
-      padding: 5px 0;
-
-      .dropdown-item {
-        color: white;
-        text-decoration: none;
-
-        &:hover {
-          color: var(--color-nav-hover);
-          background-color: var(--color-primary);
-        }
-      }
-    }
-  }
-</style>
-
-<script>
-  document.addEventListener("DOMContentLoaded", function () {
-    const dropdown = document.getElementById("dropdownMenu");
-    const icon = document.getElementById("dropdownIcon");
-
-    function toggleDropdown() {
-      if (dropdown.style.display === "none") {
-        dropdown.style.display = "block";
-        icon.classList.remove("fa-angle-down");
-        icon.classList.add("fa-angle-up");
-      } else {
-        dropdown.style.display = "none";
-        icon.classList.remove("fa-angle-up");
-        icon.classList.add("fa-angle-down");
-      }
-    }
-
-    document.querySelector(".nav-link[href='javascript:void(0);']").addEventListener("click", toggleDropdown);
-
-    document.addEventListener("click", function (event) {
-      if (!event.target.closest(".dropdown") && dropdown.style.display === "block") {
-        dropdown.style.display = "none";
-        icon.classList.remove("fa-angle-up");
-        icon.classList.add("fa-angle-down");
-      }
-    });
-
-    const dropdownItems = document.querySelectorAll("#dropdownMenu .dropdown-item");
-    dropdownItems.forEach(item => {
-      item.addEventListener("click", () => {
-        dropdown.style.display = "none";
-        icon.classList.remove("fa-angle-up");
-        icon.classList.add("fa-angle-down");
-      });
-    });
-  });
-
-
-</script>

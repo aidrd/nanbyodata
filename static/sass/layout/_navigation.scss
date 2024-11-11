@@ -162,3 +162,29 @@
     }
   }
 }
+
+/* Dropdown */
+.dropdown-menu {
+  position: absolute;
+  background-color: var(--color-primary);
+  padding: 10px;
+  border-radius: 0;
+  border: 1px solid white;
+  list-style: none;
+  top: 25px;
+
+  li {
+    margin: 0;
+    padding: 5px 0;
+
+    .dropdown-item {
+      color: white;
+      text-decoration: none;
+
+      &:hover {
+        color: var(--color-nav-hover);
+        background-color: var(--color-primary);
+      }
+    }
+  }
+}

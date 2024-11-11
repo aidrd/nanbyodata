@@ -78,30 +78,36 @@
               <option value="en" {% if get_locale()=='en' %}selected{% endif %}>English</option>
             </select>
           </div>
-          <div class="navbar-collapse collapse" id="navbarResponsive">
+          <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav">
               <li class="nav-item">
                 <a class="nav-link" href="/about_nando">ABOUT</a>
               </li>
-              <li class="nav-item">
-                <a class="nav-link" href="/api">API</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="/datasets">DATASETS</a>
+              <li class="nav-item dropdown">
+                <a class="nav-link" href="javascript:void(0);">
+                  DATA <i id="dropdownIcon" class="fas fa-angle-down"></i>
+                </a>
+                <ul class="dropdown-menu" id="dropdownMenu" style="display: none;">
+                  <li><a class="dropdown-item" href="/api">API</a></li>
+                  <li><a class="dropdown-item" href="/#download">DOWNLOAD</a></li>
+                  <li><a class="dropdown-item" href="/datasets">DATASETS</a></li>
+                </ul>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="/epidemiology">EPIDEMIOLOGY</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="/#download">DOWNLOAD</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="#"><button type="button" class="btn-TOS" data-toggle="modal"
                     data-target="#demoNormalModal_TOS">TERMS</button></a>
               </li>
               <li class="nav-item">
+                {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
                 <a class="nav-link" title="Comments & suggestions are welcome!"
                   href="https://dbcls.rois.ac.jp/contact.html">CONTACT</a>
+                {% else %}
+                <a class="nav-link" title="Comments & suggestions are welcome!"
+                  href="https://dbcls.rois.ac.jp/contact-en.html">CONTACT</a>
+                {% endif %}
               </li>
             </ul>
           </div>
