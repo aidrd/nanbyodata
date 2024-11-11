@@ -185,6 +185,9 @@ Layout
 .navbar ul.navbar-nav a.nav-link:hover {
   color: var(--color-nav-hover);
 }
+.navbar ul.navbar-nav a.nav-link:focus {
+  color: var(--color-nav-hover);
+}
 .navbar ul.navbar-nav a.nav-link button.btn-TOS {
   width: 100%;
   padding: 0;
