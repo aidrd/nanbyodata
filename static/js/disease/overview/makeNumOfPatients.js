@@ -2,7 +2,6 @@ import { createObjectUrlFromData } from '../../utils/stanzaUtils.js';
 
 export function makeNumOfPatients(data) {
   const chartTypeSelect = document.getElementById('num-of-patients-graph');
-  // データの確認と処理
   if (data.length <= 1) {
     const overviewSection = chartTypeSelect.closest('.overview-section');
     overviewSection.remove();
@@ -15,7 +14,6 @@ export function makeNumOfPatients(data) {
     });
   }
 
-  // 初回呼び出し
   initializeCharts(data);
   toggleChartDisplay(chartTypeSelect ? chartTypeSelect.value : 'line');
 }
@@ -24,13 +22,17 @@ function initializeCharts(data) {
   const targetDiv = document.getElementById('temp-num-of-patients');
   if (!targetDiv) return;
 
+  targetDiv.style.overflowX = 'auto';
+  targetDiv.style.overflowY = 'hidden';
+
   const objectUrl = createObjectUrlFromData(data);
   if (!objectUrl) {
     console.error('Error: objectUrl is undefined or invalid.');
     return;
   }
 
-  // チャート HTML を一度に挿入
+  const stanzaWidth = data.length * 100;
+
   targetDiv.innerHTML = `
     <togostanza-barchart
       data-url="${objectUrl}"
@@ -40,7 +42,7 @@ function initializeCharts(data) {
       category-title="Year"
       value-title="Num of Patients"
       chart-type="stacked"
-      width="900"
+      width="${stanzaWidth}"
       height="400"
       legend="true"
       xaxis-placement="bottom"
@@ -98,12 +100,11 @@ function initializeCharts(data) {
   if (lineChart) {
     lineChart.style.setProperty('--togostanza-theme-series_0_color', '#29697a');
     lineChart.style.setProperty('--togostanza-canvas-height', '460');
-    lineChart.style.setProperty('--togostanza-canvas-width', '970');
-    lineChart.style.setProperty('--togostanza-canvas-padding', '20');
+    lineChart.style.setProperty('--togostanza-canvas-width', `${stanzaWidth}`);
+    lineChart.style.setProperty('--togostanza-canvas-padding', '15');
     lineChart.style.setProperty('--togostanza-fonts-font_size_secondary', '14');
   }
 
-  // スクリプト追加
   addScript('https://togostanza.github.io/metastanza/barchart.js');
   addScript('https://togostanza.github.io/metastanza-devel/linechart.js');
 }
