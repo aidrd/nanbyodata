@@ -1,4 +1,8 @@
 import {
+  linkedListJaColumns,
+  linkedListEnColumns,
+} from '../utils/linkedListColumns.js';
+import {
   causalGeneColumns,
   geneticTestingColumns,
   phenotypesJaColumns,
@@ -8,9 +12,13 @@ import {
   bioResourceDnaColumns,
   variantClinvarColumns,
   variantMgendColumns,
-} from './paginationColumns.js';
+  numOfPatientsColumns,
+  subclassTableJaColumns,
+  subclassTableEnColumns,
+} from '../utils/stanzaColumns.js';
 
 export const downloadDatasets = (nandoId, datasets) => {
+  const currentLang = document.querySelector('.language-select').value;
   function prepareDataToDownload(format) {
     if (format === 'json') {
       return JSON.stringify(prepareJsonData(), null, 2);
@@ -25,6 +33,69 @@ export const downloadDatasets = (nandoId, datasets) => {
       switch (name) {
         case 'Overview':
           return { name, data };
+        case 'Synonyms':
+          return { name, data };
+        case 'Modes of Inheritance':
+          return { name, data };
+        case 'OMIM':
+          return {
+            name,
+            data: reconstructLinkedListData(
+              currentLang === 'ja' ? linkedListJaColumns : linkedListEnColumns,
+              'omim',
+              data
+            ),
+          };
+        case 'Orphanet':
+          return {
+            name,
+            data: reconstructLinkedListData(
+              currentLang === 'ja' ? linkedListJaColumns : linkedListEnColumns,
+              'orphanet',
+              data
+            ),
+          };
+        case 'Monarch Initiative':
+          return {
+            name,
+            data: reconstructLinkedListData(
+              currentLang === 'ja' ? linkedListJaColumns : linkedListEnColumns,
+              'monarch-initiative',
+              data
+            ),
+          };
+        case 'MedGen':
+          return {
+            name,
+            data: reconstructLinkedListData(
+              currentLang === 'ja' ? linkedListJaColumns : linkedListEnColumns,
+              'medgen',
+              data
+            ),
+          };
+        case 'KEGG Disease':
+          return {
+            name,
+            data: reconstructLinkedListData(
+              currentLang === 'ja' ? linkedListJaColumns : linkedListEnColumns,
+              'kegg-disease',
+              data
+            ),
+          };
+        case 'Disease Definition':
+          return { name, data };
+        case 'Patient Statistics':
+          return { name, data: reconstructionData(numOfPatientsColumns, data) };
+        case 'Subclass':
+          return {
+            name,
+            data: reconstructionData(
+              currentLang === 'ja'
+                ? subclassTableJaColumns
+                : subclassTableEnColumns,
+              data
+            ),
+          };
         case 'Causal Genes':
           return { name, data: reconstructionData(causalGeneColumns, data) };
         case 'Genetic Testing':
@@ -33,7 +104,6 @@ export const downloadDatasets = (nandoId, datasets) => {
             data: reconstructionData(geneticTestingColumns, data),
           };
         case 'Phenotypes':
-          const currentLang = document.querySelector('.language-select').value;
           const currentColumns =
             currentLang === 'ja' ? phenotypesJaColumns : phenotypesEnColumns;
           return { name, data: reconstructionData(currentColumns, data) };
@@ -85,9 +155,63 @@ export const downloadDatasets = (nandoId, datasets) => {
     });
   }
 
+  // Processing of linkedList only
+  function reconstructLinkedListData(columnsArray, className, data) {
+    const columns = columnsArray.find((col) => col.class === className);
+
+    if (!columns) {
+      console.error(`Class "${className}" not found in columns array.`);
+      return [];
+    }
+
+    return data
+      .filter((d) => d.displayid)
+      .map((d) => {
+        const reducedData = {};
+
+        for (const [key, value] of Object.entries(d)) {
+          const column = columns.labels.find((label) => label.content === key);
+
+          if (column) {
+            if (column.label === 'Link Type') {
+              const matchType = value.split('#')[1];
+              reducedData[column.label] =
+                matchType === 'closeMatch'
+                  ? 'Close Match'
+                  : matchType === 'exactMatch'
+                  ? 'Exact Match'
+                  : value;
+            } else {
+              reducedData[column.label] = value;
+            }
+          }
+        }
+
+        const orderedData = {};
+        for (const column of columns.labels) {
+          orderedData[column.label] = reducedData[column.label] || '';
+        }
+
+        return orderedData;
+      });
+  }
+
   function prepareJsonData() {
     const categoryMappings = {
       Overview: [],
+      // TODO: fix below contents
+      Synonyms: [],
+      'Modes of Inheritance': [],
+      'Overview/List of Links': [
+        'OMIM',
+        'Orphanet',
+        'Monarch Initiative',
+        'MedGen',
+        'KEGG Disease',
+      ],
+      'Disease Definition': [],
+      'Patient Statistics': [],
+      Subclass: [],
       'Causal Genes': [],
       'Genetic Testing': [],
       Phenotypes: [],
@@ -117,12 +241,28 @@ export const downloadDatasets = (nandoId, datasets) => {
     let txtData = '';
 
     Object.entries(jsonData).forEach(([categoryName, categoryData]) => {
-      if (categoryName === 'Overview') {
-        txtData += `-- ${categoryName} --\n`;
-        processObject(categoryData, '');
-        txtData += '\n';
-      } else {
-        processCategory(categoryName, categoryData);
+      switch (categoryName) {
+        case 'Overview':
+          txtData += `-- ${categoryName} --\n`;
+          processObject(categoryData, '');
+          txtData += '\n';
+          break;
+
+        case 'Synonyms':
+        case 'Disease Definition':
+        case 'Modes of Inheritance':
+          txtData += `-- Overview/${categoryName} --\n`;
+          processObject(categoryData, '');
+          txtData += '\n';
+          break;
+
+        case 'Patient Statistics':
+        case 'Subclass':
+          processCategory(`Overview/${categoryName}`, categoryData);
+          break;
+        default:
+          processCategory(categoryName, categoryData);
+          break;
       }
     });
 

@@ -162,12 +162,59 @@ export const variantMgendColumns = [
   { id: 'mondo_label', label: 'MONDO', link: 'mondo_url', target: '_blank' },
 ];
 
+// Overview Subclass
+export const subclassTableJaColumns = [
+  {
+    id: 'label',
+    label: 'Subclass(JA)',
+    escape: false,
+    'line-clamp': 2,
+  },
+  {
+    id: 'engLabel',
+    label: 'Subclass(En)',
+    escape: false,
+    'line-clamp': 2,
+  },
+  {
+    id: 'id',
+    label: 'NANDO ID',
+    escape: true,
+    'line-clamp': 1,
+    link: 'idurl',
+    target: '_blank',
+  },
+];
+
+export const subclassTableEnColumns = [
+  {
+    id: 'engLabel',
+    label: 'Subclass(En)',
+    escape: false,
+    'line-clamp': 2,
+  },
+  {
+    id: 'id',
+    label: 'NANDO ID',
+    escape: true,
+    'line-clamp': 1,
+    link: 'idurl',
+    target: '_blank',
+  },
+];
+
+// only use download
+export const numOfPatientsColumns = [
+  { id: 'year', label: 'Year' },
+  { id: 'num_of_patients', label: 'Num of Patients' },
+];
+
 // Functions
 /**
  * Convert column to text formats.
  * @param {Object[]} columns - Columns for togostanza-pagination-table.
  * @returns {string}
  */
-export function convertColumntoText(columns) {
+export function convertColumnToText(columns) {
   return JSON.stringify(columns).replace(/"/g, '&quot;');
 }

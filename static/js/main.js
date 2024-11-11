@@ -1,11 +1,11 @@
-import { navToggle } from './navigation.js';
-import { focusInput } from './focusInput.js';
-import { setLangChange } from './setLangChange.js';
+import { navToggle } from './utils/navigation.js';
+import { focusInput } from './utils/focusInput.js';
+import { setLangChange } from './utils/setLangChange.js';
 import {
   drawDesignatedIntractableDiseaseColumnsTable,
   drawPediatricChronicSpecificDiseaseColumnsTable,
-} from './epidemiology.js';
-import { smartBox } from './smart_box.js';
+} from './epidemiology/epidemiology.js';
+import { smartBox } from './utils/smart_box.js';
 
 navToggle();
 focusInput();
@@ -24,5 +24,15 @@ if (window.location.pathname === '/') {
   document.addEventListener('selectedLabel', function (event) {
     const labelInfo = event.detail.labelInfo;
     window.location.href = `${location.origin}/disease/${labelInfo.id}`;
+  });
+
+  // News open/close function
+  const newsWrapperEl = document.querySelector('.news-summary > .news-wrapper');
+  const moreButtonEl = newsWrapperEl.querySelector('.more');
+  const moreListEl = newsWrapperEl.querySelector('.logdata > .more-list');
+  moreButtonEl.addEventListener('click', () => {
+    const isOpen = moreButtonEl.classList.toggle('open');
+    moreButtonEl.textContent = isOpen ? 'close' : 'more';
+    moreListEl.classList.toggle('open');
   });
 }

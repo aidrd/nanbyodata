@@ -3,8 +3,13 @@ import {
   designatedIntractableDiseaseEnColumns,
   pediatricChronicSpecificDiseaseJaColumns,
   pediatricChronicSpecificDiseaseEnColumns,
-  convertColumntoText,
-} from './paginationColumns.js';
+  convertColumnToText,
+} from '../utils/stanzaColumns.js';
+
+import {
+  createObjectUrlFromData,
+  updateElementWithTable,
+} from '../utils/stanzaUtils.js';
 
 export const drawDesignatedIntractableDiseaseColumnsTable = async () => {
   await drawColumnsTable(
@@ -40,21 +45,20 @@ const drawColumnsTable = async (
 
   try {
     const data = await fetchDataFunc();
-    updateElementWithTable(tableView, convertColumntoText(columns), data);
+    const objectUrl = createObjectUrlFromData(data);
+    updateElementWithTable(tableView, objectUrl, convertColumnToText(columns));
   } catch (error) {
     console.error('Error fetching data:', error);
   }
 };
 
 async function designatedIntractableDiseaseFetchData() {
-  // TODO: fix url
   return await fetchDataFromUrl(
     '/sparqlist/api/nanbyodata_get_stats_on_patient_number_shitei'
   );
 }
 
 async function pediatricChronicSpecificDiseaseFetchData() {
-  // TODO: fix url
   return await fetchDataFromUrl(
     '/sparqlist/api/nanbyodata_get_stats_on_patient_number_shoman'
   );
@@ -66,24 +70,4 @@ async function fetchDataFromUrl(url) {
     throw new Error(`HTTP error! status: ${response.status}`);
   }
   return await response.json();
-}
-
-function createObjectUrlFromData(data) {
-  const blob = new Blob([JSON.stringify(data)], { type: 'application/json' });
-  return URL.createObjectURL(blob);
-}
-
-function updateElementWithTable(element, columns, data) {
-  const objectUrl = createObjectUrlFromData(data);
-  element.innerHTML = `
-    <togostanza-pagination-table
-      data-url="${objectUrl}"
-      data-type="json"
-      custom-css-url="https://togostanza.github.io/togostanza-themes/contrib/nanbyodata.css"
-      fixed-columns="1"
-      page-size-option="350"
-      page-slider="false"
-      columns="${columns}"
-    ></togostanza-pagination-table>
-  `;
 }
