@@ -2,7 +2,6 @@ import { createObjectUrlFromData } from '../../utils/stanzaUtils.js';
 
 export function makeNumOfPatients(data) {
   const chartTypeSelect = document.getElementById('num-of-patients-graph');
-  // データの確認と処理
   if (data.length <= 1) {
     const overviewSection = chartTypeSelect.closest('.overview-section');
     overviewSection.remove();
@@ -15,7 +14,6 @@ export function makeNumOfPatients(data) {
     });
   }
 
-  // 初回呼び出し
   initializeCharts(data);
   toggleChartDisplay(chartTypeSelect ? chartTypeSelect.value : 'line');
 }
@@ -101,13 +99,12 @@ function initializeCharts(data) {
     lineChart.style.setProperty('--togostanza-canvas-height', '460');
     lineChart.style.setProperty(
       '--togostanza-canvas-width',
-      `${data.length * 120}`
+      `${data.length * 100}`
     );
-    lineChart.style.setProperty('--togostanza-canvas-padding', '20');
+    lineChart.style.setProperty('--togostanza-canvas-padding', '15');
     lineChart.style.setProperty('--togostanza-fonts-font_size_secondary', '14');
   }
 
-  // スクリプト追加
   addScript('https://togostanza.github.io/metastanza/barchart.js');
   addScript('https://togostanza.github.io/metastanza-devel/linechart.js');
 }
