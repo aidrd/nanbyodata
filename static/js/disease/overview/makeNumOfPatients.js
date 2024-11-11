@@ -23,6 +23,7 @@ function initializeCharts(data) {
   if (!targetDiv) return;
 
   targetDiv.style.overflowX = 'auto';
+  targetDiv.style.overflowY = 'hidden';
 
   const objectUrl = createObjectUrlFromData(data);
   if (!objectUrl) {

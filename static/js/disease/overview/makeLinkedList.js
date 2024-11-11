@@ -273,7 +273,7 @@ function addTableOrTree(content, item, displayType, linkedListData) {
         );
         treeElement.style.setProperty(
           '--togostanza-canvas-width',
-          `${treeDepth.maxDepth * 500} px`
+          `${treeDepth.maxDepth * 300} px`
         );
       }, 0);
     }
