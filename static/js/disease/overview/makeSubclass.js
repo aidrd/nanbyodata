@@ -95,7 +95,7 @@ export async function makeSubClass(data) {
             togostanza-custom_css_url=""
             style="
               --togostanza-fonts-font_size_primary: 14;
-              --togostanza-canvas-height: ${treeDepth.maxLength * 40}px;
+              --togostanza-canvas-height: ${treeDepth.maxLength * 60}px;
               --togostanza-canvas-width: ${treeDepth.maxDepth * 500}px;
               --togostanza-theme-series_0_color: #29697a;
             "
