@@ -24,13 +24,14 @@ function initializeCharts(data) {
   const targetDiv = document.getElementById('temp-num-of-patients');
   if (!targetDiv) return;
 
+  targetDiv.style.overflowX = 'auto';
+
   const objectUrl = createObjectUrlFromData(data);
   if (!objectUrl) {
     console.error('Error: objectUrl is undefined or invalid.');
     return;
   }
 
-  // チャート HTML を一度に挿入
   targetDiv.innerHTML = `
     <togostanza-barchart
       data-url="${objectUrl}"
@@ -40,7 +41,7 @@ function initializeCharts(data) {
       category-title="Year"
       value-title="Num of Patients"
       chart-type="stacked"
-      width="900"
+      width="${data.length * 110}"
       height="400"
       legend="true"
       xaxis-placement="bottom"
@@ -98,7 +99,10 @@ function initializeCharts(data) {
   if (lineChart) {
     lineChart.style.setProperty('--togostanza-theme-series_0_color', '#29697a');
     lineChart.style.setProperty('--togostanza-canvas-height', '460');
-    lineChart.style.setProperty('--togostanza-canvas-width', '970');
+    lineChart.style.setProperty(
+      '--togostanza-canvas-width',
+      `${data.length * 120}`
+    );
     lineChart.style.setProperty('--togostanza-canvas-padding', '20');
     lineChart.style.setProperty('--togostanza-fonts-font_size_secondary', '14');
   }
