@@ -47,9 +47,11 @@
   }
 
   ul.navbar-nav {
+    display: flex;
+    gap: 22px;
     a.nav-link {
       color: #fff;
-      margin-left: 12px;
+      padding: 0;
 
       &:hover {
         color: var(--color-nav-hover);
@@ -171,7 +173,7 @@
   border-radius: 0;
   border: 1px solid white;
   list-style: none;
-  top: 25px;
+  top: 15px;
 
   li {
     margin: 0;

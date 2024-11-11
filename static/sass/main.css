@@ -178,9 +178,13 @@ Layout
   color: var(--color-black);
   background-color: var(--color-background-gray);
 }
+.navbar ul.navbar-nav {
+  display: flex;
+  gap: 22px;
+}
 .navbar ul.navbar-nav a.nav-link {
   color: #fff;
-  margin-left: 12px;
+  padding: 0;
 }
 .navbar ul.navbar-nav a.nav-link:hover {
   color: var(--color-nav-hover);
@@ -278,7 +282,7 @@ Layout
   border-radius: 0;
   border: 1px solid white;
   list-style: none;
-  top: 25px;
+  top: 15px;
 }
 .dropdown-menu li {
   margin: 0;
