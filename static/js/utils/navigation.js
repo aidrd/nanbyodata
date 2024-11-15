@@ -34,69 +34,80 @@ export const navToggle = () => {
 document.addEventListener('DOMContentLoaded', () => {
   const navButton = document.querySelector('.navbar-toggler');
   const navbarNav = document.querySelector('.navbar-nav');
-  const dropdown = document.querySelector('.nav-item.dropdown');
-  const dropdownLink = dropdown.querySelector('.nav-link');
-  const dropdownMenu = document.getElementById('dropdownMenu');
-  const dropdownIcon = document.getElementById('dropdownIcon');
-  let convertedNavItems = [];
-  let originalDropdownItems = [];
+  const dropdowns = document.querySelectorAll('.nav-item.dropdown');
+  let convertedNavItems = new Map();
+  let originalDropdownItems = new Map();
 
   function saveOriginalDropdownItems() {
-    originalDropdownItems = Array.from(
-      dropdownMenu.querySelectorAll('.dropdown-item')
-    ).map((item) => ({
-      href: item.getAttribute('href'),
-      textContent: item.textContent,
-    }));
+    dropdowns.forEach((dropdown) => {
+      const dropdownMenu = dropdown.querySelector('.dropdown-menu');
+      const items = Array.from(
+        dropdownMenu.querySelectorAll('.dropdown-item')
+      ).map((item) => ({
+        href: item.getAttribute('href'),
+        textContent: item.textContent,
+      }));
+      originalDropdownItems.set(dropdown, items);
+      convertedNavItems.set(dropdown, []);
+    });
   }
 
   function checkScreenWidth() {
     const isMobileView = window.getComputedStyle(navButton).display !== 'none';
-    if (isMobileView) {
-      if (dropdown && dropdownMenu) {
-        restoreDropdownItems();
-        convertDropdownItemsToNavItems();
+
+    dropdowns.forEach((dropdown) => {
+      const dropdownMenu = dropdown.querySelector('.dropdown-menu');
+
+      if (isMobileView) {
+        restoreDropdownItems(dropdown);
+        convertDropdownItemsToNavItems(dropdown);
         dropdown.style.display = 'none';
+      } else {
+        restoreDropdownItems(dropdown);
+        dropdown.style.display = '';
+        enableHoverDropdown(dropdown, dropdownMenu);
       }
-    } else {
-      restoreDropdownItems();
-      dropdown.style.display = '';
-      enableHoverDropdown();
-    }
+    });
   }
 
-  function toggleDropdownIcon(show) {
-    dropdownIcon.classList.toggle('fa-angle-down', !show);
-    dropdownIcon.classList.toggle('fa-angle-up', show);
+  function enableHoverDropdown(dropdown, dropdownMenu) {
+    const dropdownLink = dropdown.querySelector('.nav-link');
+
+    dropdownLink.addEventListener('mouseenter', () =>
+      showDropdown(dropdownMenu)
+    );
+    dropdownLink.addEventListener('mouseleave', () =>
+      hideDropdown(dropdownMenu)
+    );
+    dropdownMenu.addEventListener('mouseenter', () =>
+      showDropdown(dropdownMenu)
+    );
+    dropdownMenu.addEventListener('mouseleave', () =>
+      hideDropdown(dropdownMenu)
+    );
   }
 
-  function enableHoverDropdown() {
-    dropdownLink.addEventListener('mouseenter', showDropdown);
-    dropdownLink.addEventListener('mouseleave', hideDropdown);
-    dropdownMenu.addEventListener('mouseenter', showDropdown);
-    dropdownMenu.addEventListener('mouseleave', hideDropdown);
-  }
+  function disableHoverDropdown(dropdown, dropdownMenu) {
+    const dropdownLink = dropdown.querySelector('.nav-link');
 
-  function disableHoverDropdown() {
     dropdownLink.removeEventListener('mouseenter', showDropdown);
     dropdownLink.removeEventListener('mouseleave', hideDropdown);
     dropdownMenu.removeEventListener('mouseenter', showDropdown);
     dropdownMenu.removeEventListener('mouseleave', hideDropdown);
-    hideDropdown();
+    hideDropdown(dropdownMenu);
   }
 
-  function showDropdown() {
-    dropdownMenu.style.display = 'block';
-    toggleDropdownIcon(true);
+  function showDropdown(menu) {
+    menu.style.display = 'block';
   }
 
-  function hideDropdown() {
-    dropdownMenu.style.display = 'none';
-    toggleDropdownIcon(false);
+  function hideDropdown(menu) {
+    menu.style.display = 'none';
   }
 
-  function convertDropdownItemsToNavItems() {
-    originalDropdownItems.forEach((itemData) => {
+  function convertDropdownItemsToNavItems(dropdown) {
+    const dropdownItems = originalDropdownItems.get(dropdown) || [];
+    dropdownItems.forEach((itemData) => {
       const navItem = document.createElement('li');
       navItem.classList.add('nav-item');
 
@@ -107,18 +118,26 @@ document.addEventListener('DOMContentLoaded', () => {
 
       navItem.appendChild(navLink);
       navbarNav.insertBefore(navItem, dropdown);
-      convertedNavItems.push(navItem);
+      convertedNavItems.get(dropdown).push(navItem);
     });
   }
 
-  function restoreDropdownItems() {
-    convertedNavItems.forEach((navItem) => navItem.remove());
-    convertedNavItems = [];
-    if (dropdown) dropdown.style.display = '';
-    disableHoverDropdown();
+  function restoreDropdownItems(dropdown) {
+    const items = convertedNavItems.get(dropdown) || [];
+    items.forEach((navItem) => navItem.remove());
+    convertedNavItems.set(dropdown, []);
+
+    disableHoverDropdown(dropdown, dropdown.querySelector('.dropdown-menu'));
   }
 
   saveOriginalDropdownItems();
   checkScreenWidth();
   window.addEventListener('resize', checkScreenWidth);
+
+  navButton.addEventListener('click', () => {
+    dropdowns.forEach((dropdown) => {
+      hideDropdown(dropdown.querySelector('.dropdown-menu'));
+    });
+    checkScreenWidth();
+  });
 });
