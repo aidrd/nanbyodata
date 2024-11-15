@@ -47,9 +47,11 @@
   }
 
   ul.navbar-nav {
+    display: flex;
+    gap: 22px;
     a.nav-link {
       color: #fff;
-      margin-left: 12px;
+      padding: 0;
 
       &:hover {
         color: var(--color-nav-hover);
@@ -166,24 +168,23 @@
 /* Dropdown */
 .dropdown-menu {
   position: absolute;
-  background-color: var(--color-primary);
-  padding: 10px;
+  background-color: var(--color-primary-dropdown);
   border-radius: 0;
-  border: 1px solid white;
+  border: none;
   list-style: none;
-  top: 25px;
+  padding: 10px;
+  top: 15px;
 
   li {
     margin: 0;
-    padding: 5px 0;
-
     .dropdown-item {
       color: white;
       text-decoration: none;
+      padding: 0.4rem 0;
 
       &:hover {
         color: var(--color-nav-hover);
-        background-color: var(--color-primary);
+        background-color: var(--color-primary-dropdown);
       }
     }
   }
