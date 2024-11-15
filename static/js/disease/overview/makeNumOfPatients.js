@@ -32,6 +32,7 @@ function initializeCharts(data) {
   }
 
   const stanzaWidth = data.length * 100;
+  const maxValue = Math.max(...data.map((item) => item.num_of_patients));
 
   targetDiv.innerHTML = `
     <togostanza-barchart
@@ -74,6 +75,7 @@ function initializeCharts(data) {
       axis-x-title_padding="40"
       axis-x-ticks_label_angle="0"
       axis-x-ticks_interval="1"
+      axis-y-range_max="${maxValue + 10}"
       axis-y-range_min="0"
       axis-y-key="num_of_patients"
       axis-y-scale="linear"
