@@ -72,19 +72,39 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function enableHoverDropdown(dropdown, dropdownMenu) {
     const dropdownLink = dropdown.querySelector('.nav-link');
+    const dropdownIcon = dropdown.querySelector('.dropdown-icon');
 
-    dropdownLink.addEventListener('mouseenter', () =>
-      showDropdown(dropdownMenu)
-    );
-    dropdownLink.addEventListener('mouseleave', () =>
-      hideDropdown(dropdownMenu)
-    );
-    dropdownMenu.addEventListener('mouseenter', () =>
-      showDropdown(dropdownMenu)
-    );
-    dropdownMenu.addEventListener('mouseleave', () =>
-      hideDropdown(dropdownMenu)
-    );
+    dropdownLink.addEventListener('mouseenter', () => {
+      showDropdown(dropdownMenu);
+      if (dropdownIcon) {
+        dropdownIcon.classList.remove('fa-angle-down');
+        dropdownIcon.classList.add('fa-angle-up');
+      }
+    });
+
+    dropdownLink.addEventListener('mouseleave', () => {
+      hideDropdown(dropdownMenu);
+      if (dropdownIcon) {
+        dropdownIcon.classList.remove('fa-angle-up');
+        dropdownIcon.classList.add('fa-angle-down');
+      }
+    });
+
+    dropdownMenu.addEventListener('mouseenter', () => {
+      showDropdown(dropdownMenu);
+      if (dropdownIcon) {
+        dropdownIcon.classList.remove('fa-angle-down');
+        dropdownIcon.classList.add('fa-angle-up');
+      }
+    });
+
+    dropdownMenu.addEventListener('mouseleave', () => {
+      hideDropdown(dropdownMenu);
+      if (dropdownIcon) {
+        dropdownIcon.classList.remove('fa-angle-up');
+        dropdownIcon.classList.add('fa-angle-down');
+      }
+    });
   }
 
   function disableHoverDropdown(dropdown, dropdownMenu) {
