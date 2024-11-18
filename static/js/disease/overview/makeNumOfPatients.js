@@ -97,6 +97,7 @@ function initializeCharts(data) {
 
   if (barChart) {
     barChart.style.setProperty('--togostanza-series-0-color', '#29697a');
+    barChart.style.setProperty('--togostanza-title-font-size', '14');
     barChart.style.setProperty('--togostanza-label-font-size', '14');
   }
 
@@ -105,6 +106,7 @@ function initializeCharts(data) {
     lineChart.style.setProperty('--togostanza-canvas-height', '230');
     lineChart.style.setProperty('--togostanza-canvas-width', `${stanzaWidth}`);
     lineChart.style.setProperty('--togostanza-canvas-padding', '15');
+    lineChart.style.setProperty('--togostanza-fonts-font_size_primary', '14');
     lineChart.style.setProperty('--togostanza-fonts-font_size_secondary', '14');
   }
 
