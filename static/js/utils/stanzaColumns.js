@@ -165,6 +165,14 @@ export const variantMgendColumns = [
 // Overview Subclass
 export const subclassTableJaColumns = [
   {
+    id: 'id',
+    label: 'NANDO ID',
+    escape: true,
+    'line-clamp': 1,
+    link: 'idurl',
+    target: '_blank',
+  },
+  {
     id: 'label',
     label: 'Subclass(JA)',
     escape: false,
@@ -177,6 +185,17 @@ export const subclassTableJaColumns = [
     'line-clamp': 2,
   },
   {
+    id: 'parent',
+    label: 'Parent',
+    escape: true,
+    'line-clamp': 1,
+    link: 'uparent',
+    target: '_blank',
+  },
+];
+
+export const subclassTableEnColumns = [
+  {
     id: 'id',
     label: 'NANDO ID',
     escape: true,
@@ -184,9 +203,6 @@ export const subclassTableJaColumns = [
     link: 'idurl',
     target: '_blank',
   },
-];
-
-export const subclassTableEnColumns = [
   {
     id: 'engLabel',
     label: 'Subclass(En)',
@@ -194,11 +210,11 @@ export const subclassTableEnColumns = [
     'line-clamp': 2,
   },
   {
-    id: 'id',
-    label: 'NANDO ID',
+    id: 'parent',
+    label: 'Parent',
     escape: true,
     'line-clamp': 1,
-    link: 'idurl',
+    link: 'uparent',
     target: '_blank',
   },
 ];
