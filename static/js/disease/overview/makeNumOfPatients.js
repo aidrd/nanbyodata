@@ -44,7 +44,7 @@ function initializeCharts(data) {
       value-title="Num of Patients"
       chart-type="stacked"
       width="${stanzaWidth}"
-      height="400"
+      height="200"
       legend="true"
       xaxis-placement="bottom"
       yaxis-placement="left"
@@ -102,7 +102,7 @@ function initializeCharts(data) {
 
   if (lineChart) {
     lineChart.style.setProperty('--togostanza-theme-series_0_color', '#29697a');
-    lineChart.style.setProperty('--togostanza-canvas-height', '460');
+    lineChart.style.setProperty('--togostanza-canvas-height', '230');
     lineChart.style.setProperty('--togostanza-canvas-width', `${stanzaWidth}`);
     lineChart.style.setProperty('--togostanza-canvas-padding', '15');
     lineChart.style.setProperty('--togostanza-fonts-font_size_secondary', '14');
