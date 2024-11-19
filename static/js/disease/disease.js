@@ -54,9 +54,12 @@ const datasets = [
   { name: 'MedGen', data: [] },
   // TODO: temporary value
   { name: 'KEGG Disease', data: [] },
-  { name: 'Disease Definition', data: null },
-  { name: 'Patient Statistics', data: null },
-  { name: 'Subclass', data: null },
+  { name: 'Descriptions', data: null },
+  {
+    name: 'Number of Specific Medical Expenses Beneficiary Certificate Holders',
+    data: null,
+  },
+  { name: 'Sub-classes', data: null },
   { name: 'Causal Genes', data: null },
   { name: 'Genetic Testing', data: null },
   { name: 'Phenotypes', data: null },
@@ -125,8 +128,11 @@ const datasets = [
       .then((response) => {
         const numOfPatientsData = response;
         makeNumOfPatients(numOfPatientsData);
-        datasets.find((d) => d.name === 'Patient Statistics').data =
-          numOfPatientsData;
+        datasets.find(
+          (d) =>
+            d.name ===
+            'Number of Specific Medical Expenses Beneficiary Certificate Holders'
+        ).data = numOfPatientsData;
         checkAndLogDatasets();
       })
       .catch((error) => {
@@ -141,7 +147,7 @@ const datasets = [
           makeSubClass(subClassData);
         }, 500);
 
-        datasets.find((d) => d.name === 'Subclass').data = subClassData;
+        datasets.find((d) => d.name === 'Sub-classes').data = subClassData;
         checkAndLogDatasets();
       })
       .catch((error) => {
@@ -214,7 +220,7 @@ const datasets = [
         );
 
         const definitionDataset = datasets.find(
-          (d) => d.name === 'Disease Definition'
+          (d) => d.name === 'Descriptions'
         );
         if (Object.keys(definitionData).length > 0) {
           definitionDataset.data = definitionData;

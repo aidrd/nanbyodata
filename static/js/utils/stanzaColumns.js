@@ -162,7 +162,7 @@ export const variantMgendColumns = [
   { id: 'mondo_label', label: 'MONDO', link: 'mondo_url', target: '_blank' },
 ];
 
-// Overview Subclass
+// Overview Sub-classes
 export const subclassTableJaColumns = [
   {
     id: 'id',
@@ -174,13 +174,13 @@ export const subclassTableJaColumns = [
   },
   {
     id: 'label',
-    label: 'Subclass(JA)',
+    label: 'Label(JA)',
     escape: false,
     'line-clamp': 2,
   },
   {
     id: 'engLabel',
-    label: 'Subclass(En)',
+    label: 'Label(EN)',
     escape: false,
     'line-clamp': 2,
   },
@@ -205,7 +205,7 @@ export const subclassTableEnColumns = [
   },
   {
     id: 'engLabel',
-    label: 'Subclass(En)',
+    label: 'Label(EN)',
     escape: false,
     'line-clamp': 2,
   },
