@@ -139,7 +139,10 @@ const datasets = [
     fetchData('test_get_nandoID')
       .then((response) => {
         const subClassData = response;
-        makeSubClass(subClassData);
+        setTimeout(() => {
+          makeSubClass(subClassData);
+        }, 500);
+
         datasets.find((d) => d.name === 'Subclass').data = subClassData;
         checkAndLogDatasets();
       })
