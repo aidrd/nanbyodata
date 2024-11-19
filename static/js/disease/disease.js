@@ -54,9 +54,12 @@ const datasets = [
   { name: 'MedGen', data: [] },
   // TODO: temporary value
   { name: 'KEGG Disease', data: [] },
-  { name: 'Disease Definition', data: null },
-  { name: 'Patient Statistics', data: null },
-  { name: 'Subclass', data: null },
+  { name: 'Descriptions', data: null },
+  {
+    name: 'Number of Specific Medical Expenses Beneficiary Certificate Holders',
+    data: null,
+  },
+  { name: 'Sub-classes', data: null },
   { name: 'Causal Genes', data: null },
   { name: 'Genetic Testing', data: null },
   { name: 'Phenotypes', data: null },
@@ -88,9 +91,9 @@ const datasets = [
     // リンク一覧のデータ
     // TODO: change api endpoint to get all links
     await Promise.all([
-      fetchData('test-nando-omim'),
-      fetchData('link-mondo-ordo'),
-      fetchData('test_nando_link_mond'),
+      fetchData('nanbyodata_get_link_omim_by_nando_id'),
+      fetchData('nanbyodata_get_link_orphanet_by_nando_id'),
+      fetchData('nanbyodata_get_link_mondo_by_nando_id'),
       // TODO: temporary comment out
       // fetchData('test-nando-medgen'),
       // fetchData('test-nando-kegg'),
@@ -120,14 +123,16 @@ const datasets = [
         console.error('Error:', error);
       });
 
-    // 疾患統計情報のデータ
-    // TODO: change api endpoint
-    fetchData('takatsuki_test_20240322')
+    // 特定医療費受給者証所持者数のデータ
+    fetchData('nanbyodata_get_stats_on_patient_number_by_nando_id')
       .then((response) => {
         const numOfPatientsData = response;
         makeNumOfPatients(numOfPatientsData);
-        datasets.find((d) => d.name === 'Patient Statistics').data =
-          numOfPatientsData;
+        datasets.find(
+          (d) =>
+            d.name ===
+            'Number of Specific Medical Expenses Beneficiary Certificate Holders'
+        ).data = numOfPatientsData;
         checkAndLogDatasets();
       })
       .catch((error) => {
@@ -135,12 +140,14 @@ const datasets = [
       });
 
     // 下位疾患データ
-    // TODO: change api endpoint
-    fetchData('test_get_nandoID')
+    fetchData('nanbyodata_get_sub_class_by_nando_id')
       .then((response) => {
         const subClassData = response;
-        makeSubClass(subClassData);
-        datasets.find((d) => d.name === 'Subclass').data = subClassData;
+        setTimeout(() => {
+          makeSubClass(subClassData);
+        }, 500);
+
+        datasets.find((d) => d.name === 'Sub-classes').data = subClassData;
         checkAndLogDatasets();
       })
       .catch((error) => {
@@ -213,7 +220,7 @@ const datasets = [
         );
 
         const definitionDataset = datasets.find(
-          (d) => d.name === 'Disease Definition'
+          (d) => d.name === 'Descriptions'
         );
         if (Object.keys(definitionData).length > 0) {
           definitionDataset.data = definitionData;

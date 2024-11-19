@@ -2,7 +2,7 @@ import { createObjectUrlFromData } from '../../utils/stanzaUtils.js';
 
 export function makeNumOfPatients(data) {
   const chartTypeSelect = document.getElementById('num-of-patients-graph');
-  if (data.length <= 1) {
+  if (!data || data.length <= 1) {
     const overviewSection = chartTypeSelect.closest('.overview-section');
     overviewSection.remove();
     return;
@@ -44,7 +44,7 @@ function initializeCharts(data) {
       value-title="Num of Patients"
       chart-type="stacked"
       width="${stanzaWidth}"
-      height="400"
+      height="200"
       legend="true"
       xaxis-placement="bottom"
       yaxis-placement="left"
@@ -75,7 +75,7 @@ function initializeCharts(data) {
       axis-x-title_padding="40"
       axis-x-ticks_label_angle="0"
       axis-x-ticks_interval="1"
-      axis-y-range_max="${maxValue + 10}"
+      axis-y-range_max="${maxValue + maxValue * 0.2}"
       axis-y-range_min="0"
       axis-y-key="num_of_patients"
       axis-y-scale="linear"
@@ -97,14 +97,16 @@ function initializeCharts(data) {
 
   if (barChart) {
     barChart.style.setProperty('--togostanza-series-0-color', '#29697a');
+    barChart.style.setProperty('--togostanza-title-font-size', '14');
     barChart.style.setProperty('--togostanza-label-font-size', '14');
   }
 
   if (lineChart) {
     lineChart.style.setProperty('--togostanza-theme-series_0_color', '#29697a');
-    lineChart.style.setProperty('--togostanza-canvas-height', '460');
+    lineChart.style.setProperty('--togostanza-canvas-height', '230');
     lineChart.style.setProperty('--togostanza-canvas-width', `${stanzaWidth}`);
     lineChart.style.setProperty('--togostanza-canvas-padding', '15');
+    lineChart.style.setProperty('--togostanza-fonts-font_size_primary', '14');
     lineChart.style.setProperty('--togostanza-fonts-font_size_secondary', '14');
   }
 

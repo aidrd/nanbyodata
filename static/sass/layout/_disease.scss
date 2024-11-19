@@ -4,6 +4,13 @@
   }
   .overview-section {
     padding-bottom: 20px;
+    .data-num {
+      font-size: var(--font-size-base);
+      padding: 0 5px;
+      line-height: 1.5;
+      margin: 0 5px;
+      min-width: 22px;
+    }
   }
 }
 

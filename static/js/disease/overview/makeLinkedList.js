@@ -195,8 +195,8 @@ function addTableOrTree(content, item, displayType, linkedListData) {
     feedbackMessage = document.createElement('p');
     feedbackMessage.textContent =
       currentLang === 'ja'
-        ? '*リンクに関するフィードバックをお待ちしております.'
-        : '*We welcome feedback on the links.';
+        ? '* リンクに関するフィードバックをお待ちしております.'
+        : '* Welcome feedback on the links.';
     content.appendChild(feedbackMessage);
   }
 

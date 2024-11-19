@@ -468,7 +468,7 @@
                     {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
                     <h5 class="sub-title">リンク一覧</h5>
                     {% else %}
-                    <h5 class="sub-title">List of Links</h5>
+                    <h5 class="sub-title">Links</h5>
                     {% endif %}
                     <select name="linked-items-graph" id="linked-items-graph">
                       <option value="table" selected>Table</option>
@@ -512,7 +512,7 @@
                     {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
                     <h5 class="sub-title -disease-definition">疾患定義</h5>
                     {% else %}
-                    <h5 class="sub-title -disease-definition">Disease Definition</h5>
+                    <h5 class="sub-title -disease-definition">Descriptions</h5>
                     {% endif %}
                   </div>
 
@@ -542,9 +542,9 @@
                 <section class="overview-section">
                   <div class="sub-title-wrapper -select">
                     {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
-                    <h5 class="sub-title">患者統計情報</h5>
+                    <h5 class="sub-title">特定医療費受給者証所持者数</h5>
                     {% else %}
-                    <h5 class="sub-title">Patient Statistics</h5>
+                    <h5 class="sub-title">Number of Specific Medical Expenses Beneficiary Certificate Holders</h5>
                     {% endif %}
                     <select name="num-of-patients-graph" id="num-of-patients-graph">
                       <option value="bar" selected>Bar</option>
@@ -557,13 +557,13 @@
                 <section class="overview-section">
                   <div class="sub-title-wrapper -select">
                     {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
-                    <h5 class="sub-title -sub-class">下位疾患</h5>
+                    <h5 class="sub-title -sub-class">下位疾患<span class="data-num"></span></h5>
                     {% else %}
-                    <h5 class="sub-title -sub-class">Subclass</h5>
+                    <h5 class="sub-title -sub-class">Sub-classes<span class="data-num"></span></h5>
                     {% endif %}
                     <select name="sub-class-graph" id="sub-class-graph">
-                      <option value="table" selected>Table</option>
-                      <option value="tree">Tree</option>
+                      <option value="tree" selected>Tree</option>
+                      <option value="table">Table</option>
                     </select>
                   </div>
                   <div id="temp-sub-class"></div>

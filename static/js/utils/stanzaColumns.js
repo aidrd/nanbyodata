@@ -162,20 +162,8 @@ export const variantMgendColumns = [
   { id: 'mondo_label', label: 'MONDO', link: 'mondo_url', target: '_blank' },
 ];
 
-// Overview Subclass
+// Overview Sub-classes
 export const subclassTableJaColumns = [
-  {
-    id: 'label',
-    label: 'Subclass(JA)',
-    escape: false,
-    'line-clamp': 2,
-  },
-  {
-    id: 'engLabel',
-    label: 'Subclass(En)',
-    escape: false,
-    'line-clamp': 2,
-  },
   {
     id: 'id',
     label: 'NANDO ID',
@@ -184,21 +172,49 @@ export const subclassTableJaColumns = [
     link: 'idurl',
     target: '_blank',
   },
-];
-
-export const subclassTableEnColumns = [
   {
-    id: 'engLabel',
-    label: 'Subclass(En)',
+    id: 'label',
+    label: 'Label(JA)',
     escape: false,
     'line-clamp': 2,
   },
+  {
+    id: 'engLabel',
+    label: 'Label(EN)',
+    escape: false,
+    'line-clamp': 2,
+  },
+  {
+    id: 'parent',
+    label: 'Parent ID',
+    escape: true,
+    'line-clamp': 1,
+    link: 'uparent',
+    target: '_blank',
+  },
+];
+
+export const subclassTableEnColumns = [
   {
     id: 'id',
     label: 'NANDO ID',
     escape: true,
     'line-clamp': 1,
     link: 'idurl',
+    target: '_blank',
+  },
+  {
+    id: 'engLabel',
+    label: 'Label(EN)',
+    escape: false,
+    'line-clamp': 2,
+  },
+  {
+    id: 'parent',
+    label: 'Parent ID',
+    escape: true,
+    'line-clamp': 1,
+    link: 'uparent',
     target: '_blank',
   },
 ];

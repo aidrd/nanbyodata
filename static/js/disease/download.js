@@ -82,11 +82,11 @@ export const downloadDatasets = (nandoId, datasets) => {
               data
             ),
           };
-        case 'Disease Definition':
+        case 'Descriptions':
           return { name, data };
-        case 'Patient Statistics':
+        case 'Number of Specific Medical Expenses Beneficiary Certificate Holders':
           return { name, data: reconstructionData(numOfPatientsColumns, data) };
-        case 'Subclass':
+        case 'Sub-classes':
           return {
             name,
             data: reconstructionData(
@@ -202,16 +202,16 @@ export const downloadDatasets = (nandoId, datasets) => {
       // TODO: fix below contents
       Synonyms: [],
       'Modes of Inheritance': [],
-      'Overview/List of Links': [
+      'Overview/Links': [
         'OMIM',
         'Orphanet',
         'Monarch Initiative',
         'MedGen',
         'KEGG Disease',
       ],
-      'Disease Definition': [],
-      'Patient Statistics': [],
-      Subclass: [],
+      Descriptions: [],
+      'Number of Specific Medical Expenses Beneficiary Certificate Holders': [],
+      'Sub-classes': [],
       'Causal Genes': [],
       'Genetic Testing': [],
       Phenotypes: [],
@@ -249,14 +249,14 @@ export const downloadDatasets = (nandoId, datasets) => {
           break;
 
         case 'Synonyms':
-        case 'Disease Definition':
+        case 'Descriptions':
         case 'Modes of Inheritance':
           txtData += `-- Overview/${categoryName} --\n`;
           processObject(categoryData, '');
           txtData += '\n';
           break;
 
-        case 'Patient Statistics':
+        case 'Number of Specific Medical Expenses Beneficiary Certificate Holders':
         case 'Subclass':
           processCategory(`Overview/${categoryName}`, categoryData);
           break;

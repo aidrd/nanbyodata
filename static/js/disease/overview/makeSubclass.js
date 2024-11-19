@@ -17,10 +17,17 @@ export async function makeSubClass(data) {
   const currentLang = document.querySelector('.language-select').value;
 
   // データの確認と処理
-  if (data.length <= 1) {
+  if (!data || data.length <= 1) {
     const overviewSection = targetDiv.closest('.overview-section');
     overviewSection.remove();
     return;
+  }
+
+  // データの件数を表示
+  const dataNum = document.querySelector('.overview-section .data-num');
+  if (dataNum) {
+    const count = (data?.length || 0) - 1;
+    dataNum.textContent = count >= 0 ? count : 0;
   }
 
   const objectUrl = createObjectUrlFromData(data);
