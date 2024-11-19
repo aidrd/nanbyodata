@@ -541,7 +541,7 @@ function trySwitchingContent(hash, retries = 0) {
 
 // smart box
 
-smartBox('NANDO', '/static/tsv/NANDO_20240516.tsv', {
+smartBox('NANDO', '/static/tsv/NANDO_20241023.tsv', {
   api_url: '',
 });
 
