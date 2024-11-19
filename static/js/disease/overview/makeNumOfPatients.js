@@ -2,7 +2,7 @@ import { createObjectUrlFromData } from '../../utils/stanzaUtils.js';
 
 export function makeNumOfPatients(data) {
   const chartTypeSelect = document.getElementById('num-of-patients-graph');
-  if (data.length <= 1) {
+  if (!data || data.length <= 1) {
     const overviewSection = chartTypeSelect.closest('.overview-section');
     overviewSection.remove();
     return;
