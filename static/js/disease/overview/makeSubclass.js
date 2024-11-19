@@ -23,6 +23,10 @@ export async function makeSubClass(data) {
     return;
   }
 
+  // データの件数を表示
+  const dataNum = document.querySelector('.overview-section .data-num');
+  dataNum.textContent = data.length - 1;
+
   const objectUrl = createObjectUrlFromData(data);
 
   // テーブルの初期表示を設定
