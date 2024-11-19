@@ -75,7 +75,7 @@ function initializeCharts(data) {
       axis-x-title_padding="40"
       axis-x-ticks_label_angle="0"
       axis-x-ticks_interval="1"
-      axis-y-range_max="${maxValue + 20}"
+      axis-y-range_max="${maxValue + maxValue * 0.2}"
       axis-y-range_min="0"
       axis-y-key="num_of_patients"
       axis-y-scale="linear"
