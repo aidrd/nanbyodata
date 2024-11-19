@@ -129,6 +129,30 @@ def annotation_file(filename):
 
 
 #####
+# API: Feedback URL
+# GET method
+# /feedback?id_from=[FROM ID]&id_to=[TO ID]&type=[GOOD or BAD]
+@app.route('/feedback', methods=['GET','POST'])
+def api_feedback():
+    r_id_from = ""
+    r_id_to   = ""
+    r_type    = ""
+    if request.args.get('id_from') is not None:
+        r_id_from = request.args.get('id_from')
+
+    if request.args.get('id_to') is not None:
+        r_id_to = request.args.get('id_to')
+
+    if request.args.get('type') is not None:
+        r_type = request.args.get('type')
+
+    if r_id_from != "" and r_id_to != "" and r_type != "":
+        app.logger.error("Feedback: The link from " + r_id_from + " to " + r_id_to + " is " + r_type)
+
+    return ('OK'), 200
+
+
+#####
 # 疾患ページ
 ## GET:
 @app.route('/disease/NANDO:<string:id_nando>', methods=['GET'])
