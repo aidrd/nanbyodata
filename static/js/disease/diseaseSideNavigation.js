@@ -122,11 +122,9 @@ export function switchingDisplayContents(selectedItemId) {
     switch (selectedItemId) {
       case 'overview':
         toggleDisplay('#overview', 'block');
-        ['temp-aliases', '.temp-wrapper', '#temp-disease-definition'].forEach(
-          (selector) => {
-            toggleDisplay(selector, 'block');
-          }
-        );
+        ['.temp-wrapper', '#temp-disease-definition'].forEach((selector) => {
+          toggleDisplay(selector, 'block');
+        });
         break;
       case 'temp-disease-definition':
       case 'causal-genes':
