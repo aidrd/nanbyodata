@@ -1,8 +1,19 @@
-import { navToggle } from './navigation.js';
-import { focusInput } from './focusInput.js';
-import { popup } from './popup.js';
+import { navToggle } from '../utils/navigation.js';
+import { focusInput } from '../utils/focusInput.js';
+import { popup } from '../utils/popup.js';
 import { breadcrumb } from './breadcrumb.js';
 import { downloadDatasets } from './download.js';
+import { makeHeader } from './overview/makeHeader.js';
+import { makeLinkedList } from './overview/makeLinkedList.js';
+import { makeExternalLinks } from './overview/makeExternalLinks.js';
+import { makeAlternativeName } from './overview/makeAlternativeName.js';
+import { makeInheritanceUris } from './overview/makeInheritanceUris.js';
+import { makeNumOfPatients } from './overview/makeNumOfPatients.js';
+import { makeSubClass } from './overview/makeSubclass.js';
+import { checkSummaryData } from './overview/checkSummaryData.js';
+import { makeDiseaseDefinition } from './overview/makeDiseaseDefinition.js';
+import { updateOverviewDisplay } from './overview/updateOverviewDisplay.js';
+
 import {
   makeCausalGene,
   makeGeneticTesting,
@@ -14,15 +25,15 @@ import {
   makeMgend,
 } from './diseaseContent.js';
 import { switchingDisplayContents } from './diseaseSideNavigation.js';
-import { setLangChange } from './setLangChange.js';
-import { smartBox } from './smart_box.js';
+import { setLangChange } from '../utils/setLangChange.js';
+import { smartBox } from '../utils/smart_box.js';
 
-// // get NANDO ID
+// get NANDO ID
 const pathname = window.location.pathname;
 const nandoIndex = pathname.indexOf('NANDO:');
 const nandoId = pathname.slice(nandoIndex + 6);
 
-// // for cache busting
+// for cache busting
 const timestamp = Date.now();
 
 // external functions
@@ -34,6 +45,21 @@ setLangChange();
 
 const datasets = [
   { name: 'Overview', data: null },
+  { name: 'Synonyms', data: null },
+  { name: 'Modes of Inheritance', data: null },
+  { name: 'OMIM', data: null },
+  { name: 'Orphanet', data: null },
+  { name: 'Monarch Initiative', data: null },
+  // TODO: temporary value
+  { name: 'MedGen', data: [] },
+  // TODO: temporary value
+  { name: 'KEGG Disease', data: [] },
+  { name: 'Descriptions', data: null },
+  {
+    name: 'Number of Specific Medical Expenses Beneficiary Certificate Holders',
+    data: null,
+  },
+  { name: 'Sub-classes', data: null },
   { name: 'Causal Genes', data: null },
   { name: 'Genetic Testing', data: null },
   { name: 'Phenotypes', data: null },
@@ -61,6 +87,73 @@ const datasets = [
       }
     }
 
+    // Overview
+    // リンク一覧のデータ
+    // TODO: change api endpoint to get all links
+    await Promise.all([
+      fetchData('nanbyodata_get_link_omim_by_nando_id'),
+      fetchData('nanbyodata_get_link_orphanet_by_nando_id'),
+      fetchData('nanbyodata_get_link_mondo_by_nando_id'),
+      // TODO: temporary comment out
+      // fetchData('test-nando-medgen'),
+      // fetchData('test-nando-kegg'),
+    ])
+      .then(([omimData, orphanetData, monarchData]) => {
+        // TODO: change to [omimData, orphanetData, monarchData, medgenData, keggData]
+        const linkedListData = {
+          omim: omimData,
+          orphanet: orphanetData,
+          'monarch-initiative': monarchData,
+          //TODO: temporary value
+          medgen: [],
+          //TODO: temporary value
+          'kegg-disease': [],
+        };
+        makeLinkedList(linkedListData, nandoId);
+        datasets.find((d) => d.name === 'OMIM').data = omimData;
+        datasets.find((d) => d.name === 'Orphanet').data = orphanetData;
+        datasets.find((d) => d.name === 'Monarch Initiative').data =
+          monarchData;
+        //TODO: temporary comment out
+        // datasets.find((d) => d.name === 'MedGen').data = medgenData;
+        // datasets.find((d) => d.name === 'KEGG Disease').data = keggData;
+        checkAndLogDatasets();
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
+
+    // 特定医療費受給者証所持者数のデータ
+    fetchData('nanbyodata_get_stats_on_patient_number_by_nando_id')
+      .then((response) => {
+        const numOfPatientsData = response;
+        makeNumOfPatients(numOfPatientsData);
+        datasets.find(
+          (d) =>
+            d.name ===
+            'Number of Specific Medical Expenses Beneficiary Certificate Holders'
+        ).data = numOfPatientsData;
+        checkAndLogDatasets();
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
+
+    // 下位疾患データ
+    fetchData('nanbyodata_get_sub_class_by_nando_id')
+      .then((response) => {
+        const subClassData = response;
+        setTimeout(() => {
+          makeSubClass(subClassData);
+        }, 500);
+
+        datasets.find((d) => d.name === 'Sub-classes').data = subClassData;
+        checkAndLogDatasets();
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
+
     // get Overview data
     fetchData('nanbyodata_get_overview_by_nando_id').then((entryData) => {
       if (entryData) {
@@ -68,12 +161,75 @@ const datasets = [
         makeExternalLinks(entryData);
         makeAlternativeName(entryData);
         makeInheritanceUris(entryData);
-        makeLinksList(entryData);
         checkSummaryData(entryData);
         makeDiseaseDefinition(entryData);
-        updateOverviewLinkAndContentDisplay();
-        datasets.find((d) => d.name === 'Overview').data = entryData;
+        updateOverviewDisplay();
+
+        // remove unnecessary overview data
+        const {
+          alt_label_en,
+          alt_label_ja,
+          inheritance_uris,
+          kegg,
+          mondos,
+          db_xrefs,
+          medgen_id,
+          medgen_uri,
+          urdbms,
+          description,
+          mondo_decs,
+          medgen_definition,
+          ...filteredOverviewData
+        } = entryData;
+
+        datasets.find((d) => d.name === 'Overview').data = filteredOverviewData;
+
+        // 遺伝形式ダウンロードデータの用意
+        const inheritanceUrisData = Object.fromEntries(
+          Object.entries({ inheritance_uris }).filter(([_, v]) => v != null)
+        );
+
+        const inheritanceUrisDataset = datasets.find(
+          (d) => d.name === 'Modes of Inheritance'
+        );
+        if (Object.keys(inheritanceUrisData).length > 0) {
+          inheritanceUrisDataset.data = inheritanceUrisData;
+        } else {
+          inheritanceUrisDataset.data = {};
+        }
+
+        // 別疾患名ダウンロードデータの用意
+        const synonymsData = Object.fromEntries(
+          Object.entries({ alt_label_en, alt_label_ja }).filter(
+            ([_, v]) => v != null
+          )
+        );
+
+        const synonymsDataset = datasets.find((d) => d.name === 'Synonyms');
+        if (Object.keys(synonymsData).length > 0) {
+          synonymsDataset.data = synonymsData;
+        } else {
+          synonymsDataset.data = {};
+        }
+
+        // 疾患定義ダウンロードデータの用意
+        const definitionData = Object.fromEntries(
+          Object.entries({ description, mondo_decs, medgen_definition }).filter(
+            ([_, v]) => v != null
+          )
+        );
+
+        const definitionDataset = datasets.find(
+          (d) => d.name === 'Descriptions'
+        );
+        if (Object.keys(definitionData).length > 0) {
+          definitionDataset.data = definitionData;
+        } else {
+          definitionDataset.data = {};
+        }
+
         checkAndLogDatasets();
+
         if (hash) {
           trySwitchingContent(hash);
         } else {
@@ -168,318 +324,6 @@ function checkAndLogDatasets() {
   }
 }
 
-function makeHeader(entryData) {
-  const refNandoId = document.getElementById('temp-nando-id');
-  refNandoId.textContent = nandoId;
-
-  const refNandoLink = document.getElementById('temp-nando-link');
-  refNandoLink.setAttribute(
-    'href',
-    refNandoLink.getAttribute('href') + nandoId
-  );
-  refNandoLink.textContent += nandoId;
-
-  document
-    .getElementById('temp-nando-copy')
-    .addEventListener('click', async () => {
-      const clipboardText = 'https://nanbyodata.jp/ontology/NANDO_' + nandoId;
-      document.getElementById('temp-nando-copy').textContent = 'Copied!';
-      await navigator.clipboard.writeText(clipboardText);
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-      document.getElementById('temp-nando-copy').textContent = 'Copy';
-    });
-
-  const labelJa = document.getElementById('temp-label-ja');
-  if (labelJa) {
-    labelJa.innerHTML =
-      '<ruby>' +
-      entryData.label_ja +
-      '<rt>' +
-      entryData.ruby +
-      '</rt>' +
-      '</ruby>';
-  }
-
-  const labelEn = document.getElementById('temp-label-en');
-  labelEn.textContent = entryData.label_en;
-
-  const notificationNumber = document.getElementById(
-    'temp-notification-number'
-  );
-  notificationNumber.textContent = entryData.notification_number;
-  if (!entryData.notification_number) {
-    notificationNumber.parentNode.remove();
-    const tempDataSummary = document.getElementById('overview');
-    tempDataSummary.style.borderBottom = 'none';
-  }
-}
-
-function makeExternalLinks(entryData) {
-  const externalLinks = document.getElementById('temp-external-links');
-
-  const items = [
-    {
-      url: entryData.mhlw?.url,
-      element: externalLinks.querySelector('.linked-item.mhlw'),
-      existing: !!entryData.mhlw,
-    },
-    {
-      url: entryData.source,
-      element: externalLinks.querySelector('.linked-item.source'),
-      existing: !!entryData.source,
-    },
-    {
-      url: entryData.nanbyou?.url,
-      element: externalLinks.querySelector('.linked-item.nanbyou'),
-      existing: !!entryData.nanbyou,
-    },
-    {
-      url: entryData.shouman?.url,
-      element: externalLinks.querySelector('.linked-item.shouman'),
-      existing: !!entryData.shouman,
-    },
-  ];
-
-  items.forEach((item) => {
-    const { url, element } = item;
-    if (url) {
-      element.querySelector('a').setAttribute('href', url);
-    } else {
-      element.remove();
-    }
-  });
-
-  const allFalse = items.every((item) => item.existing === false);
-  if (allFalse) {
-    document.getElementById('temp-data-summary').style.borderBottom = 'none';
-  }
-}
-
-function makeAlternativeName(entryData) {
-  const altLabelJa = document.querySelector('.alt-label-ja');
-  const altLabelEn = document.querySelector('.alt-label-en');
-  const currentLang = document.querySelector('.language-select').value;
-
-  if (entryData.alt_label_ja && currentLang === 'ja') {
-    const divElement = document.createElement('div');
-    altLabelJa.append(divElement);
-    entryData.alt_label_ja.forEach((item) => {
-      const ddElement = document.createElement('dd');
-      ddElement.textContent = item;
-      ddElement.classList.add('linked-item', '-unlinked');
-      divElement.append(ddElement);
-    });
-  } else {
-    altLabelJa.remove();
-  }
-  if (entryData.alt_label_en) {
-    const divElement = document.createElement('div');
-    altLabelEn.append(divElement);
-    entryData.alt_label_en.forEach((item) => {
-      const ddElement = document.createElement('dd');
-      ddElement.textContent = item;
-      ddElement.classList.add('linked-item', '-unlinked');
-      divElement.append(ddElement);
-    });
-  } else {
-    altLabelEn.remove();
-  }
-}
-
-function createLinkElement(url, text) {
-  const a = document.createElement('a');
-  a.href = url;
-  a.target = '_blank';
-  a.rel = 'noopener noreferrer';
-  a.textContent = text;
-  return a;
-}
-
-function appendLinks(data, container, prefix = '') {
-  if (data && data.length) {
-    data.forEach((item, index) => {
-      const dd = document.createElement('dd');
-      const currentLang = document.querySelector('.language-select').value;
-      let a;
-      if (currentLang === 'en' && item.id_en) {
-        a = createLinkElement(item.url || item.uri, prefix + item.id_en);
-      } else {
-        a = createLinkElement(item.url || item.uri, prefix + item.id);
-      }
-      dd.classList.add('linked-item');
-      dd.append(a);
-      container.append(dd);
-      if (index < data.length - 1) {
-        const space = document.createTextNode(' ');
-        container.append(space);
-      }
-    });
-  } else {
-    container.remove();
-  }
-}
-
-function makeInheritanceUris(entryData) {
-  const inheritanceUris = document.querySelector('.inheritance-uri');
-  if (entryData.inheritance_uris) {
-    appendLinks(entryData.inheritance_uris, inheritanceUris);
-  } else {
-    inheritanceUris.remove();
-  }
-}
-
-function makeLinksList(entryData) {
-  const linksListProperties = document.querySelector('.properties');
-  const omim = linksListProperties.querySelector('.omim');
-  const orphanet = linksListProperties.querySelector('.orphanet');
-  const medgen = linksListProperties.querySelector('.medgen');
-  const mondos = linksListProperties.querySelector('.mondos');
-  const kegg = linksListProperties.querySelector('.kegg');
-  const urdbms = linksListProperties.querySelector('.urdbms');
-
-  appendLinks(entryData.db_xrefs?.omim, omim);
-  appendLinks(entryData.db_xrefs?.orphanet, orphanet, 'ORPHA:');
-
-  if (entryData.medgen_id) {
-    const dd = document.createElement('dd');
-    const a = createLinkElement(entryData.medgen_uri, entryData.medgen_id);
-    dd.classList.add('linked-item');
-    dd.append(a);
-    medgen.append(dd);
-  } else {
-    medgen.remove();
-  }
-
-  appendLinks(entryData.mondos, mondos);
-
-  if (entryData.kegg) {
-    const dd = document.createElement('dd');
-    const a = createLinkElement(entryData.kegg.url, entryData.kegg.id);
-    dd.classList.add('linked-item');
-    dd.append(a);
-    kegg.append(dd);
-  } else {
-    kegg.remove();
-  }
-
-  if (entryData.urdbms) {
-    const dd = document.createElement('dd');
-    const a = createLinkElement(entryData.urdbms.url, entryData.urdbms.id);
-    dd.classList.add('linked-item');
-    dd.append(a);
-    urdbms.append(dd);
-  } else {
-    urdbms.remove();
-  }
-}
-
-export function checkSummaryData(entryData) {
-  const summaryWrapper = document.querySelector('.summary-wrapper');
-  const summaryNav = document.querySelector('.nav-link.overview');
-  const diseaseDefinition = document.getElementById('temp-disease-definition');
-  const navBorderTop = document.querySelector(
-    '#temp-side-navigation > ul > li:first-child'
-  );
-  if (
-    !entryData.alt_label_ja &&
-    !entryData.alt_label_en &&
-    !entryData.db_xrefs?.omim &&
-    !entryData.db_xrefs?.orphanet &&
-    !entryData.medgen_id &&
-    !entryData.mondos &&
-    !entryData.kegg &&
-    !entryData.urdbms
-  ) {
-    if (summaryWrapper) {
-      summaryWrapper.style = 'display: none;';
-      summaryNav.style = 'display: none;';
-      navBorderTop.style = 'border-top: none;';
-      if (diseaseDefinition) {
-        summaryNav.style = 'display: block;';
-        navBorderTop.style = 'border-top: block;';
-      }
-    }
-  }
-}
-
-function makeDiseaseDefinition(entryData) {
-  const diseaseDefinition = document.getElementById('temp-disease-definition');
-  const tabWrap = diseaseDefinition.querySelector(
-    '#temp-disease-definition .tab-wrap'
-  );
-  const currentLang = document.querySelector('.language-select').value;
-
-  const items = [
-    {
-      class: 'mhlw',
-      existing: currentLang === 'en' ? false : !!entryData.description,
-      desc: entryData.description,
-      translate: false,
-    },
-    {
-      class: 'monarch-initiative',
-      existing: !!entryData.mondo_decs,
-      desc: entryData.mondo_decs?.map((dec) => dec.id).join(' '),
-      translate: true,
-    },
-    {
-      class: 'medgen',
-      existing: !!entryData.medgen_definition,
-      desc: entryData.medgen_definition,
-      translate: true,
-    },
-  ];
-
-  if (items.every((item) => !item.existing)) {
-    diseaseDefinition.remove();
-  } else {
-    let isFirstTab = true;
-
-    items.forEach((item) => {
-      if (!item.existing) {
-        const input = document.getElementById(`disease-${item.class}`);
-        const label = input.nextElementSibling;
-        label.remove();
-        input.remove();
-      }
-
-      const content = tabWrap.querySelector(`.${item.class}`);
-
-      content.textContent = item.desc;
-      const currentTab = tabWrap.querySelector(`#disease-${item.class}`);
-
-      if (currentTab && isFirstTab) {
-        currentTab.checked = true;
-        isFirstTab = false;
-      }
-
-      if (item.translate) {
-        const translationLink = document.createElement('a');
-        const translationUrl = `https://translate.google.co.jp/?hl=ja#en/ja/${item.desc}`;
-        translationLink.setAttribute('href', translationUrl);
-        translationLink.setAttribute('target', '_blank');
-        translationLink.setAttribute('rel', 'noopener noreferrer');
-        translationLink.innerHTML =
-          '<span class="google-translate">&nbsp;&gt;&gt;&nbsp;翻訳 (Google)</span>';
-        content.append(translationLink);
-      }
-    });
-  }
-}
-
-function updateOverviewLinkAndContentDisplay() {
-  const navLink = document.querySelector('.nav-link.overview');
-  const loadingSpinner = navLink.querySelector('.loading-spinner');
-
-  if (document.querySelector('.summary-wrapper').style.display === 'none') {
-    loadingSpinner.style.display = 'none';
-  } else {
-    navLink.style.cursor = 'pointer';
-    navLink.classList.remove('-disabled');
-  }
-  loadingSpinner.style.display = 'none';
-}
-
 function trySwitchingContent(hash, retries = 0) {
   const maxRetries = 10;
   let found = false;
@@ -525,7 +369,7 @@ function trySwitchingContent(hash, retries = 0) {
     switchingDisplayContents(hash);
     document.getElementById('content').style.display = 'block';
   } else if (!found && retries < maxRetries) {
-    console.log('No hash item found, retrying...');
+    console.error('No hash item found, retrying...');
     setTimeout(() => {
       trySwitchingContent(hash, retries + 1);
     }, 3000);
