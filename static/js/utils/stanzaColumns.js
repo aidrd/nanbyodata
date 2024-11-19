@@ -186,7 +186,7 @@ export const subclassTableJaColumns = [
   },
   {
     id: 'parent',
-    label: 'Parent',
+    label: 'Parent ID',
     escape: true,
     'line-clamp': 1,
     link: 'uparent',
@@ -211,7 +211,7 @@ export const subclassTableEnColumns = [
   },
   {
     id: 'parent',
-    label: 'Parent',
+    label: 'Parent ID',
     escape: true,
     'line-clamp': 1,
     link: 'uparent',
