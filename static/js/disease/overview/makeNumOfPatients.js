@@ -41,7 +41,7 @@ function initializeCharts(data) {
       category="year"
       value="num_of_patients"
       category-title="Year"
-      value-title="Num of Patients"
+      value-title="# of certificate holders"
       chart-type="stacked"
       width="${stanzaWidth}"
       height="200"
