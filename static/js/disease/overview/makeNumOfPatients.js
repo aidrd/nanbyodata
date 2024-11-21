@@ -80,7 +80,7 @@ function initializeCharts(data) {
       axis-y-key="num_of_patients"
       axis-y-scale="linear"
       axis-y-placement="left"
-      axis-y-title="Num of Patients"
+      axis-y-title="# of certificate holders"
       axis-y-title_padding="60"
       axis-y-ticks_label_angle="0"
       point_size="10"
