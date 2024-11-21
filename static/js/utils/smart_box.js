@@ -5,7 +5,8 @@
  * @param {string} data_path - The path to the TSV file containing keyword data.
  * @param {Object} [options={}] - An options object to specify additional settings.
  * @param {string} [options.api_url=''] - The URL of the API to fetch additional keyword suggestions (optional).
- * @param {boolean} [options.includeNoMatch=false] - Whether to include a selection field for the keyword itself in the suggestion box (optional).
+ * @param {boolean} [options.include_no_match=false] - Whether to include a selection field for the keyword itself in the suggestion box (optional).
+ * @param {number} [options.max_results] - The maximum number of suggestions to display (optional).
  */
 export function smartBox(input_box_id, data_path, options = {}) {
   if (!input_box_id) {
@@ -18,7 +19,7 @@ export function smartBox(input_box_id, data_path, options = {}) {
     return;
   }
 
-  const { api_url = '', includeNoMatch = false } = options;
+  const { api_url = '', include_no_match = false, max_results } = options;
 
   let diseases = [];
   let selectedIndex = -1;
@@ -245,30 +246,30 @@ export function smartBox(input_box_id, data_path, options = {}) {
 
       if (localResults.length === 0 && api_url) {
         fetchFromAPI(searchValue).then((results) => {
-          if (results.length === 0 && includeNoMatch) {
-            displayResults([], true, true);
+          if (results.length === 0 && include_no_match) {
+            displayResults([], true, true, max_results);
           } else {
             apiResults = results;
-            displayResults(results, true, true);
+            displayResults(results, true, true, max_results);
           }
         });
       } else {
-        displayResults(localResults, false, true);
+        displayResults(localResults, false, true, max_results);
       }
     } else {
       localResults = searchInLocalData(diseases, currentKeywords);
 
       if (localResults.length === 0 && api_url) {
         fetchFromAPI(searchValue).then((results) => {
-          if (results.length === 0 && includeNoMatch) {
-            displayResults([], true);
+          if (results.length === 0 && include_no_match) {
+            displayResults([], true, false, max_results);
           } else {
             apiResults = results;
-            displayResults(results, true);
+            displayResults(results, true, false, max_results);
           }
         });
       } else {
-        displayResults(localResults);
+        displayResults(localResults, false, false, max_results);
       }
     }
   }
@@ -277,8 +278,19 @@ export function smartBox(input_box_id, data_path, options = {}) {
    * Displays keyword suggestions in the suggestion box.
    * @param {Array} results - The list of keyword suggestions.
    * @param {boolean} [fromAPI=false] - Whether the results are from an API call.
+   * @param {boolean} [onlyNumeric=false] - Whether the results are numeric only.
+   * @param {number} [maxResults] - The maximum number of suggestions to display.
    */
-  function displayResults(results, fromAPI = false, onlyNumeric = false) {
+  function displayResults(
+    results,
+    fromAPI = false,
+    onlyNumeric = false,
+    maxResults
+  ) {
+    if (typeof maxResults === 'number') {
+      results = results.slice(0, maxResults);
+    }
+
     let hitCount = fromAPI ? 0 : results.length;
     let suggestionsHtml = '';
     const lang = document.documentElement.lang;
@@ -287,7 +299,7 @@ export function smartBox(input_box_id, data_path, options = {}) {
       isEng = lang === 'en' ? true : false;
     }
 
-    if (includeNoMatch) {
+    if (include_no_match) {
       suggestionsHtml += createKeywordSuggestion();
     }
 
@@ -304,7 +316,7 @@ export function smartBox(input_box_id, data_path, options = {}) {
     suggestBoxContainer.innerHTML = suggestionsHtml;
     suggestBoxContainer.style.display = 'block';
     inputElement.classList.add('suggest-box-open');
-    selectedIndex = results.length > 0 ? 0 : includeNoMatch ? 0 : -1;
+    selectedIndex = results.length > 0 ? 0 : include_no_match ? 0 : -1;
 
     attachListeners();
     updateSelection(selectedIndex);
