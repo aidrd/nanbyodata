@@ -143,10 +143,7 @@ const datasets = [
     fetchData('nanbyodata_get_sub_class_by_nando_id')
       .then((response) => {
         const subClassData = response;
-        setTimeout(() => {
-          makeSubClass(subClassData);
-        }, 500);
-
+        makeSubClass(subClassData);
         datasets.find((d) => d.name === 'Sub-classes').data = subClassData;
         checkAndLogDatasets();
       })
