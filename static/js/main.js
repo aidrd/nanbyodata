@@ -19,6 +19,7 @@ if (window.location.pathname === '/epidemiology') {
 if (window.location.pathname === '/') {
   smartBox('NANDO', '/static/tsv/NANDO_20241121.tsv', {
     api_url: '',
+    max_results: 100,
   });
 
   document.addEventListener('selectedLabel', function (event) {
