@@ -17,7 +17,7 @@ if (window.location.pathname === '/epidemiology') {
 
 // smart box
 if (window.location.pathname === '/') {
-  smartBox('NANDO', '/static/tsv/NANDO_20241023.tsv', {
+  smartBox('NANDO', '/static/tsv/NANDO_20241121.tsv', {
     api_url: '',
   });
 
