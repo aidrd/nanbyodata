@@ -137,7 +137,7 @@ function makeLinksTable(item, content, linkedListData, nandoId) {
     feedbackCell.innerHTML = `
         <a href="#" class="good-icon" title="Good"><i class="far fa-thumbs-up"></i></a>
         <a href="#" class="bad-icon" title="Bad"><i class="far fa-thumbs-down"></i></a>
-        <a href="mailto:fujiwara@dbcls.rois.ac.jp?cc=takatter@dbcls.rois.ac.jp,shin@dbcls.rois.ac.jp&subject=Feedback%20on%20NanbyoData&body=NANDO:${nandoId}%20-%20${itemData.displayid}" class="email-icon" title="Send Feedback">
+        <a href="mailto:nanbyodata@dbcls.rois.ac.jp?subject=Feedback%20on%20NanbyoData&body=NANDO:${nandoId}%20-%20${itemData.displayid}" class="email-icon" title="Send Feedback">
           <i class="far fa-envelope"></i>
         </a>
       `;

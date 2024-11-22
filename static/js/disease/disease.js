@@ -384,11 +384,10 @@ function trySwitchingContent(hash, retries = 0) {
 }
 
 // smart box
-
 smartBox('NANDO', '/static/tsv/NANDO_20241023.tsv', {
   api_url: '',
+  max_results: 100,
 });
-
 document.addEventListener('selectedLabel', function (event) {
   const labelInfo = event.detail.labelInfo;
   window.location.href = `${location.origin}/disease/${labelInfo.id}`;
