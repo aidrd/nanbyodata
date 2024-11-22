@@ -47,11 +47,17 @@
   }
 
   ul.navbar-nav {
+    display: flex;
+    gap: 22px;
     a.nav-link {
       color: #fff;
-      margin-left: 12px;
+      padding: 0;
 
       &:hover {
+        color: var(--color-nav-hover);
+      }
+
+      &:focus {
         color: var(--color-nav-hover);
       }
 
@@ -154,6 +160,31 @@
 
       ul.navbar-nav {
         padding-top: 15px;
+      }
+    }
+  }
+}
+
+/* Dropdown */
+.dropdown-menu {
+  position: absolute;
+  background-color: var(--color-primary-dropdown);
+  border-radius: 0;
+  border: none;
+  list-style: none;
+  padding: 10px;
+  top: 15px;
+
+  li {
+    margin: 0;
+    .dropdown-item {
+      color: white;
+      text-decoration: none;
+      padding: 0.4rem 0;
+
+      &:hover {
+        color: var(--color-nav-hover);
+        background-color: var(--color-primary-dropdown);
       }
     }
   }
