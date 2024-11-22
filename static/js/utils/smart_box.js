@@ -215,7 +215,6 @@ export function smartBox(input_box_id, data_path, options = {}) {
   function handleInput(event) {
     if (isComposing) return;
 
-    const lang = document.documentElement.lang;
     originalInputValue = event ? event.target.value : inputElement.value;
     const trimmedInputValue = originalInputValue.trim();
     const containsFullWidth = isFullWidth(trimmedInputValue);
@@ -225,10 +224,10 @@ export function smartBox(input_box_id, data_path, options = {}) {
 
     let minLength;
     if (containsFullWidth) {
-      // Half-width characters (numerical values)
+      // Full-width characters (numeric)
       minLength = 1;
     } else {
-      // Full-width characters (numeric)
+      // Half-width characters (alphabet, numeric)
       minLength = 2;
     }
 
@@ -287,11 +286,12 @@ export function smartBox(input_box_id, data_path, options = {}) {
     onlyNumeric = false,
     maxResults
   ) {
+    const totalHits = results.length;
+    let limitedResults = results;
     if (typeof maxResults === 'number') {
-      results = results.slice(0, maxResults);
+      limitedResults = results.slice(0, maxResults);
     }
 
-    let hitCount = fromAPI ? 0 : results.length;
     let suggestionsHtml = '';
     const lang = document.documentElement.lang;
     let isEng = isEnglish(currentKeywords.join(' '));
@@ -303,11 +303,11 @@ export function smartBox(input_box_id, data_path, options = {}) {
       suggestionsHtml += createKeywordSuggestion();
     }
 
-    const hitCountText = createHitCountText(fromAPI, hitCount);
+    const hitCountText = createHitCountText(fromAPI, totalHits, maxResults);
 
     suggestionsHtml += `<div class="hit-count">${hitCountText}</div>`;
 
-    suggestionsHtml += results
+    suggestionsHtml += limitedResults
       .map((disease, index) =>
         createSuggestionItem(disease, index, isEng, suggestionsHtml)
       )
@@ -316,7 +316,7 @@ export function smartBox(input_box_id, data_path, options = {}) {
     suggestBoxContainer.innerHTML = suggestionsHtml;
     suggestBoxContainer.style.display = 'block';
     inputElement.classList.add('suggest-box-open');
-    selectedIndex = results.length > 0 ? 0 : include_no_match ? 0 : -1;
+    selectedIndex = limitedResults.length > 0 ? 0 : include_no_match ? 0 : -1;
 
     attachListeners();
     updateSelection(selectedIndex);
@@ -324,27 +324,43 @@ export function smartBox(input_box_id, data_path, options = {}) {
   }
 
   /**
-   * Creates the HTML for a keyword suggestion item.
-   * @returns {string} - The HTML string for the keyword suggestion item.
+   * Creates the HTML for the hit count text.
+   * @param {boolean} fromAPI - Whether the results are from an API call.
+   * @param {number} totalHits - The total number of hits.
+   * @param {number} [maxResults] - The maximum number of suggestions to display.
+   * @returns {string} - The HTML string for the hit count text.
    */
-  function createKeywordSuggestion() {
+  function createHitCountText(fromAPI, totalHits, maxResults) {
     const lang = document.documentElement.lang;
-    const keyword = currentKeywords.join(' ');
-    const displayText =
-      lang === 'ja'
-        ? `"${keyword}"をテキスト入力（IDなし）`
-        : `Text input "${keyword}" (no ID)`;
 
-    return `
-    <li class="suggestion-item -keyword" data-id="noMatch">
-      <div class="label-container">
-        <span class="main-name">${displayText}</span>
-      </div>
-    </li>`;
+    let hitCountMessage;
+    if (fromAPI && totalHits === 0) {
+      hitCountMessage =
+        lang === 'ja'
+          ? `ヒット件数 [0] <span class="suggestion-hint">もしかして:</span>`
+          : `Number of hits [0] <span class="suggestion-hint">Did you mean:</span>`;
+    } else {
+      hitCountMessage =
+        lang === 'ja'
+          ? `ヒット件数 [${totalHits}]`
+          : `Number of hits [${totalHits}]`;
+    }
+
+    let limitMessage = '';
+    if (typeof maxResults === 'number' && totalHits > maxResults) {
+      limitMessage =
+        lang === 'ja'
+          ? `※最初の${maxResults}件のみ表示しています`
+          : `* Only the first ${maxResults} results are displayed`;
+    }
+
+    return limitMessage
+      ? `${hitCountMessage}&nbsp;&nbsp;<span class="limit-message">${limitMessage}</span>`
+      : hitCountMessage;
   }
 
   /**
-   * Creates the HTML for a suggestion item.
+   * Creates the HTML for a keyword suggestion item.
    * @param {Object} disease - The disease object containing keyword data.
    * @param {number} index - The index of the suggestion item.
    * @param {boolean} isEng - Whether the input language is English.
@@ -385,20 +401,23 @@ export function smartBox(input_box_id, data_path, options = {}) {
   }
 
   /**
-   * Creates the HTML for the hit count text.
-   * @param {boolean} fromAPI - Whether the results are from an API call.
-   * @param {number} hitCount - The number of hits.
-   * @returns {string} - The HTML string for the hit count text.
+   * Creates the HTML for a keyword suggestion item when there is no match.
+   * @returns {string} - The HTML string for the keyword suggestion item.
    */
-  function createHitCountText(fromAPI, hitCount) {
+  function createKeywordSuggestion() {
     const lang = document.documentElement.lang;
-    return fromAPI
-      ? lang === 'ja'
-        ? `ヒット件数 [0] <span class="suggestion-hint">もしかして:</span>`
-        : `Number of hits [0] <span class="suggestion-hint">Did you mean:</span>`
-      : lang === 'ja'
-      ? `ヒット件数 [${hitCount}]`
-      : `Number of hits [${hitCount}]`;
+    const keyword = currentKeywords.join(' ');
+    const displayText =
+      lang === 'ja'
+        ? `"${keyword}"をテキスト入力（IDなし）`
+        : `Text input "${keyword}" (no ID)`;
+
+    return `
+    <li class="suggestion-item -keyword" data-id="noMatch">
+      <div class="label-container">
+        <span class="main-name">${displayText}</span>
+      </div>
+    </li>`;
   }
 
   /**
