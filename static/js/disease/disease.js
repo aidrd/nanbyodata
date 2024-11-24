@@ -381,7 +381,7 @@ function trySwitchingContent(hash, retries = 0) {
 }
 
 // smart box
-smartBox('NANDO', '/static/tsv/NANDO_20241121.tsv', {
+smartBox('NANDO', '/ontology/current_release/nando.tsv', {
   api_url: '',
   max_results: 100,
 });
