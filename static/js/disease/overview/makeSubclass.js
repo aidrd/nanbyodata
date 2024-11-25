@@ -13,6 +13,13 @@ export async function makeSubClass(data) {
   const chartTypeSelect = document.getElementById('sub-class-graph');
   const currentLang = document.querySelector('.language-select').value;
 
+  // parentが設定されていないデータを除外するためのフィルタリング
+  const filteredDataForTable = data.filter((item) => item.parent !== undefined);
+
+  // objectUrlをそれぞれ作成
+  const tableObjectUrl = createObjectUrlFromData(filteredDataForTable);
+  const treeObjectUrl = createObjectUrlFromData(data);
+
   // データの確認と処理
   if (!data || data.length <= 1) {
     const overviewSection = targetDiv.closest('.overview-section');
@@ -27,13 +34,11 @@ export async function makeSubClass(data) {
     dataNum.textContent = count >= 0 ? count : 0;
   }
 
-  const objectUrl = createObjectUrlFromData(data);
-
   // 初期表示用のHTMLを設定
   targetDiv.innerHTML = `
     <div id="tableView" style="display: none;">
       <togostanza-pagination-table
-        data-url="${objectUrl}"
+        data-url="${tableObjectUrl}"
         data-type="json"
         data-unavailable_message="No data found."
         custom-css-url=""
@@ -56,7 +61,7 @@ export async function makeSubClass(data) {
   // 初期表示をツリーに設定
   setTimeout(() => {
     toggleDisplay('tree');
-  }, 1000);
+  }, 500);
 
   // チャートタイプが変更されたときに表示を更新
   chartTypeSelect.addEventListener('change', () => {
@@ -91,7 +96,7 @@ export async function makeSubClass(data) {
       // ツリーの内容を毎回生成
       treeView.innerHTML = `
         <togostanza-tree
-          data-url="${objectUrl}"
+          data-url="${treeObjectUrl}"
           data-type="json"
           sort-key="id"
           sort-order="ascending"
