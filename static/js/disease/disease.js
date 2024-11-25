@@ -142,7 +142,11 @@ const datasets = [
       .then((response) => {
         const subClassData = response;
         makeSubClass(subClassData);
-        datasets.find((d) => d.name === 'Sub-classes').data = subClassData;
+        // 親を持たないデータを除外
+        const filteredDataForDL = subClassData.filter(
+          (item) => item.parent !== undefined
+        );
+        datasets.find((d) => d.name === 'Sub-classes').data = filteredDataForDL;
         checkAndLogDatasets();
       })
       .catch((error) => {
