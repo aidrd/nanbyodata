@@ -50,8 +50,7 @@ const datasets = [
   { name: 'OMIM', data: null },
   { name: 'Orphanet', data: null },
   { name: 'Monarch Initiative', data: null },
-  // TODO: temporary value
-  { name: 'MedGen', data: [] },
+  { name: 'MedGen', data: null },
   // TODO: temporary value
   { name: 'KEGG Disease', data: [] },
   { name: 'Descriptions', data: null },
@@ -94,18 +93,17 @@ const datasets = [
       fetchData('nanbyodata_get_link_omim_by_nando_id'),
       fetchData('nanbyodata_get_link_orphanet_by_nando_id'),
       fetchData('nanbyodata_get_link_mondo_by_nando_id'),
+      fetchData('nanbyodata_get_link_medgen_by_nando_id'),
       // TODO: temporary comment out
-      // fetchData('test-nando-medgen'),
       // fetchData('test-nando-kegg'),
     ])
-      .then(([omimData, orphanetData, monarchData]) => {
+      .then(([omimData, orphanetData, monarchData, medgenData]) => {
         // TODO: change to [omimData, orphanetData, monarchData, medgenData, keggData]
         const linkedListData = {
           omim: omimData,
           orphanet: orphanetData,
           'monarch-initiative': monarchData,
-          //TODO: temporary value
-          medgen: [],
+          medgen: medgenData,
           //TODO: temporary value
           'kegg-disease': [],
         };
@@ -114,8 +112,8 @@ const datasets = [
         datasets.find((d) => d.name === 'Orphanet').data = orphanetData;
         datasets.find((d) => d.name === 'Monarch Initiative').data =
           monarchData;
+        datasets.find((d) => d.name === 'MedGen').data = medgenData;
         //TODO: temporary comment out
-        // datasets.find((d) => d.name === 'MedGen').data = medgenData;
         // datasets.find((d) => d.name === 'KEGG Disease').data = keggData;
         checkAndLogDatasets();
       })
