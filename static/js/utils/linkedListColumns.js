@@ -73,14 +73,8 @@ export const linkedListJaColumns = [
     class: 'medgen',
     labels: [
       {
-        label: 'MedGen UID',
-        content: 'displayid',
-        type: 'url',
-        hrefKey: 'original_disease',
-      },
-      {
         label: 'MedGen CID',
-        content: 'displayid2',
+        content: 'displayid',
         type: 'url',
         hrefKey: 'original_disease',
       },
@@ -96,7 +90,6 @@ export const linkedListJaColumns = [
     ],
     keys: [
       'displayid',
-      'displayid2',
       'parent',
       'mondo_label_ja2',
       'medgen_label',
@@ -179,14 +172,8 @@ export const linkedListEnColumns = [
     class: 'medgen',
     labels: [
       {
-        label: 'MedGen UID',
-        content: 'displayid',
-        type: 'url',
-        hrefKey: 'original_disease',
-      },
-      {
         label: 'MedGen CID',
-        content: 'displayid2',
+        content: 'displayid',
         type: 'url',
         hrefKey: 'original_disease',
       },
@@ -199,7 +186,7 @@ export const linkedListEnColumns = [
       { label: 'Label (EN)', content: 'medgen_label' },
       { label: 'Match Type', content: 'property' },
     ],
-    keys: ['displayid', 'displayid2', 'parent', 'medgen_label', 'property'],
+    keys: ['displayid', 'parent', 'medgen_label', 'property'],
   },
   {
     class: 'kegg-disease',
