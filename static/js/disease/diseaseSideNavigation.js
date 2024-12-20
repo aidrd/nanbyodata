@@ -4,6 +4,7 @@ export function makeSideNavigation() {
   const items = [
     'overview',
     'causal-genes',
+    'glycan-related-genes',
     'genetic-testing',
     'phenotypes',
     'cell',
@@ -108,6 +109,7 @@ export function switchingDisplayContents(selectedItemId) {
     '#overview',
     '#temp-disease-definition',
     '#causal-genes',
+    '#glycan-related-genes',
     '#genetic-testing',
     '#phenotypes',
     '#bio-resource',
@@ -128,6 +130,7 @@ export function switchingDisplayContents(selectedItemId) {
         break;
       case 'temp-disease-definition':
       case 'causal-genes':
+      case 'glycan-related-genes':
       case 'genetic-testing':
       case 'phenotypes':
         prepareDataWrapper();

@@ -1,6 +1,7 @@
 import { makeSideNavigation } from './diseaseSideNavigation.js';
 import {
   causalGeneColumns,
+  glycanRelatedGeneColumns,
   geneticTestingColumns,
   phenotypesJaColumns,
   phenotypesEnColumns,
@@ -29,6 +30,21 @@ export function makeCausalGene(causalGeneData) {
   );
   if (causalGeneData?.length > 0 && causalGeneData !== null) {
     const navLink = document.querySelector('.nav-link.causal-genes');
+    navLink.style.cursor = 'pointer';
+    navLink.classList.remove('-disabled');
+  }
+}
+
+// glycanRelatedGene(糖鎖関連遺伝子)
+export function makeGlycanRelatedGene(glycanRelatedGeneData) {
+  makeData(
+    glycanRelatedGeneData,
+    'glycan-related-genes',
+    'glycan-related-genes-table',
+    convertColumnToText(glycanRelatedGeneColumns)
+  );
+  if (glycanRelatedGeneData?.length > 0 && glycanRelatedGeneData !== null) {
+    const navLink = document.querySelector('.nav-link.glycan-related-genes');
     navLink.style.cursor = 'pointer';
     navLink.classList.remove('-disabled');
   }

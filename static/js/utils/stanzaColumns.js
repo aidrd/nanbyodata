@@ -72,6 +72,29 @@ export const causalGeneColumns = [
   },
 ];
 
+export const glycanRelatedGeneColumns = [
+  {
+    id: 'gene_id',
+    label: 'Glycan related gene (GlyCosmos)',
+    link: 'glycosmosgene',
+    align: 'center',
+  },
+  {
+    id: 'ncbigene_description',
+    label: 'Description (NCBI gene)',
+  },
+  {
+    id: 'go_term_mf',
+    label: 'GO term molecular function',
+    link: 'go',
+  },
+  {
+    id: 'pmid_ids',
+    label: 'PubMed',
+    link: 'pmid_link',
+  },
+];
+
 export const geneticTestingColumns = [
   { id: 'label', label: 'Test name' },
   { id: 'hp', label: 'More information', link: 'hp', target: '_blank' },

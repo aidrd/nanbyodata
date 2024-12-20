@@ -15,6 +15,7 @@ import {
   numOfPatientsColumns,
   subclassTableJaColumns,
   subclassTableEnColumns,
+  glycanRelatedGeneColumns,
 } from '../utils/stanzaColumns.js';
 
 export const downloadDatasets = (nandoId, datasets) => {
@@ -98,6 +99,11 @@ export const downloadDatasets = (nandoId, datasets) => {
           };
         case 'Causal Genes':
           return { name, data: reconstructionData(causalGeneColumns, data) };
+        case 'Glycan-related Genes':
+          return {
+            name,
+            data: reconstructionData(glycanRelatedGeneColumns, data),
+          };
         case 'Genetic Testing':
           return {
             name,
@@ -213,6 +219,7 @@ export const downloadDatasets = (nandoId, datasets) => {
       'Number of Specific Medical Expenses Beneficiary Certificate Holders': [],
       'Sub-classes': [],
       'Causal Genes': [],
+      'Glycan-related Genes': [],
       'Genetic Testing': [],
       Phenotypes: [],
       'Bio Resource': ['Cell', 'Mouse', 'DNA'],

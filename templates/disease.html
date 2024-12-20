@@ -154,6 +154,14 @@
                 {% endif %}
                 <span class="data-num"><span class="loading-spinner -sidenav"></span></span></a>
             </li>
+            <li><a href="#glycan-related-genes" class="nav-link glycan-related-genes -disabled">
+                {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
+                糖鎖関連遺伝子
+                {% else %}
+                Glycan-related Genes
+                {% endif %}
+                <span class="data-num"><span class="loading-spinner -sidenav"></span></span></a>
+            </li>
             <li><a href="#genetic-testing" class="nav-link genetic-testing -disabled">
                 {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
                 診療用遺伝学的検査情報
@@ -544,7 +552,8 @@
                     {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
                     <h5 class="sub-title">特定医療費受給者証所持者数</h5>
                     {% else %}
-                    <h5 class="sub-title">Number of Specific Medical Expenses Beneficiary Certificate Holders (in Japan)</h5>
+                    <h5 class="sub-title">Number of Specific Medical Expenses Beneficiary Certificate Holders (in Japan)
+                    </h5>
                     {% endif %}
                     <select name="num-of-patients-graph" id="num-of-patients-graph">
                       <option value="bar" selected>Bar</option>
@@ -589,6 +598,22 @@
                 </small>
               </h4>
               <div id="causal-genes-table"></div>
+            </div>
+
+            <div id="glycan-related-genes" open="">
+              <h4 class="temp-title">
+                {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
+                糖鎖関連遺伝子
+                {% else %}
+                Glycan-related Genes
+                {% endif %}
+                <span class="data-num"></span>
+                <small>
+                  &nbsp;from&nbsp;
+                  <a href="https://glycosmos.org/" target="_blank" rel="noopener noreferrer">GlyCosmos</a>
+                </small>
+              </h4>
+              <div id="glycan-related-genes-table"></div>
             </div>
 
             <div id="genetic-testing" open="">

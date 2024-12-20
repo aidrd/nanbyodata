@@ -16,6 +16,7 @@ import { updateOverviewDisplay } from './overview/updateOverviewDisplay.js';
 
 import {
   makeCausalGene,
+  makeGlycanRelatedGene,
   makeGeneticTesting,
   makePhenotypes,
   makeCell,
@@ -60,6 +61,7 @@ const datasets = [
   },
   { name: 'Sub-classes', data: null },
   { name: 'Causal Genes', data: null },
+  { name: 'Glycan-related Genes', data: null },
   { name: 'Genetic Testing', data: null },
   { name: 'Phenotypes', data: null },
   { name: 'Cell', data: null },
@@ -250,6 +252,14 @@ const datasets = [
       }
     );
 
+    // get Glycan Related Genes data
+    fetchData('edit_nando_glycogene_gomf').then((glycanRelatedGeneData) => {
+      makeGlycanRelatedGene(glycanRelatedGeneData);
+      datasets.find((d) => d.name === 'Glycan-related Genes').data =
+        glycanRelatedGeneData;
+      checkAndLogDatasets();
+    });
+
     // get Genetic Testing data
     fetchData('nanbyodata_get_genetic_test_by_nando_id').then(
       (geneticTestingData) => {
@@ -330,6 +340,7 @@ function trySwitchingContent(hash, retries = 0) {
   const items = [
     'overview',
     'causal-genes',
+    'glycan-related-genes',
     'genetic-testing',
     'phenotypes',
     'bio-resource-cell',
