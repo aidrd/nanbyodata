@@ -585,10 +585,11 @@ export function smartBox(input_box_id, data_path, options = {}) {
   }
 
   /**
-   * Searches for matching keywords in the local data based on the input keywords.
-   * @param {Array} diseases - The array of keyword objects.
-   * @param {Array} keywords - The array of input keywords.
-   * @returns {Array} - The array of matching keyword objects.
+   * 部分一致or類似度に基づいて検索し、結果をスコア順で返す関数
+   * @param {Array} diseases - TSVから読み込んだデータ配列
+   * @param {Array} keywords - ユーザ入力されたキーワード配列
+   * @param {boolean} [onlyNumeric=false] - 数値のみの場合などに使用 (元実装の踏襲)
+   * @returns {Array} スコア降順で並べたマッチ結果
    */
   function searchInLocalData(diseases, keywords, onlyNumeric = false) {
     const lang = document.documentElement.lang;
@@ -596,30 +597,71 @@ export function smartBox(input_box_id, data_path, options = {}) {
     if (onlyNumeric) {
       isEng = lang === 'en' ? true : false;
     }
-    return diseases.filter((disease) => {
-      return keywords.every((keyword) => {
+
+    // ここで検索結果の配列を組み立てる
+    const matchedResults = [];
+
+    for (const disease of diseases) {
+      let totalScore = 0;
+      let allKeywordsMatched = true;
+
+      // 全キーワードに対して、フィールドごとの最高スコアを合計する
+      for (const keyword of keywords) {
         const lowerKeyword = normalizeString(keyword);
-        if (isEng) {
-          return (
-            (disease.id &&
-              normalizeString(disease.id).includes(lowerKeyword)) ||
-            (disease.label_en &&
-              normalizeString(disease.label_en).includes(lowerKeyword)) ||
-            (disease.synonym_en &&
-              normalizeString(disease.synonym_en).includes(lowerKeyword))
-          );
-        } else {
-          return (
-            (disease.id &&
-              normalizeString(disease.id).includes(lowerKeyword)) ||
-            (disease.label_ja &&
-              normalizeString(disease.label_ja).includes(lowerKeyword)) ||
-            (disease.synonym_ja &&
-              normalizeString(disease.synonym_ja).includes(lowerKeyword))
-          );
+        const fields = isEng
+          ? [disease.id, disease.label_en, disease.synonym_en]
+          : [disease.id, disease.label_ja, disease.synonym_ja];
+
+        let bestFieldScore = 0;
+        for (const field of fields) {
+          if (!field) continue;
+          const normalizedField = normalizeString(field);
+
+          // console.log(normalizedField === lowerKeyword);
+
+          // (A) 完全一致を最優先（うまくいってない？）
+          if (normalizedField === lowerKeyword) {
+            // 完全一致の場合は特別にスコア 2.0 を割り当てる
+            bestFieldScore = Math.max(bestFieldScore, 2.0);
+          }
+          // (B) 部分一致の場合は 0.5以上のスコアを割り当てる
+          else if (normalizedField.includes(lowerKeyword)) {
+            const sim = calculateSimilarity(normalizedField, lowerKeyword);
+            bestFieldScore = Math.max(sim, 0.5);
+
+            // bestFieldScore = Math.max(bestFieldScore, 0.5);
+          }
+          // (C) それ以外は編集距離から類似度を計算（0〜1）
+          else {
+            const sim = calculateSimilarity(normalizedField, lowerKeyword);
+            bestFieldScore = Math.max(bestFieldScore, sim);
+          }
         }
-      });
-    });
+
+        // ある程度(例: 0.3)以下の類似度なら「ヒットしなかった」とみなす
+        if (bestFieldScore < 0.3) {
+          allKeywordsMatched = false;
+          break;
+        } else {
+          totalScore += bestFieldScore;
+        }
+      }
+
+      // 全てのキーワードが閾値以上の類似度を持つ場合だけ結果に追加
+      if (allKeywordsMatched) {
+        matchedResults.push({
+          ...disease,
+          score: totalScore, // 合計スコア
+        });
+      }
+    }
+
+    // 最終的にスコア降順にソート
+    matchedResults.sort((a, b) => b.score - a.score);
+
+    console.log(matchedResults);
+
+    return matchedResults;
   }
 
   /**
@@ -655,4 +697,52 @@ export function smartBox(input_box_id, data_path, options = {}) {
       clearSuggestBox();
     }
   }
+}
+
+/**
+ * Levenshtein距離を計算するヘルパー関数
+ * @param {string} a
+ * @param {string} b
+ * @returns {number} 距離(0以上)
+ */
+function calculateLevenshteinDistance(a, b) {
+  const dp = Array.from({ length: a.length + 1 }, () =>
+    new Array(b.length + 1).fill(0)
+  );
+
+  // 初期化
+  for (let i = 0; i <= a.length; i++) {
+    dp[i][0] = i;
+  }
+  for (let j = 0; j <= b.length; j++) {
+    dp[0][j] = j;
+  }
+
+  // DPで距離を計算
+  for (let i = 1; i <= a.length; i++) {
+    for (let j = 1; j <= b.length; j++) {
+      const cost = a[i - 1] === b[j - 1] ? 0 : 1;
+      dp[i][j] = Math.min(
+        dp[i - 1][j] + 1, // 削除
+        dp[i][j - 1] + 1, // 挿入
+        dp[i - 1][j - 1] + cost // 置換
+      );
+    }
+  }
+
+  return dp[a.length][b.length];
+}
+
+/**
+ * Levenshtein距離から類似度(0～1)を計算するヘルパー関数
+ * @param {string} a
+ * @param {string} b
+ * @returns {number} 類似度(1=完全一致、0=全く一致しない)
+ */
+function calculateSimilarity(a, b) {
+  if (!a && !b) return 1;
+  if (!a || !b) return 0;
+  const distance = calculateLevenshteinDistance(a, b);
+  const maxLen = Math.max(a.length, b.length);
+  return 1 - distance / maxLen;
 }
