@@ -627,19 +627,19 @@ export function smartBox(input_box_id, data_path, options = {}) {
           // (B) 部分一致の場合は 0.5以上のスコアを割り当てる
           else if (normalizedField.includes(lowerKeyword)) {
             const sim = calculateSimilarity(normalizedField, lowerKeyword);
-            bestFieldScore = Math.max(sim, 0.5);
+            bestFieldScore = sim;
 
             // bestFieldScore = Math.max(bestFieldScore, 0.5);
           }
           // (C) それ以外は編集距離から類似度を計算（0〜1）
-          else {
-            const sim = calculateSimilarity(normalizedField, lowerKeyword);
-            bestFieldScore = Math.max(bestFieldScore, sim);
-          }
+          // else {
+          //   const sim = calculateSimilarity(normalizedField, lowerKeyword);
+          //   bestFieldScore = Math.max(bestFieldScore, sim);
+          // }
         }
 
         // ある程度(例: 0.3)以下の類似度なら「ヒットしなかった」とみなす
-        if (bestFieldScore < 0.3) {
+        if (bestFieldScore < 0.01) {
           allKeywordsMatched = false;
           break;
         } else {
