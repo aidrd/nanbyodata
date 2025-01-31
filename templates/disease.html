@@ -421,29 +421,8 @@
               {% else %}
               <h4 class="temp-title">Overview</h4>
               {% endif %}
-              <!-- TODO:追加 -->
               <div class="overview-wrapper">
-                <section class="overview-section">
-                  <div class="sub-title-wrapper">
-                    {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
-                    <h5 class="sub-title -alt-label">別疾患名</h5>
-                    {% else %}
-                    <h5 class="sub-title -alt-label">Synonyms</h5>
-                    {% endif %}
-                  </div>
-                  <div class="summary-wrapper">
-                    <div id="temp-aliases">
-                      <div class="aliases">
-                        <dl class="alt-label-ja">
-                          <dt>JA</dt>
-                        </dl>
-                        <dl class="alt-label-en">
-                          <dt>EN</dt>
-                        </dl>
-                      </div>
-                    </div>
-                </section>
-                <!-- TODO:追加 -->
+
                 <section class="overview-section">
                   <div class="sub-title-wrapper">
                     {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
@@ -462,7 +441,6 @@
                   </div>
                 </section>
 
-                <!-- TODO:追加 -->
                 <section class="overview-section">
                   <div class="sub-title-wrapper -select">
                     {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
@@ -539,12 +517,34 @@
                     </div>
                   </div>
                 </section>
+
+                <section class="overview-section">
+                  <div class="sub-title-wrapper">
+                    {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
+                    <h5 class="sub-title -alt-label">別疾患名</h5>
+                    {% else %}
+                    <h5 class="sub-title -alt-label">Synonyms</h5>
+                    {% endif %}
+                  </div>
+                  <div class="summary-wrapper">
+                    <div id="temp-aliases">
+                      <div class="aliases">
+                        <dl class="alt-label-ja">
+                          <dt>JA</dt>
+                        </dl>
+                        <dl class="alt-label-en">
+                          <dt>EN</dt>
+                        </dl>
+                      </div>
+                    </div>
+                </section>
                 <section class="overview-section">
                   <div class="sub-title-wrapper -select">
                     {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
                     <h5 class="sub-title">特定医療費受給者証所持者数</h5>
                     {% else %}
-                    <h5 class="sub-title">Number of Specific Medical Expenses Beneficiary Certificate Holders (in Japan)</h5>
+                    <h5 class="sub-title">Number of Specific Medical Expenses Beneficiary Certificate Holders (in Japan)
+                    </h5>
                     {% endif %}
                     <select name="num-of-patients-graph" id="num-of-patients-graph">
                       <option value="bar" selected>Bar</option>
