@@ -70,115 +70,158 @@ if (window.location.pathname === '/') {
       // moreボタンを表示
       moreButtonEl.style.display = 'block';
 
-      // News open/close function
-      const moreListEl = newsWrapperEl.querySelector('.logdata > .more-list');
+      // moreボタンのイベントリスナーを設定
+      moreButtonEl.addEventListener('click', async () => {
+        const isOpen = moreButtonEl.classList.toggle('open');
+        moreButtonEl.textContent = isOpen ? 'close' : 'more';
 
-      if (moreListEl) {
-        moreButtonEl.addEventListener('click', () => {
-          const isOpen = moreButtonEl.classList.toggle('open');
-          moreButtonEl.textContent = isOpen ? 'close' : 'more';
-          moreListEl.classList.toggle('open');
-        });
-      }
+        if (isOpen) {
+          // ローディングスピナーを表示
+          const loadingSpinner = document.createElement('div');
+          loadingSpinner.className = 'loading-spinner news-loading';
+          newsWrapperEl.appendChild(loadingSpinner);
+
+          // 全記事を読み込む
+          await loadNewsList(true);
+
+          // ローディングスピナーを削除
+          loadingSpinner.remove();
+        } else {
+          // 最初の5件のみ表示
+          renderNewsList(JSON.parse(localStorage.getItem(CACHE_KEY)), true);
+        }
+      });
     });
   }
 }
 
-async function loadNewsList() {
+async function loadNewsList(loadAll = false) {
   const currentLang = document.documentElement.lang === 'en' ? 'en' : 'ja';
-
-  // GitHub API のエンドポイント
   const branch =
     window.location.hostname === 'nanbyodata.jp' ? 'master' : 'dev';
   const GITHUB_API_URL = `https://api.github.com/repos/aidrd/nanbyodata/contents/posts/${currentLang}?ref=${branch}`;
 
-  // キャッシュ設定
   const CACHE_KEY = `news_info_${currentLang}_${branch}`;
   const CACHE_TIMESTAMP_KEY = `news_info_timestamp_${currentLang}_${branch}`;
-  const CACHE_DURATION_MS = 30 * 60 * 1000; // 30 分
+  const CACHE_DURATION_MS = 30 * 60 * 1000;
 
   const now = new Date().getTime();
   const lastFetchTime = localStorage.getItem(CACHE_TIMESTAMP_KEY);
+  const hasValidCache =
+    lastFetchTime && now - lastFetchTime < CACHE_DURATION_MS;
 
-  // キャッシュがあり、30分以内ならAPIを叩かずキャッシュを使用
-  if (lastFetchTime && now - lastFetchTime < CACHE_DURATION_MS) {
-    console.log('Using cached news_info');
-    const cachedData = JSON.parse(localStorage.getItem(CACHE_KEY));
-    if (cachedData) {
-      renderNewsList(cachedData);
-      return;
+  let newsData = {};
+
+  if (hasValidCache) {
+    newsData = JSON.parse(localStorage.getItem(CACHE_KEY) || '{}');
+  } else {
+    try {
+      const response = await fetch(GITHUB_API_URL);
+      console.log(response);
+      if (!response.ok) throw new Error('GitHub API request failed');
+      const files = await response.json();
+
+      // ファイルを日付とpost番号でソート
+      const sortedFiles = files.sort((a, b) => {
+        const [dateA, postA] = a.name.split('-post');
+        const [dateB, postB] = b.name.split('-post');
+        if (dateA === dateB) {
+          return parseInt(postB) - parseInt(postA);
+        }
+        return dateB.localeCompare(dateA);
+      });
+
+      // 全ファイルの基本情報を取得
+      for (const file of sortedFiles) {
+        if (file.type === 'file' && file.name.endsWith('.md')) {
+          const datePart = file.name.split('-post')[0].replace(/-/g, '.');
+          const postNum = file.name.match(/-post(\d+)\.md$/)[1];
+          const filePath = file.name.replace('.md', '');
+
+          newsData[filePath] = {
+            date: datePart,
+            postNum: parseInt(postNum),
+            path: `news?post=${filePath}`,
+            download_url: file.download_url,
+            loaded: false,
+          };
+        }
+      }
+
+      // 最初の5件のタイトルを取得
+      const first5Files = sortedFiles.slice(0, 5);
+      for (const file of first5Files) {
+        if (file.type === 'file' && file.name.endsWith('.md')) {
+          const filePath = file.name.replace('.md', '');
+          const fileResponse = await fetch(file.download_url);
+          if (!fileResponse.ok) continue;
+          const mdText = await fileResponse.text();
+          const metadata = extractFrontMatter(mdText);
+
+          newsData[filePath].title = metadata.title
+            ? metadata.title.replace(/^['"](.*)['"]$/, '$1')
+            : '(No Title)';
+          newsData[filePath].loaded = true;
+        }
+      }
+
+      localStorage.setItem(CACHE_KEY, JSON.stringify(newsData));
+      localStorage.setItem(CACHE_TIMESTAMP_KEY, now.toString());
+    } catch (error) {
+      console.error('Error fetching news:', error);
     }
   }
 
-  try {
-    const response = await fetch(GITHUB_API_URL);
-    if (!response.ok) throw new Error('GitHub API request failed');
-    const files = await response.json(); // ディレクトリ内のファイルリスト
-
-    const newsData = {};
-
-    for (const file of files) {
-      if (file.type === 'file' && file.name.endsWith('.md')) {
-        // ファイル名から日付を取得 (例: "2024-11-25-post1.md" → "2024.11.25")
-        const datePart = file.name.split('-post')[0].replace(/-/g, '.');
-        const filePath = file.name.replace('.md', '');
-
-        // 記事のタイトルを取得
-        const fileResponse = await fetch(file.download_url);
+  if (loadAll) {
+    // 未ロードの記事のタイトルを取得
+    const unloadedEntries = Object.entries(newsData).filter(
+      ([_, info]) => !info.loaded
+    );
+    for (const [filePath, info] of unloadedEntries) {
+      try {
+        const fileResponse = await fetch(info.download_url);
         if (!fileResponse.ok) continue;
         const mdText = await fileResponse.text();
         const metadata = extractFrontMatter(mdText);
 
-        // 'title' のクォートを削除
-        const extractedTitle = metadata.title
+        newsData[filePath].title = metadata.title
           ? metadata.title.replace(/^['"](.*)['"]$/, '$1')
           : '(No Title)';
-
-        newsData[filePath] = {
-          date: datePart,
-          title: extractedTitle,
-          path: `news?post=${filePath}`,
-        };
+        newsData[filePath].loaded = true;
+      } catch (error) {
+        console.error(`Error loading title for ${filePath}:`, error);
       }
     }
 
-    // データをキャッシュ
+    // 更新されたデータをキャッシュに保存
     localStorage.setItem(CACHE_KEY, JSON.stringify(newsData));
-    localStorage.setItem(CACHE_TIMESTAMP_KEY, now.toString());
-
-    renderNewsList(newsData);
-  } catch (error) {
-    console.error('Error fetching news:', error);
   }
+
+  renderNewsList(newsData, !loadAll);
 }
 
-// **ニュース一覧を HTML に挿入**
-function renderNewsList(newsData) {
+function renderNewsList(newsData, limitTo5 = true) {
   const newsContainer = document.querySelector('.logdata');
   if (!newsContainer) return;
 
   let html = '';
-  let counter = 0;
 
   Object.entries(newsData)
-    .sort((a, b) => new Date(b[1].date) - new Date(a[1].date))
-    .forEach(([filePath, info]) => {
-      counter++;
-      if (counter <= 5) {
-        html += `
-        <dl>
-          <dt><time datetime="${info.date}">${info.date}</time></dt>
-          <dd><a href="${info.path}">${info.title}</a></dd>
-        </dl>`;
-      } else {
-        if (counter === 6) html += `<div class="more-list">`;
-        html += `
-        <dl>
-          <dt><time datetime="${info.date}">${info.date}</time></dt>
-          <dd><a href="${info.path}">${info.title}</a></dd>
-        </dl>`;
-        if (counter === Object.keys(newsData).length) html += `</div>`;
+    .sort((a, b) => {
+      if (a[1].date === b[1].date) {
+        return b[1].postNum - a[1].postNum;
       }
+      return new Date(b[1].date) - new Date(a[1].date);
+    })
+    .forEach(([filePath, info], index) => {
+      if (limitTo5 && index >= 5) return;
+      if (!info.loaded) return;
+
+      html += `
+      <dl>
+        <dt><time datetime="${info.date}">${info.date}</time></dt>
+        <dd><a href="${info.path}">${info.title}</a></dd>
+      </dl>`;
     });
 
   newsContainer.innerHTML = html;
