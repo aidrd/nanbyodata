@@ -84,27 +84,7 @@
 
           <div class="news-wrapper">
             <div class="logdata">
-              {% for file_path, info in news_info.items() %}
-              {% if loop.index <= 5 %} <dl>
-                <dt><time datetime="{{ info.date }}">{{ info.date }}</time></dt>
-                <dd><a href="{{info.path}}">{{ info.title }}</a></dd>
-                </dl>
-                {% else %}
-                {% if loop.index == 6 %}
-                <div class="more-list">
-                  {% endif %}
-                  <dl>
-                    <dt><time datetime="{{ info.date }}">{{ info.date }}</time></dt>
-                    <dd><a href="{{info.path}}">{{ info.title }}</a></dd>
-                  </dl>
-                  {% if loop.last %}
-                </div>
-                {% endif %}
-                {% endif %}
-                {% endfor %}
             </div>
-
-            <div class="more">more</div>
           </div>
         </section>
 

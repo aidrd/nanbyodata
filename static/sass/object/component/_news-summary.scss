@@ -1,5 +1,6 @@
 .news-summary {
   padding: 0 20px;
+  position: relative;
   .news-wrapper {
     display: flex;
     flex-direction: column;
@@ -42,10 +43,17 @@
     padding: 0px 10px;
     cursor: pointer;
     transition: 0.15s;
+    background: var(--color-white);
+    outline: none;
 
     &:hover {
       color: #fff;
       background-color: var(--color-primary);
     }
+  }
+
+  .news-loading {
+    top: 100%;
+    left: 48%;
   }
 }
