@@ -627,6 +627,22 @@ header.search-area .intro-text .keyword a {
   font-weight: normal;
   letter-spacing: 0.1rem;
 }
+.news-summary .logdata dd::after {
+  content: "new";
+  position: relative;
+  background: pink;
+  padding: 0 10px;
+  border-radius: 10px;
+  color: white;
+  left: 5px;
+  display: none;
+}
+.news-summary .logdata dd[data-date]::after {
+  display: none;
+}
+.news-summary .logdata dd[data-date].is-recent::after {
+  display: inline-block;
+}
 .news-summary .logdata .more-list {
   display: none;
 }

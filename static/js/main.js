@@ -205,6 +205,10 @@ function renderNewsList(newsData, limitTo5 = true) {
   if (!newsContainer) return;
 
   let html = '';
+  const now = new Date();
+  const threeMonthsAgo = new Date();
+  // 3ヶ月前の日付を計算
+  threeMonthsAgo.setMonth(now.getMonth() - 3);
 
   Object.entries(newsData)
     .sort((a, b) => {
@@ -217,10 +221,14 @@ function renderNewsList(newsData, limitTo5 = true) {
       if (limitTo5 && index >= 5) return;
       if (!info.loaded) return;
 
+      const itemDate = new Date(info.date.replace(/\./g, '-'));
+      const isRecent = itemDate > threeMonthsAgo;
+      const recentClass = isRecent ? 'is-recent' : '';
+
       html += `
       <dl>
         <dt><time datetime="${info.date}">${info.date}</time></dt>
-        <dd><a href="${info.path}">${info.title}</a></dd>
+        <dd data-date="${info.date}" class="${recentClass}"><a href="${info.path}">${info.title}</a></dd>
       </dl>`;
     });
 

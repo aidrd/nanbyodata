@@ -25,6 +25,29 @@
       letter-spacing: 0.1rem;
     }
 
+    dd {
+      &::after {
+        content: 'new';
+        position: relative;
+        background: pink;
+        padding: 0 10px;
+        border-radius: 10px;
+        color: white;
+        left: 5px;
+        display: none;
+      }
+
+      &[data-date] {
+        &::after {
+          display: none;
+        }
+
+        &.is-recent::after {
+          display: inline-block;
+        }
+      }
+    }
+
     .more-list {
       display: none;
 
