@@ -253,12 +253,14 @@ const datasets = [
     );
 
     // get Glycan Related Genes data
-    fetchData('edit_nando_glycogene_gomf').then((glycanRelatedGeneData) => {
-      makeGlycanRelatedGene(glycanRelatedGeneData);
-      datasets.find((d) => d.name === 'Glycan-related Genes').data =
-        glycanRelatedGeneData;
-      checkAndLogDatasets();
-    });
+    fetchData('nanbyodata_get_glycosmos_gene_by_nando_id').then(
+      (glycanRelatedGeneData) => {
+        makeGlycanRelatedGene(glycanRelatedGeneData);
+        datasets.find((d) => d.name === 'Glycan-related Genes').data =
+          glycanRelatedGeneData;
+        checkAndLogDatasets();
+      }
+    );
 
     // get Genetic Testing data
     fetchData('nanbyodata_get_genetic_test_by_nando_id').then(
