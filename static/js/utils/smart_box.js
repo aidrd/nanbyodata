@@ -585,10 +585,11 @@ export function smartBox(input_box_id, data_path, options = {}) {
   }
 
   /**
-   * Searches for matching keywords in the local data based on the input keywords.
-   * @param {Array} diseases - The array of keyword objects.
-   * @param {Array} keywords - The array of input keywords.
-   * @returns {Array} - The array of matching keyword objects.
+   * Search based on partial match or similarity and return results sorted by score
+   * @param {Array} diseases - Array of data loaded from TSV
+   * @param {Array} keywords - Array of user input keywords
+   * @param {boolean} [onlyNumeric=false] - Used for numeric-only cases (following original implementation)
+   * @returns {Array} Matching results sorted by descending score
    */
   function searchInLocalData(diseases, keywords, onlyNumeric = false) {
     const lang = document.documentElement.lang;
@@ -596,30 +597,48 @@ export function smartBox(input_box_id, data_path, options = {}) {
     if (onlyNumeric) {
       isEng = lang === 'en' ? true : false;
     }
-    return diseases.filter((disease) => {
-      return keywords.every((keyword) => {
+
+    const matchedResults = [];
+
+    for (const disease of diseases) {
+      let totalScore = 0;
+      let allKeywordsMatched = true;
+
+      for (const keyword of keywords) {
         const lowerKeyword = normalizeString(keyword);
-        if (isEng) {
-          return (
-            (disease.id &&
-              normalizeString(disease.id).includes(lowerKeyword)) ||
-            (disease.label_en &&
-              normalizeString(disease.label_en).includes(lowerKeyword)) ||
-            (disease.synonym_en &&
-              normalizeString(disease.synonym_en).includes(lowerKeyword))
-          );
-        } else {
-          return (
-            (disease.id &&
-              normalizeString(disease.id).includes(lowerKeyword)) ||
-            (disease.label_ja &&
-              normalizeString(disease.label_ja).includes(lowerKeyword)) ||
-            (disease.synonym_ja &&
-              normalizeString(disease.synonym_ja).includes(lowerKeyword))
-          );
+        const fields = isEng
+          ? [disease.id, disease.label_en, disease.synonym_en]
+          : [disease.id, disease.label_ja, disease.synonym_ja];
+
+        let bestFieldScore = 0;
+        for (const field of fields) {
+          if (!field) continue;
+          const normalizedField = normalizeString(field);
+          if (normalizedField.includes(lowerKeyword)) {
+            const sim = calculateSimilarity(normalizedField, lowerKeyword);
+            bestFieldScore = sim;
+          }
         }
-      });
-    });
+
+        if (bestFieldScore < 0.01) {
+          allKeywordsMatched = false;
+          break;
+        } else {
+          totalScore += bestFieldScore;
+        }
+      }
+
+      if (allKeywordsMatched) {
+        matchedResults.push({
+          ...disease,
+          score: totalScore,
+        });
+      }
+    }
+
+    matchedResults.sort((a, b) => b.score - a.score);
+
+    return matchedResults;
   }
 
   /**
@@ -655,4 +674,52 @@ export function smartBox(input_box_id, data_path, options = {}) {
       clearSuggestBox();
     }
   }
+}
+
+/**
+ * Calculate Levenshtein distance
+ * @param {string} a
+ * @param {string} b
+ * @returns {number}
+ */
+function calculateLevenshteinDistance(a, b) {
+  const dp = Array.from({ length: a.length + 1 }, () =>
+    new Array(b.length + 1).fill(0)
+  );
+
+  // Initialize
+  for (let i = 0; i <= a.length; i++) {
+    dp[i][0] = i;
+  }
+  for (let j = 0; j <= b.length; j++) {
+    dp[0][j] = j;
+  }
+
+  // Calculate distance using DP
+  for (let i = 1; i <= a.length; i++) {
+    for (let j = 1; j <= b.length; j++) {
+      const cost = a[i - 1] === b[j - 1] ? 0 : 1;
+      dp[i][j] = Math.min(
+        dp[i - 1][j] + 1, // Delete
+        dp[i][j - 1] + 1, // Insert
+        dp[i - 1][j - 1] + cost // Replace
+      );
+    }
+  }
+
+  return dp[a.length][b.length];
+}
+
+/**
+ * Calculate similarity (0-1) from Levenshtein distance
+ * @param {string} a
+ * @param {string} b
+ * @returns {number}
+ */
+function calculateSimilarity(a, b) {
+  if (!a && !b) return 1;
+  if (!a || !b) return 0;
+  const distance = calculateLevenshteinDistance(a, b);
+  const maxLen = Math.max(a.length, b.length);
+  return 1 - distance / maxLen;
 }
