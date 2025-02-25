@@ -84,6 +84,7 @@ export const glycanRelatedGeneColumns = [
   {
     id: 'ncbigene_description',
     label: 'Full name (NCBI gene)',
+    link: 'ncbi_url',
   },
   {
     id: 'go_term_mf',
