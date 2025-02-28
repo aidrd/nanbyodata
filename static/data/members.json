@@ -1,0 +1,327 @@
+[
+  {
+    "team": "Main Project Team",
+    "members": [
+      {
+        "name": {
+          "ja": "藤原 豊史",
+          "en": "Toyofumi Fujiwara"
+        },
+        "affiliation": {
+          "ja": "DBCLS",
+          "en": "DBCLS"
+        },
+        "image_name": "toyofumi_fujiwara.png",
+        "url": ""
+      },
+      {
+        "name": {
+          "ja": "高月 照江",
+          "en": "Terue Takatsuki"
+        },
+        "affiliation": {
+          "ja": "DBCLS",
+          "en": "DBCLS"
+        },
+        "image_name": "terue_takatsuki.jpg",
+        "url": ""
+      },
+      {
+        "name": {
+          "ja": "申 在紋",
+          "en": "Jaemoon Shin"
+        },
+        "affiliation": {
+          "ja": "DBCLS",
+          "en": "DBCLS"
+        },
+        "image_name": "jaemoon_shin.jpg",
+        "url": ""
+      },
+      {
+        "name": {
+          "ja": "細田 正恵",
+          "en": "Masae Hosoda"
+        },
+        "affiliation": {
+          "ja": "DBCLS",
+          "en": "DBCLS"
+        },
+        "image_name": "masae_hosoda.png",
+        "url": ""
+      }
+    ]
+  },
+  {
+    "team": "Advisors",
+    "members": [
+      {
+        "name": {
+          "ja": "",
+          "en": "Orion Buske"
+        },
+        "affiliation": {
+          "ja": "",
+          "en": "PhenoTips Inc."
+        },
+        "image_name": "orion_buske.jpg",
+        "url": ""
+      },
+      {
+        "name": {
+          "ja": "桝屋 啓志",
+          "en": "Hiroshi Masuya"
+        },
+        "affiliation": {
+          "ja": "理化学研究所バイオリソース研究センター",
+          "en": "RIKEN BioResource Research Center"
+        },
+        "image_name": "hiroshi_masuya.jpg",
+        "url": ""
+      },
+      {
+        "name": {
+          "ja": "荻島 創一",
+          "en": "Soichi Ogishima"
+        },
+        "affiliation": {
+          "ja": "東北大学",
+          "en": "Tohoku University"
+        },
+        "image_name": "soichi_ogishima.jpg",
+        "url": ""
+      },
+      {
+        "name": {
+          "ja": "菊池 敦生",
+          "en": "Atsuo Kikuchi"
+        },
+        "affiliation": {
+          "ja": "東北大学",
+          "en": "Tohoku University"
+        },
+        "image_name": "",
+        "url": ""
+      }
+    ]
+  },
+  {
+    "team": "Key Collaborators",
+    "members": [
+      {
+        "name": {
+          "ja": "櫛田 達矢",
+          "en": "Tatsuya Kushida"
+        },
+        "affiliation": {
+          "ja": "理化学研究所バイオリソース研究センター",
+          "en": "RIKEN BioResource Research Center"
+        },
+        "image_name": "",
+        "url": ""
+      },
+      {
+        "name": {
+          "ja": "佐藤 万仁",
+          "en": "Kazuhito Satou"
+        },
+        "affiliation": {
+          "ja": "",
+          "en": ""
+        },
+        "image_name": "kazuhito_satou.jpg",
+        "url": ""
+      },
+      {
+        "name": {
+          "ja": "足立 香織",
+          "en": "Kaori Adachi"
+        },
+        "affiliation": {
+          "ja": "",
+          "en": ""
+        },
+        "image_name": "",
+        "url": ""
+      },
+      {
+        "name": {
+          "ja": "鎌田 真由美",
+          "en": "Mayumi Kamada"
+        },
+        "affiliation": {
+          "ja": "北里大学",
+          "en": "Kitazato University"
+        },
+        "image_name": "mayumi_kamada.jpg",
+        "url": ""
+      },
+      {
+        "name": {
+          "ja": "河合 洋介",
+          "en": "Yosuke Kawai"
+        },
+        "affiliation": {
+          "ja": "国立研究開発法人国立国際医療研究センター",
+          "en": "National Center for Global Health and Medicine"
+        },
+        "image_name": "",
+        "url": ""
+      },
+      {
+        "name": {
+          "ja": "",
+          "en": "Nicolas Matentzoglu"
+        },
+        "affiliation": {
+          "ja": "",
+          "en": "Monarch Initiative"
+        },
+        "image_name": "",
+        "url": ""
+      },
+      {
+        "name": {
+          "ja": "",
+          "en": "David Lagorce"
+        },
+        "affiliation": {
+          "ja": "",
+          "en": "Orphanet,Orpha Data"
+        },
+        "image_name": "",
+        "url": ""
+      },
+      {
+        "name": {
+          "ja": "",
+          "en": "Tzung-Chien Hsieh"
+        },
+        "affiliation": {
+          "ja": "",
+          "en": ""
+        },
+        "image_name": "",
+        "url": ""
+      },
+      {
+        "name": {
+          "ja": "三橋 信孝",
+          "en": "Nobutaka Mitsuhashi"
+        },
+        "affiliation": {
+          "ja": "DBCLS",
+          "en": "DBCLS"
+        },
+        "image_name": "nobutaka_mitsuhashi.jpg",
+        "url": ""
+      },
+      {
+        "name": {
+          "ja": "山本 泰智",
+          "en": "Yasunori Yamamoto"
+        },
+        "affiliation": {
+          "ja": "DBCLS",
+          "en": "DBCLS"
+        },
+        "image_name": "yasunori_yamamoto.jpg",
+        "url": ""
+      },
+      {
+        "name": {
+          "ja": "川島 秀一",
+          "en": "Shuichi Kawashima"
+        },
+        "affiliation": {
+          "ja": "DBCLS",
+          "en": "DBCLS"
+        },
+        "image_name": "shuichi_kawashima.jpg",
+        "url": ""
+      },
+      {
+        "name": {
+          "ja": "片山 俊明",
+          "en": "Toshiaki Katayama"
+        },
+        "affiliation": {
+          "ja": "DBCLS",
+          "en": "DBCLS"
+        },
+        "image_name": "toshiaki_katayama.jpg",
+        "url": ""
+      },
+      {
+        "name": {
+          "ja": "川嶋 実苗",
+          "en": "Minae Kawashima"
+        },
+        "affiliation": {
+          "ja": "DBCLS",
+          "en": "DBCLS"
+        },
+        "image_name": "",
+        "url": ""
+      },
+      {
+        "name": {
+          "ja": "畠中 秀樹",
+          "en": "Hideki Hatanaka"
+        },
+        "affiliation": {
+          "ja": "DBCLS",
+          "en": "DBCLS"
+        },
+        "image_name": "hideki_hatanaka.jpg",
+        "url": ""
+      }
+    ]
+  },
+  {
+    "team": "Consultants",
+    "members": [
+      {
+        "name": {
+          "ja": "野原",
+          "en": "Nohara"
+        },
+        "affiliation": {
+          "ja": "",
+          "en": ""
+        },
+        "image_name": "",
+        "url": ""
+      },
+      {
+        "name": {
+          "ja": "行事 光",
+          "en": "Hikaru Gyoji"
+        },
+        "affiliation": {
+          "ja": "PENQE",
+          "en": "PENQE"
+        },
+        "image_name": "",
+        "url": ""
+      }
+    ]
+  },
+  {
+    "team": "In Memoriam",
+    "members": [
+      {
+        "name": {
+          "ja": "仁宮 洸太",
+          "en": "Kota Ninomiya"
+        },
+        "affiliation": {
+          "ja": "",
+          "en": ""
+        },
+        "image_name": "kota_ninomiya.jpeg",
+        "url": ""
+      }
+    ]
+  }
+]
