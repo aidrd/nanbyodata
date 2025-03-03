@@ -68,7 +68,9 @@ export function makeDiseaseDefinition(entryData) {
 
       if (item.translate) {
         const translationLink = document.createElement('a');
-        const translationUrl = `https://translate.google.co.jp/?hl=ja#en/ja/${item.desc}`;
+        const translationUrl = `https://translate.google.co.jp/?hl=ja&sl=en&tl=ja&text=${encodeURIComponent(
+          item.desc
+        )}`;
         translationLink.setAttribute('href', translationUrl);
         translationLink.setAttribute('target', '_blank');
         translationLink.setAttribute('rel', 'noopener noreferrer');
