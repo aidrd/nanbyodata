@@ -24,6 +24,20 @@ export function makeDiseaseDefinition(entryData) {
       desc: entryData.medgen_definition,
       translate: true,
     },
+    {
+      class: 'kegg',
+      existing: !!entryData.kegg_description,
+      desc: entryData.kegg_description,
+      translate: true,
+    },
+    {
+      class: 'ordo',
+      existing: !!entryData.ordo_dif && entryData.ordo_dif.length > 0,
+      desc: entryData.ordo_dif
+        ? entryData.ordo_dif.map((item) => item.data).join(' ')
+        : '',
+      translate: true,
+    },
   ];
 
   if (items.every((item) => !item.existing)) {
