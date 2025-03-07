@@ -1565,6 +1565,10 @@ Disease page right top */
   font-weight: bold;
   color: var(--color-secondary);
 }
+.team-section .team-box .collaborators-section h4 {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
 
 .member-card .member-image {
   width: 150px;

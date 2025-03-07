@@ -5,48 +5,56 @@
       {
         "name": {
           "ja": "藤原 豊史",
-          "en": "Toyofumi Fujiwara"
+          "en": "Toyofumi Fujiwara",
+          "yomi": "ふじわら とよふみ"
         },
         "affiliation": {
           "ja": "DBCLS",
           "en": "DBCLS"
         },
+        "location": "",
         "image_name": "toyofumi_fujiwara.png",
         "url": ""
       },
       {
         "name": {
           "ja": "高月 照江",
-          "en": "Terue Takatsuki"
+          "en": "Terue Takatsuki",
+          "yomi": "たかつき てるえ"
         },
         "affiliation": {
           "ja": "DBCLS",
           "en": "DBCLS"
         },
+        "location": "",
         "image_name": "terue_takatsuki.jpg",
         "url": ""
       },
       {
         "name": {
           "ja": "申 在紋",
-          "en": "Jaemoon Shin"
+          "en": "Jaemoon Shin",
+          "yomi": "しん じぇむん"
         },
         "affiliation": {
           "ja": "DBCLS",
           "en": "DBCLS"
         },
+        "location": "",
         "image_name": "jaemoon_shin.jpg",
         "url": ""
       },
       {
         "name": {
           "ja": "細田 正恵",
-          "en": "Masae Hosoda"
+          "en": "Masae Hosoda",
+          "yomi": "ほそだ まさえ"
         },
         "affiliation": {
           "ja": "DBCLS",
           "en": "DBCLS"
         },
+        "location": "",
         "image_name": "masae_hosoda.png",
         "url": ""
       }
@@ -64,25 +72,29 @@
           "ja": "",
           "en": "PhenoTips Inc."
         },
+        "location": "",
         "image_name": "orion_buske.jpg",
         "url": ""
       },
       {
         "name": {
           "ja": "桝屋 啓志",
-          "en": "Hiroshi Masuya"
+          "en": "Hiroshi Masuya",
+          "yomi": "ますや ひろし"
         },
         "affiliation": {
           "ja": "理化学研究所バイオリソース研究センター",
           "en": "RIKEN BioResource Research Center"
         },
+        "location": "",
         "image_name": "hiroshi_masuya.jpg",
         "url": ""
       },
       {
         "name": {
           "ja": "荻島 創一",
-          "en": "Soichi Ogishima"
+          "en": "Soichi Ogishima",
+          "yomi": "おぎしま そういち"
         },
         "affiliation": {
           "ja": "東北大学",
@@ -94,12 +106,14 @@
       {
         "name": {
           "ja": "菊池 敦生",
-          "en": "Atsuo Kikuchi"
+          "en": "Atsuo Kikuchi",
+          "yomi": "きくち あつお"
         },
         "affiliation": {
           "ja": "東北大学",
           "en": "Tohoku University"
         },
+        "location": "",
         "image_name": "",
         "url": ""
       }
@@ -111,60 +125,70 @@
       {
         "name": {
           "ja": "櫛田 達矢",
-          "en": "Tatsuya Kushida"
+          "en": "Tatsuya Kushida",
+          "yomi": "くしだ たつや"
         },
         "affiliation": {
           "ja": "理化学研究所バイオリソース研究センター",
           "en": "RIKEN BioResource Research Center"
         },
+        "location": "domestic",
         "image_name": "",
         "url": ""
       },
       {
         "name": {
           "ja": "佐藤 万仁",
-          "en": "Kazuhito Satou"
+          "en": "Kazuhito Satou",
+          "yomi": "さとう かずひと"
         },
         "affiliation": {
           "ja": "",
           "en": ""
         },
+        "location": "domestic",
         "image_name": "kazuhito_satou.jpg",
         "url": ""
       },
       {
         "name": {
           "ja": "足立 香織",
-          "en": "Kaori Adachi"
+          "en": "Kaori Adachi",
+          "yomi": "あだち かおり"
         },
         "affiliation": {
           "ja": "",
           "en": ""
         },
+        "location": "domestic",
         "image_name": "",
         "url": ""
       },
       {
         "name": {
           "ja": "鎌田 真由美",
-          "en": "Mayumi Kamada"
+          "en": "Mayumi Kamada",
+          "yomi": "かまだ まゆみ"
         },
         "affiliation": {
           "ja": "北里大学",
           "en": "Kitazato University"
         },
+        "location": "domestic",
         "image_name": "mayumi_kamada.jpg",
         "url": ""
       },
       {
         "name": {
           "ja": "河合 洋介",
-          "en": "Yosuke Kawai"
+          "en": "Yosuke Kawai",
+          "yomi": "かわい ようすけ"
         },
         "affiliation": {
           "ja": "国立研究開発法人国立国際医療研究センター",
           "en": "National Center for Global Health and Medicine"
         },
+        "location": "domestic",
         "image_name": "",
         "url": ""
       },
@@ -177,6 +201,7 @@
           "ja": "",
           "en": "Monarch Initiative"
         },
+        "location": "international",
         "image_name": "",
         "url": ""
       },
@@ -189,6 +214,7 @@
           "ja": "",
           "en": "Orphanet,Orpha Data"
         },
+        "location": "international",
         "image_name": "",
         "url": ""
       },
@@ -201,78 +227,91 @@
           "ja": "",
           "en": ""
         },
+        "location": "international",
         "image_name": "",
         "url": ""
       },
       {
         "name": {
           "ja": "三橋 信孝",
-          "en": "Nobutaka Mitsuhashi"
+          "en": "Nobutaka Mitsuhashi",
+          "yomi": "みつはし のぶたか"
         },
         "affiliation": {
           "ja": "DBCLS",
           "en": "DBCLS"
         },
+        "location": "domestic",
         "image_name": "nobutaka_mitsuhashi.jpg",
         "url": ""
       },
       {
         "name": {
           "ja": "山本 泰智",
-          "en": "Yasunori Yamamoto"
+          "en": "Yasunori Yamamoto",
+          "yomi": "やまもと やすのり"
         },
         "affiliation": {
           "ja": "DBCLS",
           "en": "DBCLS"
         },
+        "location": "domestic",
         "image_name": "yasunori_yamamoto.jpg",
         "url": ""
       },
       {
         "name": {
           "ja": "川島 秀一",
-          "en": "Shuichi Kawashima"
+          "en": "Shuichi Kawashima",
+          "yomi": "かわしま しゅういち"
         },
         "affiliation": {
           "ja": "DBCLS",
           "en": "DBCLS"
         },
+        "location": "domestic",
         "image_name": "shuichi_kawashima.jpg",
         "url": ""
       },
       {
         "name": {
           "ja": "片山 俊明",
-          "en": "Toshiaki Katayama"
+          "en": "Toshiaki Katayama",
+          "yomi": "かたやま としあき"
         },
         "affiliation": {
           "ja": "DBCLS",
           "en": "DBCLS"
         },
+        "location": "domestic",
         "image_name": "toshiaki_katayama.jpg",
         "url": ""
       },
       {
         "name": {
           "ja": "川嶋 実苗",
-          "en": "Minae Kawashima"
+          "en": "Minae Kawashima",
+          "yomi": "かわしま みなえ"
         },
         "affiliation": {
           "ja": "DBCLS",
           "en": "DBCLS"
         },
+        "location": "domestic",
         "image_name": "",
         "url": ""
       },
       {
         "name": {
           "ja": "畠中 秀樹",
-          "en": "Hideki Hatanaka"
+          "en": "Hideki Hatanaka",
+          "yomi": "はたなか ひでき"
         },
         "affiliation": {
           "ja": "DBCLS",
           "en": "DBCLS"
         },
+        "location": "domestic",
         "image_name": "hideki_hatanaka.jpg",
         "url": ""
       }
@@ -290,6 +329,7 @@
           "ja": "",
           "en": ""
         },
+        "location": "",
         "image_name": "",
         "url": ""
       },
@@ -302,6 +342,7 @@
           "ja": "PENQE",
           "en": "PENQE"
         },
+        "location": "",
         "image_name": "",
         "url": ""
       }
@@ -319,6 +360,7 @@
           "ja": "",
           "en": ""
         },
+        "location": "",
         "image_name": "kota_ninomiya.jpeg",
         "url": ""
       }
