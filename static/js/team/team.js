@@ -1,6 +1,20 @@
+// 環境に応じたベースURLを設定
+// TODO: 本番環境と開発環境ではこのURLを変更する
+const BASE_URL =
+  window.location.origin === 'https://nanbyodata.jp'
+    ? '/static/img/members/'
+    : 'https://raw.githubusercontent.com/PENQEinc/nanbyodata/refs/heads/feature/team-page/static/img/members/';
+
+// データのベースURLを設定
+// TODO: 本番環境と開発環境ではこのURLを変更する
+const DATA_URL =
+  window.location.origin === 'https://nanbyodata.jp'
+    ? '/static/data/members.json'
+    : 'https://raw.githubusercontent.com/PENQEinc/nanbyodata/refs/heads/feature/team-page/static/data/members.json';
+
 async function loadTeamMembers() {
   try {
-    const response = await fetch('/static/data/members.json');
+    const response = await fetch(DATA_URL);
     const teams = await response.json();
     const locale = document.querySelector('.language-select').value || 'en';
 
@@ -53,9 +67,7 @@ async function loadTeamMembers() {
                           <div class="member-image mb-2">
                             ${
                               member.image_name
-                                ? `<img src="/static/img/members/${
-                                    member.image_name
-                                  }" 
+                                ? `<img src="${BASE_URL}${member.image_name}" 
                                   alt="${getLocalizedValue(member, 'name')}"
                                   class="rounded-circle"
                                   onerror="this.onerror=null; this.parentElement.innerHTML='<i class=\\'fas fa-user-circle\\'></i>';">`
@@ -104,9 +116,7 @@ async function loadTeamMembers() {
                           <div class="member-image mb-2">
                             ${
                               member.image_name
-                                ? `<img src="/static/img/members/${
-                                    member.image_name
-                                  }" 
+                                ? `<img src="${BASE_URL}${member.image_name}" 
                                   alt="${getLocalizedValue(member, 'name')}"
                                   class="rounded-circle"
                                   onerror="this.onerror=null; this.parentElement.innerHTML='<i class=\\'fas fa-user-circle\\'></i>';">`
@@ -156,9 +166,7 @@ async function loadTeamMembers() {
                         <div class="member-image mb-2">
                           ${
                             member.image_name
-                              ? `<img src="/static/img/members/${
-                                  member.image_name
-                                }" 
+                              ? `<img src="${BASE_URL}${member.image_name}" 
                                 alt="${getLocalizedValue(member, 'name')}"
                                 class="rounded-circle"
                                 onerror="this.onerror=null; this.parentElement.innerHTML='<i class=\\'fas fa-user-circle\\'></i>';">`
