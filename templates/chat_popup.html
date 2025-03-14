@@ -17,6 +17,7 @@
       overflow: hidden;
     }
 
+    /* ポップアップ用のスタイル上書き */
     .chat-container {
       position: fixed;
       top: 0;
@@ -29,20 +30,12 @@
       padding: 0;
       border-radius: 0;
       box-shadow: none;
-      transform: none !important;
-      opacity: 1 !important;
-      pointer-events: auto !important;
+      transform: none;
+      opacity: 1;
+      pointer-events: auto;
       display: flex;
       flex-direction: column;
       overflow: hidden;
-    }
-
-    .chat-container.active {
-      transform: none !important;
-    }
-
-    .chat-header {
-      flex-shrink: 0;
     }
 
     .chat-body {
@@ -58,14 +51,10 @@
       box-sizing: border-box;
     }
 
-    .chat-footer {
-      flex-shrink: 0;
-    }
-
     /* 不要なボタンを非表示 */
     .chat-popup-button,
     .chat-expand-button {
-      display: none !important;
+      display: none;
     }
 
     /* メッセージ内容が横にはみ出さないように */
@@ -77,132 +66,9 @@
 </head>
 
 <body>
-  <div class="chat-container active">
-    <div class="chat-header">
-      <h3>NanbyoData Assistant</h3>
-      <button class="chat-close-button" title="閉じる">×</button>
-    </div>
-    <div class="chat-body">
-      <div class="chat-messages">
-        <div class="message assistant">
-          <div class="message-avatar">
-            <img src="/static/img/roboto.png" alt="Robot Avatar">
-          </div>
-          <div class="message-content">
-            こんにちは！NanbyoDataについて何かお手伝いできることはありますか？
-            <br><br>
-            Hello! How can I help you with NanbyoData?
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="chat-footer">
-      <textarea class="chat-input" placeholder="メッセージを入力してください..."></textarea>
-      <button class="chat-send-button">送信</button>
-    </div>
-  </div>
+  {% include 'component/chat.html' %}
 
-  <script>
-    document.addEventListener('DOMContentLoaded', function () {
-      const opener = window.opener;
-      const elements = {
-        chatInput: document.querySelector('.chat-input'),
-        chatSendButton: document.querySelector('.chat-send-button'),
-        chatMessages: document.querySelector('.chat-messages'),
-        chatBody: document.querySelector('.chat-body'),
-        chatCloseButton: document.querySelector('.chat-close-button')
-      };
-
-      // State management
-      const state = {
-        isComposing: false
-      };
-
-      // メッセージ同期用のイベントリスナー
-      window.addEventListener('message', function (event) {
-        if (event.data.type === 'newMessage') {
-          addMessage(event.data.content, event.data.sender);
-        } else if (event.data.type === 'syncMessages') {
-          // メッセージ履歴を同期
-          elements.chatMessages.innerHTML = event.data.messages;
-          scrollToBottom();
-        }
-      });
-
-      // 初期メッセージ履歴の要求
-      if (opener) {
-        opener.postMessage({ type: 'requestMessages' }, '*');
-      }
-
-      function scrollToBottom() {
-        elements.chatBody.scrollTop = elements.chatBody.scrollHeight;
-      }
-
-      function addMessage(content, sender) {
-        const messageDiv = document.createElement('div');
-        messageDiv.className = `message ${sender}`;
-
-        if (sender === 'assistant') {
-          const avatarDiv = document.createElement('div');
-          avatarDiv.className = 'message-avatar';
-          const avatarImg = document.createElement('img');
-          avatarImg.src = '/static/img/roboto.png';
-          avatarImg.alt = 'Robot Avatar';
-          avatarDiv.appendChild(avatarImg);
-          messageDiv.appendChild(avatarDiv);
-        }
-
-        const messageContent = document.createElement('div');
-        messageContent.className = 'message-content';
-        content.split('\n').forEach((line, index) => {
-          if (index > 0) messageContent.appendChild(document.createElement('br'));
-          messageContent.appendChild(document.createTextNode(line));
-        });
-
-        messageDiv.appendChild(messageContent);
-        elements.chatMessages.appendChild(messageDiv);
-        scrollToBottom();
-      }
-
-      function sendMessage() {
-        const message = elements.chatInput.value.trim();
-        if (!message) return;
-
-        // メッセージを親ウィンドウに送信
-        if (opener) {
-          opener.postMessage({
-            type: 'sendMessage',
-            content: message
-          }, '*');
-        }
-
-        elements.chatInput.value = '';
-      }
-
-      // イベントリスナーの設定
-      elements.chatSendButton.addEventListener('click', sendMessage);
-
-      // IME入力の状態管理
-      elements.chatInput.addEventListener('compositionstart', () => {
-        state.isComposing = true;
-      });
-
-      elements.chatInput.addEventListener('compositionend', () => {
-        state.isComposing = false;
-      });
-
-      elements.chatInput.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter' && !e.shiftKey && !state.isComposing) {
-          e.preventDefault();
-          sendMessage();
-        }
-      });
-
-      elements.chatCloseButton.addEventListener('click', () => {
-        window.close();
-      });
-    });
-  </script>
+  <script src="/static/js/chat/chatPopup.js"></script>
 </body>
 
 </html>
