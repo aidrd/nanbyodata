@@ -8,11 +8,26 @@ $border-light: #eee;
 $shadow-color: rgba(0, 0, 0, 0.2);
 
 .chat {
+  &-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+
+    &.active {
+      display: block;
+    }
+  }
+
   &-container {
     position: fixed;
     right: 20px;
     bottom: 80px;
-    width: 350px;
+    width: 500px;
     height: 500px;
     background-color: $white;
     border-radius: 10px;
@@ -21,7 +36,7 @@ $shadow-color: rgba(0, 0, 0, 0.2);
     flex-direction: column;
     z-index: 1000;
     overflow: hidden;
-    transition: transform 0.3s ease, opacity 0.3s ease;
+    transition: all 0.3s ease;
     transform: translateY(20px);
     opacity: 0;
     pointer-events: none;
@@ -30,6 +45,18 @@ $shadow-color: rgba(0, 0, 0, 0.2);
       transform: translateY(0);
       opacity: 1;
       pointer-events: auto;
+    }
+
+    &.expanded {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 50%;
+      height: 80%;
+      right: auto;
+      bottom: auto;
+      z-index: 9999;
     }
   }
 
@@ -44,6 +71,37 @@ $shadow-color: rgba(0, 0, 0, 0.2);
     h3 {
       margin: 0;
       font-size: 16px;
+    }
+
+    .header-controls {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+
+      button:focus {
+        outline: none;
+      }
+    }
+  }
+
+  &-control-button {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    padding: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.2s ease;
+
+    &:hover {
+      opacity: 0.8;
+    }
+
+    i {
+      pointer-events: none;
     }
   }
 

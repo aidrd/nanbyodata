@@ -1430,11 +1430,24 @@ header.search-area .intro-text .keyword a {
   width: 580px;
 }
 
+.chat-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+}
+.chat-overlay.active {
+  display: block;
+}
 .chat-container {
   position: fixed;
   right: 20px;
   bottom: 80px;
-  width: 350px;
+  width: 500px;
   height: 500px;
   background-color: #fff;
   border-radius: 10px;
@@ -1443,7 +1456,7 @@ header.search-area .intro-text .keyword a {
   flex-direction: column;
   z-index: 1000;
   overflow: hidden;
-  transition: transform 0.3s ease, opacity 0.3s ease;
+  transition: all 0.3s ease;
   transform: translateY(20px);
   opacity: 0;
   pointer-events: none;
@@ -1452,6 +1465,17 @@ header.search-area .intro-text .keyword a {
   transform: translateY(0);
   opacity: 1;
   pointer-events: auto;
+}
+.chat-container.expanded {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 50%;
+  height: 80%;
+  right: auto;
+  bottom: auto;
+  z-index: 9999;
 }
 .chat-header {
   background-color: var(--color-primary);
@@ -1464,6 +1488,32 @@ header.search-area .intro-text .keyword a {
 .chat-header h3 {
   margin: 0;
   font-size: 16px;
+}
+.chat-header .header-controls {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.chat-header .header-controls button:focus {
+  outline: none;
+}
+.chat-control-button {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.2s ease;
+}
+.chat-control-button:hover {
+  opacity: 0.8;
+}
+.chat-control-button i {
+  pointer-events: none;
 }
 .chat-close-button {
   background: none;

@@ -268,3 +268,10 @@ def page(filename):
     date = filename.split('-post')[0].replace('-', '.')
 
     return render_template('news.html', title=title, date=date, content=html_content)
+
+#####
+# Chat Popup
+## GET: 
+@app.route('/chat_popup')
+def chat():
+    return render_template('chat_popup.html')
