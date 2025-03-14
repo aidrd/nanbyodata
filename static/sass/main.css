@@ -1445,8 +1445,8 @@ header.search-area .intro-text .keyword a {
 }
 .chat-container {
   position: fixed;
-  right: 20px;
-  bottom: 80px;
+  right: 40px;
+  bottom: 40px;
   width: 600px;
   height: 500px;
   background-color: #fff;
