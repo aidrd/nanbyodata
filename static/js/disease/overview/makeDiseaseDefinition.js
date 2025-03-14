@@ -13,6 +13,14 @@ export function makeDiseaseDefinition(entryData) {
       translate: false,
     },
     {
+      class: 'ordo',
+      existing: !!entryData.ordo_dif && entryData.ordo_dif.length > 0,
+      desc: entryData.ordo_dif
+        ? entryData.ordo_dif.map((item) => item.data).join(' ')
+        : '',
+      translate: true,
+    },
+    {
       class: 'monarch-initiative',
       existing: !!entryData.mondo_decs,
       desc: entryData.mondo_decs?.map((dec) => dec.id).join(' '),
@@ -28,14 +36,6 @@ export function makeDiseaseDefinition(entryData) {
       class: 'kegg',
       existing: !!entryData.kegg_description,
       desc: entryData.kegg_description,
-      translate: true,
-    },
-    {
-      class: 'ordo',
-      existing: !!entryData.ordo_dif && entryData.ordo_dif.length > 0,
-      desc: entryData.ordo_dif
-        ? entryData.ordo_dif.map((item) => item.data).join(' ')
-        : '',
       translate: true,
     },
   ];
