@@ -15,6 +15,13 @@
       width: 100%;
       height: 100%;
       overflow: hidden;
+      box-sizing: border-box;
+    }
+
+    *,
+    *:before,
+    *:after {
+      box-sizing: inherit;
     }
 
     /* ポップアップ用のスタイル上書き */
@@ -42,13 +49,141 @@
       flex: 1;
       height: auto;
       max-height: none;
-      overflow-y: auto;
-      overflow-x: hidden;
+      overflow: hidden !important;
+      position: relative;
+      width: 100%;
     }
 
     .chat-messages {
       width: 100%;
       box-sizing: border-box;
+      padding-right: 40px;
+      transition: padding-right 0.3s ease;
+      max-width: 100%;
+      overflow-y: auto;
+      height: 100%;
+      padding-bottom: 20px;
+
+      /* スクロールバーを非表示にする */
+      scrollbar-width: none;
+      /* Firefox */
+      -ms-overflow-style: none;
+      /* IE and Edge */
+    }
+
+    .chat-messages::-webkit-scrollbar {
+      display: none;
+      /* Chrome, Safari, Opera */
+    }
+
+    /* 引用パネルのスタイル調整 */
+    .chat-reference-panel {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+      z-index: 10;
+      width: 300px;
+      transition: transform 0.3s ease;
+      transform: translateX(100%);
+      display: flex;
+      flex-direction: column;
+      overflow: visible;
+    }
+
+    .chat-reference-panel.active {
+      transform: translateX(0);
+
+      /* 引用パネルが表示されているときはトグルボタンを非表示 */
+      .reference-toggle {
+        display: none;
+      }
+    }
+
+    /* 引用パネルのトグルボタン */
+    .reference-toggle {
+      position: absolute;
+      left: -40px;
+      top: 10px;
+      background-color: var(--color-primary);
+      color: white;
+      border: none;
+      border-radius: 8px 0 0 8px;
+      /* 左側だけ角丸に */
+      width: 36px;
+      height: auto;
+      /* 高さを自動に */
+      padding: 10px 5px;
+      /* 上下のパディングを追加 */
+      display: flex;
+      flex-direction: column;
+      /* 縦方向に並べる */
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      z-index: 15;
+    }
+
+    /* アイコンのスタイル */
+    .reference-toggle i {
+      font-size: 18px;
+      margin-bottom: 8px;
+    }
+
+    /* 縦書きテキスト */
+    .reference-toggle span {
+      writing-mode: vertical-rl;
+      /* 縦書きにする */
+      text-orientation: upright;
+      /* 文字を縦向きに */
+      white-space: nowrap;
+      /* 改行しない */
+      font-size: 14px;
+      /* フォントサイズ調整 */
+      letter-spacing: 1px;
+      /* 文字間隔を調整 */
+    }
+
+    .reference-content {
+      background: white;
+      height: 100%;
+      width: 100%;
+      border-left: 1px solid #ddd;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .reference-header {
+      padding: 10px;
+      border-bottom: 1px solid #ddd;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-shrink: 0;
+      background-color: white;
+      position: sticky;
+      top: 0;
+      z-index: 2;
+    }
+
+    .reference-body {
+      padding: 10px;
+      overflow-y: auto;
+      flex-grow: 1;
+      height: calc(100% - 40px);
+
+      /* スクロールバーを非表示にする */
+      scrollbar-width: none;
+      /* Firefox */
+      -ms-overflow-style: none;
+      /* IE and Edge */
+    }
+
+    .reference-body::-webkit-scrollbar {
+      display: none;
+      /* Chrome, Safari, Opera */
     }
 
     /* 不要なボタンを非表示 */

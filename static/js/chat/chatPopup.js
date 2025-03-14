@@ -7,15 +7,53 @@ document.addEventListener('DOMContentLoaded', function () {
     chatBody: document.querySelector('.chat-body'),
     chatCloseButton: document.querySelector('.chat-close-button'),
     chatContainer: document.querySelector('.chat-container'),
+    referencePanel: document.querySelector('.chat-reference-panel'),
+    referenceToggle: document.querySelector('.reference-toggle'),
+    referenceClose: document.querySelector('.reference-close'),
   };
-
-  // 常に表示状態にする
-  elements.chatContainer.classList.add('active');
 
   // State management
   const state = {
     isComposing: false,
   };
+
+  // Reference Panel Management
+  const referenceUI = {
+    toggle: () => {
+      // スクロール位置を記憶
+      const scrollTop = elements.chatMessages.scrollTop;
+
+      elements.referencePanel.classList.toggle('active');
+      adjustMessagesLayout();
+
+      // スクロール位置を復元
+      setTimeout(() => {
+        elements.chatMessages.scrollTop = scrollTop;
+      }, 50);
+    },
+    close: () => {
+      // スクロール位置を記憶
+      const scrollTop = elements.chatMessages.scrollTop;
+
+      elements.referencePanel.classList.remove('active');
+      adjustMessagesLayout();
+
+      // スクロール位置を復元
+      setTimeout(() => {
+        elements.chatMessages.scrollTop = scrollTop;
+      }, 50);
+    },
+  };
+
+  // メッセージエリアのレイアウトを調整する関数
+  function adjustMessagesLayout() {
+    if (elements.referencePanel.classList.contains('active')) {
+      elements.chatMessages.style.paddingRight = '310px';
+    } else {
+      elements.chatMessages.style.paddingRight = '';
+    }
+    scrollToBottom();
+  }
 
   // メッセージ同期用のイベントリスナー
   window.addEventListener('message', function (event) {
@@ -34,7 +72,7 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   function scrollToBottom() {
-    elements.chatBody.scrollTop = elements.chatBody.scrollHeight;
+    elements.chatMessages.scrollTop = elements.chatMessages.scrollHeight;
   }
 
   function addMessage(content, sender) {
@@ -82,25 +120,49 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   // イベントリスナーの設定
-  elements.chatSendButton.addEventListener('click', sendMessage);
-
-  // IME入力の状態管理
-  elements.chatInput.addEventListener('compositionstart', () => {
-    state.isComposing = true;
-  });
-
-  elements.chatInput.addEventListener('compositionend', () => {
-    state.isComposing = false;
-  });
-
-  elements.chatInput.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter' && !e.shiftKey && !state.isComposing) {
-      e.preventDefault();
-      sendMessage();
+  function setupEventListeners() {
+    // Reference panel controls
+    if (elements.referenceToggle) {
+      elements.referenceToggle.addEventListener('click', referenceUI.toggle);
     }
-  });
+    if (elements.referenceClose) {
+      elements.referenceClose.addEventListener('click', referenceUI.close);
+    }
 
-  elements.chatCloseButton.addEventListener('click', () => {
-    window.close();
+    // Message sending
+    elements.chatSendButton.addEventListener('click', sendMessage);
+
+    // IME入力の状態管理
+    elements.chatInput.addEventListener('compositionstart', () => {
+      state.isComposing = true;
+    });
+
+    elements.chatInput.addEventListener('compositionend', () => {
+      state.isComposing = false;
+    });
+
+    elements.chatInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' && !e.shiftKey && !state.isComposing) {
+        e.preventDefault();
+        sendMessage();
+      }
+    });
+
+    elements.chatCloseButton.addEventListener('click', () => {
+      window.close();
+    });
+  }
+
+  // Initialize
+  setupEventListeners();
+  elements.chatContainer.classList.add('active');
+
+  // 初期化時に横スクロールを防止
+  document.documentElement.style.overflowX = 'hidden';
+  document.body.style.overflowX = 'hidden';
+
+  // ウィンドウサイズ変更時にもスクロール位置を調整
+  window.addEventListener('resize', () => {
+    scrollToBottom();
   });
 });

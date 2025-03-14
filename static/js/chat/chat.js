@@ -11,6 +11,9 @@ document.addEventListener('DOMContentLoaded', function () {
     chatMessages: document.querySelector('.chat-messages'),
     chatBody: document.querySelector('.chat-body'),
     chatOverlay: document.createElement('div'),
+    referencePanel: document.querySelector('.chat-reference-panel'),
+    referenceToggle: document.querySelector('.reference-toggle'),
+    referenceClose: document.querySelector('.reference-close'),
   };
 
   // オーバーレイの初期化
@@ -64,8 +67,8 @@ document.addEventListener('DOMContentLoaded', function () {
     togglePopup: () => {
       if (!state.popupWindow || state.popupWindow.closed) {
         // 新しいウィンドウを開く
-        const width = 400;
-        const height = 600;
+        const width = 1000; // より大きな幅に変更
+        const height = 800; // より大きな高さに変更
         const left = (window.screen.width - width) / 2;
         const top = (window.screen.height - height) / 2;
 
@@ -115,16 +118,17 @@ document.addEventListener('DOMContentLoaded', function () {
   // Scroll Management
   const scrollManager = {
     scrollToBottom: () => {
-      if (!elements.chatBody) return;
+      if (!elements.chatMessages) return;
 
-      // chat-bodyをスクロール（chat-messagesではなく）
-      elements.chatBody.scrollTop = elements.chatBody.scrollHeight;
+      // chat-messagesをスクロール（chat-bodyではなく）
+      elements.chatMessages.scrollTop = elements.chatMessages.scrollHeight;
 
       // 遅延スクロールで確実に最下部に移動
       [50, 150, 300].forEach((delay) => {
         setTimeout(() => {
-          if (elements.chatBody) {
-            elements.chatBody.scrollTop = elements.chatBody.scrollHeight;
+          if (elements.chatMessages) {
+            elements.chatMessages.scrollTop =
+              elements.chatMessages.scrollHeight;
           }
         }, delay);
       });
@@ -218,6 +222,49 @@ document.addEventListener('DOMContentLoaded', function () {
     },
   };
 
+  // Reference Panel Management
+  const referenceUI = {
+    toggle: () => {
+      // スクロール位置を記憶
+      const scrollTop = elements.chatMessages.scrollTop;
+
+      elements.referencePanel.classList.toggle('active');
+      // 引用パネルの状態に応じてメッセージエリアのスタイルを調整
+      adjustMessagesLayout();
+
+      // スクロール位置を復元
+      setTimeout(() => {
+        elements.chatMessages.scrollTop = scrollTop;
+      }, 50);
+    },
+    close: () => {
+      // スクロール位置を記憶
+      const scrollTop = elements.chatMessages.scrollTop;
+
+      elements.referencePanel.classList.remove('active');
+      // 引用パネルを閉じたときにメッセージエリアのスタイルを元に戻す
+      adjustMessagesLayout();
+
+      // スクロール位置を復元
+      setTimeout(() => {
+        elements.chatMessages.scrollTop = scrollTop;
+      }, 50);
+    },
+  };
+
+  // メッセージエリアのレイアウトを調整する関数
+  function adjustMessagesLayout() {
+    if (elements.referencePanel.classList.contains('active')) {
+      // 引用パネルが表示されているときは、メッセージエリアの右側にパディングを追加
+      elements.chatMessages.style.paddingRight = '310px';
+    } else {
+      // 引用パネルが非表示のときは、パディングをリセット
+      elements.chatMessages.style.paddingRight = '';
+    }
+    // レイアウト変更後にスクロール位置を調整
+    scrollManager.scrollToBottom();
+  }
+
   // Event Listeners
   function setupEventListeners() {
     // Chat window controls
@@ -285,6 +332,14 @@ document.addEventListener('DOMContentLoaded', function () {
         }
       }
     });
+
+    // Reference panel controls
+    if (elements.referenceToggle) {
+      elements.referenceToggle.addEventListener('click', referenceUI.toggle);
+    }
+    if (elements.referenceClose) {
+      elements.referenceClose.addEventListener('click', referenceUI.close);
+    }
   }
 
   // Initialize
