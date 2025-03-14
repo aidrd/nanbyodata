@@ -2,7 +2,7 @@
 /* ================================================
 Foundation
 ================================================ */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700&family=Sriracha&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700&family=Sriracha&display=swap");
 :root {
   --color-primary: #147786;
   --color-primary-opacity2: rgba(20, 119, 134, 0.2);
@@ -44,18 +44,15 @@ Foundation
   --zindex-disease-side-link: 1;
   --zindex-popup: 50;
   --zindex-sidebar-optionlist: 100;
-  --icon-link: '';
-  --icon-copy: '';
-  --icon-download: '';
-  --icon-book: '';
-  --icon-file: '';
+  --icon-link: "";
+  --icon-copy: "";
+  --icon-download: "";
+  --icon-book: "";
+  --icon-file: "";
 }
 
 body {
-  font-family: Muli, sans-serif, 'Poppins', 'Renner*', 'Avenir',
-    'Helvetica Neue', 'Helvetica', 'Arial', 'Hiragino Sans',
-    'ヒラギノ角ゴシック', YuGothic, 'Yu Gothic', 'メイリオ', Meiryo,
-    'ＭＳ Ｐゴシック', 'MS PGothic';
+  font-family: Muli, sans-serif, "Poppins", "Renner*", "Avenir", "Helvetica Neue", "Helvetica", "Arial", "Hiragino Sans", "ヒラギノ角ゴシック", YuGothic, "Yu Gothic", "メイリオ", Meiryo, "ＭＳ Ｐゴシック", "MS PGothic";
 }
 
 h1,
@@ -95,20 +92,18 @@ ul {
 }
 
 .br::before {
-  content: '\a';
+  content: "\a";
   white-space: pre;
 }
 
 a {
   color: var(--color-secondary);
 }
-a:visited,
-a:hover,
-a:active {
+a:visited, a:hover, a:active {
   color: var(--color-secondary);
 }
-a[target='_blank']::after {
-  font-family: 'Font Awesome 5 Free';
+a[target=_blank]::after {
+  font-family: "Font Awesome 5 Free";
   content: var(--icon-link);
   font-size: 85%;
   font-weight: 900;
@@ -263,13 +258,7 @@ Layout
   padding: 8px 20px;
   max-width: 690px;
 }
-#diseaseNav
-  .wrapper
-  .navbar-left
-  .intro-text
-  ul.token-input-list-facebook
-  li.token-input-input-token-facebook
-  #token-input-tokeninput {
+#diseaseNav .wrapper .navbar-left .intro-text ul.token-input-list-facebook li.token-input-input-token-facebook #token-input-tokeninput {
   height: 24px;
 }
 #diseaseNav .wrapper .navbar-right .rigth-wrapper {
@@ -328,8 +317,8 @@ footer a:hover {
 footer a:visited {
   color: inherit;
 }
-footer a[target='_blank']::after {
-  content: '';
+footer a[target=_blank]::after {
+  content: "";
 }
 footer .container .footer__info {
   display: flex;
@@ -346,12 +335,7 @@ footer .container .footer__info .footer__organism .footer__organism-text {
   text-align: center;
   margin-top: 11px;
 }
-footer
-  .container
-  .footer__info
-  .footer__organism
-  .footer__organism-text
-  .footer__organism-main {
+footer .container .footer__info .footer__organism .footer__organism-text .footer__organism-main {
   font-size: var(--font-size-medium);
   font-weight: 700;
   letter-spacing: -0.5px;
@@ -371,13 +355,7 @@ footer .container .footer__info .footer__links ul.links__wrapper {
   inline-size: 200px;
   overflow-wrap: break-word;
 }
-footer
-  .container
-  .footer__info
-  .footer__links
-  ul.links__wrapper
-  li.individual_link
-  + li {
+footer .container .footer__info .footer__links ul.links__wrapper li.individual_link + li {
   margin-top: 5px;
 }
 footer .container .footer__bottom .footer__partners {
@@ -397,7 +375,7 @@ footer .container .footer__bottom .footer__lisence small {
   gap: 5px;
 }
 footer .container .footer__bottom .footer__lisence small:before {
-  content: '';
+  content: "";
   width: 81px;
   height: 16px;
   background: url(../img/by.svg) no-repeat;
@@ -441,7 +419,7 @@ footer .container .footer__bottom .footer__lisence small:before {
   margin-bottom: var(--spacing-heading-bottom);
 }
 .page-layout h3.content-title::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
@@ -543,7 +521,7 @@ footer .container .footer__bottom .footer__lisence small:before {
   align-items: center;
 }
 .content-wrapper #content #data-wrapper .temp-title::before {
-  content: '';
+  content: "";
   position: absolute;
   left: 1px;
   width: 6px;
@@ -578,7 +556,7 @@ footer .container .footer__bottom .footer__lisence small:before {
   margin-bottom: 0;
 }
 .content-wrapper #content #data-wrapper .sub-title::before {
-  content: '';
+  content: "";
   position: absolute;
   left: 1px;
   width: 10px;
@@ -588,18 +566,10 @@ footer .container .footer__bottom .footer__lisence small:before {
 .content-wrapper #content #data-wrapper #temp-disease-definition .tab-content {
   text-align: justify;
 }
-.content-wrapper
-  #content
-  #data-wrapper
-  #temp-disease-definition
-  a[target='_blank'] {
+.content-wrapper #content #data-wrapper #temp-disease-definition a[target=_blank] {
   color: var(--color-link);
 }
-.content-wrapper
-  #content
-  #data-wrapper
-  #temp-disease-definition
-  a[target='_blank']::after {
+.content-wrapper #content #data-wrapper #temp-disease-definition a[target=_blank]::after {
   color: inherit;
   margin-left: 5px;
 }
@@ -726,8 +696,7 @@ header.search-area .intro-text .keyword a {
 .btn:focus {
   box-shadow: none;
 }
-.btn:hover,
-.btn:active {
+.btn:hover, .btn:active {
   color: #fff;
   background-color: var(--color-blue);
 }
@@ -749,8 +718,7 @@ header.search-area .intro-text .keyword a {
   margin-top: 10px;
   margin-bottom: 30px;
 }
-.modal-content .modal-body button.close:focus,
-.modal-content .modal-body button.close:focus-visible {
+.modal-content .modal-body button.close:focus, .modal-content .modal-body button.close:focus-visible {
   outline: none;
 }
 .modal-content .modal-body table {
@@ -782,7 +750,7 @@ header.search-area .intro-text .keyword a {
 }
 .modal-content .modal-body table td a::before {
   content: var(--icon-file);
-  font-family: 'Font Awesome 5 Free';
+  font-family: "Font Awesome 5 Free";
   font-weight: 900;
   margin-right: 8px;
 }
@@ -793,7 +761,7 @@ header.search-area .intro-text .keyword a {
 }
 .modal-content .modal-body.content-tos .modal-title::before {
   content: var(--icon-book);
-  font-family: 'Font Awesome 5 Free';
+  font-family: "Font Awesome 5 Free";
   font-weight: 900;
   margin-right: 8px;
   color: var(--color-blue);
@@ -896,7 +864,7 @@ header.search-area .intro-text .keyword a {
 }
 .breadcrumb-list .breadcrumb-tree::before,
 .breadcrumb-list .breadcrumb-tree .breadcrumb-tree::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   bottom: 0;
@@ -907,7 +875,7 @@ header.search-area .intro-text .keyword a {
   line-height: 1.3rem;
 }
 .breadcrumb-list .breadcrumb-tree .inner-tree:before {
-  content: '';
+  content: "";
   position: absolute;
   left: 0;
   top: 1rem;
@@ -933,7 +901,7 @@ header.search-area .intro-text .keyword a {
   color: var(--color-secondary);
 }
 .breadcrumb-list .breadcrumb-tree .inner-tree .wrapper .select-option::after {
-  content: '';
+  content: "";
   position: absolute;
   top: 0.6em;
   right: 0.6em;
@@ -958,36 +926,18 @@ header.search-area .intro-text .keyword a {
   overflow-y: auto;
   padding-right: 7px;
 }
-.breadcrumb-list
-  .breadcrumb-tree
-  .inner-tree
-  .wrapper
-  .option-list
-  .options
-  .option {
+.breadcrumb-list .breadcrumb-tree .inner-tree .wrapper .option-list .options .option {
   line-height: 1.7;
   padding: 0 20px;
   border-radius: var(--radius-medium);
   cursor: pointer;
 }
-.breadcrumb-list
-  .breadcrumb-tree
-  .inner-tree
-  .wrapper
-  .option-list
-  .options
-  .option:hover {
+.breadcrumb-list .breadcrumb-tree .inner-tree .wrapper .option-list .options .option:hover {
   background-color: #4285f4;
   color: #fff;
 }
-.breadcrumb-list
-  .breadcrumb-tree
-  .inner-tree
-  .wrapper
-  .option-list
-  .options
-  .option:before {
-  content: '';
+.breadcrumb-list .breadcrumb-tree .inner-tree .wrapper .option-list .options .option:before {
+  content: "";
   display: inline-block;
   position: relative;
   bottom: 1px;
@@ -999,66 +949,30 @@ header.search-area .intro-text .keyword a {
   transform: rotate(40deg);
   pointer-events: none;
 }
-.breadcrumb-list
-  .breadcrumb-tree
-  .inner-tree
-  .wrapper
-  .option-list
-  .options
-  .option.selected::before {
+.breadcrumb-list .breadcrumb-tree .inner-tree .wrapper .option-list .options .option.selected::before {
   border-color: var(--color-black);
 }
-.breadcrumb-list
-  .breadcrumb-tree
-  .inner-tree
-  .wrapper
-  .option-list
-  .options
-  .option.selected:hover::before {
+.breadcrumb-list .breadcrumb-tree .inner-tree .wrapper .option-list .options .option.selected:hover::before {
   border-color: #fff;
 }
-.breadcrumb-list
-  .breadcrumb-tree
-  .inner-tree
-  .wrapper
-  .option-list
-  .options::-webkit-scrollbar {
+.breadcrumb-list .breadcrumb-tree .inner-tree .wrapper .option-list .options::-webkit-scrollbar {
   width: 7px;
 }
-.breadcrumb-list
-  .breadcrumb-tree
-  .inner-tree
-  .wrapper
-  .option-list
-  .options::-webkit-scrollbar-track {
+.breadcrumb-list .breadcrumb-tree .inner-tree .wrapper .option-list .options::-webkit-scrollbar-track {
   background-color: #e9e9e9;
   border-radius: 0.5lh;
 }
-.breadcrumb-list
-  .breadcrumb-tree
-  .inner-tree
-  .wrapper
-  .option-list
-  .options::-webkit-scrollbar-thumb {
+.breadcrumb-list .breadcrumb-tree .inner-tree .wrapper .option-list .options::-webkit-scrollbar-thumb {
   background-color: #aaa;
   border-radius: 0.5lh;
 }
-.breadcrumb-list
-  .breadcrumb-tree
-  .inner-tree
-  .wrapper
-  .option-list
-  .options::-webkit-scrollbar-thumb:hover {
+.breadcrumb-list .breadcrumb-tree .inner-tree .wrapper .option-list .options::-webkit-scrollbar-thumb:hover {
   background-color: #b3b3b3;
 }
 .breadcrumb-list .breadcrumb-tree .inner-tree .wrapper.active:hover {
   background-color: transparent;
 }
-.breadcrumb-list
-  .breadcrumb-tree
-  .inner-tree
-  .wrapper.active
-  .select-option::after {
+.breadcrumb-list .breadcrumb-tree .inner-tree .wrapper.active .select-option::after {
   top: 2px;
   border-top: 6px solid transparent;
   border-bottom: 6px solid var(--color-secondary);
@@ -1140,7 +1054,7 @@ header.search-area .intro-text .keyword a {
 }
 #temp-side-navigation > ul > li .bio-resource ul li::before,
 #temp-side-navigation > ul > li .variant ul li::before {
-  content: '';
+  content: "";
   display: block;
   width: 5px;
   height: 33px;
@@ -1157,7 +1071,7 @@ header.search-area .intro-text .keyword a {
 }
 #temp-side-navigation > ul > li .bio-resource ul li::after,
 #temp-side-navigation > ul > li .variant ul li::after {
-  content: '';
+  content: "";
   display: block;
   width: 1px;
   height: 1px;
@@ -1270,11 +1184,11 @@ header.search-area .intro-text .keyword a {
   transform-origin: top center;
   transition: 200ms ease-in-out;
 }
-.summary-header-actions .popup-view[aria-hidden='false'] {
+.summary-header-actions .popup-view[aria-hidden=false] {
   transform: scale(1);
 }
 .summary-header-actions .popup-view::before {
-  content: '';
+  content: "";
   position: fixed;
   top: -3px;
   transform: translateY(-50%);
@@ -1317,63 +1231,32 @@ header.search-area .intro-text .keyword a {
   gap: 10px;
   padding: 0;
 }
-.summary-header-actions
-  .summary-download
-  .popup-view
-  .popup-body
-  .popup-wrapper {
+.summary-header-actions .summary-download .popup-view .popup-body .popup-wrapper {
   display: flex;
   align-items: center;
   gap: 10px;
   position: relative;
 }
-.summary-header-actions
-  .summary-download
-  .popup-view
-  .popup-body
-  .popup-wrapper::before,
-.summary-header-actions
-  .summary-download
-  .popup-view
-  .popup-body
-  .popup-wrapper::after {
-  content: '';
+.summary-header-actions .summary-download .popup-view .popup-body .popup-wrapper::before, .summary-header-actions .summary-download .popup-view .popup-body .popup-wrapper::after {
+  content: "";
   position: absolute;
   right: 10px;
   border-left: 0.3em solid transparent;
   border-right: 0.3em solid transparent;
   pointer-events: none;
 }
-.summary-header-actions
-  .summary-download
-  .popup-view
-  .popup-body
-  .popup-wrapper::before {
+.summary-header-actions .summary-download .popup-view .popup-body .popup-wrapper::before {
   top: 11px;
   border-bottom: 0.3em solid currentColor;
 }
-.summary-header-actions
-  .summary-download
-  .popup-view
-  .popup-body
-  .popup-wrapper::after {
+.summary-header-actions .summary-download .popup-view .popup-body .popup-wrapper::after {
   top: 20px;
   border-top: 0.3em solid currentColor;
 }
-.summary-header-actions
-  .summary-download
-  .popup-view
-  .popup-body
-  .popup-wrapper
-  .label {
+.summary-header-actions .summary-download .popup-view .popup-body .popup-wrapper .label {
   margin: 0;
 }
-.summary-header-actions
-  .summary-download
-  .popup-view
-  .popup-body
-  .popup-wrapper
-  select {
+.summary-header-actions .summary-download .popup-view .popup-body .popup-wrapper select {
   flex: 1;
   padding: 0.3rem 1.75rem 0.3rem 0.75rem;
   font-weight: 400;
@@ -1513,18 +1396,10 @@ header.search-area .intro-text .keyword a {
 .smart-box-container > .suggest-box > .suggestion-item.-selected > .label-id {
   color: #fff;
 }
-.smart-box-container
-  > .suggest-box
-  > .suggestion-item.-selected
-  > .label-container
-  > .main-name {
+.smart-box-container > .suggest-box > .suggestion-item.-selected > .label-container > .main-name {
   color: #f2d2d7;
 }
-.smart-box-container
-  > .suggest-box
-  > .suggestion-item.-selected
-  > .label-container
-  > .synonyms {
+.smart-box-container > .suggest-box > .suggestion-item.-selected > .label-container > .synonyms {
   color: #fff;
 }
 .smart-box-container > .suggest-box > .suggestion-item.-keyword {
@@ -1533,18 +1408,10 @@ header.search-area .intro-text .keyword a {
 .smart-box-container > .suggest-box > .suggestion-item > .label-container {
   align-content: center;
 }
-.smart-box-container
-  > .suggest-box
-  > .suggestion-item
-  > .label-container
-  > .main-name {
+.smart-box-container > .suggest-box > .suggestion-item > .label-container > .main-name {
   color: #3777b5;
 }
-.smart-box-container
-  > .suggest-box
-  > .suggestion-item
-  > .label-container
-  > .synonyms {
+.smart-box-container > .suggest-box > .suggestion-item > .label-container > .synonyms {
   color: #000;
 }
 .smart-box-container > .suggest-box > .suggestion-item > .label-id {
@@ -1610,16 +1477,22 @@ header.search-area .intro-text .keyword a {
   flex-grow: 1;
   padding: 15px;
   overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  max-height: calc(100% - 110px);
 }
 .chat-messages {
   display: flex;
   flex-direction: column;
+  width: 100%;
+  min-height: 100%;
 }
 .chat-footer {
   padding: 10px;
   display: flex;
   border-top: 1px solid #eee;
   background-color: #f9f9f9;
+  min-height: 60px;
 }
 .chat-input {
   flex-grow: 1;
@@ -1671,33 +1544,42 @@ header.search-area .intro-text .keyword a {
 }
 .message.user {
   align-self: flex-end;
+  margin-left: auto;
 }
 .message.user .message-content {
   background-color: #dcf1f9;
+  border-radius: 15px;
 }
 .message.assistant {
   align-self: flex-start;
   display: flex;
   align-items: flex-start;
+  margin-right: auto;
 }
 .message.assistant .message-content {
+  position: relative;
   background-color: #f1f0f0;
+  border-radius: 15px;
+  margin-left: 8px;
+}
+.message.assistant .message-content::before {
+  content: "";
+  position: absolute;
+  left: -5px;
+  top: 10px;
+  border-style: solid;
+  border-width: 8px 8px 8px 0;
+  border-color: transparent #f1f0f0 transparent transparent;
 }
 .message-content {
   padding: 10px 15px;
-  border-radius: 15px;
-}
-.message-content p {
-  margin: 0 0 5px 0;
-}
-.message-content p:last-child {
-  margin-bottom: 0;
+  word-break: break-word;
 }
 .message-avatar {
   width: 36px;
   height: 36px;
   min-width: 36px;
-  margin-right: 8px;
+  margin-right: 4px;
   border-radius: 50%;
   background-color: var(--color-primary);
   display: flex;
@@ -1708,7 +1590,7 @@ header.search-area .intro-text .keyword a {
   position: relative;
 }
 .message-avatar::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
@@ -1769,7 +1651,7 @@ Disease page right top */
 }
 .summary-header > .data-name > h3 a.nando-link::after,
 .summary-header > .data-name > h3 span.nando-copy::after {
-  font-family: 'Font Awesome 5 Free';
+  font-family: "Font Awesome 5 Free";
   padding-left: 3px;
   margin: 0;
 }
@@ -1813,14 +1695,14 @@ Disease page right top */
   gap: 5px;
 }
 .summary-header .summary-header-links .summary-download .btn-text::before {
-  font-family: 'Font Awesome 5 Free';
+  font-family: "Font Awesome 5 Free";
   content: var(--icon-download);
   font-weight: 900;
   margin-right: 6px;
 }
 .summary-header .summary-header-links .summary-share .btn-text::before {
-  font-family: 'Font Awesome 5 Free';
-  content: '\f1e0';
+  font-family: "Font Awesome 5 Free";
+  content: "\f1e0";
   font-weight: 900;
   margin-right: 6px;
 }
@@ -1851,4 +1733,4 @@ Disease page right top */
   -webkit-margin-start: 0;
   margin-inline-start: 0;
   display: inline;
-} /*# sourceMappingURL=main.css.map */
+}/*# sourceMappingURL=main.css.map */

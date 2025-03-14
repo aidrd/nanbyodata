@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', function () {
     chatInput: document.querySelector('.chat-input'),
     chatSendButton: document.querySelector('.chat-send-button'),
     chatMessages: document.querySelector('.chat-messages'),
+    chatBody: document.querySelector('.chat-body'),
   };
 
   // State management
@@ -19,7 +20,8 @@ document.addEventListener('DOMContentLoaded', function () {
     open: () => {
       elements.chatContainer.classList.add('active');
       elements.chatInput.focus();
-      scrollManager.toBottom();
+      // チャットを開いたときに最下部にスクロール
+      setTimeout(() => scrollManager.scrollToBottom(), 100);
     },
 
     close: () => {
@@ -39,40 +41,25 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // Scroll Management
   const scrollManager = {
-    toBottom: () => {
-      if (!elements.chatMessages) return;
+    scrollToBottom: () => {
+      if (!elements.chatBody) return;
 
-      // First immediate scroll
-      elements.chatMessages.scrollTop = elements.chatMessages.scrollHeight;
+      console.log('スクロール実行: 高さ=', elements.chatBody.scrollHeight);
 
-      // Follow-up scrolls with increasing delays to handle rendering issues
-      const delays = [10, 50, 150, 300];
-      delays.forEach((delay) => {
+      // chat-bodyをスクロール（chat-messagesではなく）
+      elements.chatBody.scrollTop = elements.chatBody.scrollHeight;
+
+      // 遅延スクロールで確実に最下部に移動
+      [50, 150, 300].forEach((delay) => {
         setTimeout(() => {
-          elements.chatMessages.scrollTo({
-            top: elements.chatMessages.scrollHeight,
-            behavior: delay > 50 ? 'smooth' : 'auto',
-          });
+          if (elements.chatBody) {
+            elements.chatBody.scrollTop = elements.chatBody.scrollHeight;
+            console.log(
+              `${delay}ms後のスクロール: 位置=${elements.chatBody.scrollTop}, 高さ=${elements.chatBody.scrollHeight}`
+            );
+          }
         }, delay);
       });
-    },
-
-    toElement: (element) => {
-      if (!elements.chatMessages || !element) return;
-
-      // Calculate position to make the element visible
-      const messagesRect = elements.chatMessages.getBoundingClientRect();
-
-      // First scroll immediately
-      elements.chatMessages.scrollTop = element.offsetTop - 10;
-
-      // Then smooth scroll with small delay for better UX
-      setTimeout(() => {
-        elements.chatMessages.scrollTo({
-          top: element.offsetTop - 10,
-          behavior: 'smooth',
-        });
-      }, 50);
     },
   };
 
@@ -90,8 +77,7 @@ document.addEventListener('DOMContentLoaded', function () {
       setTimeout(() => {
         const response =
           'Thank you for your message. This is a placeholder response. In a production environment, this would be connected to an AI or support service.';
-        const messageElement = messageManager.add(response, 'assistant');
-        scrollManager.toElement(messageElement);
+        messageManager.add(response, 'assistant');
       }, 1000);
     },
 
@@ -119,14 +105,21 @@ document.addEventListener('DOMContentLoaded', function () {
       const messageContent = document.createElement('div');
       messageContent.className = 'message-content';
 
-      const messageParagraph = document.createElement('p');
-      messageParagraph.textContent = content;
+      // 改行を処理
+      const lines = content.split('\n');
+      lines.forEach((line, index) => {
+        if (index > 0) {
+          messageContent.appendChild(document.createElement('br'));
+        }
+        messageContent.appendChild(document.createTextNode(line));
+      });
 
-      messageContent.appendChild(messageParagraph);
       messageDiv.appendChild(messageContent);
       elements.chatMessages.appendChild(messageDiv);
 
-      scrollManager.toBottom();
+      // メッセージ追加後に最下部にスクロール
+      scrollManager.scrollToBottom();
+
       return messageDiv;
     },
 
@@ -172,31 +165,22 @@ document.addEventListener('DOMContentLoaded', function () {
         messageManager.send();
       }
     });
-  }
 
-  // Setup mutation observer for dynamic content changes
-  function setupMutationObserver() {
-    const chatObserver = new MutationObserver((mutations) => {
-      for (const mutation of mutations) {
-        if (mutation.type === 'childList' && mutation.addedNodes.length > 0) {
-          scrollManager.toBottom();
-          break;
-        }
+    // ウィンドウのリサイズ時にもスクロール位置を調整
+    window.addEventListener('resize', () => {
+      if (elements.chatContainer.classList.contains('active')) {
+        scrollManager.scrollToBottom();
       }
-    });
-
-    chatObserver.observe(elements.chatMessages, {
-      childList: true,
-      subtree: true,
     });
   }
 
   // Initialize
   setupEventListeners();
-  setupMutationObserver();
 
   // Add a small delay before initializing the chat to ensure DOM is fully ready
   setTimeout(() => {
     messageManager.initializeChat();
+    // 初期化後に最下部にスクロール
+    scrollManager.scrollToBottom();
   }, 100);
 });
