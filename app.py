@@ -272,6 +272,6 @@ def page(filename):
 #####
 # Chat Popup
 ## GET: 
-@app.route('/chat_popup')
+@app.route('/chat_window')
 def chat():
-    return render_template('chat_popup.html')
+    return render_template('chat_window.html')

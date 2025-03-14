@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', function () {
     chatMessages: document.querySelector('.chat-messages'),
     chatBody: document.querySelector('.chat-body'),
     chatCloseButton: document.querySelector('.chat-close-button'),
+    chatClearButton: document.querySelector('.chat-clear-button'),
     chatContainer: document.querySelector('.chat-container'),
     referencePanel: document.querySelector('.chat-reference-panel'),
     referenceToggle: document.querySelector('.reference-toggle'),
@@ -63,6 +64,8 @@ document.addEventListener('DOMContentLoaded', function () {
       // メッセージ履歴を同期
       elements.chatMessages.innerHTML = event.data.messages;
       scrollToBottom();
+    } else if (event.data.action === 'resetChat') {
+      resetChat();
     }
   });
 
@@ -119,6 +122,40 @@ document.addEventListener('DOMContentLoaded', function () {
     elements.chatInput.value = '';
   }
 
+  function resetChat() {
+    // 確認ダイアログを表示
+    if (!confirm('新規チャットを開始しますか？現在の会話内容は失われます。')) {
+      return; // キャンセルされた場合は何もしない
+    }
+
+    // 最初のアシスタントメッセージを保持し、他のメッセージをすべて削除
+    const firstAssistantMessage =
+      elements.chatMessages.querySelector('.message.assistant');
+
+    // すべてのメッセージを削除
+    while (elements.chatMessages.firstChild) {
+      elements.chatMessages.removeChild(elements.chatMessages.firstChild);
+    }
+
+    // 最初のアシスタントメッセージを再追加
+    if (firstAssistantMessage) {
+      elements.chatMessages.appendChild(firstAssistantMessage.cloneNode(true));
+    }
+
+    // 引用情報パネルをクリア
+    const referenceBody = document.querySelector('.reference-body');
+    if (referenceBody) {
+      referenceBody.innerHTML = '';
+    }
+
+    // 引用パネルを閉じる
+    elements.referencePanel.classList.remove('active');
+    adjustMessagesLayout();
+
+    // 入力フィールドをクリア
+    elements.chatInput.value = '';
+  }
+
   // イベントリスナーの設定
   function setupEventListeners() {
     // Reference panel controls
@@ -131,6 +168,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Message sending
     elements.chatSendButton.addEventListener('click', sendMessage);
+
+    // 新規作成ボタン
+    if (elements.chatClearButton) {
+      elements.chatClearButton.addEventListener('click', resetChat);
+    }
 
     // IME入力の状態管理
     elements.chatInput.addEventListener('compositionstart', () => {

@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', function () {
     chatCloseButton: document.querySelector('.chat-close-button'),
     chatExpandButton: document.querySelector('.chat-expand-button'),
     chatPopupButton: document.querySelector('.chat-popup-button'),
+    chatClearButton: document.querySelector('.chat-clear-button'),
     chatInput: document.querySelector('.chat-input'),
     chatSendButton: document.querySelector('.chat-send-button'),
     chatMessages: document.querySelector('.chat-messages'),
@@ -51,6 +52,48 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     },
 
+    resetChat: () => {
+      // 確認ダイアログを表示
+      if (
+        !confirm('新規チャットを開始しますか？現在の会話内容は失われます。')
+      ) {
+        return; // キャンセルされた場合は何もしない
+      }
+
+      // 最初のアシスタントメッセージを保持し、他のメッセージをすべて削除
+      const firstAssistantMessage =
+        elements.chatMessages.querySelector('.message.assistant');
+
+      // すべてのメッセージを削除
+      while (elements.chatMessages.firstChild) {
+        elements.chatMessages.removeChild(elements.chatMessages.firstChild);
+      }
+
+      // 最初のアシスタントメッセージを再追加
+      if (firstAssistantMessage) {
+        elements.chatMessages.appendChild(
+          firstAssistantMessage.cloneNode(true)
+        );
+      }
+
+      // 引用情報パネルをクリア
+      const referenceBody = document.querySelector('.reference-body');
+      if (referenceBody) {
+        referenceBody.innerHTML = '';
+      }
+
+      // 引用パネルを閉じる
+      elements.referencePanel.classList.remove('active');
+
+      // 入力フィールドをクリア
+      elements.chatInput.value = '';
+
+      // ポップアップウィンドウが開いている場合、そのメッセージもクリア
+      if (state.popupWindow && !state.popupWindow.closed) {
+        state.popupWindow.postMessage({ action: 'resetChat' }, '*');
+      }
+    },
+
     toggleExpand: () => {
       state.isExpanded = !state.isExpanded;
       elements.chatContainer.classList.toggle('expanded');
@@ -73,7 +116,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const top = (window.screen.height - height) / 2;
 
         state.popupWindow = window.open(
-          '/chat_popup',
+          '/chat_window',
           'chat_window',
           `width=${width},height=${height},left=${left},top=${top},resizable=yes`
         );
@@ -272,6 +315,7 @@ document.addEventListener('DOMContentLoaded', function () {
     elements.chatCloseButton.addEventListener('click', chatUI.close);
     elements.chatExpandButton.addEventListener('click', chatUI.toggleExpand);
     elements.chatPopupButton.addEventListener('click', chatUI.togglePopup);
+    elements.chatClearButton.addEventListener('click', chatUI.resetChat);
     document.addEventListener('click', chatUI.handleOutsideClick);
 
     // Message sending

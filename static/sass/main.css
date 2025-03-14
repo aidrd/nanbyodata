@@ -1489,6 +1489,14 @@ header.search-area .intro-text .keyword a {
   margin: 0;
   font-size: 16px;
 }
+.chat-header .header-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.chat-header .header-left .chat-clear-button {
+  outline: none;
+}
 .chat-header .header-controls {
   display: flex;
   gap: 10px;
@@ -1678,6 +1686,7 @@ header.search-area .intro-text .keyword a {
 .chat-reference-panel .reference-header h4 {
   margin: 0;
   font-size: 16px;
+  font-weight: normal;
 }
 .chat-reference-panel .reference-header .reference-close {
   background: none;

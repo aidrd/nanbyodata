@@ -73,6 +73,16 @@ $shadow-color: rgba(0, 0, 0, 0.2);
       font-size: 16px;
     }
 
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+
+      .chat-clear-button {
+        outline: none;
+      }
+    }
+
     .header-controls {
       display: flex;
       gap: 10px;
@@ -286,6 +296,7 @@ $shadow-color: rgba(0, 0, 0, 0.2);
       h4 {
         margin: 0;
         font-size: 16px;
+        font-weight: normal;
       }
 
       .reference-close {
