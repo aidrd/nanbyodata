@@ -134,6 +134,42 @@ document.addEventListener('DOMContentLoaded', function () {
           }
           // オーバーレイを非表示
           elements.chatOverlay.classList.remove('active');
+
+          // ポップアップウィンドウが完全に読み込まれた後に引用パネルの状態を同期
+          state.popupWindow.addEventListener('load', () => {
+            // 現在の引用情報を取得
+            const referenceBody = document.querySelector('.reference-body');
+            if (referenceBody) {
+              // 引用情報パネルの状態を同期
+              const isReferenceActive =
+                elements.referencePanel.classList.contains('active');
+
+              // 引用情報があれば、それを送信
+              const citations = [];
+              const citationItems =
+                referenceBody.querySelectorAll('.citation-item');
+              citationItems.forEach((item) => {
+                const id = item.id;
+                const title = item.querySelector('.citation-title').textContent;
+                const text = item.querySelector('.citation-text').textContent;
+                const linkElement = item.querySelector('.citation-title a');
+                const url = linkElement ? linkElement.href : null;
+
+                citations.push({ id, title, url, text });
+              });
+
+              if (citations.length > 0) {
+                state.popupWindow.postMessage(
+                  {
+                    type: 'updateCitations',
+                    citations: citations,
+                    showPanel: isReferenceActive,
+                  },
+                  '*'
+                );
+              }
+            }
+          });
         }
       } else {
         // 既存のウィンドウにフォーカスを当てる
@@ -188,15 +224,115 @@ document.addEventListener('DOMContentLoaded', function () {
       messageManager.add(message, 'user');
       elements.chatInput.value = '';
 
-      // Simulate response (replace with actual API call in production)
-      setTimeout(() => {
-        const response =
-          'Thank you for your message. This is a placeholder response. In a production environment, this would be connected to an AI or support service.';
-        messageManager.add(response, 'assistant');
-      }, 1000);
+      // ローディングインジケーターを表示
+      const loadingDiv = document.createElement('div');
+      loadingDiv.className = 'message assistant loading';
+      const loadingContent = document.createElement('div');
+      loadingContent.className = 'message-content';
+      loadingContent.textContent = '応答を生成中...';
+
+      // アバターを追加
+      const avatarDiv = document.createElement('div');
+      avatarDiv.className = 'message-avatar';
+      const avatarImg = document.createElement('img');
+      avatarImg.src = '/static/img/roboto.png';
+      avatarImg.alt = 'Robot Avatar';
+      avatarImg.width = 24;
+      avatarImg.height = 24;
+      avatarImg.style.borderRadius = '50%';
+      avatarDiv.appendChild(avatarImg);
+
+      loadingDiv.appendChild(avatarDiv);
+      loadingDiv.appendChild(loadingContent);
+      elements.chatMessages.appendChild(loadingDiv);
+      scrollManager.scrollToBottom();
+
+      // APIリクエストを送信（実際の実装ではここをfetchに置き換え）
+      messageManager
+        .fetchChatResponse(message)
+        .then((response) => {
+          // ローディングメッセージを削除
+          if (loadingDiv.parentNode) {
+            loadingDiv.parentNode.removeChild(loadingDiv);
+          }
+
+          // レスポンスからメッセージと引用情報を取得して表示
+          if (response.message) {
+            const messageDiv = messageManager.add(
+              response.message,
+              'assistant',
+              response.citations
+            );
+
+            // 引用情報があれば引用パネルに表示
+            if (response.citations && response.citations.length > 0) {
+              messageManager.updateCitations(response.citations);
+            }
+          }
+        })
+        .catch((error) => {
+          console.error('Error fetching response:', error);
+          // ローディングメッセージを削除
+          if (loadingDiv.parentNode) {
+            loadingDiv.parentNode.removeChild(loadingDiv);
+          }
+          // エラーメッセージを表示
+          messageManager.add(
+            '申し訳ありません。応答の取得中にエラーが発生しました。もう一度お試しください。',
+            'assistant'
+          );
+        });
     },
 
-    add: (content, sender) => {
+    // APIからレスポンスを取得する関数（実際の実装では実際のAPIエンドポイントを使用）
+    fetchChatResponse: async (message) => {
+      // 開発用のモックレスポンス
+      // 実際の実装では、ここをfetchに置き換えてAPIからデータを取得
+      return new Promise((resolve) => {
+        setTimeout(() => {
+          // モックレスポンスの例
+          const mockResponses = [
+            {
+              message:
+                '難病（指定難病）は、発病の機構が明らかでなく、治療方法が確立していない希少な疾病です。現在、国が指定する指定難病は338疾病あります。',
+              citations: [
+                {
+                  id: 'citation-1',
+                  title: '難病情報センター',
+                  url: 'https://www.nanbyou.or.jp/',
+                  text: '難病（指定難病）は、発病の機構が明らかでなく、治療方法が確立していない希少な疾病であって、当該疾病にかかることにより長期にわたり療養を必要とすることになるものをいいます。',
+                },
+              ],
+            },
+            {
+              message:
+                'ALSは筋萎縮性側索硬化症（Amyotrophic Lateral Sclerosis）の略称で、運動ニューロンが変性することにより筋肉の萎縮と筋力低下をきたす進行性の神経変性疾患です。',
+              citations: [
+                {
+                  id: 'citation-2',
+                  title: '日本ALS協会',
+                  url: 'https://www.alsjapan.org/',
+                  text: 'ALSは、運動ニューロンと呼ばれる、脳や脊髄にある神経細胞が徐々に死んでいくことで、全身の筋肉が動かせなくなる病気です。',
+                },
+                {
+                  id: 'citation-3',
+                  title: '厚生労働省 指定難病情報',
+                  url: 'https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/0000084783.html',
+                  text: '筋萎縮性側索硬化症は、上位運動ニューロンと下位運動ニューロンが選択的にかつ進行性に変性・消失していく原因不明の疾患である。',
+                },
+              ],
+            },
+          ];
+
+          // ランダムにレスポンスを選択（実際の実装では、APIからの実際のレスポンスを使用）
+          const randomResponse =
+            mockResponses[Math.floor(Math.random() * mockResponses.length)];
+          resolve(randomResponse);
+        }, 1500); // 1.5秒の遅延でモックレスポンスを返す
+      });
+    },
+
+    add: (content, sender, citations = null) => {
       const messageDiv = document.createElement('div');
       messageDiv.className = `message ${sender}`;
 
@@ -227,6 +363,98 @@ document.addEventListener('DOMContentLoaded', function () {
         messageContent.appendChild(document.createTextNode(line));
       });
 
+      // 引用情報がある場合、引用タグを追加
+      if (citations && citations.length > 0 && sender === 'assistant') {
+        const citationsContainer = document.createElement('div');
+        citationsContainer.className = 'citations-container';
+
+        // 引用情報の概要タグ（クリックすると引用パネルを開く）
+        const citationSummaryTag = document.createElement('div');
+        citationSummaryTag.className = 'citation-summary-tag';
+        citationSummaryTag.innerHTML = `<i class="fas fa-quote-left"></i> 引用情報あり (${citations.length})`;
+        citationSummaryTag.addEventListener('click', () => {
+          // 引用パネルを開く
+          elements.referencePanel.classList.add('active');
+          // 引用情報にスクロール
+          const referenceBody = document.querySelector('.reference-body');
+          if (referenceBody) {
+            referenceBody.scrollTop = 0;
+          }
+          // メッセージエリアのレイアウトを調整
+          adjustMessagesLayout();
+
+          // ポップアップウィンドウが開いている場合、引用パネルを同期
+          if (state.popupWindow && !state.popupWindow.closed) {
+            state.popupWindow.postMessage(
+              {
+                type: 'updateCitations',
+                citations: citations,
+                showPanel: true,
+              },
+              '*'
+            );
+          }
+        });
+
+        // 個別の引用タグ（クリックするとリンク先に飛ぶ）
+        const citationTagsContainer = document.createElement('div');
+        citationTagsContainer.className = 'citation-tags';
+
+        citations.forEach((citation, index) => {
+          if (citation.url) {
+            const citationTag = document.createElement('a');
+            citationTag.className = 'citation-tag';
+            citationTag.href = citation.url;
+            citationTag.target = '_blank';
+            citationTag.innerHTML = `${citation.title}`;
+            citationTag.title = `${citation.title} - ${citation.text.substring(
+              0,
+              50
+            )}...`;
+            citationTagsContainer.appendChild(citationTag);
+          } else {
+            const citationTag = document.createElement('div');
+            citationTag.className = 'citation-tag no-link';
+            citationTag.innerHTML = `<i class="fas fa-quote-left"></i> ${citation.title}`;
+            citationTag.title = `${citation.title} - ${citation.text.substring(
+              0,
+              50
+            )}...`;
+            citationTag.addEventListener('click', () => {
+              // 引用パネルを開き、特定の引用情報にスクロール
+              elements.referencePanel.classList.add('active');
+              const referenceBody = document.querySelector('.reference-body');
+              if (referenceBody) {
+                const citationElement = document.getElementById(citation.id);
+                if (citationElement) {
+                  citationElement.scrollIntoView({ behavior: 'smooth' });
+                }
+              }
+              // メッセージエリアのレイアウトを調整
+              adjustMessagesLayout();
+
+              // ポップアップウィンドウが開いている場合、引用パネルを同期
+              if (state.popupWindow && !state.popupWindow.closed) {
+                state.popupWindow.postMessage(
+                  {
+                    type: 'updateCitations',
+                    citations: citations,
+                    showPanel: true,
+                  },
+                  '*'
+                );
+              }
+            });
+            citationTagsContainer.appendChild(citationTag);
+          }
+        });
+
+        citationsContainer.appendChild(citationSummaryTag);
+        citationsContainer.appendChild(citationTagsContainer);
+        messageContent.appendChild(document.createElement('br'));
+        messageContent.appendChild(citationsContainer);
+      }
+
       messageDiv.appendChild(messageContent);
       elements.chatMessages.appendChild(messageDiv);
 
@@ -240,12 +468,71 @@ document.addEventListener('DOMContentLoaded', function () {
             type: 'newMessage',
             content: content,
             sender: sender,
+            citations: citations,
           },
           '*'
         );
       }
 
       return messageDiv;
+    },
+
+    // 引用情報パネルを更新する関数
+    updateCitations: (citations) => {
+      const referenceBody = document.querySelector('.reference-body');
+      if (!referenceBody) return;
+
+      // 既存の引用情報をクリア
+      referenceBody.innerHTML = '';
+
+      // 引用情報がない場合
+      if (!citations || citations.length === 0) {
+        const noCitationsMsg = document.createElement('p');
+        noCitationsMsg.className = 'no-citations';
+        noCitationsMsg.textContent = '引用情報はありません。';
+        referenceBody.appendChild(noCitationsMsg);
+        return;
+      }
+
+      // 引用情報を表示
+      citations.forEach((citation) => {
+        const citationDiv = document.createElement('div');
+        citationDiv.className = 'citation-item';
+        citationDiv.id = citation.id;
+
+        const titleElement = document.createElement('h5');
+        titleElement.className = 'citation-title';
+
+        if (citation.url) {
+          const linkElement = document.createElement('a');
+          linkElement.href = citation.url;
+          linkElement.target = '_blank';
+          linkElement.textContent = citation.title;
+          titleElement.appendChild(linkElement);
+        } else {
+          titleElement.textContent = citation.title;
+        }
+
+        const textElement = document.createElement('p');
+        textElement.className = 'citation-text';
+        textElement.textContent = citation.text;
+
+        citationDiv.appendChild(titleElement);
+        citationDiv.appendChild(textElement);
+        referenceBody.appendChild(citationDiv);
+      });
+
+      // ポップアップウィンドウが開いている場合、引用情報を同期
+      if (state.popupWindow && !state.popupWindow.closed) {
+        state.popupWindow.postMessage(
+          {
+            type: 'updateCitations',
+            citations: citations,
+            showPanel: elements.referencePanel.classList.contains('active'),
+          },
+          '*'
+        );
+      }
     },
 
     // Update initialization with specific welcome message
@@ -259,7 +546,7 @@ document.addEventListener('DOMContentLoaded', function () {
       // Only add welcome message if there are no assistant messages yet
       if (elements.chatMessages && !hasAssistantMessage) {
         const welcomeMessage =
-          'こんにちは！NanbyoDataについて何かお手伝いできることはありますか？\n\nHello! How can I help you with NanbyoData?';
+          'こんにちは！何かお手伝いできることはありますか？';
         messageManager.add(welcomeMessage, 'assistant');
       }
     },
@@ -357,12 +644,64 @@ document.addEventListener('DOMContentLoaded', function () {
         // ユーザーメッセージを追加
         messageManager.add(event.data.content, 'user');
 
-        // AIの応答をシミュレート
-        setTimeout(() => {
-          const response =
-            'Thank you for your message. This is a placeholder response. In a production environment, this would be connected to an AI or support service.';
-          messageManager.add(response, 'assistant');
-        }, 1000);
+        // ローディングインジケーターを表示
+        const loadingDiv = document.createElement('div');
+        loadingDiv.className = 'message assistant loading';
+        const loadingContent = document.createElement('div');
+        loadingContent.className = 'message-content';
+        loadingContent.textContent = '応答を生成中...';
+
+        // アバターを追加
+        const avatarDiv = document.createElement('div');
+        avatarDiv.className = 'message-avatar';
+        const avatarImg = document.createElement('img');
+        avatarImg.src = '/static/img/roboto.png';
+        avatarImg.alt = 'Robot Avatar';
+        avatarImg.width = 24;
+        avatarImg.height = 24;
+        avatarImg.style.borderRadius = '50%';
+        avatarDiv.appendChild(avatarImg);
+
+        loadingDiv.appendChild(avatarDiv);
+        loadingDiv.appendChild(loadingContent);
+        elements.chatMessages.appendChild(loadingDiv);
+        scrollManager.scrollToBottom();
+
+        // APIリクエストを送信
+        messageManager
+          .fetchChatResponse(event.data.content)
+          .then((response) => {
+            // ローディングメッセージを削除
+            if (loadingDiv.parentNode) {
+              loadingDiv.parentNode.removeChild(loadingDiv);
+            }
+
+            // レスポンスからメッセージと引用情報を取得して表示
+            if (response.message) {
+              const messageDiv = messageManager.add(
+                response.message,
+                'assistant',
+                response.citations
+              );
+
+              // 引用情報があれば引用パネルに表示
+              if (response.citations && response.citations.length > 0) {
+                messageManager.updateCitations(response.citations);
+              }
+            }
+          })
+          .catch((error) => {
+            console.error('Error fetching response:', error);
+            // ローディングメッセージを削除
+            if (loadingDiv.parentNode) {
+              loadingDiv.parentNode.removeChild(loadingDiv);
+            }
+            // エラーメッセージを表示
+            messageManager.add(
+              '申し訳ありません。応答の取得中にエラーが発生しました。もう一度お試しください。',
+              'assistant'
+            );
+          });
       } else if (event.data.type === 'requestMessages') {
         // メッセージ履歴を同期
         if (state.popupWindow && !state.popupWindow.closed) {
@@ -374,6 +713,37 @@ document.addEventListener('DOMContentLoaded', function () {
             '*'
           );
         }
+      } else if (event.data.type === 'resetFromPopup') {
+        // ポップアップウィンドウからのリセット通知を処理
+        // 確認ダイアログは表示せずに直接リセット処理を実行
+
+        // 最初のアシスタントメッセージを保持し、他のメッセージをすべて削除
+        const firstAssistantMessage =
+          elements.chatMessages.querySelector('.message.assistant');
+
+        // すべてのメッセージを削除
+        while (elements.chatMessages.firstChild) {
+          elements.chatMessages.removeChild(elements.chatMessages.firstChild);
+        }
+
+        // 最初のアシスタントメッセージを再追加
+        if (firstAssistantMessage) {
+          elements.chatMessages.appendChild(
+            firstAssistantMessage.cloneNode(true)
+          );
+        }
+
+        // 引用情報パネルをクリア
+        const referenceBody = document.querySelector('.reference-body');
+        if (referenceBody) {
+          referenceBody.innerHTML = '';
+        }
+
+        // 引用パネルを閉じる
+        elements.referencePanel.classList.remove('active');
+
+        // 入力フィールドをクリア
+        elements.chatInput.value = '';
       }
     });
 
