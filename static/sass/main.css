@@ -1477,6 +1477,16 @@ header.search-area .intro-text .keyword a {
   bottom: auto;
   z-index: 9999;
 }
+.chat-container.expanded .chat-reference-panel {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+  z-index: 10000;
+}
+.chat-container.expanded .chat-reference-panel.active {
+  transform: translateX(0);
+}
 .chat-header {
   background-color: var(--color-primary);
   color: white;
@@ -1533,11 +1543,9 @@ header.search-area .intro-text .keyword a {
 }
 .chat-body {
   flex-grow: 1;
-  padding: 15px;
   overflow: hidden; /* スクロールを無効化 */
   display: flex;
   flex-direction: column;
-  max-height: calc(100% - 110px);
   position: relative;
   width: 100%;
   box-sizing: border-box;
@@ -1626,9 +1634,6 @@ header.search-area .intro-text .keyword a {
   transform: translateX(0);
   /* 引用パネルが表示されているときはトグルボタンを非表示 */
 }
-.chat-reference-panel.active + .chat-messages, .chat-reference-panel.active ~ .chat-messages {
-  padding-right: 310px;
-}
 .chat-reference-panel.active .reference-toggle {
   display: none;
 }
@@ -1694,6 +1699,12 @@ header.search-area .intro-text .keyword a {
   cursor: pointer;
   font-size: 16px;
 }
+.chat-reference-panel .reference-header .reference-close:hover {
+  opacity: 0.6;
+}
+.chat-reference-panel .reference-header .reference-close:focus {
+  outline: none;
+}
 .chat-reference-panel .reference-body {
   padding: 10px;
   overflow-y: auto; /* 本文部分のみスクロール可能 */
@@ -1708,7 +1719,7 @@ header.search-area .intro-text .keyword a {
 }
 
 .message {
-  margin-bottom: 15px;
+  margin: 15px;
   max-width: 80%;
   display: flex;
   box-sizing: border-box;
@@ -1767,15 +1778,10 @@ header.search-area .intro-text .keyword a {
   background-color: #f0f0f0;
   border-radius: 4px;
   padding: 4px 8px;
-  margin-right: 8px;
-  margin-bottom: 8px;
   font-size: 0.85em;
   color: #555;
   cursor: pointer;
   transition: background-color 0.2s;
-}
-.message-content .citations-container .citation-summary-tag:hover {
-  background-color: #e0e0e0;
 }
 .message-content .citations-container .citation-summary-tag i {
   margin-right: 4px;
@@ -1788,19 +1794,14 @@ header.search-area .intro-text .keyword a {
 }
 .message-content .citations-container .citation-tags .citation-tag {
   display: inline-block;
-  background-color: #e8f4ff;
+  background-color: var(--color-primary);
   border-radius: 4px;
   padding: 3px 8px;
   font-size: 0.8em;
-  color: #0066cc;
+  color: var(--color-white);
   cursor: pointer;
   text-decoration: none;
-  border: 1px solid #d0e6ff;
   transition: all 0.2s;
-}
-.message-content .citations-container .citation-tags .citation-tag:hover {
-  background-color: #d0e6ff;
-  border-color: #99ccff;
 }
 .message-content .citations-container .citation-tags .citation-tag i {
   margin-right: 4px;

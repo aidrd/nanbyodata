@@ -27,6 +27,17 @@ document.addEventListener('DOMContentLoaded', function () {
       elements.referencePanel.classList.toggle('active');
       adjustMessagesLayout();
 
+      // メインウィンドウに引用パネルの状態を同期
+      if (opener) {
+        opener.postMessage(
+          {
+            type: 'toggleReferencePanel',
+            isActive: elements.referencePanel.classList.contains('active')
+          },
+          '*'
+        );
+      }
+
       // スクロール位置を復元
       setTimeout(() => {
         elements.chatMessages.scrollTop = scrollTop;
@@ -37,7 +48,22 @@ document.addEventListener('DOMContentLoaded', function () {
       const scrollTop = elements.chatMessages.scrollTop;
 
       elements.referencePanel.classList.remove('active');
+      
+      // 引用パネルのtransformスタイルをリセット
+      elements.referencePanel.style.transform = '';
+      
       adjustMessagesLayout();
+
+      // メインウィンドウに引用パネルの状態を同期
+      if (opener) {
+        opener.postMessage(
+          {
+            type: 'toggleReferencePanel',
+            isActive: false
+          },
+          '*'
+        );
+      }
 
       // スクロール位置を復元
       setTimeout(() => {
@@ -53,7 +79,6 @@ document.addEventListener('DOMContentLoaded', function () {
     } else {
       elements.chatMessages.style.paddingRight = '';
     }
-    scrollToBottom();
   }
 
   // ウィンドウのロード時に初期レイアウトを調整
@@ -77,16 +102,27 @@ document.addEventListener('DOMContentLoaded', function () {
       scrollToBottom();
     } else if (event.data.type === 'updateCitations') {
       // 引用情報を更新
-      console.log('Received citations:', event.data.citations);
-      updateCitations(event.data.citations);
+      updateCitations(event.data.citations, event.data.scrollToCitationId);
 
       // 引用パネルの表示状態を設定
-      if (event.data.showPanel && elements.referencePanel) {
+      if (event.data.showPanel === true) {
+        // showPanelがtrueの場合は必ず開く
         elements.referencePanel.classList.add('active');
-      } else if (elements.referencePanel && event.data.showPanel === false) {
+      } else if (event.data.showPanel === false) {
+        // showPanelがfalseの場合は必ず閉じる
         elements.referencePanel.classList.remove('active');
       }
+      // showPanelがnullまたはundefinedの場合は現在の状態を維持する（何もしない）
 
+      // メッセージエリアのレイアウトを調整
+      adjustMessagesLayout();
+    } else if (event.data.type === 'toggleReferencePanel') {
+      // 引用パネルの状態を同期
+      if (event.data.isActive) {
+        elements.referencePanel.classList.add('active');
+      } else {
+        elements.referencePanel.classList.remove('active');
+      }
       // メッセージエリアのレイアウトを調整
       adjustMessagesLayout();
     } else if (event.data.action === 'resetChat') {
@@ -138,22 +174,16 @@ document.addEventListener('DOMContentLoaded', function () {
     if (citations && citations.length > 0 && sender === 'assistant') {
       const citationsContainer = document.createElement('div');
       citationsContainer.className = 'citations-container';
+      // 引用情報をデータ属性として保存（JSON文字列に変換）
+      citationsContainer.dataset.citations = JSON.stringify(citations);
 
       // 引用情報の概要タグ（クリックすると引用パネルを開く）
       const citationSummaryTag = document.createElement('div');
       citationSummaryTag.className = 'citation-summary-tag';
       citationSummaryTag.innerHTML = `<i class="fas fa-quote-left"></i> 引用情報あり (${citations.length})`;
-      citationSummaryTag.addEventListener('click', () => {
-        // 引用パネルを開く
-        elements.referencePanel.classList.add('active');
-        // 引用情報にスクロール
-        const referenceBody = document.querySelector('.reference-body');
-        if (referenceBody) {
-          referenceBody.scrollTop = 0;
-        }
-        // メッセージエリアのレイアウトを調整
-        adjustMessagesLayout();
-      });
+      
+      // クリックイベントを直接関数として定義せず、delegateする
+      citationSummaryTag.dataset.hasCitations = 'true';
 
       // 個別の引用タグ（クリックするとリンク先に飛ぶ）
       const citationTagsContainer = document.createElement('div');
@@ -179,19 +209,10 @@ document.addEventListener('DOMContentLoaded', function () {
             0,
             50
           )}...`;
-          citationTag.addEventListener('click', () => {
-            // 引用パネルを開き、特定の引用情報にスクロール
-            elements.referencePanel.classList.add('active');
-            const referenceBody = document.querySelector('.reference-body');
-            if (referenceBody) {
-              const citationElement = document.getElementById(citation.id);
-              if (citationElement) {
-                citationElement.scrollIntoView({ behavior: 'smooth' });
-              }
-            }
-            // メッセージエリアのレイアウトを調整
-            adjustMessagesLayout();
-          });
+          // データ属性として引用情報のIDを保存
+          citationTag.dataset.citationId = citation.id;
+          citationTag.dataset.hasCitations = 'true';
+          
           citationTagsContainer.appendChild(citationTag);
         }
       });
@@ -212,7 +233,7 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   // 引用情報パネルを更新する関数
-  function updateCitations(citations) {
+  function updateCitations(citations, scrollToCitationId = null) {
     const referenceBody = document.querySelector('.reference-body');
     if (!referenceBody) return;
 
@@ -255,18 +276,46 @@ document.addEventListener('DOMContentLoaded', function () {
       citationDiv.appendChild(textElement);
       referenceBody.appendChild(citationDiv);
     });
+
+    // 特定の引用情報にスクロール
+    if (scrollToCitationId) {
+      setTimeout(() => {
+        const citationElement = document.getElementById(scrollToCitationId);
+        if (citationElement) {
+          citationElement.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 100);
+    }
   }
 
   function sendMessage() {
     const message = elements.chatInput.value.trim();
     if (!message) return;
 
+    // 引用パネルの状態を記憶
+    const isReferenceActive = elements.referencePanel.classList.contains('active');
+    // 現在表示されている引用情報を記憶
+    const currentCitations = [];
+    const citationItems = document.querySelectorAll('.reference-body .citation-item');
+    citationItems.forEach((item) => {
+      const id = item.id;
+      const title = item.querySelector('.citation-title').textContent;
+      const text = item.querySelector('.citation-text').textContent;
+      const linkElement = item.querySelector('.citation-title a');
+      const url = linkElement ? linkElement.href : null;
+      currentCitations.push({ id, title, url, text });
+    });
+
+    // ローカルでのメッセージ追加は行わない（親ウィンドウからのメッセージ同期を待つ）
+    
     // メッセージを親ウィンドウに送信
     if (opener) {
       opener.postMessage(
         {
           type: 'sendMessage',
           content: message,
+          isReferenceActive: isReferenceActive,
+          currentCitations: currentCitations
         },
         '*'
       );
@@ -323,6 +372,98 @@ document.addEventListener('DOMContentLoaded', function () {
     if (elements.referenceClose) {
       elements.referenceClose.addEventListener('click', referenceUI.close);
     }
+
+    // 引用情報ボタンのクリックイベントを委譲（Event Delegation）
+    elements.chatMessages.addEventListener('click', (event) => {
+      // 引用情報の概要タグがクリックされた場合
+      if (event.target.classList.contains('citation-summary-tag') || 
+          (event.target.parentElement && event.target.parentElement.classList.contains('citation-summary-tag'))) {
+        
+        // クリックされた要素またはその親要素を取得
+        const target = event.target.classList.contains('citation-summary-tag') ? 
+                      event.target : event.target.parentElement;
+        
+        // 引用情報コンテナを取得
+        const citationsContainer = target.closest('.citations-container');
+        if (citationsContainer && citationsContainer.dataset.citations) {
+          // 引用情報を取得
+          const citations = JSON.parse(citationsContainer.dataset.citations);
+          
+          // 引用情報を表示
+          updateCitations(citations);
+          
+          // 引用パネルを開く
+          elements.referencePanel.classList.add('active');
+          
+          // 引用情報にスクロール
+          const referenceBody = document.querySelector('.reference-body');
+          if (referenceBody) {
+            referenceBody.scrollTop = 0;
+          }
+          
+          // メッセージエリアのレイアウトを調整
+          adjustMessagesLayout();
+          
+          // メインウィンドウに引用パネルの状態を同期
+          if (opener) {
+            opener.postMessage(
+              {
+                type: 'updateCitations',
+                citations: citations,
+                showPanel: true
+              },
+              '*'
+            );
+          }
+        }
+      }
+      
+      // 個別の引用タグ（リンクなし）がクリックされた場合
+      if (event.target.classList.contains('citation-tag') && event.target.classList.contains('no-link')) {
+        // 引用情報コンテナを取得
+        const citationsContainer = event.target.closest('.citations-container');
+        if (citationsContainer && citationsContainer.dataset.citations) {
+          // 引用情報を取得
+          const citations = JSON.parse(citationsContainer.dataset.citations);
+          
+          // 引用情報を表示
+          updateCitations(citations);
+          
+          // 引用パネルを開く
+          elements.referencePanel.classList.add('active');
+          
+          // 特定の引用情報にスクロール
+          const citationId = event.target.dataset.citationId;
+          if (citationId) {
+            const referenceBody = document.querySelector('.reference-body');
+            if (referenceBody) {
+              setTimeout(() => {
+                const citationElement = document.getElementById(citationId);
+                if (citationElement) {
+                  citationElement.scrollIntoView({ behavior: 'smooth' });
+                }
+              }, 100);
+            }
+          }
+          
+          // メッセージエリアのレイアウトを調整
+          adjustMessagesLayout();
+          
+          // メインウィンドウに引用パネルの状態を同期
+          if (opener) {
+            opener.postMessage(
+              {
+                type: 'updateCitations',
+                citations: citations,
+                showPanel: true,
+                scrollToCitationId: citationId
+              },
+              '*'
+            );
+          }
+        }
+      }
+    });
 
     // Message sending
     elements.chatSendButton.addEventListener('click', sendMessage);

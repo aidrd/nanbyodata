@@ -57,6 +57,19 @@ $shadow-color: rgba(0, 0, 0, 0.2);
       right: auto;
       bottom: auto;
       z-index: 9999;
+      
+      // 拡大表示時の引用パネルのスタイルを追加
+      .chat-reference-panel {
+        position: absolute;
+        top: 0;
+        right: 0;
+        height: 100%;
+        z-index: 10000; // 拡大表示時はz-indexを上げる
+        
+        &.active {
+          transform: translateX(0);
+        }
+      }
     }
   }
 
@@ -126,11 +139,9 @@ $shadow-color: rgba(0, 0, 0, 0.2);
 
   &-body {
     flex-grow: 1;
-    padding: 15px;
     overflow: hidden; /* スクロールを無効化 */
     display: flex;
     flex-direction: column;
-    max-height: calc(100% - 110px); // ヘッダーとフッターの高さを考慮
     position: relative;
     width: 100%;
     box-sizing: border-box;
@@ -227,11 +238,6 @@ $shadow-color: rgba(0, 0, 0, 0.2);
     &.active {
       transform: translateX(0);
 
-      & + .chat-messages,
-      & ~ .chat-messages {
-        padding-right: 310px;
-      }
-
       /* 引用パネルが表示されているときはトグルボタンを非表示 */
       .reference-toggle {
         display: none;
@@ -304,6 +310,12 @@ $shadow-color: rgba(0, 0, 0, 0.2);
         border: none;
         cursor: pointer;
         font-size: 16px;
+        &:hover {
+          opacity: 0.6;
+        }
+        &:focus {
+          outline: none;
+        }
       }
     }
 
@@ -324,7 +336,7 @@ $shadow-color: rgba(0, 0, 0, 0.2);
 }
 
 .message {
-  margin-bottom: 15px;
+  margin: 15px;
   max-width: 80%;
   display: flex;
   box-sizing: border-box;
@@ -392,16 +404,10 @@ $shadow-color: rgba(0, 0, 0, 0.2);
         background-color: #f0f0f0;
         border-radius: 4px;
         padding: 4px 8px;
-        margin-right: 8px;
-        margin-bottom: 8px;
         font-size: 0.85em;
         color: #555;
         cursor: pointer;
         transition: background-color 0.2s;
-
-        &:hover {
-          background-color: #e0e0e0;
-        }
 
         i {
           margin-right: 4px;
@@ -416,20 +422,14 @@ $shadow-color: rgba(0, 0, 0, 0.2);
 
         .citation-tag {
           display: inline-block;
-          background-color: #e8f4ff;
+          background-color: var(--color-primary);
           border-radius: 4px;
           padding: 3px 8px;
           font-size: 0.8em;
-          color: #0066cc;
+          color: var(--color-white);
           cursor: pointer;
           text-decoration: none;
-          border: 1px solid #d0e6ff;
           transition: all 0.2s;
-
-          &:hover {
-            background-color: #d0e6ff;
-            border-color: #99ccff;
-          }
 
           i {
             margin-right: 4px;

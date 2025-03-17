@@ -95,6 +95,23 @@ document.addEventListener('DOMContentLoaded', function () {
     },
 
     toggleExpand: () => {
+      // 引用パネルの状態を記憶
+      const isReferenceActive = elements.referencePanel.classList.contains('active');
+      // 現在表示されている引用情報を記憶
+      const currentCitations = [];
+      const citationItems = document.querySelectorAll('.reference-body .citation-item');
+      citationItems.forEach((item) => {
+        const id = item.id;
+        const title = item.querySelector('.citation-title').textContent;
+        const text = item.querySelector('.citation-text').textContent;
+        const linkElement = item.querySelector('.citation-title a');
+        const url = linkElement ? linkElement.href : null;
+        currentCitations.push({ id, title, url, text });
+      });
+      
+      // スクロール位置を記憶
+      const scrollTop = elements.chatMessages.scrollTop;
+      
       state.isExpanded = !state.isExpanded;
       elements.chatContainer.classList.toggle('expanded');
       elements.chatOverlay.classList.toggle('active');
@@ -104,7 +121,23 @@ document.addEventListener('DOMContentLoaded', function () {
       elements.chatExpandButton.title = state.isExpanded
         ? '縮小表示'
         : '拡大表示';
-      scrollManager.scrollToBottom();
+      
+      // レイアウト調整
+      adjustMessagesLayout();
+      
+      // 拡大表示後も引用パネルの状態を維持
+      if (isReferenceActive) {
+        elements.referencePanel.classList.add('active');
+        // 引用情報も復元
+        if (currentCitations.length > 0) {
+          messageManager.updateCitations(currentCitations);
+        }
+      }
+      
+      // スクロール位置を復元
+      setTimeout(() => {
+        elements.chatMessages.scrollTop = scrollTop;
+      }, 50);
     },
 
     togglePopup: () => {
@@ -220,6 +253,20 @@ document.addEventListener('DOMContentLoaded', function () {
       const message = elements.chatInput.value.trim();
       if (!message) return;
 
+      // 引用パネルの状態を記憶
+      const isReferenceActive = elements.referencePanel.classList.contains('active');
+      // 現在表示されている引用情報を記憶
+      const currentCitations = [];
+      const citationItems = document.querySelectorAll('.reference-body .citation-item');
+      citationItems.forEach((item) => {
+        const id = item.id;
+        const title = item.querySelector('.citation-title').textContent;
+        const text = item.querySelector('.citation-text').textContent;
+        const linkElement = item.querySelector('.citation-title a');
+        const url = linkElement ? linkElement.href : null;
+        currentCitations.push({ id, title, url, text });
+      });
+
       // Add user message
       messageManager.add(message, 'user');
       elements.chatInput.value = '';
@@ -267,7 +314,54 @@ document.addEventListener('DOMContentLoaded', function () {
             // 引用情報があれば引用パネルに表示
             if (response.citations && response.citations.length > 0) {
               messageManager.updateCitations(response.citations);
+              
+              // 引用情報は更新するが、パネルの状態は維持する
+              if (state.popupWindow && !state.popupWindow.closed) {
+                state.popupWindow.postMessage(
+                  {
+                    type: 'updateCitations',
+                    citations: response.citations,
+                    showPanel: isReferenceActive,
+                  },
+                  '*'
+                );
+              }
+            } else if (isReferenceActive) {
+              // 以前の引用パネルの状態を復元
+              elements.referencePanel.classList.add('active');
+              
+              // 以前の引用情報があれば復元
+              if (currentCitations.length > 0) {
+                messageManager.updateCitations(currentCitations);
+                
+                // ポップアップウィンドウが開いている場合、引用情報を同期
+                if (state.popupWindow && !state.popupWindow.closed) {
+                  state.popupWindow.postMessage(
+                    {
+                      type: 'updateCitations',
+                      citations: currentCitations,
+                      showPanel: isReferenceActive,
+                    },
+                    '*'
+                  );
+                }
+              }
             }
+            
+            // 拡大表示時は特別な処理を追加
+            if (state.isExpanded && elements.referencePanel.classList.contains('active')) {
+              // 拡大表示時のレイアウト調整
+              elements.chatMessages.style.paddingRight = '310px';
+              elements.referencePanel.style.zIndex = '10000';
+              elements.referencePanel.style.position = 'absolute';
+              elements.referencePanel.style.right = '0';
+              elements.referencePanel.style.top = '0';
+              elements.referencePanel.style.height = '100%';
+              elements.referencePanel.style.transform = 'translateX(0)';
+            }
+            
+            // メッセージエリアのレイアウトを調整
+            adjustMessagesLayout();
           }
         })
         .catch((error) => {
@@ -281,6 +375,40 @@ document.addEventListener('DOMContentLoaded', function () {
             '申し訳ありません。応答の取得中にエラーが発生しました。もう一度お試しください。',
             'assistant'
           );
+          
+          // 以前の引用パネルの状態を復元
+          if (isReferenceActive && currentCitations.length > 0) {
+            // 引用情報を復元してポップアップウィンドウに送信
+            if (state.popupWindow && !state.popupWindow.closed) {
+              state.popupWindow.postMessage(
+                {
+                  type: 'updateCitations',
+                  citations: currentCitations,
+                  showPanel: isReferenceActive,
+                },
+                '*'
+              );
+            }
+            
+            // 以前の引用パネルの状態を復元（メインウィンドウ）
+            elements.referencePanel.classList.add('active');
+            messageManager.updateCitations(currentCitations);
+            
+            // 拡大表示時は特別な処理を追加
+            if (state.isExpanded) {
+              // 拡大表示時のレイアウト調整
+              elements.chatMessages.style.paddingRight = '310px';
+              elements.referencePanel.style.zIndex = '10000';
+              elements.referencePanel.style.position = 'absolute';
+              elements.referencePanel.style.right = '0';
+              elements.referencePanel.style.top = '0';
+              elements.referencePanel.style.height = '100%';
+              elements.referencePanel.style.transform = 'translateX(0)';
+            }
+            
+            // メッセージエリアのレイアウトを調整
+            adjustMessagesLayout();
+          }
         });
     },
 
@@ -367,35 +495,17 @@ document.addEventListener('DOMContentLoaded', function () {
       if (citations && citations.length > 0 && sender === 'assistant') {
         const citationsContainer = document.createElement('div');
         citationsContainer.className = 'citations-container';
+        // 引用情報をデータ属性として保存（JSON文字列に変換）
+        citationsContainer.dataset.citations = JSON.stringify(citations);
 
         // 引用情報の概要タグ（クリックすると引用パネルを開く）
         const citationSummaryTag = document.createElement('div');
         citationSummaryTag.className = 'citation-summary-tag';
         citationSummaryTag.innerHTML = `<i class="fas fa-quote-left"></i> 引用情報あり (${citations.length})`;
-        citationSummaryTag.addEventListener('click', () => {
-          // 引用パネルを開く
-          elements.referencePanel.classList.add('active');
-          // 引用情報にスクロール
-          const referenceBody = document.querySelector('.reference-body');
-          if (referenceBody) {
-            referenceBody.scrollTop = 0;
-          }
-          // メッセージエリアのレイアウトを調整
-          adjustMessagesLayout();
-
-          // ポップアップウィンドウが開いている場合、引用パネルを同期
-          if (state.popupWindow && !state.popupWindow.closed) {
-            state.popupWindow.postMessage(
-              {
-                type: 'updateCitations',
-                citations: citations,
-                showPanel: true,
-              },
-              '*'
-            );
-          }
-        });
-
+        
+        // クリックイベントを直接関数として定義せず、delegateする
+        citationSummaryTag.dataset.hasCitations = 'true';
+        
         // 個別の引用タグ（クリックするとリンク先に飛ぶ）
         const citationTagsContainer = document.createElement('div');
         citationTagsContainer.className = 'citation-tags';
@@ -420,31 +530,10 @@ document.addEventListener('DOMContentLoaded', function () {
               0,
               50
             )}...`;
-            citationTag.addEventListener('click', () => {
-              // 引用パネルを開き、特定の引用情報にスクロール
-              elements.referencePanel.classList.add('active');
-              const referenceBody = document.querySelector('.reference-body');
-              if (referenceBody) {
-                const citationElement = document.getElementById(citation.id);
-                if (citationElement) {
-                  citationElement.scrollIntoView({ behavior: 'smooth' });
-                }
-              }
-              // メッセージエリアのレイアウトを調整
-              adjustMessagesLayout();
-
-              // ポップアップウィンドウが開いている場合、引用パネルを同期
-              if (state.popupWindow && !state.popupWindow.closed) {
-                state.popupWindow.postMessage(
-                  {
-                    type: 'updateCitations',
-                    citations: citations,
-                    showPanel: true,
-                  },
-                  '*'
-                );
-              }
-            });
+            // データ属性として引用情報のIDを保存
+            citationTag.dataset.citationId = citation.id;
+            citationTag.dataset.hasCitations = 'true';
+            
             citationTagsContainer.appendChild(citationTag);
           }
         });
@@ -478,7 +567,7 @@ document.addEventListener('DOMContentLoaded', function () {
     },
 
     // 引用情報パネルを更新する関数
-    updateCitations: (citations) => {
+    updateCitations: (citations, scrollToCitationId = null) => {
       const referenceBody = document.querySelector('.reference-body');
       if (!referenceBody) return;
 
@@ -522,6 +611,16 @@ document.addEventListener('DOMContentLoaded', function () {
         referenceBody.appendChild(citationDiv);
       });
 
+      // 特定の引用情報にスクロール
+      if (scrollToCitationId) {
+        setTimeout(() => {
+          const citationElement = document.getElementById(scrollToCitationId);
+          if (citationElement) {
+            citationElement.scrollIntoView({ behavior: 'smooth' });
+          }
+        }, 100);
+      }
+
       // ポップアップウィンドウが開いている場合、引用情報を同期
       if (state.popupWindow && !state.popupWindow.closed) {
         state.popupWindow.postMessage(
@@ -529,6 +628,7 @@ document.addEventListener('DOMContentLoaded', function () {
             type: 'updateCitations',
             citations: citations,
             showPanel: elements.referencePanel.classList.contains('active'),
+            scrollToCitationId: scrollToCitationId
           },
           '*'
         );
@@ -562,6 +662,17 @@ document.addEventListener('DOMContentLoaded', function () {
       // 引用パネルの状態に応じてメッセージエリアのスタイルを調整
       adjustMessagesLayout();
 
+      // ポップアップウィンドウが開いている場合、引用パネルの状態を同期
+      if (state.popupWindow && !state.popupWindow.closed) {
+        state.popupWindow.postMessage(
+          {
+            type: 'toggleReferencePanel',
+            isActive: elements.referencePanel.classList.contains('active')
+          },
+          '*'
+        );
+      }
+
       // スクロール位置を復元
       setTimeout(() => {
         elements.chatMessages.scrollTop = scrollTop;
@@ -571,9 +682,27 @@ document.addEventListener('DOMContentLoaded', function () {
       // スクロール位置を記憶
       const scrollTop = elements.chatMessages.scrollTop;
 
+      // 引用パネルを閉じる
       elements.referencePanel.classList.remove('active');
+      
+      // 拡大表示時のスタイルをリセット
+      if (state.isExpanded) {
+        elements.referencePanel.style.transform = '';
+      }
+      
       // 引用パネルを閉じたときにメッセージエリアのスタイルを元に戻す
       adjustMessagesLayout();
+
+      // ポップアップウィンドウが開いている場合、引用パネルの状態を同期
+      if (state.popupWindow && !state.popupWindow.closed) {
+        state.popupWindow.postMessage(
+          {
+            type: 'toggleReferencePanel',
+            isActive: false
+          },
+          '*'
+        );
+      }
 
       // スクロール位置を復元
       setTimeout(() => {
@@ -587,12 +716,26 @@ document.addEventListener('DOMContentLoaded', function () {
     if (elements.referencePanel.classList.contains('active')) {
       // 引用パネルが表示されているときは、メッセージエリアの右側にパディングを追加
       elements.chatMessages.style.paddingRight = '310px';
+      
+      // 拡大表示時は引用パネルのスタイルを調整
+      if (state.isExpanded) {
+        elements.referencePanel.style.zIndex = '10000'; // 拡大表示時はz-indexを上げる
+        elements.referencePanel.style.position = 'absolute';
+        elements.referencePanel.style.right = '0';
+        elements.referencePanel.style.top = '0';
+        elements.referencePanel.style.height = '100%';
+        elements.referencePanel.style.transform = 'translateX(0)';
+      } else {
+        elements.referencePanel.style.zIndex = '10'; // 通常表示時は元のz-index
+        elements.referencePanel.style.position = 'absolute';
+      }
     } else {
       // 引用パネルが非表示のときは、パディングをリセット
       elements.chatMessages.style.paddingRight = '';
+      
+      // 引用パネルが非表示のときは、transformプロパティをリセット
+      elements.referencePanel.style.transform = '';
     }
-    // レイアウト変更後にスクロール位置を調整
-    scrollManager.scrollToBottom();
   }
 
   // Event Listeners
@@ -607,6 +750,122 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Message sending
     elements.chatSendButton.addEventListener('click', messageManager.send);
+
+    // 引用情報ボタンのクリックイベントを委譲（Event Delegation）
+    elements.chatMessages.addEventListener('click', (event) => {
+      // 引用情報の概要タグがクリックされた場合
+      if (event.target.classList.contains('citation-summary-tag') || 
+          (event.target.parentElement && event.target.parentElement.classList.contains('citation-summary-tag'))) {
+        
+        // クリックされた要素またはその親要素を取得
+        const target = event.target.classList.contains('citation-summary-tag') ? 
+                      event.target : event.target.parentElement;
+        
+        // 引用情報コンテナを取得
+        const citationsContainer = target.closest('.citations-container');
+        if (citationsContainer && citationsContainer.dataset.citations) {
+          // 引用情報を取得
+          const citations = JSON.parse(citationsContainer.dataset.citations);
+          
+          // 引用情報を表示
+          messageManager.updateCitations(citations);
+          
+          // 引用パネルを開く
+          elements.referencePanel.classList.add('active');
+          
+          // 引用情報にスクロール
+          const referenceBody = document.querySelector('.reference-body');
+          if (referenceBody) {
+            referenceBody.scrollTop = 0;
+          }
+          
+          // 拡大表示時は特別な処理を追加
+          if (state.isExpanded) {
+            // 拡大表示時のレイアウト調整
+            elements.chatMessages.style.paddingRight = '310px';
+            elements.referencePanel.style.zIndex = '10000';
+            elements.referencePanel.style.position = 'absolute';
+            elements.referencePanel.style.right = '0';
+            elements.referencePanel.style.top = '0';
+            elements.referencePanel.style.height = '100%';
+            elements.referencePanel.style.transform = 'translateX(0)';
+          }
+          
+          // メッセージエリアのレイアウトを調整
+          adjustMessagesLayout();
+          
+          // ポップアップウィンドウが開いている場合、引用パネルを同期
+          if (state.popupWindow && !state.popupWindow.closed) {
+            state.popupWindow.postMessage(
+              {
+                type: 'updateCitations',
+                citations: citations,
+                showPanel: true,
+              },
+              '*'
+            );
+          }
+        }
+      }
+      
+      // 個別の引用タグ（リンクなし）がクリックされた場合
+      if (event.target.classList.contains('citation-tag') && event.target.classList.contains('no-link')) {
+        // 引用情報コンテナを取得
+        const citationsContainer = event.target.closest('.citations-container');
+        if (citationsContainer && citationsContainer.dataset.citations) {
+          // 引用情報を取得
+          const citations = JSON.parse(citationsContainer.dataset.citations);
+          
+          // 引用情報を表示
+          messageManager.updateCitations(citations);
+          
+          // 引用パネルを開く
+          elements.referencePanel.classList.add('active');
+          
+          // 特定の引用情報にスクロール
+          const citationId = event.target.dataset.citationId;
+          if (citationId) {
+            const referenceBody = document.querySelector('.reference-body');
+            if (referenceBody) {
+              setTimeout(() => {
+                const citationElement = document.getElementById(citationId);
+                if (citationElement) {
+                  citationElement.scrollIntoView({ behavior: 'smooth' });
+                }
+              }, 100);
+            }
+          }
+          
+          // 拡大表示時は特別な処理を追加
+          if (state.isExpanded) {
+            // 拡大表示時のレイアウト調整
+            elements.chatMessages.style.paddingRight = '310px';
+            elements.referencePanel.style.zIndex = '10000';
+            elements.referencePanel.style.position = 'absolute';
+            elements.referencePanel.style.right = '0';
+            elements.referencePanel.style.top = '0';
+            elements.referencePanel.style.height = '100%';
+            elements.referencePanel.style.transform = 'translateX(0)';
+          }
+          
+          // メッセージエリアのレイアウトを調整
+          adjustMessagesLayout();
+          
+          // ポップアップウィンドウが開いている場合、引用パネルを同期
+          if (state.popupWindow && !state.popupWindow.closed) {
+            state.popupWindow.postMessage(
+              {
+                type: 'updateCitations',
+                citations: citations,
+                showPanel: true,
+                scrollToCitationId: citationId
+              },
+              '*'
+            );
+          }
+        }
+      }
+    });
 
     // Input handling
     elements.chatInput.addEventListener('compositionstart', () => {
@@ -641,6 +900,10 @@ document.addEventListener('DOMContentLoaded', function () {
     // ポップアップウィンドウからのメッセージを処理
     window.addEventListener('message', (event) => {
       if (event.data.type === 'sendMessage') {
+        // 引用パネルの状態を記憶
+        const isReferenceActive = event.data.isReferenceActive || false;
+        const currentCitations = event.data.currentCitations || [];
+        
         // ユーザーメッセージを追加
         messageManager.add(event.data.content, 'user');
 
@@ -687,6 +950,38 @@ document.addEventListener('DOMContentLoaded', function () {
               // 引用情報があれば引用パネルに表示
               if (response.citations && response.citations.length > 0) {
                 messageManager.updateCitations(response.citations);
+                
+                // 引用情報は更新するが、パネルの状態は維持する
+                if (state.popupWindow && !state.popupWindow.closed) {
+                  state.popupWindow.postMessage(
+                    {
+                      type: 'updateCitations',
+                      citations: response.citations,
+                      showPanel: isReferenceActive,
+                    },
+                    '*'
+                  );
+                }
+              } else if (isReferenceActive) {
+                // 以前の引用パネルの状態を復元
+                elements.referencePanel.classList.add('active');
+                
+                // 以前の引用情報があれば復元
+                if (currentCitations.length > 0) {
+                  messageManager.updateCitations(currentCitations);
+                  
+                  // ポップアップウィンドウが開いている場合、引用情報を同期
+                  if (state.popupWindow && !state.popupWindow.closed) {
+                    state.popupWindow.postMessage(
+                      {
+                        type: 'updateCitations',
+                        citations: currentCitations,
+                        showPanel: isReferenceActive,
+                      },
+                      '*'
+                    );
+                  }
+                }
               }
             }
           })
@@ -701,6 +996,40 @@ document.addEventListener('DOMContentLoaded', function () {
               '申し訳ありません。応答の取得中にエラーが発生しました。もう一度お試しください。',
               'assistant'
             );
+            
+            // 以前の引用パネルの状態を復元
+            if (isReferenceActive && currentCitations.length > 0) {
+              // 引用情報を復元してポップアップウィンドウに送信
+              if (state.popupWindow && !state.popupWindow.closed) {
+                state.popupWindow.postMessage(
+                  {
+                    type: 'updateCitations',
+                    citations: currentCitations,
+                    showPanel: isReferenceActive,
+                  },
+                  '*'
+                );
+              }
+              
+              // 以前の引用パネルの状態を復元（メインウィンドウ）
+              elements.referencePanel.classList.add('active');
+              messageManager.updateCitations(currentCitations);
+              
+              // 拡大表示時は特別な処理を追加
+              if (state.isExpanded) {
+                // 拡大表示時のレイアウト調整
+                elements.chatMessages.style.paddingRight = '310px';
+                elements.referencePanel.style.zIndex = '10000';
+                elements.referencePanel.style.position = 'absolute';
+                elements.referencePanel.style.right = '0';
+                elements.referencePanel.style.top = '0';
+                elements.referencePanel.style.height = '100%';
+                elements.referencePanel.style.transform = 'translateX(0)';
+              }
+              
+              // メッセージエリアのレイアウトを調整
+              adjustMessagesLayout();
+            }
           });
       } else if (event.data.type === 'requestMessages') {
         // メッセージ履歴を同期
@@ -713,6 +1042,15 @@ document.addEventListener('DOMContentLoaded', function () {
             '*'
           );
         }
+      } else if (event.data.type === 'toggleReferencePanel') {
+        // 引用パネルの状態を同期
+        if (event.data.isActive) {
+          elements.referencePanel.classList.add('active');
+        } else {
+          elements.referencePanel.classList.remove('active');
+        }
+        // メッセージエリアのレイアウトを調整
+        adjustMessagesLayout();
       } else if (event.data.type === 'resetFromPopup') {
         // ポップアップウィンドウからのリセット通知を処理
         // 確認ダイアログは表示せずに直接リセット処理を実行
