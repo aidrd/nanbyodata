@@ -117,7 +117,6 @@ async function loadNewsList(loadAll = false) {
   } else {
     try {
       const response = await fetch(GITHUB_API_URL);
-      console.log(response);
       if (!response.ok) throw new Error('GitHub API request failed');
       const files = await response.json();
 
