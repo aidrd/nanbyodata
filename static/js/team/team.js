@@ -1,16 +1,33 @@
-// 環境に応じたベースURLを設定
-// TODO: 本番環境と開発環境ではこのURLを変更する
-const BASE_URL =
-  window.location.origin === 'https://nanbyodata.jp'
-    ? '/static/img/members/'
-    : 'https://raw.githubusercontent.com/PENQEinc/nanbyodata/refs/heads/feature/team-page/static/img/members/';
+// 環境ごとの設定を一元管理
+const ENV_CONFIG = (() => {
+  const origin = window.location.origin;
+  // 環境ごとの設定マップ
+  const configs = {
+    'https://nanbyodata.jp': {
+      branch: 'master',
+      useGithub: true,
+    },
+    'https://dev-nanbyodata.dbcls.jp': {
+      branch: 'dev',
+      useGithub: true,
+    },
+    default: {
+      useGithub: false,
+    },
+  };
 
-// データのベースURLを設定
-// TODO: 本番環境と開発環境ではこのURLを変更する
-const DATA_URL =
-  window.location.origin === 'https://nanbyodata.jp'
-    ? '/static/data/members.json'
-    : 'https://raw.githubusercontent.com/PENQEinc/nanbyodata/refs/heads/feature/team-page/static/data/members.json';
+  // 該当する環境の設定を返す、なければデフォルト設定
+  return configs[origin] || configs['default'];
+})();
+
+// 環境設定から各URLを生成
+const BASE_URL = ENV_CONFIG.useGithub
+  ? `https://raw.githubusercontent.com/aidrd/nanbyodata/refs/heads/${ENV_CONFIG.branch}/static/img/members/`
+  : '/static/img/members/';
+
+const DATA_URL = ENV_CONFIG.useGithub
+  ? `https://raw.githubusercontent.com/aidrd/nanbyodata/refs/heads/${ENV_CONFIG.branch}/static/data/members.json`
+  : 'static/data/members.json';
 
 async function loadTeamMembers() {
   try {
@@ -214,16 +231,10 @@ async function loadTeamMembers() {
 
 // メンバーをソートする関数を追加
 function sortMembers(members, locale) {
-  console.log('Before sorting:');
   members.forEach((member) => {
     if (member.name['ja']) {
       const surname =
         member.name['yomi']?.split(' ')[0] || member.name['ja'].split(' ')[0]; // 読み仮名がない場合は漢字を使用
-      console.log(
-        `${member.name['ja']} (${member.name['en']} - よみ: ${surname})`
-      );
-    } else {
-      console.log(member.name['en']);
     }
   });
 
@@ -251,17 +262,10 @@ function sortMembers(members, locale) {
     return nameA.localeCompare(nameB, 'en');
   });
 
-  // ソート結果をコンソールに出力
-  console.log('Sorted members:');
   sortedMembers.forEach((member) => {
     if (member.name['ja']) {
       const surname =
         member.name['yomi']?.split(' ')[0] || member.name['ja'].split(' ')[0]; // 読み仮名がない場合は漢字を使用
-      console.log(
-        `${member.name['ja']} (${member.name['en']} - よみ: ${surname})`
-      );
-    } else {
-      console.log(member.name['en']);
     }
   });
 
