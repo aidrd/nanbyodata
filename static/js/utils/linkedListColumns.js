@@ -97,19 +97,19 @@ export const linkedListJaColumns = [
     ],
   },
   {
-    class: 'kegg-disease',
+    class: 'kegg',
     labels: [
       {
-        label: 'KEGG Disease ID',
-        content: 'kegg_disease_id',
+        label: 'KEGG ID',
+        content: 'displayid',
         type: 'url',
         hrefKey: 'kegg_url',
       },
-      { label: 'Disease Name', content: 'disease_name' },
-      { label: 'Pathway', content: 'pathway' },
+      { label: 'KEGG Label (JA)', content: 'kegg_label_ja' },
+      { label: 'KEGG Label (EN)', content: 'kegg_label_en' },
       { label: 'Match Type', content: 'property' },
     ],
-    keys: ['kegg_disease_id', 'disease_name', 'pathway', 'property'],
+    keys: ['displayid', 'kegg_label_ja', 'kegg_label_en', 'property'],
   },
 ];
 
@@ -189,18 +189,17 @@ export const linkedListEnColumns = [
     keys: ['displayid', 'parent', 'medgen_label', 'property'],
   },
   {
-    class: 'kegg-disease',
+    class: 'kegg',
     labels: [
       {
-        label: 'KEGG Disease ID',
-        content: 'kegg_disease_id',
+        label: 'KEGG ID',
+        content: 'displayid',
         type: 'url',
         hrefKey: 'kegg_url',
       },
-      { label: 'Disease Name', content: 'disease_name' },
-      { label: 'Pathway', content: 'pathway' },
+      { label: 'KEGG Label (EN)', content: 'kegg_label_en' },
       { label: 'Match Type', content: 'property' },
     ],
-    keys: ['kegg_disease_id', 'disease_name', 'pathway', 'property'],
+    keys: ['displayid', 'kegg_label_en', 'property'],
   },
 ];
