@@ -94,6 +94,14 @@ def datasets():
     return render_template('datasets.html')
 
 #####
+# TEAM
+## GET: 
+@app.route('/team')
+def team():
+    return render_template('team.html')
+
+
+#####
 # NANDOについて
 ## GET: 
 @app.route('/epidemiology')
