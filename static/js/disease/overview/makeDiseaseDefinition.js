@@ -13,6 +13,14 @@ export function makeDiseaseDefinition(entryData) {
       translate: false,
     },
     {
+      class: 'ordo',
+      existing: !!entryData.ordo_dif && entryData.ordo_dif.length > 0,
+      desc: entryData.ordo_dif
+        ? entryData.ordo_dif.map((item) => item.data).join(' ')
+        : '',
+      translate: true,
+    },
+    {
       class: 'monarch-initiative',
       existing: !!entryData.mondo_decs,
       desc: entryData.mondo_decs?.map((dec) => dec.id).join(' '),
@@ -22,6 +30,12 @@ export function makeDiseaseDefinition(entryData) {
       class: 'medgen',
       existing: !!entryData.medgen_definition,
       desc: entryData.medgen_definition,
+      translate: true,
+    },
+    {
+      class: 'kegg',
+      existing: !!entryData.kegg_description,
+      desc: entryData.kegg_description,
       translate: true,
     },
   ];
@@ -54,7 +68,9 @@ export function makeDiseaseDefinition(entryData) {
 
       if (item.translate) {
         const translationLink = document.createElement('a');
-        const translationUrl = `https://translate.google.co.jp/?hl=ja#en/ja/${item.desc}`;
+        const translationUrl = `https://translate.google.co.jp/?hl=ja&sl=en&tl=ja&text=${encodeURIComponent(
+          item.desc
+        )}`;
         translationLink.setAttribute('href', translationUrl);
         translationLink.setAttribute('target', '_blank');
         translationLink.setAttribute('rel', 'noopener noreferrer');

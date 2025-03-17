@@ -16,6 +16,7 @@ import { updateOverviewDisplay } from './overview/updateOverviewDisplay.js';
 
 import {
   makeCausalGene,
+  makeGlycanRelatedGene,
   makeGeneticTesting,
   makePhenotypes,
   makeCell,
@@ -51,8 +52,7 @@ const datasets = [
   { name: 'Orphanet', data: null },
   { name: 'Monarch Initiative', data: null },
   { name: 'MedGen', data: null },
-  // TODO: temporary value
-  { name: 'KEGG Disease', data: [] },
+  { name: 'KEGG', data: null },
   { name: 'Descriptions', data: null },
   {
     name: 'Number of Specific Medical Expenses Beneficiary Certificate Holders',
@@ -60,6 +60,7 @@ const datasets = [
   },
   { name: 'Sub-classes', data: null },
   { name: 'Causal Genes', data: null },
+  { name: 'Glycan-related Genes', data: null },
   { name: 'Genetic Testing', data: null },
   { name: 'Phenotypes', data: null },
   { name: 'Cell', data: null },
@@ -88,24 +89,20 @@ const datasets = [
 
     // Overview
     // リンク一覧のデータ
-    // TODO: change api endpoint to get all links
     await Promise.all([
       fetchData('nanbyodata_get_link_omim_by_nando_id'),
       fetchData('nanbyodata_get_link_orphanet_by_nando_id'),
       fetchData('nanbyodata_get_link_mondo_by_nando_id'),
       fetchData('nanbyodata_get_link_medgen_by_nando_id'),
-      // TODO: temporary comment out
-      // fetchData('test-nando-kegg'),
+      fetchData('nanbyodata_get_link_kegg_by_nando_id'),
     ])
-      .then(([omimData, orphanetData, monarchData, medgenData]) => {
-        // TODO: change to [omimData, orphanetData, monarchData, medgenData, keggData]
+      .then(([omimData, orphanetData, monarchData, medgenData, keggData]) => {
         const linkedListData = {
           omim: omimData,
           orphanet: orphanetData,
           'monarch-initiative': monarchData,
           medgen: medgenData,
-          //TODO: temporary value
-          'kegg-disease': [],
+          kegg: keggData,
         };
         makeLinkedList(linkedListData, nandoId);
         datasets.find((d) => d.name === 'OMIM').data = omimData;
@@ -113,8 +110,7 @@ const datasets = [
         datasets.find((d) => d.name === 'Monarch Initiative').data =
           monarchData;
         datasets.find((d) => d.name === 'MedGen').data = medgenData;
-        //TODO: temporary comment out
-        // datasets.find((d) => d.name === 'KEGG Disease').data = keggData;
+        datasets.find((d) => d.name === 'KEGG').data = keggData;
         checkAndLogDatasets();
       })
       .catch((error) => {
@@ -154,7 +150,8 @@ const datasets = [
       });
 
     // get Overview data
-    fetchData('nanbyodata_get_overview_by_nando_id').then((entryData) => {
+    // TODO: need to change overview api endpoint
+    fetchData('test_overview').then((entryData) => {
       if (entryData) {
         makeHeader(entryData);
         makeExternalLinks(entryData);
@@ -178,6 +175,8 @@ const datasets = [
           description,
           mondo_decs,
           medgen_definition,
+          kegg_description,
+          ordo_dif,
           ...filteredOverviewData
         } = entryData;
 
@@ -213,9 +212,13 @@ const datasets = [
 
         // 疾患定義ダウンロードデータの用意
         const definitionData = Object.fromEntries(
-          Object.entries({ description, mondo_decs, medgen_definition }).filter(
-            ([_, v]) => v != null
-          )
+          Object.entries({
+            description,
+            mondo_decs,
+            medgen_definition,
+            kegg_description,
+            ordo_dif,
+          }).filter(([_, v]) => v != null)
         );
 
         const definitionDataset = datasets.find(
@@ -246,6 +249,16 @@ const datasets = [
       (causalGeneData) => {
         makeCausalGene(causalGeneData);
         datasets.find((d) => d.name === 'Causal Genes').data = causalGeneData;
+        checkAndLogDatasets();
+      }
+    );
+
+    // get Glycan Related Genes data
+    fetchData('nanbyodata_get_glycosmos_gene_by_nando_id').then(
+      (glycanRelatedGeneData) => {
+        makeGlycanRelatedGene(glycanRelatedGeneData);
+        datasets.find((d) => d.name === 'Glycan-related Genes').data =
+          glycanRelatedGeneData;
         checkAndLogDatasets();
       }
     );
@@ -330,6 +343,7 @@ function trySwitchingContent(hash, retries = 0) {
   const items = [
     'overview',
     'causal-genes',
+    'glycan-related-genes',
     'genetic-testing',
     'phenotypes',
     'bio-resource-cell',

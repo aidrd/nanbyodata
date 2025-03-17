@@ -70,11 +70,20 @@ def api():
 
 
 #####
+# NanbyoDataについて
+## GET: 
+@app.route('/about_nanbyodata')
+def about_nanbyodata():
+    return render_template('about_nanbyodata.html')
+
+
+#####
 # NANDOについて
 ## GET: 
 @app.route('/about_nando')
 def about_nando():
     return render_template('about_nando.html')
+
 
 #####
 # DATASETSについて
@@ -82,6 +91,14 @@ def about_nando():
 @app.route('/datasets')
 def datasets():
     return render_template('datasets.html')
+
+#####
+# TEAM
+## GET: 
+@app.route('/team')
+def team():
+    return render_template('team.html')
+
 
 #####
 # NANDOについて

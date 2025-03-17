@@ -19,8 +19,15 @@
       </div>
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav">
-          <li class="nav-item">
-            <a class="nav-link" href="/about_nando">ABOUT</a>
+          <li class="nav-item dropdown">
+            <a class="nav-link" href="javascript:void(0);">
+              ABOUT <i class="dropdown-icon fas fa-angle-down"></i>
+            </a>
+            <ul class="dropdown-menu" style="display: none;">
+              <li><a class="dropdown-item" href="/about_nanbyodata">NanbyoData</a></li>
+              <li><a class="dropdown-item" href="/about_nando">NANDO</a></li>
+              <li><a class="dropdown-item" href="/team">TEAM</a></li>
+            </ul>
           </li>
           <li class="nav-item dropdown">
             <a class="nav-link" href="javascript:void(0);">
@@ -28,7 +35,7 @@
             </a>
             <ul class="dropdown-menu" style="display: none;">
               <li><a class="dropdown-item" href="/api">API</a></li>
-              <li><a class="dropdown-item" href="/#download">DOWNLOAD</a></li>
+              <li><a class="dropdown-item" href="/download/">DOWNLOAD</a></li>
               <li><a class="dropdown-item" href="/datasets">DATASETS</a></li>
             </ul>
           </li>
