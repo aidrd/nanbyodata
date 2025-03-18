@@ -1,5 +1,6 @@
 .news-summary {
   padding: 0 20px;
+  position: relative;
   .news-wrapper {
     display: flex;
     flex-direction: column;
@@ -24,6 +25,29 @@
       letter-spacing: 0.1rem;
     }
 
+    dd {
+      &::after {
+        content: 'new';
+        position: relative;
+        background: pink;
+        padding: 0 10px;
+        border-radius: 10px;
+        color: white;
+        left: 5px;
+        display: none;
+      }
+
+      &[data-date] {
+        &::after {
+          display: none;
+        }
+
+        &.is-recent::after {
+          display: inline-block;
+        }
+      }
+    }
+
     .more-list {
       display: none;
 
@@ -42,10 +66,17 @@
     padding: 0px 10px;
     cursor: pointer;
     transition: 0.15s;
+    background: var(--color-white);
+    outline: none;
 
     &:hover {
       color: #fff;
       background-color: var(--color-primary);
     }
+  }
+
+  .news-loading {
+    top: 100%;
+    left: 48%;
   }
 }

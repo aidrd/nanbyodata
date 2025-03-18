@@ -3,7 +3,15 @@ export const setLangChange = () => {
   langButton.addEventListener('change', function () {
     const value = this.value;
     const currentHash = window.location.hash;
-    const newUrl = '?lang=' + value + currentHash;
+    const search = window.location.search;
+    let newUrl = '';
+    if (search.includes('post')) {
+      const params = new URLSearchParams(search);
+      params.set('lang', value);
+      newUrl = '?' + params.toString();
+    } else {
+      newUrl = currentHash + '?' + 'lang=' + value;
+    }
     window.location.href = newUrl;
   });
 };
