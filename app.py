@@ -242,3 +242,10 @@ def get_overview(id_nando):
 @app.route('/news')
 def page():
     return render_template('news.html')
+
+#####
+# Chat Popup
+## GET: 
+@app.route('/chat_window')
+def chat():
+    return render_template('chat_window.html')

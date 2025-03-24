@@ -1,0 +1,53 @@
+<div class="chat-container">
+  <div class="chat-header">
+    <div class="header-left">
+      <h3>NanbyoData Assistant</h3>
+      <button class="chat-control-button chat-clear-button" title="新規作成">
+        <i class="fas fa-file-medical"></i>
+      </button>
+    </div>
+    <div class="header-controls">
+      <button class="chat-control-button chat-expand-button" title="拡大表示">
+        <i class="fas fa-expand-arrows-alt"></i>
+      </button>
+      <button class="chat-control-button chat-popup-button" title="別ウィンドウで開く">
+        <i class="fas fa-external-link-alt"></i>
+      </button>
+      <button class="chat-control-button chat-close-button" title="閉じる"><i class="fas fa-times"></i></button>
+    </div>
+  </div>
+  <div class="chat-body">
+    <div class="chat-messages">
+      <div class="message assistant">
+        <div class="message-avatar">
+          <img src="/static/img/roboto.png" alt="Robot Avatar" width="24" height="24">
+        </div>
+        <div class="message-content">
+          こんにちは！何かお手伝いできることはありますか？
+        </div>
+      </div>
+      <!-- Messages will be added here dynamically -->
+    </div>
+    <div class="chat-reference-panel">
+      <button class="reference-toggle" title="引用情報">
+        <i class="fas fa-info-circle"></i>
+        <span>引用情報</span>
+      </button>
+      <div class="reference-content">
+        <div class="reference-header">
+          <h4>引用情報</h4>
+          <button class="reference-close">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+        <div class="reference-body">
+          <!-- 引用情報の内容がここに入ります -->
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="chat-footer">
+    <textarea class="chat-input" placeholder="メッセージを入力してください..."></textarea>
+    <button class="chat-send-button">送信</button>
+  </div>
+</div>

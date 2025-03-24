@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>NanbyoData Assistant</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/static/sass/main.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <style>
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      box-sizing: border-box;
+    }
+
+    *,
+    *:before,
+    *:after {
+      box-sizing: inherit;
+    }
+
+    /* ポップアップ用のスタイル上書き */
+    .chat-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      border-radius: 0;
+      box-shadow: none;
+      transform: none;
+      opacity: 1;
+      pointer-events: auto;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .chat-body {
+      flex: 1;
+      height: auto;
+      max-height: none;
+      overflow: hidden !important;
+      position: relative;
+      width: 100%;
+    }
+
+    .chat-messages {
+      width: 100%;
+      box-sizing: border-box;
+      padding-right: 40px;
+      transition: padding-right 0.3s ease;
+      max-width: 100%;
+      overflow-y: auto;
+      height: 100%;
+      padding-bottom: 20px;
+
+      /* スクロールバーを非表示にする */
+      scrollbar-width: none;
+      /* Firefox */
+      -ms-overflow-style: none;
+      /* IE and Edge */
+    }
+
+    .chat-messages::-webkit-scrollbar {
+      display: none;
+      /* Chrome, Safari, Opera */
+    }
+
+    /* 引用パネルのスタイル調整 */
+    .chat-reference-panel {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+      z-index: 10;
+      width: 300px;
+      transition: transform 0.3s ease;
+      transform: translateX(100%);
+      display: flex;
+      flex-direction: column;
+      overflow: visible;
+    }
+
+    .chat-reference-panel.active {
+      transform: translateX(0);
+    }
+
+    /* 引用パネルが表示されているときはトグルボタンを非表示 */
+    .chat-reference-panel.active+.reference-toggle {
+      display: none;
+    }
+
+    /* 引用パネルのトグルボタン */
+    .reference-toggle {
+      position: absolute;
+      right: 0;
+      top: 10px;
+      background-color: var(--color-primary);
+      color: white;
+      border: none;
+      border-radius: 8px 0 0 8px;
+      /* 左側だけ角丸に */
+      width: 36px;
+      height: auto;
+      /* 高さを自動に */
+      padding: 10px 5px;
+      /* 上下のパディングを追加 */
+      display: flex;
+      flex-direction: column;
+      /* 縦方向に並べる */
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      z-index: 15;
+    }
+
+    /* アイコンのスタイル */
+    .reference-toggle i {
+      font-size: 18px;
+      margin-bottom: 8px;
+    }
+
+    /* 縦書きテキスト */
+    .reference-toggle span {
+      writing-mode: vertical-rl;
+      /* 縦書きにする */
+      text-orientation: upright;
+      /* 文字を縦向きに */
+      white-space: nowrap;
+      /* 改行しない */
+      font-size: 14px;
+      /* フォントサイズ調整 */
+      letter-spacing: 1px;
+      /* 文字間隔を調整 */
+    }
+
+    .reference-content {
+      background: white;
+      height: 100%;
+      width: 100%;
+      border-left: 1px solid #ddd;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .reference-header {
+      padding: 10px;
+      border-bottom: 1px solid #ddd;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-shrink: 0;
+      background-color: white;
+      position: sticky;
+      top: 0;
+      z-index: 2;
+    }
+
+    .reference-body {
+      padding: 10px;
+      overflow-y: auto;
+      flex-grow: 1;
+      height: calc(100% - 40px);
+
+      /* スクロールバーを非表示にする */
+      scrollbar-width: none;
+      /* Firefox */
+      -ms-overflow-style: none;
+      /* IE and Edge */
+    }
+
+    .reference-body::-webkit-scrollbar {
+      display: none;
+      /* Chrome, Safari, Opera */
+    }
+
+    /* 不要なボタンを非表示 */
+    .chat-popup-button,
+    .chat-expand-button {
+      display: none;
+    }
+
+    /* ヘッダーの左側部分のスタイル */
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    /* 新規作成ボタンのスタイル調整 */
+    .chat-clear-button {
+      margin-right: 5px;
+    }
+
+    .header-left h3 {
+      margin: 0;
+      font-size: 16px;
+    }
+
+    /* メッセージ内容が横にはみ出さないように */
+    .message-content {
+      word-break: break-word;
+      max-width: 100%;
+    }
+
+    .citation-title {
+      margin: 0 0 8px 0;
+      font-size: 14px;
+      color: #333;
+    }
+
+    .citation-text {
+      margin: 0;
+      font-size: 13px;
+      color: #666;
+      line-height: 1.5;
+    }
+
+    .no-citations {
+      color: #999;
+      font-style: italic;
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    /* ローディングメッセージのスタイル */
+    .message.loading .message-content:after {
+      content: "";
+      animation: loading-dots 1.5s infinite;
+    }
+
+    @keyframes loading-dots {
+      0% {
+        content: "";
+      }
+
+      25% {
+        content: ".";
+      }
+
+      50% {
+        content: "..";
+      }
+
+      75% {
+        content: "...";
+      }
+
+      100% {
+        content: "";
+      }
+    }
+  </style>
+</head>
+
+<body>
+  {% include 'component/chat.html' %}
+
+  <script src="/static/js/chat/chatWindow.js"></script>
+</body>
+
+</html>

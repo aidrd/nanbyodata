@@ -405,3 +405,7 @@ document.addEventListener('selectedLabel', function (event) {
   const labelInfo = event.detail.labelInfo;
   window.location.href = `${location.origin}/disease/${labelInfo.id}`;
 });
+
+document.querySelector('.chat-button').addEventListener('click', function () {
+  // ここにチャット画面を表示するコードを追加します
+});
