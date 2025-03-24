@@ -36,24 +36,20 @@
     <!-- Navigation -->
     {% include 'component/navigation.html' %}
 
-    <!--- News article page -->
     <div class="page-layout" id="news-page">
       <header class="page-title">
-        {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
-        <h2>お知らせ</h2>
-        {% else %}
         <h2>News</h2>
-        {% endif %}
       </header>
+
       <div class="contents-wrapper">
-        <h3 class="news-title">{{title}}</h3>
+        <h3 class="news-title"></h3>
         <hr />
-        <p class="post-date">{{date}}</p>
-        <div class="post-content">{{ content|safe }}</div>
+        <p class="post-date"></p>
+        <div class="post-content"></div>
       </div>
+
     </div>
 
-    <!--- footer --->
     {% include 'component/footer.html' %}
 
     <!--- NanbyoData利用規約 modal -->
@@ -62,7 +58,6 @@
     {% else %}
     {% include 'component/modal-tos_en.html' %}
     {% endif %}
-
   </main>
 
 
@@ -78,7 +73,10 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
     integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
     </script>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <script type="module" src="/static/js/main.js"></script>
+  <script type="module" src="/static/js/news/news.js"></script>]
+
 </body>
 
 </html>
