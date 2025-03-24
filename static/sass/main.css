@@ -604,6 +604,7 @@ header.search-area .intro-text .keyword a {
 
 .news-summary {
   padding: 0 20px;
+  position: relative;
 }
 .news-summary .news-wrapper {
   display: flex;
@@ -626,6 +627,22 @@ header.search-area .intro-text .keyword a {
   font-weight: normal;
   letter-spacing: 0.1rem;
 }
+.news-summary .logdata dd::after {
+  content: "new";
+  position: relative;
+  background: pink;
+  padding: 0 10px;
+  border-radius: 10px;
+  color: white;
+  left: 5px;
+  display: none;
+}
+.news-summary .logdata dd[data-date]::after {
+  display: none;
+}
+.news-summary .logdata dd[data-date].is-recent::after {
+  display: inline-block;
+}
 .news-summary .logdata .more-list {
   display: none;
 }
@@ -641,10 +658,16 @@ header.search-area .intro-text .keyword a {
   padding: 0px 10px;
   cursor: pointer;
   transition: 0.15s;
+  background: var(--color-white);
+  outline: none;
 }
 .news-summary .more:hover {
   color: #fff;
   background-color: var(--color-primary);
+}
+.news-summary .news-loading {
+  top: 100%;
+  left: 48%;
 }
 
 .card-wrapper {
@@ -1481,4 +1504,50 @@ Disease page right top */
   -webkit-margin-start: 0;
   margin-inline-start: 0;
   display: inline;
+}
+
+.team-section .team-box {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  padding: 2rem 4rem;
+  margin-bottom: 2rem;
+}
+.team-section .team-box h3 {
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  font-size: 1.4rem;
+  font-weight: bold;
+  color: var(--color-secondary);
+}
+.team-section .team-box .collaborators-section h4 {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.member-card .member-image {
+  width: 150px;
+  height: 150px;
+  margin: 0 auto;
+}
+.member-card .member-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border: 2px solid var(--color-primary-opacity2);
+}
+.member-card .member-image i {
+  font-size: 150px;
+  color: #eee;
+  width: 150px;
+  height: 150px;
+  line-height: 150px;
+}
+.member-card .member-info .member-name {
+  font-size: 1rem;
+  margin-bottom: 0.25rem;
+}
+.member-card .member-info .member-affiliation {
+  font-size: 0.875rem;
+  color: #666;
 }/*# sourceMappingURL=main.css.map */

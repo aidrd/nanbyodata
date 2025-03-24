@@ -74,12 +74,12 @@ export const downloadDatasets = (nandoId, datasets) => {
               data
             ),
           };
-        case 'KEGG Disease':
+        case 'KEGG':
           return {
             name,
             data: reconstructLinkedListData(
               currentLang === 'ja' ? linkedListJaColumns : linkedListEnColumns,
-              'kegg-disease',
+              'kegg',
               data
             ),
           };
@@ -186,6 +186,8 @@ export const downloadDatasets = (nandoId, datasets) => {
                   ? 'Close Match'
                   : matchType === 'exactMatch'
                   ? 'Exact Match'
+                  : matchType === 'hasDbXref'
+                  ? 'database_cross_reference'
                   : value;
             } else {
               reducedData[column.label] = value;
@@ -205,7 +207,6 @@ export const downloadDatasets = (nandoId, datasets) => {
   function prepareJsonData() {
     const categoryMappings = {
       Overview: [],
-      // TODO: fix below contents
       Synonyms: [],
       'Modes of Inheritance': [],
       'Overview/Links': [
@@ -213,7 +214,7 @@ export const downloadDatasets = (nandoId, datasets) => {
         'Orphanet',
         'Monarch Initiative',
         'MedGen',
-        'KEGG Disease',
+        'KEGG',
       ],
       Descriptions: [],
       'Number of Specific Medical Expenses Beneficiary Certificate Holders': [],

@@ -88,8 +88,15 @@
           </div>
           <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav">
-              <li class="nav-item">
-                <a class="nav-link" href="/about_nando">ABOUT</a>
+              <li class="nav-item dropdown">
+                <a class="nav-link" href="javascript:void(0);">
+                  ABOUT <i class="dropdown-icon fas fa-angle-down"></i>
+                </a>
+                <ul class="dropdown-menu" style="display: none;">
+                  <li><a class="dropdown-item" href="/about_nanbyodata">NanbyoData</a></li>
+                  <li><a class="dropdown-item" href="/about_nando">NANDO</a></li>
+                  <li><a class="dropdown-item" href="/team">TEAM</a></li>
+                </ul>
               </li>
               <li class="nav-item dropdown">
                 <a class="nav-link" href="javascript:void(0);">
@@ -97,7 +104,7 @@
                 </a>
                 <ul class="dropdown-menu" style="display: none;">
                   <li><a class="dropdown-item" href="/api">API</a></li>
-                  <li><a class="dropdown-item" href="/#download">DOWNLOAD</a></li>
+                  <li><a class="dropdown-item" href="/download/">DOWNLOAD</a></li>
                   <li><a class="dropdown-item" href="/datasets">DATASETS</a></li>
                 </ul>
               </li>
@@ -491,9 +498,9 @@
                       <div class="tab-content medgen">
                       </div>
 
-                      <input type="radio" name="linked-items" class="tab-switch" id="linked-item-kegg-disease" />
-                      <label class="tab-label" for="linked-item-kegg-disease">KEGG Disease</label>
-                      <div class="tab-content kegg-disease">
+                      <input type="radio" name="linked-items" class="tab-switch" id="linked-item-kegg" />
+                      <label class="tab-label" for="linked-item-kegg">KEGG</label>
+                      <div class="tab-content kegg">
                       </div>
 
                       <span class="tab-label -flex"></span>
@@ -517,6 +524,11 @@
                       <div class="tab-content mhlw">
                       </div>
 
+                      <input type="radio" name="disease-definition" class="tab-switch" id="disease-ordo" />
+                      <label class="tab-label" for="disease-ordo"><small>from&nbsp;</small>Orphanet</label>
+                      <div class="tab-content ordo">
+                      </div>
+
                       <input type="radio" name="disease-definition" class="tab-switch"
                         id="disease-monarch-initiative" />
                       <label class="tab-label" for="disease-monarch-initiative"><small>from&nbsp;</small>Monarch
@@ -527,6 +539,11 @@
                       <input type="radio" name="disease-definition" class="tab-switch" id="disease-medgen" />
                       <label class="tab-label" for="disease-medgen"><small>from&nbsp;</small>MedGen</label>
                       <div class="tab-content medgen">
+                      </div>
+
+                      <input type="radio" name="disease-definition" class="tab-switch" id="disease-kegg" />
+                      <label class="tab-label" for="disease-kegg"><small>from&nbsp;</small>KEGG</label>
+                      <div class="tab-content kegg">
                       </div>
 
                       <span class="tab-label -flex"></span>

@@ -58,8 +58,7 @@ app.debug = True
 ## GET: display top page
 @app.route('/')
 def index():
-    news_info = get_news_info()
-    return render_template('index.html', news_info=news_info)
+    return render_template('index.html')
 
 
 #####
@@ -71,11 +70,20 @@ def api():
 
 
 #####
+# NanbyoDataについて
+## GET: 
+@app.route('/about_nanbyodata')
+def about_nanbyodata():
+    return render_template('about_nanbyodata.html')
+
+
+#####
 # NANDOについて
 ## GET: 
 @app.route('/about_nando')
 def about_nando():
     return render_template('about_nando.html')
+
 
 #####
 # DATASETSについて
@@ -83,6 +91,14 @@ def about_nando():
 @app.route('/datasets')
 def datasets():
     return render_template('datasets.html')
+
+#####
+# TEAM
+## GET: 
+@app.route('/team')
+def team():
+    return render_template('team.html')
+
 
 #####
 # NANDOについて
@@ -223,48 +239,6 @@ def get_overview(id_nando):
     return {'title': title, 'description': description}
 
 # Newsページ
-def load_news_content(filename):
-    locale = get_locale() 
-    path = os.path.join("posts", locale, filename)
-    with open(path, "r", encoding="utf-8") as file:
-        content = file.read()
-    return content
-
-def get_news_info():
-    locale = get_locale()
-    if locale is None:
-        locale = 'en'
-    path = os.path.join("posts", locale)
-    md_files = [f for f in os.listdir(path) if f.endswith(".md")]
-
-    news_data = {}
-
-    for md_file in md_files:
-        md_content = load_news_content(md_file)
-        md_file_path = os.path.splitext(os.path.join("posts", md_file))[0]
-
-        html_content = markdown2.markdown(md_content, extras=["metadata", "tables"])
-        metadata = html_content.metadata
-        title = metadata['title'].replace("'", "")
-        date = md_file.split('-post')[0].replace('-', '.')
-        news_data[md_file] = {"date": date, "title": title, "path": md_file_path}
-
-    def sort_key(item):
-        date_str, post_section = item[0].split('-post')
-        post_num = post_section.split('.')[0]
-        date_obj = datetime.datetime.strptime(date_str, '%Y-%m-%d')
-        return (date_obj, int(post_num))
-
-
-    sorted_news_data = dict(sorted(news_data.items(), key=sort_key, reverse=True))
-    return sorted_news_data
-
-@app.route('/posts/<filename>')
-def page(filename):
-    md_content = load_news_content(filename + '.md')
-    html_content = markdown2.markdown(md_content, extras=["metadata", "tables", "task_list"])
-    metadata = html_content.metadata
-    title = metadata['title'].replace("'", "")
-    date = filename.split('-post')[0].replace('-', '.')
-
-    return render_template('news.html', title=title, date=date, content=html_content)
+@app.route('/news')
+def page():
+    return render_template('news.html')
