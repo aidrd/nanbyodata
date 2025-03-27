@@ -70,8 +70,8 @@
           "yomi": "くしだ たつや"
         },
         "affiliation": {
-          "ja": "理化学研究所バイオリソース研究センター",
-          "en": "RIKEN BioResource Research Center"
+          "ja": "理研BRC",
+          "en": "RIKEN BRC"
         },
         "location": "domestic",
         "image_name": "",
@@ -98,8 +98,8 @@
           "yomi": "あだち かおり"
         },
         "affiliation": {
-          "ja": "",
-          "en": ""
+          "ja": "鳥取大学",
+          "en": "Tottori University"
         },
         "location": "domestic",
         "image_name": "",
@@ -126,7 +126,7 @@
           "yomi": "かわい ようすけ"
         },
         "affiliation": {
-          "ja": "国立研究開発法人国立国際医療研究センター",
+          "ja": "国立国際医療研究センター",
           "en": "National Center for Global Health and Medicine"
         },
         "location": "domestic",
@@ -166,7 +166,7 @@
         },
         "affiliation": {
           "ja": "",
-          "en": ""
+          "en": "University Hospital Bonn"
         },
         "location": "international",
         "image_name": "",
@@ -281,8 +281,8 @@
           "yomi": "ますや ひろし"
         },
         "affiliation": {
-          "ja": "理化学研究所バイオリソース研究センター",
-          "en": "RIKEN BioResource Research Center"
+          "ja": "理研BRC",
+          "en": "RIKEN BRC"
         },
         "location": "",
         "image_name": "hiroshi_masuya.jpg",
