@@ -61,65 +61,6 @@
     ]
   },
   {
-    "team": "Advisors",
-    "members": [
-      {
-        "name": {
-          "ja": "",
-          "en": "Orion Buske"
-        },
-        "affiliation": {
-          "ja": "",
-          "en": "PhenoTips Inc."
-        },
-        "location": "",
-        "image_name": "orion_buske.jpg",
-        "url": ""
-      },
-      {
-        "name": {
-          "ja": "桝屋 啓志",
-          "en": "Hiroshi Masuya",
-          "yomi": "ますや ひろし"
-        },
-        "affiliation": {
-          "ja": "理化学研究所バイオリソース研究センター",
-          "en": "RIKEN BioResource Research Center"
-        },
-        "location": "",
-        "image_name": "hiroshi_masuya.jpg",
-        "url": ""
-      },
-      {
-        "name": {
-          "ja": "荻島 創一",
-          "en": "Soichi Ogishima",
-          "yomi": "おぎしま そういち"
-        },
-        "affiliation": {
-          "ja": "東北大学",
-          "en": "Tohoku University"
-        },
-        "image_name": "soichi_ogishima.jpg",
-        "url": ""
-      },
-      {
-        "name": {
-          "ja": "菊池 敦生",
-          "en": "Atsuo Kikuchi",
-          "yomi": "きくち あつお"
-        },
-        "affiliation": {
-          "ja": "東北大学",
-          "en": "Tohoku University"
-        },
-        "location": "",
-        "image_name": "",
-        "url": ""
-      }
-    ]
-  },
-  {
     "team": "Key Collaborators",
     "members": [
       {
@@ -313,6 +254,65 @@
         },
         "location": "domestic",
         "image_name": "hideki_hatanaka.jpg",
+        "url": ""
+      }
+    ]
+  },
+  {
+    "team": "Advisors",
+    "members": [
+      {
+        "name": {
+          "ja": "",
+          "en": "Orion Buske"
+        },
+        "affiliation": {
+          "ja": "",
+          "en": "PhenoTips Inc."
+        },
+        "location": "",
+        "image_name": "orion_buske.jpg",
+        "url": ""
+      },
+      {
+        "name": {
+          "ja": "桝屋 啓志",
+          "en": "Hiroshi Masuya",
+          "yomi": "ますや ひろし"
+        },
+        "affiliation": {
+          "ja": "理化学研究所バイオリソース研究センター",
+          "en": "RIKEN BioResource Research Center"
+        },
+        "location": "",
+        "image_name": "hiroshi_masuya.jpg",
+        "url": ""
+      },
+      {
+        "name": {
+          "ja": "荻島 創一",
+          "en": "Soichi Ogishima",
+          "yomi": "おぎしま そういち"
+        },
+        "affiliation": {
+          "ja": "東北大学",
+          "en": "Tohoku University"
+        },
+        "image_name": "soichi_ogishima.jpg",
+        "url": ""
+      },
+      {
+        "name": {
+          "ja": "菊池 敦生",
+          "en": "Atsuo Kikuchi",
+          "yomi": "きくち あつお"
+        },
+        "affiliation": {
+          "ja": "東北大学",
+          "en": "Tohoku University"
+        },
+        "location": "",
+        "image_name": "",
         "url": ""
       }
     ]
