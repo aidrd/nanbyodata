@@ -44,6 +44,29 @@ popup();
 breadcrumb(nandoId);
 setLangChange();
 
+// 初期ローディングスピナーを表示
+const contentElement = document.getElementById('content');
+if (contentElement) {
+  // 既存のローディングスピナーがあれば削除
+  const existingSpinner = contentElement.querySelector('.loading-spinner');
+  if (existingSpinner) {
+    existingSpinner.remove();
+  }
+    
+  // コンテンツのバックグラウンドを表示しながらコンテンツ部分は非表示に
+  contentElement.style.display = 'block';
+  // コンテンツ内の要素を一旦非表示にする
+  const contentChildren = contentElement.children;
+  for (let i = 0; i < contentChildren.length; i++) {
+    contentChildren[i].style.visibility = 'hidden';
+  }
+  
+  // スピナーは表示
+  const loadingSpinner = document.createElement('div');
+  loadingSpinner.className = 'loading-spinner';
+  contentElement.appendChild(loadingSpinner);
+}
+
 const datasets = [
   { name: 'Overview', data: null },
   { name: 'Synonyms', data: null },
@@ -223,6 +246,22 @@ const datasets = [
             const overviewEl = document.querySelector('.nav-link.overview');
             overviewEl.classList.add('selected');
             overviewEl.style.cursor = 'pointer';
+            
+            // スピナーを削除
+            const spinner = document.querySelector('#content > .loading-spinner');
+            if (spinner) {
+              spinner.remove();
+            }
+            
+            // コンテンツの可視性を戻す
+            const contentElement = document.getElementById('content');
+            if (contentElement) {
+              const contentChildren = contentElement.children;
+              for (let i = 0; i < contentChildren.length; i++) {
+                contentChildren[i].style.visibility = 'visible';
+              }
+            }
+            
             document.getElementById('content').style.display = 'block';
           }
         }
@@ -307,6 +346,22 @@ function trySwitchingContent(hash, retries = 0) {
   const maxRetries = 10;
   let found = false;
 
+  // コンテンツがロード中の場合はローディングスピナーを表示
+  const contentElement = document.getElementById('content');
+  if (contentElement) {
+    // 既存のローディングスピナーがあれば削除
+    const existingSpinner = contentElement.querySelector('.loading-spinner');
+    if (existingSpinner) {
+      existingSpinner.remove();
+    }
+    
+    // コンテンツを非表示にし、ローディングスピナーを追加
+    contentElement.style.display = 'block';
+    const loadingSpinner = document.createElement('div');
+    loadingSpinner.className = 'loading-spinner';
+    contentElement.appendChild(loadingSpinner);
+  }
+
   const items = [
     'overview',
     'causal-genes',
@@ -347,13 +402,32 @@ function trySwitchingContent(hash, retries = 0) {
   if (found && (!alreadySelected || alreadySelected === element)) {
     element.classList.add('selected');
     switchingDisplayContents(hash);
+    // スピナーを削除
+    const spinner = document.querySelector('#content > .loading-spinner');
+    if (spinner) {
+      spinner.remove();
+    }
+    // コンテンツの可視性を戻す
+    const contentElement = document.getElementById('content');
+    if (contentElement) {
+      const contentChildren = contentElement.children;
+      for (let i = 0; i < contentChildren.length; i++) {
+        contentChildren[i].style.visibility = 'visible';
+      }
+    }
     document.getElementById('content').style.display = 'block';
   } else if (!found && retries < maxRetries) {
     console.error('No hash item found, retrying...');
     setTimeout(() => {
       trySwitchingContent(hash, retries + 1);
-    }, 3000);
+    }, 1000);
   } else {
+    // 最大リトライ回数に達した場合もスピナーを削除
+    const spinner = document.querySelector('#content > .loading-spinner');
+    if (spinner) {
+      spinner.remove();
+    }
+    
     if (alreadySelected) {
       return;
     } else {
