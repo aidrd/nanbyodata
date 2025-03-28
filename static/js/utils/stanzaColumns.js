@@ -93,7 +93,7 @@ export const glycanRelatedGeneColumns = [
   },
   {
     id: 'pmid_num',
-    label: 'PubMed',
+    label: 'References',
     link: 'pmid_link',
   },
 ];
