@@ -445,7 +445,7 @@ function trySwitchingContent(hash, retries = 0) {
   }
 }
 
-// smart box
+// smartbox
 document.addEventListener('selectedSmartBoxLabel', function (event) {
   const labelInfo = event.detail.labelInfo;
   window.location.href = `${location.origin}/disease/${labelInfo.id}`;

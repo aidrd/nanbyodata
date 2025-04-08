@@ -14,7 +14,7 @@ if (window.location.pathname === '/epidemiology') {
   drawPediatricChronicSpecificDiseaseColumnsTable();
 }
 
-// smart box
+// smartbox
 if (window.location.pathname === '/') {
   document.addEventListener('selectedSmartBoxLabel', function (event) {
     const labelInfo = event.detail.labelInfo;
