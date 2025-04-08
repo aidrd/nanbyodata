@@ -55,22 +55,53 @@ export const pediatricChronicSpecificDiseaseEnColumns = [
 export const causalGeneColumns = [
   {
     id: 'gene_symbol',
-    label: 'Gene symbol',
+    label: 'Gene_symbol(OMIM)',
     link: 'omim_url',
     target: '_blank',
+    rowspan: true,
   },
-  { id: 'ncbi_id', label: 'NCBI gene ID', link: 'ncbi_url', target: '_blank' },
   {
-    id: 'nando_label_e',
-    label: 'NANDO disease label',
-    link: 'nando_ida',
+    id: 'ncbi_id',
+    label: 'NCBI gene ID',
+    link: 'ncbi_url',
+    target: '_blank',
+    rowspan: true,
+  },
+  {
+    id: 'nando_id',
+    label: 'NANDO ID',
+    link: 'nando',
+    target: '_blank',
+  },
+  {
+    id: 'nando_label_en',
+    label: 'NANDO Label(en)',
+    lineClamp: 1,
+  },
+  {
+    id: 'nando_label_ja',
+    label: 'NANDO Label(ja)',
+    lineClamp: 1,
+  },
+  {
+    id: 'mondo_id1',
+    label: 'BridgeID(MONDO)',
+  },
+  {
+    id: 'mondo_id',
+    label: 'Child_bridgeID(MONDO)',
+    link: 'mondo_url',
     target: '_blank',
   },
   {
     id: 'mondo_label',
-    label: 'Mondo disease label',
-    link: 'mondo_url',
-    target: '_blank',
+    label: 'MONDO Label(en)',
+    lineClamp: 1,
+  },
+  {
+    id: 'mondo_label_ja',
+    label: 'MONDO Label(ja)',
+    lineClamp: 1,
   },
 ];
 

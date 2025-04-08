@@ -14,12 +14,14 @@ export function createObjectUrlFromData(data) {
  * @param {string} objectUrl - The object URL containing the data for the table.
  * @param {string} columns - The columns configuration for the table.
  */
+
+// TODO: togostanza-themesのファイルで以下の内容を上書きする custom-css-urlを指定する
 export function updateElementWithTable(element, objectUrl, columns) {
   element.innerHTML = `
     <togostanza-pagination-table
       data-url="${objectUrl}"
       data-type="json"
-      custom-css-url="https://togostanza.github.io/togostanza-themes/contrib/nanbyodata.css"
+      custom-css-url="https://gstein314.github.io/sample_api/test-vertical-align-top.css"
       fixed-columns="1"
       page-size-option="100"
       page-slider="false"

@@ -52,7 +52,7 @@ if (contentElement) {
   if (existingSpinner) {
     existingSpinner.remove();
   }
-    
+
   // コンテンツのバックグラウンドを表示しながらコンテンツ部分は非表示に
   contentElement.style.display = 'block';
   // コンテンツ内の要素を一旦非表示にする
@@ -60,7 +60,7 @@ if (contentElement) {
   for (let i = 0; i < contentChildren.length; i++) {
     contentChildren[i].style.visibility = 'hidden';
   }
-  
+
   // スピナーは表示
   const loadingSpinner = document.createElement('div');
   loadingSpinner.className = 'loading-spinner';
@@ -136,18 +136,20 @@ const datasets = [
         datasets.find((d) => d.name === 'KEGG').data = keggData;
         checkAndLogDatasets();
       }),
-      
+
       // 他のAPI呼び出し
-      fetchData('nanbyodata_get_stats_on_patient_number_by_nando_id').then((response) => {
-        const numOfPatientsData = response;
-        makeNumOfPatients(numOfPatientsData);
-        datasets.find(
-          (d) =>
-            d.name ===
-            'Number of Specific Medical Expenses Beneficiary Certificate Holders'
-        ).data = numOfPatientsData;
-        checkAndLogDatasets();
-      }),
+      fetchData('nanbyodata_get_stats_on_patient_number_by_nando_id').then(
+        (response) => {
+          const numOfPatientsData = response;
+          makeNumOfPatients(numOfPatientsData);
+          datasets.find(
+            (d) =>
+              d.name ===
+              'Number of Specific Medical Expenses Beneficiary Certificate Holders'
+          ).data = numOfPatientsData;
+          checkAndLogDatasets();
+        }
+      ),
       fetchData('nanbyodata_get_sub_class_by_nando_id').then((response) => {
         const subClassData = response;
         makeSubClass(subClassData);
@@ -187,7 +189,8 @@ const datasets = [
             ...filteredOverviewData
           } = entryData;
 
-          datasets.find((d) => d.name === 'Overview').data = filteredOverviewData;
+          datasets.find((d) => d.name === 'Overview').data =
+            filteredOverviewData;
 
           // 遺伝形式ダウンロードデータの用意
           const inheritanceUrisData = Object.fromEntries(
@@ -246,13 +249,15 @@ const datasets = [
             const overviewEl = document.querySelector('.nav-link.overview');
             overviewEl.classList.add('selected');
             overviewEl.style.cursor = 'pointer';
-            
+
             // スピナーを削除
-            const spinner = document.querySelector('#content > .loading-spinner');
+            const spinner = document.querySelector(
+              '#content > .loading-spinner'
+            );
             if (spinner) {
               spinner.remove();
             }
-            
+
             // コンテンツの可視性を戻す
             const contentElement = document.getElementById('content');
             if (contentElement) {
@@ -261,18 +266,16 @@ const datasets = [
                 contentChildren[i].style.visibility = 'visible';
               }
             }
-            
+
             document.getElementById('content').style.display = 'block';
           }
         }
       }),
-      fetchData('nanbyodata_get_causal_gene_by_nando_id').then(
-        (causalGeneData) => {
-          makeCausalGene(causalGeneData);
-          datasets.find((d) => d.name === 'Causal Genes').data = causalGeneData;
-          checkAndLogDatasets();
-        }
-      ),
+      fetchData('test_get_gene').then((causalGeneData) => {
+        makeCausalGene(causalGeneData);
+        datasets.find((d) => d.name === 'Causal Genes').data = causalGeneData;
+        checkAndLogDatasets();
+      }),
       fetchData('nanbyodata_get_glycosmos_gene_by_nando_id').then(
         (glycanRelatedGeneData) => {
           makeGlycanRelatedGene(glycanRelatedGeneData);
@@ -289,11 +292,13 @@ const datasets = [
           checkAndLogDatasets();
         }
       ),
-      fetchData('nanbyodata_get_hpo_data_by_nando_id').then((phenotypesData) => {
-        makePhenotypes(phenotypesData);
-        datasets.find((d) => d.name === 'Phenotypes').data = phenotypesData;
-        checkAndLogDatasets();
-      }),
+      fetchData('nanbyodata_get_hpo_data_by_nando_id').then(
+        (phenotypesData) => {
+          makePhenotypes(phenotypesData);
+          datasets.find((d) => d.name === 'Phenotypes').data = phenotypesData;
+          checkAndLogDatasets();
+        }
+      ),
       fetchData('nanbyodata_get_riken_brc_cell_info_by_nando_id').then(
         (cellData) => {
           makeCell(cellData);
@@ -322,11 +327,13 @@ const datasets = [
           checkAndLogDatasets();
         }
       ),
-      fetchData('nanbyodata_get_mgend_variant_by_nando_id').then((mgendData) => {
-        makeMgend(mgendData);
-        datasets.find((d) => d.name === 'MGeND').data = mgendData;
-        checkAndLogDatasets();
-      })
+      fetchData('nanbyodata_get_mgend_variant_by_nando_id').then(
+        (mgendData) => {
+          makeMgend(mgendData);
+          datasets.find((d) => d.name === 'MGeND').data = mgendData;
+          checkAndLogDatasets();
+        }
+      ),
     ]);
   } catch (error) {
     console.error('Error:', error);
@@ -354,7 +361,7 @@ function trySwitchingContent(hash, retries = 0) {
     if (existingSpinner) {
       existingSpinner.remove();
     }
-    
+
     // コンテンツを非表示にし、ローディングスピナーを追加
     contentElement.style.display = 'block';
     const loadingSpinner = document.createElement('div');
@@ -427,7 +434,7 @@ function trySwitchingContent(hash, retries = 0) {
     if (spinner) {
       spinner.remove();
     }
-    
+
     if (alreadySelected) {
       return;
     } else {
