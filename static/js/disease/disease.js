@@ -271,11 +271,13 @@ const datasets = [
           }
         }
       }),
-      fetchData('test_get_gene').then((causalGeneData) => {
-        makeCausalGene(causalGeneData);
-        datasets.find((d) => d.name === 'Causal Genes').data = causalGeneData;
-        checkAndLogDatasets();
-      }),
+      fetchData('nanbyodata_get_causal_gene_by_nando_id').then(
+        (causalGeneData) => {
+          makeCausalGene(causalGeneData);
+          datasets.find((d) => d.name === 'Causal Genes').data = causalGeneData;
+          checkAndLogDatasets();
+        }
+      ),
       fetchData('nanbyodata_get_glycosmos_gene_by_nando_id').then(
         (glycanRelatedGeneData) => {
           makeGlycanRelatedGene(glycanRelatedGeneData);
