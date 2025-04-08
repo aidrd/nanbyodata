@@ -80,11 +80,13 @@ export const glycanRelatedGeneColumns = [
     label: 'Glycan related gene (GlyCosmos)',
     link: 'glycosmosgene',
     align: 'center',
+    rowspan: true,
   },
   {
     id: 'ncbigene_description',
     label: 'Full name (NCBI gene)',
     link: 'ncbi_url',
+    rowspan: true,
   },
   {
     id: 'go_term_mf',
