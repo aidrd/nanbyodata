@@ -38,9 +38,6 @@
   <!-- Main CSS -->
   <link rel="stylesheet" type="text/css" href="/static/sass/main.css" />
 
-  <!-- SmartBox Style -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/PubCaseFinder/pubcasefinder_tools@main/smartbox/style.css">
-
   <!-- favicon -->
   <link rel="icon" type="image/x-icon" href="/static/img/favicon.ico">
 
@@ -60,17 +57,14 @@
           </h1>
           <div class="disease-smart-box">
             {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
-            <smart-box smart-box-id="NANDO" data-path="/ontology/current_release/nando.tsv" placeholder="難病名を入力"
-              autocomplete="off" options='{
-              "api_url": "",
-              "max_results": 100
-            }'></smart-box>
+            <div class="smart-box-container">
+              <input type="text" id="NANDO" class="smart-box-input" autocomplete="off" placeholder="難病名を入力">
+            </div>
             {% else %}
-            <smart-box smart-box-id="NANDO" data-path="/ontology/current_release/nando.tsv"
-              placeholder="Type in disease name" autocomplete="off" options='{
-              "api_url": "",
-              "max_results": 100
-            }'></smart-box>
+            <div class="smart-box-container">
+              <input type="text" id="NANDO" class="smart-box-input" autocomplete="off"
+                placeholder="Type in disease name">
+            </div>
             {% endif %}
           </div>
         </div>
@@ -93,8 +87,7 @@
                 <ul class="dropdown-menu" style="display: none;">
                   <li><a class="dropdown-item" href="/about_nanbyodata">NanbyoData</a></li>
                   <li><a class="dropdown-item" href="/about_nando">NANDO</a></li>
-                  <!-- TODO: チームページを作成したら表示 -->
-                  <!-- <li><a class="dropdown-item" href="/team">TEAM</a></li> -->
+                  <li><a class="dropdown-item" href="/team">TEAM</a></li>
                 </ul>
               </li>
               <li class="nav-item dropdown">
@@ -774,9 +767,6 @@
     crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
   <script type="module" src="/static/js/disease/disease.js"></script>
-  <script type="module"
-    src="https://cdn.jsdelivr.net/gh/PubCaseFinder/pubcasefinder_tools@main/smartbox/smartbox.js"></script>
-  </script>
 </body>
 
 </html>

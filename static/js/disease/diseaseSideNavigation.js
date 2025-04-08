@@ -115,21 +115,6 @@ export function switchingDisplayContents(selectedItemId) {
     '#bio-resource',
     '#variant',
   ];
-  
-  // ローディングスピナーを追加
-  const contentElement = document.getElementById('content');
-  if (contentElement) {
-    // 既存のローディングスピナーがあれば削除
-    const existingSpinner = contentElement.querySelector('.loading-spinner');
-    if (existingSpinner) {
-      existingSpinner.remove();
-    }
-    
-    // ローディングスピナーを追加
-    const loadingSpinner = document.createElement('div');
-    loadingSpinner.className = 'loading-spinner';
-    contentElement.appendChild(loadingSpinner);
-  }
 
   // Hide all elements
   items.forEach((selector) => toggleDisplay(selector));
@@ -180,18 +165,6 @@ export function switchingDisplayContents(selectedItemId) {
         break;
       default:
         window.location.href = window.location.href.split('#')[0];
-    }
-    
-    // コンテンツ表示後、ローディングスピナーを削除
-    const spinner = document.querySelector('#content > .loading-spinner');
-    if (spinner) {
-      spinner.remove();
-    }
-    
-    // コンテンツの可視性を戻す
-    const contentChildren = contentElement.children;
-    for (let i = 0; i < contentChildren.length; i++) {
-      contentChildren[i].style.visibility = 'visible';
     }
   }
 }

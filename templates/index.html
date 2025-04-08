@@ -33,9 +33,6 @@
   <!-- CSS -->
   <link rel="stylesheet" type="text/css" href="/static/sass/main.css">
 
-  <!-- SmartBox Style -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/PubCaseFinder/pubcasefinder_tools@main/smartbox/style.css">
-
   <!-- favicon -->
   <link rel="icon" type="image/x-icon" href="/static/img/favicon.ico">
 
@@ -56,17 +53,14 @@
         <div class="intro-text">
           <div class="top-smart-box">
             {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
-            <smart-box smart-box-id="NANDO" data-path="/ontology/current_release/nando.tsv" placeholder="難病名を入力"
-              autocomplete="off" options='{
-              "api_url": "",
-              "max_results": 100
-            }'></smart-box>
+            <div class="smart-box-container">
+              <input type="text" id="NANDO" class="smart-box-input" autocomplete="off" placeholder="難病名を入力">
+            </div>
             {% else %}
-            <smart-box smart-box-id="NANDO" data-path="/ontology/current_release/nando.tsv"
-              placeholder="Type in disease name" autocomplete="off" options='{
-              "api_url": "",
-              "max_results": 100
-            }'></smart-box>
+            <div class="smart-box-container">
+              <input type="text" id="NANDO" class="smart-box-input" autocomplete="off"
+                placeholder="Type in disease name">
+            </div>
             {% endif %}
           </div>
           <p>ex&#41;</p>
@@ -291,8 +285,6 @@
     </script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
   <script type="module" src="/static/js/main.js"></script>
-  <script type="module"
-    src="https://cdn.jsdelivr.net/gh/PubCaseFinder/pubcasefinder_tools@main/smartbox/smartbox.js"></script>
 </body>
 
 </html>

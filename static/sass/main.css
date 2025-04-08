@@ -1356,24 +1356,92 @@ header.search-area .intro-text .keyword a {
   display: block;
 }
 
-.top-smart-box .smart-box-container,
-.disease-smart-box .smart-box-container {
+.smart-box-container {
+  position: relative;
   width: 690px;
   font-family: Verdana;
+  text-align: left;
 }
-.top-smart-box .smart-box-container > .smart-box-input,
-.disease-smart-box .smart-box-container > .smart-box-input {
-  height: auto;
+.smart-box-container > .smart-box-input {
+  width: 100%;
   box-sizing: border-box;
   border-radius: 30px;
   padding: 10px 26px;
   font-size: var(--font-size-medium);
   font-size: 1rem;
   background-color: #fff;
+  border: 1px solid #ccc;
 }
-.top-smart-box .smart-box-container > .smart-box-input.suggest-box-open,
-.disease-smart-box .smart-box-container > .smart-box-input.suggest-box-open {
+.smart-box-container > .smart-box-input:focus {
+  outline: none;
+}
+.smart-box-container > .smart-box-input.suggest-box-open {
   border-radius: 30px 30px 0 0;
+}
+.smart-box-container > .suggest-box {
+  display: none;
+  position: absolute;
+  padding-left: 0;
+  width: 100%;
+  box-sizing: border-box;
+  top: 100%;
+  margin-top: -2px;
+  border: 1px solid #ccc;
+  border-top: none;
+  background-color: #fff;
+  border-radius: 0 0 5px 5px;
+  z-index: 9999;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0);
+  max-height: 50vh;
+  overflow: auto;
+}
+.smart-box-container > .suggest-box > .hit-count {
+  padding: 6px 12px;
+  font-size: 0.8rem;
+  font-weight: bold;
+  color: #757575;
+}
+.smart-box-container > .suggest-box > .hit-count > .suggestion-hint {
+  color: #f8516d;
+}
+.smart-box-container > .suggest-box > .suggestion-item {
+  padding: 6px 12px;
+  cursor: pointer;
+  display: flex;
+  gap: 25px;
+  font-size: 1rem;
+  line-height: 1.6;
+}
+.smart-box-container > .suggest-box > .suggestion-item.-selected {
+  background-color: #34508a;
+  color: #212529;
+}
+.smart-box-container > .suggest-box > .suggestion-item.-selected > .label-id {
+  color: #fff;
+}
+.smart-box-container > .suggest-box > .suggestion-item.-selected > .label-container > .main-name {
+  color: #f2d2d7;
+}
+.smart-box-container > .suggest-box > .suggestion-item.-selected > .label-container > .synonyms {
+  color: #fff;
+}
+.smart-box-container > .suggest-box > .suggestion-item.-keyword {
+  margin-bottom: 10px;
+}
+.smart-box-container > .suggest-box > .suggestion-item > .label-container {
+  align-content: center;
+}
+.smart-box-container > .suggest-box > .suggestion-item > .label-container > .main-name {
+  color: #3777b5;
+}
+.smart-box-container > .suggest-box > .suggestion-item > .label-container > .synonyms {
+  color: #000;
+}
+.smart-box-container > .suggest-box > .suggestion-item > .label-id {
+  color: #000;
+}
+.smart-box-container > .suggest-box > .suggestion-item .highlight {
+  font-weight: bold;
 }
 
 .top-smart-box {

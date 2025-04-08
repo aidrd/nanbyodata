@@ -22,28 +22,11 @@ makeSideNavigation();
 
 // causalGene(疾患原因遺伝子)
 export function makeCausalGene(causalGeneData) {
-  // gene_symbolの重複を除外したユニークな値の数を計算
-  let uniqueGeneSymbolCount = 0;
-  if (
-    causalGeneData &&
-    Array.isArray(causalGeneData) &&
-    causalGeneData.length > 0
-  ) {
-    const uniqueGeneSymbols = new Set();
-    causalGeneData.forEach((gene) => {
-      if (gene.gene_symbol) {
-        uniqueGeneSymbols.add(gene.gene_symbol);
-      }
-    });
-    uniqueGeneSymbolCount = uniqueGeneSymbols.size;
-  }
-
   makeData(
     causalGeneData,
     'causal-genes',
     'causal-genes-table',
-    convertColumnToText(causalGeneColumns),
-    uniqueGeneSymbolCount // 重複のないgene_symbolの数を渡す
+    convertColumnToText(causalGeneColumns)
   );
   if (causalGeneData?.length > 0 && causalGeneData !== null) {
     const navLink = document.querySelector('.nav-link.causal-genes');
@@ -54,28 +37,11 @@ export function makeCausalGene(causalGeneData) {
 
 // glycanRelatedGene(糖鎖関連遺伝子)
 export function makeGlycanRelatedGene(glycanRelatedGeneData) {
-  // gene_idの重複を除外したユニークな値の数を計算
-  let uniqueGeneIdCount = 0;
-  if (
-    glycanRelatedGeneData &&
-    Array.isArray(glycanRelatedGeneData) &&
-    glycanRelatedGeneData.length > 0
-  ) {
-    const uniqueGeneIds = new Set();
-    glycanRelatedGeneData.forEach((gene) => {
-      if (gene.gene_id) {
-        uniqueGeneIds.add(gene.gene_id);
-      }
-    });
-    uniqueGeneIdCount = uniqueGeneIds.size;
-  }
-
   makeData(
     glycanRelatedGeneData,
     'glycan-related-genes',
     'glycan-related-genes-table',
-    convertColumnToText(glycanRelatedGeneColumns),
-    uniqueGeneIdCount // 重複のないgene_idの数を渡す
+    convertColumnToText(glycanRelatedGeneColumns)
   );
   if (glycanRelatedGeneData?.length > 0 && glycanRelatedGeneData !== null) {
     const navLink = document.querySelector('.nav-link.glycan-related-genes');
@@ -263,22 +229,17 @@ export function makeMgend(mgendData) {
  * @param {string} categoryName - Category name (e.g., 'causal-genes', 'genetic-testing', 'phenotypes').
  * @param {string} tableId - Table element ID (e.g., 'causal-genes-table', 'genetic-testing-table', 'phenotype-ja', 'phenotype-en').
  * @param {string} columns - Columns for togostanza-pagination-table.
- * @param {number} customCount - Optional custom count for data-num (used for unique gene counts).
  */
-function makeData(data, categoryName, tableId, columns, customCount) {
+function makeData(data, categoryName, tableId, columns) {
   const container = document.getElementById(categoryName);
   const tableView = container.querySelector(`#${tableId}`);
   const objectUrl = createObjectUrlFromData(data);
   updateElementWithTable(tableView, objectUrl, columns);
-
-  // カスタム数値が指定されていれば使用し、そうでなければデータの長さを使用
-  const displayCount =
-    customCount !== undefined
-      ? customCount
-      : data === null
-      ? 'error'
-      : data.length;
-  updateDataNumElement(`#${categoryName}`, `.${categoryName}`, displayCount);
+  updateDataNumElement(
+    `#${categoryName}`,
+    `.${categoryName}`,
+    data === null ? 'error' : data.length
+  );
 
   const links = document.querySelectorAll('#temp-side-navigation .nav-link');
   links.forEach((link) => {
@@ -318,9 +279,8 @@ function updateDataNumElement(mainWrapperName, navWrapperName, dataLength) {
  * @param {Object[]} items - Array of tab items.
  * @param {string} rootId - ID of the root element.
  * @param {HTMLElement} tabWrap - The tab wrapper element.
- * @param {number} customCount - Optional custom count for data-num.
  */
-function processTabs(items, rootId, tabWrap, customCount) {
+function processTabs(items, rootId, tabWrap) {
   // Ensure items is always an array
   if (!Array.isArray(items)) {
     items = [items];
@@ -332,14 +292,11 @@ function processTabs(items, rootId, tabWrap, customCount) {
     if (object !== null) {
       updateElementWithTable(tableView, object, columns);
     }
-    // カスタム数値が指定されていれば使用し、そうでなければデータの長さを使用
-    const displayCount =
-      customCount !== undefined
-        ? customCount
-        : data === null
-        ? 'error'
-        : data.length;
-    updateDataNumElement(`.${rootId}-${id}`, `.${id}`, displayCount);
+    updateDataNumElement(
+      `.${rootId}-${id}`,
+      `.${id}`,
+      data === null ? 'error' : data.length
+    );
   });
 }
 
