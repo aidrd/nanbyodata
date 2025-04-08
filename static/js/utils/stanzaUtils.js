@@ -14,6 +14,7 @@ export function createObjectUrlFromData(data) {
  * @param {string} objectUrl - The object URL containing the data for the table.
  * @param {string} columns - The columns configuration for the table.
  */
+
 export function updateElementWithTable(element, objectUrl, columns) {
   element.innerHTML = `
     <togostanza-pagination-table
