@@ -160,7 +160,7 @@ const datasets = [
         datasets.find((d) => d.name === 'Sub-classes').data = filteredDataForDL;
         checkAndLogDatasets();
       }),
-      fetchData('test_overview').then((entryData) => {
+      fetchData('nanbyodata_get_overview_by_nando_id').then((entryData) => {
         if (entryData) {
           makeHeader(entryData);
           makeExternalLinks(entryData);
