@@ -27,7 +27,6 @@ import {
 } from './diseaseContent.js';
 import { switchingDisplayContents } from './diseaseSideNavigation.js';
 import { setLangChange } from '../utils/setLangChange.js';
-import { smartBox } from '../utils/smart_box.js';
 
 // get NANDO ID
 const pathname = window.location.pathname;
@@ -447,11 +446,7 @@ function trySwitchingContent(hash, retries = 0) {
 }
 
 // smart box
-smartBox('NANDO', '/ontology/current_release/nando.tsv', {
-  api_url: '',
-  max_results: 100,
-});
-document.addEventListener('selectedLabel', function (event) {
+document.addEventListener('selectedSmartBoxLabel', function (event) {
   const labelInfo = event.detail.labelInfo;
   window.location.href = `${location.origin}/disease/${labelInfo.id}`;
 });

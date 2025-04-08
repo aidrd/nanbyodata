@@ -5,7 +5,6 @@ import {
   drawDesignatedIntractableDiseaseColumnsTable,
   drawPediatricChronicSpecificDiseaseColumnsTable,
 } from './epidemiology/epidemiology.js';
-import { smartBox } from './utils/smart_box.js';
 
 navToggle();
 focusInput();
@@ -17,12 +16,7 @@ if (window.location.pathname === '/epidemiology') {
 
 // smart box
 if (window.location.pathname === '/') {
-  smartBox('NANDO', '/ontology/current_release/nando.tsv', {
-    api_url: '',
-    max_results: 100,
-  });
-
-  document.addEventListener('selectedLabel', function (event) {
+  document.addEventListener('selectedSmartBoxLabel', function (event) {
     const labelInfo = event.detail.labelInfo;
     window.location.href = `${location.origin}/disease/${labelInfo.id}`;
   });
