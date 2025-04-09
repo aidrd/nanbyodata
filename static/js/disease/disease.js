@@ -27,7 +27,6 @@ import {
 } from './diseaseContent.js';
 import { switchingDisplayContents } from './diseaseSideNavigation.js';
 import { setLangChange } from '../utils/setLangChange.js';
-import { smartBox } from '../utils/smart_box.js';
 
 // get NANDO ID
 const pathname = window.location.pathname;
@@ -43,6 +42,29 @@ focusInput();
 popup();
 breadcrumb(nandoId);
 setLangChange();
+
+// 初期ローディングスピナーを表示
+const contentElement = document.getElementById('content');
+if (contentElement) {
+  // 既存のローディングスピナーがあれば削除
+  const existingSpinner = contentElement.querySelector('.loading-spinner');
+  if (existingSpinner) {
+    existingSpinner.remove();
+  }
+
+  // コンテンツのバックグラウンドを表示しながらコンテンツ部分は非表示に
+  contentElement.style.display = 'block';
+  // コンテンツ内の要素を一旦非表示にする
+  const contentChildren = contentElement.children;
+  for (let i = 0; i < contentChildren.length; i++) {
+    contentChildren[i].style.visibility = 'hidden';
+  }
+
+  // スピナーは表示
+  const loadingSpinner = document.createElement('div');
+  loadingSpinner.className = 'loading-spinner';
+  contentElement.appendChild(loadingSpinner);
+}
 
 const datasets = [
   { name: 'Overview', data: null },
@@ -87,16 +109,16 @@ const datasets = [
       }
     }
 
-    // Overview
-    // リンク一覧のデータ
+    // 全てのAPIを並列で呼び出す
     await Promise.all([
-      fetchData('nanbyodata_get_link_omim_by_nando_id'),
-      fetchData('nanbyodata_get_link_orphanet_by_nando_id'),
-      fetchData('nanbyodata_get_link_mondo_by_nando_id'),
-      fetchData('nanbyodata_get_link_medgen_by_nando_id'),
-      fetchData('nanbyodata_get_link_kegg_by_nando_id'),
-    ])
-      .then(([omimData, orphanetData, monarchData, medgenData, keggData]) => {
+      // リンク一覧データ
+      Promise.all([
+        fetchData('nanbyodata_get_link_omim_by_nando_id'),
+        fetchData('nanbyodata_get_link_orphanet_by_nando_id'),
+        fetchData('nanbyodata_get_link_mondo_by_nando_id'),
+        fetchData('nanbyodata_get_link_medgen_by_nando_id'),
+        fetchData('nanbyodata_get_link_kegg_by_nando_id'),
+      ]).then(([omimData, orphanetData, monarchData, medgenData, keggData]) => {
         const linkedListData = {
           omim: omimData,
           orphanet: orphanetData,
@@ -112,30 +134,22 @@ const datasets = [
         datasets.find((d) => d.name === 'MedGen').data = medgenData;
         datasets.find((d) => d.name === 'KEGG').data = keggData;
         checkAndLogDatasets();
-      })
-      .catch((error) => {
-        console.error('Error:', error);
-      });
+      }),
 
-    // 特定医療費受給者証所持者数のデータ
-    fetchData('nanbyodata_get_stats_on_patient_number_by_nando_id')
-      .then((response) => {
-        const numOfPatientsData = response;
-        makeNumOfPatients(numOfPatientsData);
-        datasets.find(
-          (d) =>
-            d.name ===
-            'Number of Specific Medical Expenses Beneficiary Certificate Holders'
-        ).data = numOfPatientsData;
-        checkAndLogDatasets();
-      })
-      .catch((error) => {
-        console.error('Error:', error);
-      });
-
-    // 下位疾患データ
-    fetchData('nanbyodata_get_sub_class_by_nando_id')
-      .then((response) => {
+      // 他のAPI呼び出し
+      fetchData('nanbyodata_get_stats_on_patient_number_by_nando_id').then(
+        (response) => {
+          const numOfPatientsData = response;
+          makeNumOfPatients(numOfPatientsData);
+          datasets.find(
+            (d) =>
+              d.name ===
+              'Number of Specific Medical Expenses Beneficiary Certificate Holders'
+          ).data = numOfPatientsData;
+          checkAndLogDatasets();
+        }
+      ),
+      fetchData('nanbyodata_get_sub_class_by_nando_id').then((response) => {
         const subClassData = response;
         makeSubClass(subClassData);
         // 親を持たないデータを除外
@@ -144,184 +158,184 @@ const datasets = [
         );
         datasets.find((d) => d.name === 'Sub-classes').data = filteredDataForDL;
         checkAndLogDatasets();
-      })
-      .catch((error) => {
-        console.error('Error:', error);
-      });
+      }),
+      fetchData('nanbyodata_get_overview_by_nando_id').then((entryData) => {
+        if (entryData) {
+          makeHeader(entryData);
+          makeExternalLinks(entryData);
+          makeAlternativeName(entryData);
+          makeInheritanceUris(entryData);
+          checkSummaryData(entryData);
+          makeDiseaseDefinition(entryData);
+          updateOverviewDisplay();
 
-    // get Overview data
-    // TODO: need to change overview api endpoint
-    fetchData('test_overview').then((entryData) => {
-      if (entryData) {
-        makeHeader(entryData);
-        makeExternalLinks(entryData);
-        makeAlternativeName(entryData);
-        makeInheritanceUris(entryData);
-        checkSummaryData(entryData);
-        makeDiseaseDefinition(entryData);
-        updateOverviewDisplay();
-
-        // remove unnecessary overview data
-        const {
-          alt_label_en,
-          alt_label_ja,
-          inheritance_uris,
-          kegg,
-          mondos,
-          db_xrefs,
-          medgen_id,
-          medgen_uri,
-          urdbms,
-          description,
-          mondo_decs,
-          medgen_definition,
-          kegg_description,
-          ordo_dif,
-          ...filteredOverviewData
-        } = entryData;
-
-        datasets.find((d) => d.name === 'Overview').data = filteredOverviewData;
-
-        // 遺伝形式ダウンロードデータの用意
-        const inheritanceUrisData = Object.fromEntries(
-          Object.entries({ inheritance_uris }).filter(([_, v]) => v != null)
-        );
-
-        const inheritanceUrisDataset = datasets.find(
-          (d) => d.name === 'Modes of Inheritance'
-        );
-        if (Object.keys(inheritanceUrisData).length > 0) {
-          inheritanceUrisDataset.data = inheritanceUrisData;
-        } else {
-          inheritanceUrisDataset.data = {};
-        }
-
-        // 別疾患名ダウンロードデータの用意
-        const synonymsData = Object.fromEntries(
-          Object.entries({ alt_label_en, alt_label_ja }).filter(
-            ([_, v]) => v != null
-          )
-        );
-
-        const synonymsDataset = datasets.find((d) => d.name === 'Synonyms');
-        if (Object.keys(synonymsData).length > 0) {
-          synonymsDataset.data = synonymsData;
-        } else {
-          synonymsDataset.data = {};
-        }
-
-        // 疾患定義ダウンロードデータの用意
-        const definitionData = Object.fromEntries(
-          Object.entries({
+          // remove unnecessary overview data
+          const {
+            alt_label_en,
+            alt_label_ja,
+            inheritance_uris,
+            kegg,
+            mondos,
+            db_xrefs,
+            medgen_id,
+            medgen_uri,
+            urdbms,
             description,
             mondo_decs,
             medgen_definition,
             kegg_description,
             ordo_dif,
-          }).filter(([_, v]) => v != null)
-        );
+            ...filteredOverviewData
+          } = entryData;
 
-        const definitionDataset = datasets.find(
-          (d) => d.name === 'Descriptions'
-        );
-        if (Object.keys(definitionData).length > 0) {
-          definitionDataset.data = definitionData;
-        } else {
-          definitionDataset.data = {};
+          datasets.find((d) => d.name === 'Overview').data =
+            filteredOverviewData;
+
+          // 遺伝形式ダウンロードデータの用意
+          const inheritanceUrisData = Object.fromEntries(
+            Object.entries({ inheritance_uris }).filter(([_, v]) => v != null)
+          );
+
+          const inheritanceUrisDataset = datasets.find(
+            (d) => d.name === 'Modes of Inheritance'
+          );
+          if (Object.keys(inheritanceUrisData).length > 0) {
+            inheritanceUrisDataset.data = inheritanceUrisData;
+          } else {
+            inheritanceUrisDataset.data = {};
+          }
+
+          // 別疾患名ダウンロードデータの用意
+          const synonymsData = Object.fromEntries(
+            Object.entries({ alt_label_en, alt_label_ja }).filter(
+              ([_, v]) => v != null
+            )
+          );
+
+          const synonymsDataset = datasets.find((d) => d.name === 'Synonyms');
+          if (Object.keys(synonymsData).length > 0) {
+            synonymsDataset.data = synonymsData;
+          } else {
+            synonymsDataset.data = {};
+          }
+
+          // 疾患定義ダウンロードデータの用意
+          const definitionData = Object.fromEntries(
+            Object.entries({
+              description,
+              mondo_decs,
+              medgen_definition,
+              kegg_description,
+              ordo_dif,
+            }).filter(([_, v]) => v != null)
+          );
+
+          const definitionDataset = datasets.find(
+            (d) => d.name === 'Descriptions'
+          );
+          if (Object.keys(definitionData).length > 0) {
+            definitionDataset.data = definitionData;
+          } else {
+            definitionDataset.data = {};
+          }
+
+          checkAndLogDatasets();
+
+          if (hash) {
+            trySwitchingContent(hash);
+          } else {
+            switchingDisplayContents('overview');
+            const overviewEl = document.querySelector('.nav-link.overview');
+            overviewEl.classList.add('selected');
+            overviewEl.style.cursor = 'pointer';
+
+            // スピナーを削除
+            const spinner = document.querySelector(
+              '#content > .loading-spinner'
+            );
+            if (spinner) {
+              spinner.remove();
+            }
+
+            // コンテンツの可視性を戻す
+            const contentElement = document.getElementById('content');
+            if (contentElement) {
+              const contentChildren = contentElement.children;
+              for (let i = 0; i < contentChildren.length; i++) {
+                contentChildren[i].style.visibility = 'visible';
+              }
+            }
+
+            document.getElementById('content').style.display = 'block';
+          }
         }
-
-        checkAndLogDatasets();
-
-        if (hash) {
-          trySwitchingContent(hash);
-        } else {
-          switchingDisplayContents('overview');
-          const overviewEl = document.querySelector('.nav-link.overview');
-          overviewEl.classList.add('selected');
-          overviewEl.style.cursor = 'pointer';
-          document.getElementById('content').style.display = 'block';
+      }),
+      fetchData('nanbyodata_get_causal_gene_by_nando_id').then(
+        (causalGeneData) => {
+          makeCausalGene(causalGeneData);
+          datasets.find((d) => d.name === 'Causal Genes').data = causalGeneData;
+          checkAndLogDatasets();
         }
-      }
-    });
-
-    // get Causal Genes data
-    fetchData('nanbyodata_get_causal_gene_by_nando_id').then(
-      (causalGeneData) => {
-        makeCausalGene(causalGeneData);
-        datasets.find((d) => d.name === 'Causal Genes').data = causalGeneData;
-        checkAndLogDatasets();
-      }
-    );
-
-    // get Glycan Related Genes data
-    fetchData('nanbyodata_get_glycosmos_gene_by_nando_id').then(
-      (glycanRelatedGeneData) => {
-        makeGlycanRelatedGene(glycanRelatedGeneData);
-        datasets.find((d) => d.name === 'Glycan-related Genes').data =
-          glycanRelatedGeneData;
-        checkAndLogDatasets();
-      }
-    );
-
-    // get Genetic Testing data
-    fetchData('nanbyodata_get_genetic_test_by_nando_id').then(
-      (geneticTestingData) => {
-        makeGeneticTesting(geneticTestingData);
-        datasets.find((d) => d.name === 'Genetic Testing').data =
-          geneticTestingData;
-        checkAndLogDatasets();
-      }
-    );
-
-    // get Phenotypes data
-    fetchData('nanbyodata_get_hpo_data_by_nando_id').then((phenotypesData) => {
-      makePhenotypes(phenotypesData);
-      datasets.find((d) => d.name === 'Phenotypes').data = phenotypesData;
-      checkAndLogDatasets();
-    });
-
-    // get Cell data
-    fetchData('nanbyodata_get_riken_brc_cell_info_by_nando_id').then(
-      (cellData) => {
-        makeCell(cellData);
-        datasets.find((d) => d.name === 'Cell').data = cellData;
-        checkAndLogDatasets();
-      }
-    );
-
-    // get Mouse data
-    fetchData('nanbyodata_get_riken_brc_mouse_info_by_nando_id').then(
-      (mouseData) => {
-        makeMouse(mouseData);
-        datasets.find((d) => d.name === 'Mouse').data = mouseData;
-        checkAndLogDatasets();
-      }
-    );
-
-    // get DNA data
-    fetchData('nanbyodata_get_riken_brc_dna_info_by_nando_id').then(
-      (dnaData) => {
-        makeDNA(dnaData);
-        datasets.find((d) => d.name === 'DNA').data = dnaData;
-        checkAndLogDatasets();
-      }
-    );
-
-    // get Clinvar data
-    fetchData('nanbyodata_get_clinvar_variant_by_nando_id').then(
-      (clinvarData) => {
-        makeClinvar(clinvarData);
-        datasets.find((d) => d.name === 'Clinvar').data = clinvarData;
-        checkAndLogDatasets();
-      }
-    );
-
-    // get MGenD data
-    fetchData('nanbyodata_get_mgend_variant_by_nando_id').then((mgendData) => {
-      makeMgend(mgendData);
-      datasets.find((d) => d.name === 'MGeND').data = mgendData;
-      checkAndLogDatasets();
-    });
+      ),
+      fetchData('nanbyodata_get_glycosmos_gene_by_nando_id').then(
+        (glycanRelatedGeneData) => {
+          makeGlycanRelatedGene(glycanRelatedGeneData);
+          datasets.find((d) => d.name === 'Glycan-related Genes').data =
+            glycanRelatedGeneData;
+          checkAndLogDatasets();
+        }
+      ),
+      fetchData('nanbyodata_get_genetic_test_by_nando_id').then(
+        (geneticTestingData) => {
+          makeGeneticTesting(geneticTestingData);
+          datasets.find((d) => d.name === 'Genetic Testing').data =
+            geneticTestingData;
+          checkAndLogDatasets();
+        }
+      ),
+      fetchData('nanbyodata_get_hpo_data_by_nando_id').then(
+        (phenotypesData) => {
+          makePhenotypes(phenotypesData);
+          datasets.find((d) => d.name === 'Phenotypes').data = phenotypesData;
+          checkAndLogDatasets();
+        }
+      ),
+      fetchData('nanbyodata_get_riken_brc_cell_info_by_nando_id').then(
+        (cellData) => {
+          makeCell(cellData);
+          datasets.find((d) => d.name === 'Cell').data = cellData;
+          checkAndLogDatasets();
+        }
+      ),
+      fetchData('nanbyodata_get_riken_brc_mouse_info_by_nando_id').then(
+        (mouseData) => {
+          makeMouse(mouseData);
+          datasets.find((d) => d.name === 'Mouse').data = mouseData;
+          checkAndLogDatasets();
+        }
+      ),
+      fetchData('nanbyodata_get_riken_brc_dna_info_by_nando_id').then(
+        (dnaData) => {
+          makeDNA(dnaData);
+          datasets.find((d) => d.name === 'DNA').data = dnaData;
+          checkAndLogDatasets();
+        }
+      ),
+      fetchData('nanbyodata_get_clinvar_variant_by_nando_id').then(
+        (clinvarData) => {
+          makeClinvar(clinvarData);
+          datasets.find((d) => d.name === 'Clinvar').data = clinvarData;
+          checkAndLogDatasets();
+        }
+      ),
+      fetchData('nanbyodata_get_mgend_variant_by_nando_id').then(
+        (mgendData) => {
+          makeMgend(mgendData);
+          datasets.find((d) => d.name === 'MGeND').data = mgendData;
+          checkAndLogDatasets();
+        }
+      ),
+    ]);
   } catch (error) {
     console.error('Error:', error);
   }
@@ -339,6 +353,22 @@ function checkAndLogDatasets() {
 function trySwitchingContent(hash, retries = 0) {
   const maxRetries = 10;
   let found = false;
+
+  // コンテンツがロード中の場合はローディングスピナーを表示
+  const contentElement = document.getElementById('content');
+  if (contentElement) {
+    // 既存のローディングスピナーがあれば削除
+    const existingSpinner = contentElement.querySelector('.loading-spinner');
+    if (existingSpinner) {
+      existingSpinner.remove();
+    }
+
+    // コンテンツを非表示にし、ローディングスピナーを追加
+    contentElement.style.display = 'block';
+    const loadingSpinner = document.createElement('div');
+    loadingSpinner.className = 'loading-spinner';
+    contentElement.appendChild(loadingSpinner);
+  }
 
   const items = [
     'overview',
@@ -380,13 +410,32 @@ function trySwitchingContent(hash, retries = 0) {
   if (found && (!alreadySelected || alreadySelected === element)) {
     element.classList.add('selected');
     switchingDisplayContents(hash);
+    // スピナーを削除
+    const spinner = document.querySelector('#content > .loading-spinner');
+    if (spinner) {
+      spinner.remove();
+    }
+    // コンテンツの可視性を戻す
+    const contentElement = document.getElementById('content');
+    if (contentElement) {
+      const contentChildren = contentElement.children;
+      for (let i = 0; i < contentChildren.length; i++) {
+        contentChildren[i].style.visibility = 'visible';
+      }
+    }
     document.getElementById('content').style.display = 'block';
   } else if (!found && retries < maxRetries) {
     console.error('No hash item found, retrying...');
     setTimeout(() => {
       trySwitchingContent(hash, retries + 1);
-    }, 3000);
+    }, 1000);
   } else {
+    // 最大リトライ回数に達した場合もスピナーを削除
+    const spinner = document.querySelector('#content > .loading-spinner');
+    if (spinner) {
+      spinner.remove();
+    }
+
     if (alreadySelected) {
       return;
     } else {
@@ -396,12 +445,8 @@ function trySwitchingContent(hash, retries = 0) {
   }
 }
 
-// smart box
-smartBox('NANDO', '/ontology/current_release/nando.tsv', {
-  api_url: '',
-  max_results: 100,
-});
-document.addEventListener('selectedLabel', function (event) {
+// smartbox
+document.addEventListener('selectedSmartBoxLabel', function (event) {
   const labelInfo = event.detail.labelInfo;
   window.location.href = `${location.origin}/disease/${labelInfo.id}`;
 });
