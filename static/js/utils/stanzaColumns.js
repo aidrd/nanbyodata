@@ -55,7 +55,7 @@ export const pediatricChronicSpecificDiseaseEnColumns = [
 export const causalGeneColumns = [
   {
     id: 'gene_symbol',
-    label: 'Gene_symbol(OMIM)',
+    label: 'Gene symbol',
     link: 'omim_url',
     target: '_blank',
     rowspan: true,
@@ -75,32 +75,28 @@ export const causalGeneColumns = [
   },
   {
     id: 'nando_label_en',
-    label: 'NANDO Label(en)',
+    label: 'NANDO label (EN)',
     lineClamp: 1,
   },
   {
     id: 'nando_label_ja',
-    label: 'NANDO Label(ja)',
+    label: 'NANDO label (JA)',
     lineClamp: 1,
   },
   {
-    id: 'mondo_id1',
-    label: 'BridgeID(MONDO)',
-  },
-  {
     id: 'mondo_id',
-    label: 'Child_bridgeID(MONDO)',
+    label: 'Bridge ID',
     link: 'mondo_url',
     target: '_blank',
   },
   {
     id: 'mondo_label',
-    label: 'MONDO Label(en)',
+    label: 'Mondo label (EN)',
     lineClamp: 1,
   },
   {
     id: 'mondo_label_ja',
-    label: 'MONDO Label(ja)',
+    label: 'Mondo label (JA)',
     lineClamp: 1,
   },
 ];
