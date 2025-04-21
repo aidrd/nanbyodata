@@ -33,6 +33,9 @@
   <!-- CSS -->
   <link rel="stylesheet" type="text/css" href="/static/sass/main.css">
 
+  <!-- SmartBox Style -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/PubCaseFinder/pubcasefinder_tools@main/smartbox/style.css">
+
   <!-- favicon -->
   <link rel="icon" type="image/x-icon" href="/static/img/favicon.ico">
 
@@ -53,14 +56,17 @@
         <div class="intro-text">
           <div class="top-smart-box">
             {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
-            <div class="smart-box-container">
-              <input type="text" id="NANDO" class="smart-box-input" autocomplete="off" placeholder="難病名を入力">
-            </div>
+            <smart-box smart-box-id="NANDO" data-path="/ontology/current_release/nando.tsv" placeholder="難病名を入力"
+              autocomplete="off" options='{
+              "api_url": "",
+              "max_results": 100
+            }'></smart-box>
             {% else %}
-            <div class="smart-box-container">
-              <input type="text" id="NANDO" class="smart-box-input" autocomplete="off"
-                placeholder="Type in disease name">
-            </div>
+            <smart-box smart-box-id="NANDO" data-path="/ontology/current_release/nando.tsv"
+              placeholder="Type in disease name" autocomplete="off" options='{
+              "api_url": "",
+              "max_results": 100
+            }'></smart-box>
             {% endif %}
           </div>
           <p>ex&#41;</p>
@@ -84,34 +90,13 @@
 
           <div class="news-wrapper">
             <div class="logdata">
-              {% for file_path, info in news_info.items() %}
-              {% if loop.index <= 5 %} <dl>
-                <dt><time datetime="{{ info.date }}">{{ info.date }}</time></dt>
-                <dd><a href="{{info.path}}">{{ info.title }}</a></dd>
-                </dl>
-                {% else %}
-                {% if loop.index == 6 %}
-                <div class="more-list">
-                  {% endif %}
-                  <dl>
-                    <dt><time datetime="{{ info.date }}">{{ info.date }}</time></dt>
-                    <dd><a href="{{info.path}}">{{ info.title }}</a></dd>
-                  </dl>
-                  {% if loop.last %}
-                </div>
-                {% endif %}
-                {% endif %}
-                {% endfor %}
             </div>
-
-            <div class="more">more</div>
           </div>
         </section>
 
 
         <section id="download" class="section-block">
           {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
-          <h2 class="section-title">ダウンロード</h2>
           <p class="section-description">NanbyoDataは<a
               href="https://creativecommons.org/licenses/by/4.0/deed.ja">クリエイティブ・コモンズ【表示4.0国際】</a>の下に提供されています。
           </p>
@@ -196,22 +181,19 @@
             <img src="/static/img/modal_icon_1.png">
             <h3 class="modal-title" id="demoModalTitle">Nanbyo Disease Ontology</h3>
             </br>
+            <p>Please download the latest version from the link below.</p>
             <table>
               <tr>
-                <th>Version</th>
                 <th>File</th>
               </tr>
               <tr>
-                <td>2024-11-21</td>
-                <td><a href="/ontology/current_release/nando.ttl">Turtle</a></td>
+                <td><a href="/download/latest/nando.ttl">Turtle</a></td>
               </tr>
               <tr>
-                <td>2024-11-21</td>
-                <td><a href="/ontology/current_release/nando.rdf">RDF/XML</a></td>
+                <td><a href="/download/latest/nando.rdf">RDF/XML</a></td>
               </tr>
               <tr>
-                <td>2024-11-21</td>
-                <td><a href="/ontology/current_release/nando.xlsx">Excel(.xlsx)</a></td>
+                <td><a href="/download/latest/nando.xlsx">Excel(.xlsx)</a></td>
               </tr>
             </table>
             <div class="btn-close">
@@ -235,24 +217,16 @@
             <img src="/static/img/modal_icon_2.png">
             <h3 class="modal-title" id="demoModalTitle">Nanbyo-Gene Associations</h3>
             </br>
+            <p>Please download the latest version from the link below.</p>
             <table>
               <tr>
-                <th>Version</th>
                 <th>File</th>
-                <th>Size</th>
-                <th>Date</th>
               </tr>
               <tr>
-                <td>1.0.1</td>
-                <td><a href="/annotation/nanbyo-gene-associations.json">JSON</a></td>
-                <td>75KB</td>
-                <td>2021-08-05</td>
+                <td><a href="/download/latest/nando_gene.csv">CSV</a></td>
               </tr>
               <tr>
-                <td>1.0.1</td>
-                <td><a href="/annotation/nanbyo-gene-associations.tsv">TSV</a></td>
-                <td>69KB</td>
-                <td>2021-08-05</td>
+                <td><a href="/download/latest/nando_gene.json">JSON</a></td>
               </tr>
             </table>
             <div class="btn-close">
@@ -276,24 +250,16 @@
             <img src="/static/img/modal_icon_3.png">
             <h3 class="modal-title" id="demoModalTitle">Nanbyo-Phenotype Associations</h3>
             </br>
+            <p>Please download the latest version from the link below.</p>
             <table>
               <tr>
-                <th>Version</th>
                 <th>File</th>
-                <th>Size</th>
-                <th>Date</th>
               </tr>
               <tr>
-                <td>1.0.1</td>
-                <td><a href="/annotation/nanbyo-phenotype-associations.json">JSON</a></td>
-                <td>942KB</td>
-                <td>2021-08-05</td>
+                <td><a href="/download/latest/nando_hp.csv">CSV</a></td>
               </tr>
               <tr>
-                <td>1.0.1</td>
-                <td><a href="/annotation/nanbyo-phenotype-associations.tsv">TSV</a></td>
-                <td>1.3MB</td>
-                <td>2021-08-05</td>
+                <td><a href="/download/latest/nando_hp.json">JSON</a></td>
               </tr>
             </table>
             <div class="btn-close">
@@ -325,6 +291,8 @@
     </script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
   <script type="module" src="/static/js/main.js"></script>
+  <script type="module"
+    src="https://cdn.jsdelivr.net/gh/PubCaseFinder/pubcasefinder_tools@main/smartbox/smartbox.js"></script>
 </body>
 
 </html>

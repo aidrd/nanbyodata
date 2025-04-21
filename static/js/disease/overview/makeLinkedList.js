@@ -125,6 +125,8 @@ function makeLinksTable(item, content, linkedListData, nandoId) {
             ? 'Close Match'
             : matchType === 'exactMatch'
             ? 'Exact Match'
+            : matchType === 'hasDbXref'
+            ? 'database_cross_reference'
             : propertyValue;
       } else {
         cell.textContent = itemData[key];

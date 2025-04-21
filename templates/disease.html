@@ -38,6 +38,9 @@
   <!-- Main CSS -->
   <link rel="stylesheet" type="text/css" href="/static/sass/main.css" />
 
+  <!-- SmartBox Style -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/PubCaseFinder/pubcasefinder_tools@main/smartbox/style.css">
+
   <!-- favicon -->
   <link rel="icon" type="image/x-icon" href="/static/img/favicon.ico">
 
@@ -57,14 +60,17 @@
           </h1>
           <div class="disease-smart-box">
             {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
-            <div class="smart-box-container">
-              <input type="text" id="NANDO" class="smart-box-input" autocomplete="off" placeholder="難病名を入力">
-            </div>
+            <smart-box smart-box-id="NANDO" data-path="/ontology/current_release/nando.tsv" placeholder="難病名を入力"
+              autocomplete="off" options='{
+              "api_url": "",
+              "max_results": 100
+            }'></smart-box>
             {% else %}
-            <div class="smart-box-container">
-              <input type="text" id="NANDO" class="smart-box-input" autocomplete="off"
-                placeholder="Type in disease name">
-            </div>
+            <smart-box smart-box-id="NANDO" data-path="/ontology/current_release/nando.tsv"
+              placeholder="Type in disease name" autocomplete="off" options='{
+              "api_url": "",
+              "max_results": 100
+            }'></smart-box>
             {% endif %}
           </div>
         </div>
@@ -80,8 +86,16 @@
           </div>
           <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav">
-              <li class="nav-item">
-                <a class="nav-link" href="/about_nando">ABOUT</a>
+              <li class="nav-item dropdown">
+                <a class="nav-link" href="javascript:void(0);">
+                  ABOUT <i class="dropdown-icon fas fa-angle-down"></i>
+                </a>
+                <ul class="dropdown-menu" style="display: none;">
+                  <li><a class="dropdown-item" href="/about_nanbyodata">NanbyoData</a></li>
+                  <li><a class="dropdown-item" href="/about_nando">NANDO</a></li>
+                  <!-- TODO: チームページを作成したら表示 -->
+                  <!-- <li><a class="dropdown-item" href="/team">TEAM</a></li> -->
+                </ul>
               </li>
               <li class="nav-item dropdown">
                 <a class="nav-link" href="javascript:void(0);">
@@ -89,7 +103,7 @@
                 </a>
                 <ul class="dropdown-menu" style="display: none;">
                   <li><a class="dropdown-item" href="/api">API</a></li>
-                  <li><a class="dropdown-item" href="/#download">DOWNLOAD</a></li>
+                  <li><a class="dropdown-item" href="/download/">DOWNLOAD</a></li>
                   <li><a class="dropdown-item" href="/datasets">DATASETS</a></li>
                 </ul>
               </li>
@@ -151,6 +165,14 @@
                 疾患原因遺伝子
                 {% else %}
                 Causal Genes
+                {% endif %}
+                <span class="data-num"><span class="loading-spinner -sidenav"></span></span></a>
+            </li>
+            <li><a href="#glycan-related-genes" class="nav-link glycan-related-genes -disabled">
+                {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
+                糖鎖関連遺伝子
+                {% else %}
+                Glycan-related Genes
                 {% endif %}
                 <span class="data-num"><span class="loading-spinner -sidenav"></span></span></a>
             </li>
@@ -421,29 +443,8 @@
               {% else %}
               <h4 class="temp-title">Overview</h4>
               {% endif %}
-              <!-- TODO:追加 -->
               <div class="overview-wrapper">
-                <section class="overview-section">
-                  <div class="sub-title-wrapper">
-                    {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
-                    <h5 class="sub-title -alt-label">別疾患名</h5>
-                    {% else %}
-                    <h5 class="sub-title -alt-label">Synonyms</h5>
-                    {% endif %}
-                  </div>
-                  <div class="summary-wrapper">
-                    <div id="temp-aliases">
-                      <div class="aliases">
-                        <dl class="alt-label-ja">
-                          <dt>JA</dt>
-                        </dl>
-                        <dl class="alt-label-en">
-                          <dt>EN</dt>
-                        </dl>
-                      </div>
-                    </div>
-                </section>
-                <!-- TODO:追加 -->
+
                 <section class="overview-section">
                   <div class="sub-title-wrapper">
                     {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
@@ -462,7 +463,6 @@
                   </div>
                 </section>
 
-                <!-- TODO:追加 -->
                 <section class="overview-section">
                   <div class="sub-title-wrapper -select">
                     {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
@@ -497,9 +497,9 @@
                       <div class="tab-content medgen">
                       </div>
 
-                      <input type="radio" name="linked-items" class="tab-switch" id="linked-item-kegg-disease" />
-                      <label class="tab-label" for="linked-item-kegg-disease">KEGG Disease</label>
-                      <div class="tab-content kegg-disease">
+                      <input type="radio" name="linked-items" class="tab-switch" id="linked-item-kegg" />
+                      <label class="tab-label" for="linked-item-kegg">KEGG</label>
+                      <div class="tab-content kegg">
                       </div>
 
                       <span class="tab-label -flex"></span>
@@ -523,6 +523,11 @@
                       <div class="tab-content mhlw">
                       </div>
 
+                      <input type="radio" name="disease-definition" class="tab-switch" id="disease-ordo" />
+                      <label class="tab-label" for="disease-ordo"><small>from&nbsp;</small>Orphanet</label>
+                      <div class="tab-content ordo">
+                      </div>
+
                       <input type="radio" name="disease-definition" class="tab-switch"
                         id="disease-monarch-initiative" />
                       <label class="tab-label" for="disease-monarch-initiative"><small>from&nbsp;</small>Monarch
@@ -535,16 +540,43 @@
                       <div class="tab-content medgen">
                       </div>
 
+                      <input type="radio" name="disease-definition" class="tab-switch" id="disease-kegg" />
+                      <label class="tab-label" for="disease-kegg"><small>from&nbsp;</small>KEGG</label>
+                      <div class="tab-content kegg">
+                      </div>
+
                       <span class="tab-label -flex"></span>
                     </div>
                   </div>
+                </section>
+
+                <section class="overview-section">
+                  <div class="sub-title-wrapper">
+                    {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
+                    <h5 class="sub-title -alt-label">別疾患名</h5>
+                    {% else %}
+                    <h5 class="sub-title -alt-label">Synonyms</h5>
+                    {% endif %}
+                  </div>
+                  <div class="summary-wrapper">
+                    <div id="temp-aliases">
+                      <div class="aliases">
+                        <dl class="alt-label-ja">
+                          <dt>JA</dt>
+                        </dl>
+                        <dl class="alt-label-en">
+                          <dt>EN</dt>
+                        </dl>
+                      </div>
+                    </div>
                 </section>
                 <section class="overview-section">
                   <div class="sub-title-wrapper -select">
                     {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
                     <h5 class="sub-title">特定医療費受給者証所持者数</h5>
                     {% else %}
-                    <h5 class="sub-title">Number of Specific Medical Expenses Beneficiary Certificate Holders (in Japan)</h5>
+                    <h5 class="sub-title">Number of Specific Medical Expenses Beneficiary Certificate Holders (in Japan)
+                    </h5>
                     {% endif %}
                     <select name="num-of-patients-graph" id="num-of-patients-graph">
                       <option value="bar" selected>Bar</option>
@@ -589,6 +621,22 @@
                 </small>
               </h4>
               <div id="causal-genes-table"></div>
+            </div>
+
+            <div id="glycan-related-genes" open="">
+              <h4 class="temp-title">
+                {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
+                糖鎖関連遺伝子
+                {% else %}
+                Glycan-related Genes
+                {% endif %}
+                <span class="data-num"></span>
+                <small>
+                  &nbsp;from&nbsp;
+                  <a href="https://glycosmos.org/" target="_blank" rel="noopener noreferrer">GlyCosmos</a>
+                </small>
+              </h4>
+              <div id="glycan-related-genes-table"></div>
             </div>
 
             <div id="genetic-testing" open="">
@@ -726,6 +774,9 @@
     crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
   <script type="module" src="/static/js/disease/disease.js"></script>
+  <script type="module"
+    src="https://cdn.jsdelivr.net/gh/PubCaseFinder/pubcasefinder_tools@main/smartbox/smartbox.js"></script>
+  </script>
 </body>
 
 </html>

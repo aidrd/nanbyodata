@@ -14,15 +14,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
   <!-- SEO -->
-  <title>About | NanbyoData</title>
-  <meta name="description" content="NanbyoDataのAboutページです." />
+  <title>About | NANDO</title>
+  <meta name="description" content="NANDO Overview Page" />
   <meta property="og:site_name" content="NanbyoData" />
-  <meta property="og:title" content="About | NanbyoData" />
+  <meta property="og:title" content="About NANDO | NanbyoData" />
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://nanbyodata.jp/about_nando" />
-  <meta property="og:description" content="NanbyoDataのAboutページです." />
+  <meta property="og:description" content="NANDO Overview Page" />
   <meta property="og:image" content="/static/img/ogp_img.png" />
-
+  
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -44,141 +44,180 @@
     <!-- Navigation -->
     {% include 'component/navigation.html' %}
 
-    <!--- About page -->
     <div class="page-layout">
       <header class="page-title">
-        <h2>About</h2>
+        <h2>About NANDO</h2>
       </header>
 
       {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
       <div class="contents-wrapper">
         <div class="content-block">
-          <h3 class="content-title">NanbyoData について</h3>
-          <p>NanbyoDataは難病に関わる全て人に有用な難病情報をあらゆる観点から集積・一元的に提供します。</p>
-          <div class="illust-wrapper">
-            <div class="illust-card">
-              <img src="/static/img/illust_1.png" class="illust-img">
-              <h4 class="illust-title">難病情報を多様な観点から集積</h4>
-              <p class="illust-text">
-                基礎研究から臨床情報や疾患の実情まで多様な側面から日本語で書かれた情報を掲載
-              </p>
-            </div>
-            <div class="illust-card">
-              <img src="/static/img/illust_2.png" class="illust-img">
-              <h4 class="illust-title">難病情報を世界中から集積</h4>
-              <p class="illust-text">
-                世界中の医学データベースや情報サイトから難病に関する最新情報を掲載
-              </p>
-            </div>
-            <div class="illust-card">
-              <img src="/static/img/illust_3.png" class="illust-img">
-              <h4 class="illust-title">難病情報をアップデート(予定)</h4>
-              <p class="illust-text">
-                これまでの難病研究・調査や大規模医療データベースによる独自の疫学情報など、日本人を対象とした難病情報を掲載
-              </p>
-            </div>
-          </div>
-        </div>
-        <div class="content-block">
-          <h3 class="content-title">NANDO について</h3>
-          <p>難病は「指定難病」制度と小児患者に限定した「小児慢性特定疾病」制度が存在し、それぞれ333疾患、762疾患が含まれていますが（2021年7月時点）、<a
-              href="https://github.com/dbcls/nando">難病オントロジー（Nanbyo Disease Ontology;
-              NANDO）</a>は日本の難病制度の対象疾患について、その疾患概念や疾患同士の関係性を体系化した初めてのオントロジーです。NanbyoDataはNANDOを介して国内外の難病関連データを集め提供しています。NANDOの語彙一覧および階層構造は以下から参照可能です。<br>
-            <a href="http://nanbyodata.jp/ontology/nando">・語彙一覧</a><br>
+          <h3 class="content-title">概要</h3>
+          <p>
+	    <b>NANDO（Nanbyo Disease Ontology）</b>は、日本の厚生労働省が定める「指定難病制度」および「小児慢性特定疾病制度」の対象疾患を、体系的かつ網羅的に整理した国内初の難病語彙集（オントロジー）です。
+	    2021年に正式版をリリースし、それぞれの制度の更新に合わせて継続的にアップデートしています。
+	    NANDOは、日本国内の難病情報を統合し、国際的な疾患データベースとの互換性を高めることで、標準化と相互運用性の向上を目指しています。
+	    その一環として、国際的な希少疾患語彙集である<a href="https://mondo.monarchinitiative.org/">MONDO（Mondo Disease Ontology）</a>と相互連携し、難病に関する国際的なデータ共有を可能にしています。<br>
+            <a href="http://nanbyodata.jp/ontology/nando"><b>・語彙一覧</b></a><br>
           </p>
         </div>
+
         <div class="content-block">
+          <h3 class="content-title">構築方法</h3>
+          <p>
+	    NANDOは、日本の厚生労働省が定める「指定難病制度」および「小児慢性特定疾病制度」に基づいて構築されています。各難病の下位階層の難病名を収集し、親子関係を整理することで体系化し、オントロジーとして構造化しました。  
+	    また、日本語難病名を英訳し、Mondoとのマッピングを行うとともに、OrphanetやMedGenなどの国際的なデータベースとの対応関係を確立しました。最終的に臨床遺伝専門医の監修を経て、オントロジー形式に加え、エクセル形式でも提供し、幅広い用途に対応できるよう整備しています。
+          </p>
+        </div>
+
+        <div class="content-block">
+          <h3 class="content-title">統計情報</h3>
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th>データ項目</th>
+                <th>数</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>総疾患数</td>
+                <td>2,800以上</td>
+              </tr>
+              <tr>
+                <td>データベースクロスリファレンス</td>
+                <td>6,000以上</td>
+              </tr>
+              <tr>
+                <td>用語定義</td>
+                <td>1,300以上</td>
+              </tr>
+              <tr>
+                <td>同義語（日本語、英語を含む）</td>
+                <td>3,000以上</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+	<!--
+        <div class="content-block">
+          <h3 class="content-title">貢献方法</h3>
+          <p>
+            GitHub のリポジトリで Issue を報告したり、Pull Request を送ることで、NANDO の改善に貢献できます。
+            <a href="https://github.com/dbcls/nando">GitHubリポジトリはこちら</a>。
+          </p>
+        </div>
+	-->
+
+	<div class="content-block">
           <h3 class="content-title">免責事項</h3>
           <p>
             NanbyoData及びNANDOは誠実にデータを提供しますが、データの正確性、臨床的妥当性または有用性を検証することはありません。DBCLSは、明示的にも黙示的にも、利用者が当データを用いて行う一切の行為について、何ら責任を負うものではありません。DBCLSは、本サービスの変更、中断、または終了により被った損害に関しても、何ら責任を負うものではありません。また、ライフサイエンス統合データベースセンターのサイト・ポリシー内「<a
               class="policy" href="https://dbcls.rois.ac.jp/policy.html">免責事項</a>」にも準ずるものとします。
           </p>
         </div>
+
         <div class="content-block">
           <h3 class="content-title">ライセンス</h3>
           <p>
-            NANDO及びNanbyoDataで提供されるデータは、クリエイティブ・コモンズ【表示4.0国際】ライセンスに従うかぎり、商用利用を含め、自由に複製または改変してご利用いただくことが可能です。<br>
-            <a href="https://creativecommons.org/licenses/by/4.0/deed.ja">CC-BY 4.0</a> | <a
-              href="http://dbcls.rois.ac.jp/">DBCLS</a>
+            NANDO は <a href="https://creativecommons.org/licenses/by/4.0/deed.ja">CC-BY 4.0</a> ライセンスのもとで公開されています。
+            商用利用を含め、自由に複製または改変してご利用いただくことが可能です。
           </p>
         </div>
+
         <div class="content-block">
-          <h3 class="content-title">出典</h3>
+          <h3 class="content-title">お問い合わせ</h3>
           <p>
-            <a href="http://nanbyodata.jp/datasets">「データセット」</a>を参照してください。<br>
+            NANDO に関するお問い合わせは、以下のメールアドレスまでご連絡ください。<br>
+            <a href="mailto:nanbyodata@dbcls.rois.ac.jp">nanbyodata@dbcls.rois.ac.jp</a>
           </p>
         </div>
-        <div class="content-block">
-          <h3 class="content-title">謝辞</h3>
-          <p>
-            本オントロジーの構築に際して<a href="https://ddrare.nibiohn.go.jp/">DDrare</a>および<a
-              href="https://metadb.riken.jp/metadb/ontology/RDVJ">RDVJ</a>を参照した．
-            本オントロジーの構築に<a href="http://biohackathon.org/">BioHackathon</a>の成果を利用した．
-          </p>
-        </div>
+
       </div>
       {% else %}
       <div class="contents-wrapper">
         <div class="content-block">
-          <h3 class="content-title">About NanbyoData</h3>
-          <p>NanbyoData provides a comprehensive and centralized collection of useful information on rare diseases from various perspectives, accessible to everyone.</p>
-          <div class="illust-wrapper">
-            <div class="illust-card">
-              <img src="/static/img/illust_1.png" class="illust-img">
-              <h4 class="illust-title">Accumulating information on nanbyo diseases from diverse perspectives</h4>
-              <p class="illust-text">
-                NanbyoData aggregates rare disease information from a variety of perspectives, including basic research, clinical data, and real-world disease scenarios, all presented in Japanese.
-              </p>
-            </div>
-            <div class="illust-card">
-              <img src="/static/img/illust_2.png" class="illust-img">
-              <h4 class="illust-title">Accumulating information on nanbyo diseases from around the world</h4>
-              <p class="illust-text">
-                NanbyoData compiles rare disease information from around the world, featuring the latest updates from global medical databases and information sites.
-              </p>
-            </div>
-            <div class="illust-card">
-              <img src="/static/img/illust_3.png" class="illust-img">
-              <h4 class="illust-title">Updateing information on nanbyo diseases</h4>
-              <p class="illust-text">
-                NanbyoData plans to publish information on rare diseases targeting the Japanese population, incorporating findings from past research and studies, as well as unique epidemiological data from large-scale medical databases.
-              </p>
-            </div>
-          </div>
-        </div>
-        <div class="content-block">
-          <h3 class="content-title">About NANDO</h3>
+          <h3 class="content-title">About</h3>
           <p>
-In Japan, rare diseases are addressed through two specific healthcare schemes: the "Designated Intractable Diseases" system and the "Specified Chronic Diseases of Children" system. As of July 2021, these systems cover 333 and 762 diseases, respectively. The <a href="https://github.com/dbcls/nando">Nanbyo Disease Ontology (NANDO)</a> is the first ontology that systematizes the disease concepts and relationships among the diseases targeted by Japan's rare disease policies. NanbyoData utilizes NANDO to gather and provide data on rare diseases both domestically and internationally. The vocabulary list and hierarchical structure of NANDO can be accessed as the follow:</br>
-            <a href="http://nanbyodata.jp/ontology/nando"> - Vocabulary list</a>
+            <strong>NANDO (Nanbyo Disease Ontology)</strong> is an ontology designed to classify and systematize diseases covered under Japan’s "Designated Intractable Diseases" and "Specified Chronic Diseases of Children" programs.
+            NANDO integrates domestic rare disease information and enhances standardization and interoperability with international rare disease databases.
+
+	    NANDO (Nanbyo Disease Ontology) is Japan's first comprehensive ontology of intractable and rare disease terminology, systematically organizing diseases covered under the Designated Intractable Disease System and the Pediatric Chronic Specific Disease System, as defined by the Ministry of Health, Labour and Welfare of Japan.  
+	    The official version of NANDO was released in 2021, and it has been continuously updated to reflect revisions to these systems. By integrating Japan's intractable disease information and enhancing compatibility with international disease databases, NANDO aims to improve standardization and interoperability.  
+	    As part of this effort, NANDO is interoperable with the international rare disease ontology, <a href="https://mondo.monarchinitiative.org/">MONDO (Mondo Disease Ontology)</a>, enabling global data sharing on intractable diseases.<br>
+            <a href="http://nanbyodata.jp/ontology/nando"><b> - Vocabulary list</b></a>
           </p>
         </div>
+
         <div class="content-block">
+          <h3 class="content-title">How to develop</h3>
+          <p>
+	    NANDO is constructed based on the Designated Intractable Disease System and the Pediatric Chronic Specific Disease System, as defined by the Ministry of Health, Labour and Welfare of Japan. It systematically organizes diseases by extracting lower-level disease names, structuring them into hierarchical parent-child relationships, and formalizing them as an ontology.  
+	    Additionally, nanbyo disease names have been translated into English, and mappings to Mondo have been established. NANDO also aligns with international disease databases such as Orphanet and MedGen. After review by clinical genetic specialists, the data is made available not only in ontology format but also in an Excel format to accommodate a wide range of use cases.
+          </p>
+        </div>
+
+        <div class="content-block">
+          <h3 class="content-title">Summary statistics</h3>
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th>Feature</th>
+                <th>Count</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Total number of terms</td>
+                <td>2,800+</td>
+              </tr>
+              <tr>
+                <td>Database cross references</td>
+                <td>6,000+</td>
+              </tr>
+              <tr>
+                <td>Term definitions</td>
+                <td>1,300+</td>
+              </tr>
+              <tr>
+                <td>Synonyms</td>
+                <td>3,000+</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+	<!--
+        <div class="content-block">
+          <h3 class="content-title">Contribute</h3>
+          <p>
+            Contributions to NANDO can be made through GitHub by reporting issues or submitting pull requests.
+            <a href="https://github.com/dbcls/nando">GitHub repository here</a>.
+          </p>
+        </div>
+	-->
+
+	<div class="content-block">
           <h3 class="content-title">Disclaimer</h3>
           <p>
 NanbyoData and NANDO strive to provide data in good faith, but do not verify the accuracy, clinical validity, or usefulness of the data. The Database Center for Life Science (DBCLS) bears no responsibility, either expressed or implied, for any actions taken by users using this data. DBCLS also bears no responsibility for any damages incurred due to changes, interruptions, or cessation of this service. Additionally, the terms of this disclaimer align with those outlined in the <a class="policy" href="https://dbcls.rois.ac.jp/policy.html">"Disclaimer"</a> section of the Life Science Integrated Database Center's site policy.
           </p>
         </div>
+
         <div class="content-block">
           <h3 class="content-title">License</h3>
           <p>
-The data provided by NANDO and NanbyoData is available for use, including commercial purposes, as long as it adheres to the Creative Commons Attribution 4.0 International (CC-BY 4.0) License. This license allows users to freely replicate or modify the data under these terms.</br>
-            <a href="https://creativecommons.org/licenses/by/4.0/deed.ja">CC-BY 4.0</a> | <a href="http://dbcls.rois.ac.jp/">Database Center for Life Science (DBCLS)</a>
+            NANDO is released under the <a href="https://creativecommons.org/licenses/by/4.0/deed.en">CC-BY 4.0</a> license.
+            It is free to use, modify, and distribute, including for commercial purposes.
           </p>
         </div>
+
         <div class="content-block">
-          <h3 class="content-title">Sources</h3>
+          <h3 class="content-title">Contact</h3>
           <p>
-- <a href="https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/0000084783.html">Ministry of Health, Labour and Welfare, "Overview, Diagnostic Criteria, etc." (Accessed July 14, 2020)</a></br>
-- <a href="https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/0000084783.html">Ministry of Health, Labour and Welfare, "Clinical Survey Individual Sheet" (Accessed July 14, 2020)</a></br>
-- <a href="https://www.shouman.jp/disease/search/group/">Center for Chronic Pediatric Diseases, "Overview" (Accessed July 14, 2020)</a></br>
-- <a href="https://www.shouman.jp/disease/search/group/">Center for Chronic Pediatric Diseases, "Opinion Paper" (Accessed July 14, 2020)</a></br>
-          </p>
-        </div>
-        <div class="content-block">
-          <h3 class="content-title">Acknowledgements</h3>
-          <p>
-The construction of this ontology was informed by references to <a href="https://ddrare.nibiohn.go.jp/">DDrare</a> and <a href="https://metadb.riken.jp/metadb/ontology/RDVJ">RDVJ</a>. The results from the <a href="http://biohackathon.org/">BioHackathon</a> were also utilized in building this ontology.
+            For inquiries regarding NANDO, please contact us at:<br>
+            <a href="mailto:nanbyodata@dbcls.rois.ac.jp">nanbyodata@dbcls.rois.ac.jp</a>
           </p>
         </div>
       </div>
@@ -194,13 +233,8 @@ The construction of this ontology was informed by references to <a href="https:/
     {% else %}
     {% include 'component/modal-tos_en.html' %}
     {% endif %}
-
+    
   </main>
-
-
-
-
-
 
   <!-- Optional JavaScript -->
   <!-- jQuery first, then Bootstrap JS -->

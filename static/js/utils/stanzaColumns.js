@@ -58,19 +58,72 @@ export const causalGeneColumns = [
     label: 'Gene symbol',
     link: 'omim_url',
     target: '_blank',
+    rowspan: true,
   },
-  { id: 'ncbi_id', label: 'NCBI gene ID', link: 'ncbi_url', target: '_blank' },
   {
-    id: 'nando_label_e',
-    label: 'NANDO disease label',
-    link: 'nando_ida',
+    id: 'ncbi_id',
+    label: 'NCBI gene ID',
+    link: 'ncbi_url',
+    target: '_blank',
+    rowspan: true,
+  },
+  {
+    id: 'nando_id',
+    label: 'NANDO ID',
+    link: 'nando',
+    target: '_blank',
+  },
+  {
+    id: 'nando_label_en',
+    label: 'NANDO label (EN)',
+    lineClamp: 1,
+  },
+  {
+    id: 'nando_label_ja',
+    label: 'NANDO label (JA)',
+    lineClamp: 1,
+  },
+  {
+    id: 'mondo_id',
+    label: 'Bridge ID',
+    link: 'mondo_url',
     target: '_blank',
   },
   {
     id: 'mondo_label',
-    label: 'Mondo disease label',
-    link: 'mondo_url',
-    target: '_blank',
+    label: 'Mondo label (EN)',
+    lineClamp: 1,
+  },
+  {
+    id: 'mondo_label_ja',
+    label: 'Mondo label (JA)',
+    lineClamp: 1,
+  },
+];
+
+export const glycanRelatedGeneColumns = [
+  {
+    id: 'gene_id',
+    label: 'Glycan related gene (GlyCosmos)',
+    link: 'glycosmosgene',
+    align: 'center',
+    rowspan: true,
+  },
+  {
+    id: 'ncbigene_description',
+    label: 'Full name (NCBI gene)',
+    link: 'ncbi_url',
+    rowspan: true,
+  },
+  {
+    id: 'go_term_mf',
+    label: 'GO term (molecular function)',
+    link: 'go',
+  },
+  {
+    id: 'pmid_num',
+    label: 'References',
+    link: 'pmid_link',
   },
 ];
 
