@@ -630,7 +630,7 @@ header.search-area .intro-text .keyword a {
 .news-summary .logdata dd::after {
   content: "new";
   position: relative;
-  background: pink;
+  background: #f93759;
   padding: 0 10px;
   border-radius: 10px;
   color: white;
