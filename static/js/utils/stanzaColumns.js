@@ -135,9 +135,15 @@ export const geneticTestingColumns = [
 ];
 
 export const phenotypesJaColumns = [
-  { id: 'hpo_label_ja', label: 'Symptom (JA)' },
-  { id: 'hpo_label_en', label: 'Symptom (EN)' },
-  { id: 'hpo_id', label: 'HPO ID', link: 'hpo_url', target: '_blank' },
+  { id: 'hpo_label_ja', label: 'Symptom (JA)', rowspan: true },
+  { id: 'hpo_label_en', label: 'Symptom (EN)', rowspan: true },
+  {
+    id: 'hpo_id',
+    label: 'HPO ID',
+    link: 'hpo_url',
+    target: '_blank',
+    rowspan: true,
+  },
   {
     id: 'hpo_category_name_en',
     label: 'Symptom category',
@@ -147,8 +153,14 @@ export const phenotypesJaColumns = [
 ];
 
 export const phenotypesEnColumns = [
-  { id: 'hpo_label_en', label: 'Symptom' },
-  { id: 'hpo_id', label: 'HPO ID', link: 'hpo_url', target: '_blank' },
+  { id: 'hpo_label_en', label: 'Symptom', rowspan: true },
+  {
+    id: 'hpo_id',
+    label: 'HPO ID',
+    link: 'hpo_url',
+    target: '_blank',
+    rowspan: true,
+  },
   {
     id: 'hpo_category_name_en',
     label: 'Symptom category',
