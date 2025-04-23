@@ -101,13 +101,35 @@ export function makeGeneticTesting(geneticTestingData) {
 
 // phenotypes(臨床的特徴)
 export function makePhenotypes(phenotypesData) {
+  // hpo_idの重複を除外したユニークな値の数を計算
+  let uniqueHpoIdCount = 0;
+  if (
+    phenotypesData &&
+    Array.isArray(phenotypesData) &&
+    phenotypesData.length > 0
+  ) {
+    const uniqueHpoIds = new Set();
+    phenotypesData.forEach((phenotype) => {
+      if (phenotype.hpo_id) {
+        uniqueHpoIds.add(phenotype.hpo_id);
+      }
+    });
+    uniqueHpoIdCount = uniqueHpoIds.size;
+  }
+
   const currentLang = document.querySelector('.language-select').value;
   const phenotypeLang = currentLang === 'ja' ? 'phenotype-ja' : 'phenotype-en';
   const columns = {
     ja: convertColumnToText(phenotypesJaColumns),
     en: convertColumnToText(phenotypesEnColumns),
   };
-  makeData(phenotypesData, 'phenotypes', phenotypeLang, columns[currentLang]);
+  makeData(
+    phenotypesData,
+    'phenotypes',
+    phenotypeLang,
+    columns[currentLang],
+    uniqueHpoIdCount
+  );
   if (phenotypesData?.length > 0 && phenotypesData !== null) {
     const navLink = document.querySelector('.nav-link.phenotypes');
     navLink.style.cursor = 'pointer';
