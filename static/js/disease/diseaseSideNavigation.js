@@ -3,6 +3,7 @@ export function makeSideNavigation() {
 
   const items = [
     'overview',
+    'pubmed-papers',
     'causal-genes',
     'glycan-related-genes',
     'genetic-testing',
@@ -108,6 +109,7 @@ export function switchingDisplayContents(selectedItemId) {
   const items = [
     '#overview',
     '#temp-disease-definition',
+    '#pubmed-papers',
     '#causal-genes',
     '#glycan-related-genes',
     '#genetic-testing',
@@ -144,6 +146,7 @@ export function switchingDisplayContents(selectedItemId) {
         });
         break;
       case 'temp-disease-definition':
+      case 'pubmed-papers':
       case 'causal-genes':
       case 'glycan-related-genes':
       case 'genetic-testing':

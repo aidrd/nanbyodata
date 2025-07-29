@@ -1,5 +1,6 @@
 import { makeSideNavigation } from './diseaseSideNavigation.js';
 import {
+  pubmedPapersColumns,
   causalGeneColumns,
   glycanRelatedGeneColumns,
   geneticTestingColumns,
@@ -19,6 +20,15 @@ import {
 } from '../utils/stanzaUtils.js';
 
 makeSideNavigation();
+
+export function makePubMedPapers(pubmedPapersData) {
+  makeData(
+    pubmedPapersData,
+    'pubmed-papers',
+    'pubmed-papers-table',
+    convertColumnToText(pubmedPapersColumns)
+  );
+}
 
 // causalGene(疾患原因遺伝子)
 export function makeCausalGene(causalGeneData) {

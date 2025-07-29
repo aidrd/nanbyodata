@@ -51,6 +51,14 @@ export const pediatricChronicSpecificDiseaseEnColumns = [
   { id: 'num_of_2018', label: '2018', type: 'number' },
 ];
 
+// PubMed Papers
+export const pubmedPapersColumns = [
+  { id: 'id', label: 'ID' },
+  { id: 'title', label: 'Title' },
+  { id: 'name', label: 'Name' },
+  { id: 'date', label: 'Date' },
+];
+
 // Disease
 export const causalGeneColumns = [
   {

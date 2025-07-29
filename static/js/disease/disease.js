@@ -15,6 +15,7 @@ import { makeDiseaseDefinition } from './overview/makeDiseaseDefinition.js';
 import { updateOverviewDisplay } from './overview/updateOverviewDisplay.js';
 
 import {
+  makePubMedPapers,
   makeCausalGene,
   makeGlycanRelatedGene,
   makeGeneticTesting,
@@ -270,6 +271,13 @@ const datasets = [
           }
         }
       }),
+      // TODO: check API name
+      fetchData('test_pubmed').then((pubmedPapersData) => {
+        makePubMedPapers(pubmedPapersData);
+        datasets.find((d) => d.name === 'PubMed Papers').data =
+          pubmedPapersData;
+        checkAndLogDatasets();
+      }),
       fetchData('nanbyodata_get_causal_gene_by_nando_id').then(
         (causalGeneData) => {
           makeCausalGene(causalGeneData);
@@ -372,6 +380,7 @@ function trySwitchingContent(hash, retries = 0) {
 
   const items = [
     'overview',
+    'pubmed-papers',
     'causal-genes',
     'glycan-related-genes',
     'genetic-testing',
