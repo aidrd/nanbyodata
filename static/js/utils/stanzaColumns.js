@@ -53,10 +53,10 @@ export const pediatricChronicSpecificDiseaseEnColumns = [
 
 // PubMed Papers
 export const pubmedPapersColumns = [
-  { id: 'id', label: 'ID' },
+  { id: 'pmid', label: 'ID', link: 'url', target: '_blank' },
   { id: 'title', label: 'Title' },
-  { id: 'name', label: 'Name' },
-  { id: 'date', label: 'Date' },
+  { id: 'magazine', label: 'Magazine' },
+  { id: 'date', label: 'Date', type: 'date' },
 ];
 
 // Disease

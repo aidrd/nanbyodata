@@ -28,6 +28,11 @@ export function makePubMedPapers(pubmedPapersData) {
     'pubmed-papers-table',
     convertColumnToText(pubmedPapersColumns)
   );
+  if (pubmedPapersData?.length > 0 && pubmedPapersData !== null) {
+    const navLink = document.querySelector('.nav-link.pubmed-papers');
+    navLink.style.cursor = 'pointer';
+    navLink.classList.remove('-disabled');
+  }
 }
 
 // causalGene(疾患原因遺伝子)

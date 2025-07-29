@@ -82,6 +82,7 @@ const datasets = [
     data: null,
   },
   { name: 'Sub-classes', data: null },
+  { name: 'PubMed Papers', data: null },
   { name: 'Causal Genes', data: null },
   { name: 'Glycan-related Genes', data: null },
   { name: 'Genetic Testing', data: null },
