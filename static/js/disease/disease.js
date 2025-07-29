@@ -8,6 +8,7 @@ import { makeLinkedList } from './overview/makeLinkedList.js';
 import { makeExternalLinks } from './overview/makeExternalLinks.js';
 import { makeAlternativeName } from './overview/makeAlternativeName.js';
 import { makeInheritanceUris } from './overview/makeInheritanceUris.js';
+import { makeReferenceGenes } from './overview/makeReferenceGenes.js';
 import { makeNumOfPatients } from './overview/makeNumOfPatients.js';
 import { makeSubClass } from './overview/makeSubclass.js';
 import { checkSummaryData } from './overview/checkSummaryData.js';
@@ -76,6 +77,7 @@ const datasets = [
   { name: 'MedGen', data: null },
   { name: 'KEGG', data: null },
   { name: 'Descriptions', data: null },
+  { name: 'Reference Genes', data: null },
   {
     name: 'Number of Specific Medical Expenses Beneficiary Certificate Holders',
     data: null,
@@ -137,6 +139,13 @@ const datasets = [
       }),
 
       // 他のAPI呼び出し
+      fetchData('test_reference_gene').then((response) => {
+        const referenceGeneData = response;
+        makeReferenceGenes(referenceGeneData);
+        datasets.find((d) => d.name === 'Reference Genes').data =
+          referenceGeneData;
+        checkAndLogDatasets();
+      }),
       fetchData('nanbyodata_get_stats_on_patient_number_by_nando_id').then(
         (response) => {
           const numOfPatientsData = response;
