@@ -1055,28 +1055,33 @@ header.search-area .intro-text .keyword a {
   color: var(--color-secondary);
 }
 #temp-side-navigation > ul > li .bio-resource,
-#temp-side-navigation > ul > li .variant {
+#temp-side-navigation > ul > li .variant,
+#temp-side-navigation > ul > li .causal-genes {
   color: var(--color-secondary);
   font-weight: bold;
   padding: 10px 0 20px 10px;
 }
 #temp-side-navigation > ul > li .bio-resource.-disabled,
-#temp-side-navigation > ul > li .variant.-disabled {
+#temp-side-navigation > ul > li .variant.-disabled,
+#temp-side-navigation > ul > li .causal-genes.-disabled {
   color: rgba(19, 41, 90, 0.2705882353);
 }
 #temp-side-navigation > ul > li .bio-resource ul,
-#temp-side-navigation > ul > li .variant ul {
+#temp-side-navigation > ul > li .variant ul,
+#temp-side-navigation > ul > li .causal-genes ul {
   position: relative;
   bottom: 6px;
 }
 #temp-side-navigation > ul > li .bio-resource ul li,
-#temp-side-navigation > ul > li .variant ul li {
+#temp-side-navigation > ul > li .variant ul li,
+#temp-side-navigation > ul > li .causal-genes ul li {
   position: relative;
   margin-left: 20px;
   padding-top: 4px;
 }
 #temp-side-navigation > ul > li .bio-resource ul li::before,
-#temp-side-navigation > ul > li .variant ul li::before {
+#temp-side-navigation > ul > li .variant ul li::before,
+#temp-side-navigation > ul > li .causal-genes ul li::before {
   content: "";
   display: block;
   width: 5px;
@@ -1088,12 +1093,14 @@ header.search-area .intro-text .keyword a {
   position: absolute;
 }
 #temp-side-navigation > ul > li .bio-resource ul li:first-child::before,
-#temp-side-navigation > ul > li .variant ul li:first-child::before {
+#temp-side-navigation > ul > li .variant ul li:first-child::before,
+#temp-side-navigation > ul > li .causal-genes ul li:first-child::before {
   top: 8px;
   height: 26px;
 }
 #temp-side-navigation > ul > li .bio-resource ul li::after,
-#temp-side-navigation > ul > li .variant ul li::after {
+#temp-side-navigation > ul > li .variant ul li::after,
+#temp-side-navigation > ul > li .causal-genes ul li::after {
   content: "";
   display: block;
   width: 1px;
@@ -1105,7 +1112,8 @@ header.search-area .intro-text .keyword a {
   position: absolute;
 }
 #temp-side-navigation > ul > li .bio-resource ul li a,
-#temp-side-navigation > ul > li .variant ul li a {
+#temp-side-navigation > ul > li .variant ul li a,
+#temp-side-navigation > ul > li .causal-genes ul li a {
   display: block;
   text-decoration: none;
   position: relative;
@@ -1118,15 +1126,18 @@ header.search-area .intro-text .keyword a {
   background-color: transparent;
 }
 #temp-side-navigation > ul > li .bio-resource ul li a:hover,
-#temp-side-navigation > ul > li .variant ul li a:hover {
+#temp-side-navigation > ul > li .variant ul li a:hover,
+#temp-side-navigation > ul > li .causal-genes ul li a:hover {
   background-color: var(--color-breadcrumb-hover);
 }
 #temp-side-navigation > ul > li .bio-resource ul li .-disabled:hover,
-#temp-side-navigation > ul > li .variant ul li .-disabled:hover {
+#temp-side-navigation > ul > li .variant ul li .-disabled:hover,
+#temp-side-navigation > ul > li .causal-genes ul li .-disabled:hover {
   background-color: transparent;
 }
 #temp-side-navigation > ul > li .bio-resource ul li .selected,
-#temp-side-navigation > ul > li .variant ul li .selected {
+#temp-side-navigation > ul > li .variant ul li .selected,
+#temp-side-navigation > ul > li .causal-genes ul li .selected {
   background-color: rgba(22, 35, 78, 0.2);
 }
 

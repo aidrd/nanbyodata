@@ -128,6 +128,36 @@ export const glycanRelatedGeneColumns = [
   },
 ];
 
+export const referenceGeneColumns = [
+  {
+    id: 'symbol',
+    label: 'Gene symbol',
+    link: 'hgnc',
+    target: '_blank',
+  },
+  {
+    id: 'ncbi_id',
+    label: 'NCBI gene ID',
+    link: 'ncbi',
+    target: '_blank',
+  },
+  {
+    id: 'hgnc_id',
+    label: 'HGNC ID',
+    link: 'hgnc',
+    target: '_blank',
+  },
+  {
+    id: 'gene_name',
+    label: 'Gene name',
+  },
+  {
+    id: 'gene_description',
+    label: 'Description',
+    lineClamp: 2,
+  },
+];
+
 export const geneticTestingColumns = [
   { id: 'label', label: 'Test name' },
   { id: 'hp', label: 'More information', link: 'hp', target: '_blank' },

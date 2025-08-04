@@ -160,13 +160,32 @@
                 Overview
                 {% endif %}
                 <span class="data-num"><span class="loading-spinner -sidenav"></span></span></a>
-            <li><a href="#causal-genes" class="nav-link causal-genes -disabled">
+            <li>
+              <div class="causal-genes -disabled">
                 {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
                 疾患原因遺伝子
                 {% else %}
                 Causal Genes
                 {% endif %}
-                <span class="data-num"><span class="loading-spinner -sidenav"></span></span></a>
+                <ul>
+                  <li><a href="#causal-genes" class="disease-associated nav-link -disabled">
+                      {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
+                      関連遺伝子
+                      {% else %}
+                      Associated Genes
+                      {% endif %}
+                      <span class="data-num"><span class="loading-spinner -sidenav"></span></span></a>
+                  </li>
+                  <li><a href="#causal-genes" class="reference nav-link -disabled">
+                      {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
+                      リファレンス遺伝子
+                      {% else %}
+                      Reference Genes
+                      {% endif %}
+                      <span class="data-num"><span class="loading-spinner -sidenav"></span></span></a>
+                  </li>
+                </ul>
+              </div>
             </li>
             <li><a href="#glycan-related-genes" class="nav-link glycan-related-genes -disabled">
                 {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
@@ -463,8 +482,9 @@
                   </div>
                 </section>
 
+                <!-- リファレンス遺伝子セクションは疾患原因遺伝子のタブに移動したため削除 -->
+                <!-- 
                 <section class="overview-section">
-                  <!-- リファレンス遺伝子 -->
                   <div class="sub-title-wrapper">
                     {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
                     <h5 class="sub-title -reference-gene">リファレンス遺伝子</h5>
@@ -481,6 +501,7 @@
                     </div>
                   </div>
                 </section>
+                -->
 
                 <section class="overview-section">
                   <div class="sub-title-wrapper -select">
@@ -629,7 +650,6 @@
                 {% else %}
                 Causal Genes
                 {% endif %}
-                <span class="data-num"></span>
                 <small>
                   &nbsp;from&nbsp;
                   <a href="https://www.ncbi.nlm.nih.gov/medgen/" target="_blank" rel="noopener noreferrer">MedGen</a>
@@ -639,7 +659,32 @@
                   <a href="https://thegencc.org/" target="_blank" rel="noopener noreferrer">GenCC</a>
                 </small>
               </h4>
-              <div id="causal-genes-table"></div>
+
+              <div class="tab-wrap">
+                <input type="radio" name="causal-genes" class="tab-switch" id="causal-genes-disease-associated" />
+                <label class="tab-label causal-genes-disease-associated" for="causal-genes-disease-associated">
+                  {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
+                  関連遺伝子
+                  {% else %}
+                  Associated Genes
+                  {% endif %}
+                  <span class="data-num"></span>
+                </label>
+                <div class="tab-content disease-associated"></div>
+
+                <input type="radio" name="causal-genes" class="tab-switch" id="causal-genes-reference" />
+                <label class="tab-label causal-genes-reference" for="causal-genes-reference">
+                  {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
+                  リファレンス遺伝子
+                  {% else %}
+                  Reference Genes
+                  {% endif %}
+                  <span class="data-num"></span>
+                </label>
+                <div class="tab-content reference"></div>
+
+                <span class="tab-label -flex"></span>
+              </div>
             </div>
 
             <div id="glycan-related-genes" open="">

@@ -17,6 +17,7 @@ import { updateOverviewDisplay } from './overview/updateOverviewDisplay.js';
 
 import {
   makeCausalGene,
+  makeReferenceGene,
   makeGlycanRelatedGene,
   makeGeneticTesting,
   makePhenotypes,
@@ -141,7 +142,7 @@ const datasets = [
       // 他のAPI呼び出し
       fetchData('test_reference_gene').then((response) => {
         const referenceGeneData = response;
-        makeReferenceGenes(referenceGeneData);
+        makeReferenceGene(referenceGeneData);
         datasets.find((d) => d.name === 'Reference Genes').data =
           referenceGeneData;
         checkAndLogDatasets();
@@ -381,7 +382,8 @@ function trySwitchingContent(hash, retries = 0) {
 
   const items = [
     'overview',
-    'causal-genes',
+    'causal-genes-disease-associated',
+    'causal-genes-reference',
     'glycan-related-genes',
     'genetic-testing',
     'phenotypes',
@@ -400,6 +402,10 @@ function trySwitchingContent(hash, retries = 0) {
 
   let modifiedHash = hash;
   switch (hash) {
+    case 'causal-genes-disease-associated':
+    case 'causal-genes-reference':
+      modifiedHash = hash.substring('causal-genes-'.length);
+      break;
     case 'bio-resource-cell':
     case 'bio-resource-mouse':
     case 'bio-resource-dna':

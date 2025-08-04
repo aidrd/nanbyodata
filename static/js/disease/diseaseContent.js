@@ -1,6 +1,7 @@
 import { makeSideNavigation } from './diseaseSideNavigation.js';
 import {
   causalGeneColumns,
+  referenceGeneColumns,
   glycanRelatedGeneColumns,
   geneticTestingColumns,
   phenotypesJaColumns,
@@ -22,6 +23,23 @@ makeSideNavigation();
 
 // causalGene(疾患原因遺伝子)
 export function makeCausalGene(causalGeneData) {
+  // 疾患原因遺伝子のみ表示
+  makeCausalGenes(causalGeneData);
+}
+
+// referenceGene(リファレンス遺伝子)
+export function makeReferenceGene(referenceGeneData) {
+  // リファレンス遺伝子タブを表示
+  makeReferenceGenes(referenceGeneData);
+}
+
+// causalGenes(疾患原因遺伝子)
+export function makeCausalGenes(causalGeneData) {
+  const causalGenes = document.getElementById('causal-genes');
+  const tabWrap = causalGenes.querySelector('.tab-wrap');
+
+  const causalGenesDataset = processData(causalGeneData);
+
   // gene_symbolの重複を除外したユニークな値の数を計算
   let uniqueGeneSymbolCount = 0;
   if (
@@ -38,17 +56,70 @@ export function makeCausalGene(causalGeneData) {
     uniqueGeneSymbolCount = uniqueGeneSymbols.size;
   }
 
-  makeData(
-    causalGeneData,
-    'causal-genes',
-    'causal-genes-table',
-    convertColumnToText(causalGeneColumns),
-    uniqueGeneSymbolCount // 重複のないgene_symbolの数を渡す
-  );
+  const items = {
+    id: 'disease-associated',
+    columns: convertColumnToText(causalGeneColumns),
+    data: causalGeneData,
+    object: causalGenesDataset.dataObject,
+  };
+
+  processTabs(items, 'causal-genes', tabWrap, uniqueGeneSymbolCount);
   if (causalGeneData?.length > 0 && causalGeneData !== null) {
-    const navLink = document.querySelector('.nav-link.causal-genes');
+    const navLink = document.querySelector('.nav-link.disease-associated');
+    const causalGenesWrapper = document.querySelector('.causal-genes');
     navLink.style.cursor = 'pointer';
     navLink.classList.remove('-disabled');
+    causalGenesWrapper.classList.remove('-disabled');
+  } else {
+    document.querySelector('#causal-genes-disease-associated').remove();
+    document
+      .querySelector('.tab-label.causal-genes-disease-associated')
+      .remove();
+    document.querySelector('.tab-content.disease-associated').remove();
+  }
+}
+
+// referenceGenes(リファレンス遺伝子)
+export function makeReferenceGenes(referenceGeneData) {
+  const causalGenes = document.getElementById('causal-genes');
+  const tabWrap = causalGenes.querySelector('.tab-wrap');
+
+  const referenceGenesDataset = processData(referenceGeneData);
+
+  // symbolの重複を除外したユニークな値の数を計算
+  let uniqueReferenceSymbolCount = 0;
+  if (
+    referenceGeneData &&
+    Array.isArray(referenceGeneData) &&
+    referenceGeneData.length > 0
+  ) {
+    const uniqueReferenceSymbols = new Set();
+    referenceGeneData.forEach((gene) => {
+      if (gene.symbol) {
+        uniqueReferenceSymbols.add(gene.symbol);
+      }
+    });
+    uniqueReferenceSymbolCount = uniqueReferenceSymbols.size;
+  }
+
+  const items = {
+    id: 'reference',
+    columns: convertColumnToText(referenceGeneColumns),
+    data: referenceGeneData,
+    object: referenceGenesDataset.dataObject,
+  };
+
+  processTabs(items, 'causal-genes', tabWrap, uniqueReferenceSymbolCount);
+  if (referenceGeneData?.length > 0 && referenceGeneData !== null) {
+    const navLink = document.querySelector('.nav-link.reference');
+    const causalGenesWrapper = document.querySelector('.causal-genes');
+    navLink.style.cursor = 'pointer';
+    navLink.classList.remove('-disabled');
+    causalGenesWrapper.classList.remove('-disabled');
+  } else {
+    document.querySelector('#causal-genes-reference').remove();
+    document.querySelector('.tab-label.causal-genes-reference').remove();
+    document.querySelector('.tab-content.reference').remove();
   }
 }
 
