@@ -381,7 +381,7 @@ function trySwitchingContent(hash, retries = 0) {
 
   const items = [
     'overview',
-    'pubmed-papers',
+    'publications',
     'causal-genes',
     'glycan-related-genes',
     'genetic-testing',

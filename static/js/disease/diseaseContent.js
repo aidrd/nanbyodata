@@ -24,12 +24,12 @@ makeSideNavigation();
 export function makePubMedPapers(pubmedPapersData) {
   makeData(
     pubmedPapersData,
-    'pubmed-papers',
-    'pubmed-papers-table',
+    'publications',
+    'publications-table',
     convertColumnToText(pubmedPapersColumns)
   );
   if (pubmedPapersData?.length > 0 && pubmedPapersData !== null) {
-    const navLink = document.querySelector('.nav-link.pubmed-papers');
+    const navLink = document.querySelector('.nav-link.publications');
     navLink.style.cursor = 'pointer';
     navLink.classList.remove('-disabled');
   }
