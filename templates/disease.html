@@ -168,19 +168,19 @@
                 Causal Genes
                 {% endif %}
                 <ul>
-                  <li><a href="#causal-genes" class="disease-associated nav-link -disabled">
-                      {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
-                      関連遺伝子
-                      {% else %}
-                      Associated Genes
-                      {% endif %}
-                      <span class="data-num"><span class="loading-spinner -sidenav"></span></span></a>
-                  </li>
                   <li><a href="#causal-genes" class="reference nav-link -disabled">
                       {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
                       リファレンス遺伝子
                       {% else %}
                       Reference Genes
+                      {% endif %}
+                      <span class="data-num"><span class="loading-spinner -sidenav"></span></span></a>
+                  </li>
+                  <li><a href="#causal-genes" class="disease-associated nav-link -disabled">
+                      {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
+                      関連遺伝子
+                      {% else %}
+                      Associated Genes
                       {% endif %}
                       <span class="data-num"><span class="loading-spinner -sidenav"></span></span></a>
                   </li>
@@ -650,28 +650,9 @@
                 {% else %}
                 Causal Genes
                 {% endif %}
-                <small>
-                  &nbsp;from&nbsp;
-                  <a href="https://www.ncbi.nlm.nih.gov/medgen/" target="_blank" rel="noopener noreferrer">MedGen</a>
-                  ,&nbsp;
-                  <a href="https://www.orphadata.com/" target="_blank" rel="noopener noreferrer">Orphadata</a>
-                  ,&nbsp;
-                  <a href="https://thegencc.org/" target="_blank" rel="noopener noreferrer">GenCC</a>
-                </small>
               </h4>
 
               <div class="tab-wrap">
-                <input type="radio" name="causal-genes" class="tab-switch" id="causal-genes-disease-associated" />
-                <label class="tab-label causal-genes-disease-associated" for="causal-genes-disease-associated">
-                  {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
-                  関連遺伝子
-                  {% else %}
-                  Associated Genes
-                  {% endif %}
-                  <span class="data-num"></span>
-                </label>
-                <div class="tab-content disease-associated"></div>
-
                 <input type="radio" name="causal-genes" class="tab-switch" id="causal-genes-reference" />
                 <label class="tab-label causal-genes-reference" for="causal-genes-reference">
                   {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
@@ -682,6 +663,25 @@
                   <span class="data-num"></span>
                 </label>
                 <div class="tab-content reference"></div>
+
+                <input type="radio" name="causal-genes" class="tab-switch" id="causal-genes-disease-associated" />
+                <label class="tab-label causal-genes-disease-associated" for="causal-genes-disease-associated">
+                  {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
+                  関連遺伝子
+                  {% else %}
+                  Associated Genes
+                  {% endif %}
+                  <span class="data-num"></span>
+                  <small>
+                    &nbsp;from&nbsp;
+                    <a href="https://www.ncbi.nlm.nih.gov/medgen/" target="_blank" rel="noopener noreferrer">MedGen</a>
+                    ,&nbsp;
+                    <a href="https://www.orphadata.com/" target="_blank" rel="noopener noreferrer">Orphadata</a>
+                    ,&nbsp;
+                    <a href="https://thegencc.org/" target="_blank" rel="noopener noreferrer">GenCC</a>
+                  </small>
+                </label>
+                <div class="tab-content disease-associated"></div>
 
                 <span class="tab-label -flex"></span>
               </div>
