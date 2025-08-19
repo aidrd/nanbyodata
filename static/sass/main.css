@@ -1550,4 +1550,47 @@ Disease page right top */
 .member-card .member-info .member-affiliation {
   font-size: 0.875rem;
   color: #666;
+}
+
+.content-block .table-contents {
+  display: block;
+}
+.content-block .table-contents > .section {
+  padding: 12px 0;
+}
+.content-block .table-contents > .section + .section {
+  margin-top: 8px;
+}
+.content-block .table-contents > .section h4.sub-title {
+  margin: 10px 0 12px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.content-block .table-contents > .section h4.sub-title::before {
+  content: "•";
+  color: #249eb3;
+  font-size: 1.1em;
+  line-height: 1;
+}
+
+/* 単体テーブルの余白調整 */
+#stats-causal-genes,
+#stats-genetic-testing,
+#stats-phenotypes,
+#stats-cell,
+#stats-mouse,
+#stats-dna,
+#stats-link-orphanet,
+#stats-link-monarch,
+#stats-link-medgen,
+#stats-link-kegg,
+#stats-def-mhlw,
+#stats-def-orphanet,
+#stats-def-monarch,
+#stats-def-medgen,
+#stats-def-kegg,
+#stats-variant-mgend {
+  padding: 8px 0 12px;
 }/*# sourceMappingURL=main.css.map */

@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+  <!-- SEO -->
+  <title>Stats | NanbyoData</title>
+  <meta name="description" content="NanbyoDataのStatsページです." />
+  <meta property="og:site_name" content="NanbyoData" />
+  <meta property="og:title" content="Stats | NanbyoData" />
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://nanbyodata.jp/stats" />
+  <meta property="og:description" content="NanbyoDataのStatsページです." />
+  <meta property="og:image" content="/static/img/ogp_img.png" />
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://indestructibletype-fonthosting.github.io/renner.css" type="text/css"
+    charset="utf-8" />
+  <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet" />
+
+  <!-- CSS -->
+  <link rel="stylesheet" type="text/css" href="/static/sass/main.css" />
+
+  <!-- favicon -->
+  <link rel="icon" type="image/x-icon" href="/static/img/favicon.ico">
+
+  <!-- TogoStanza pagination table component -->
+  <script type="module" src="https://togostanza.github.io/metastanza/pagination-table.js" async></script>
+
+</head>
+
+<body>
+  <main>
+    <style>
+      togostanza-pagination-table {
+        --togostanza-series-0-color: #94d0da;
+        --togostanza-series-1-color: #249eb3;
+        --togostanza-series-2-color: #dcf1f9;
+        --togostanza-series-3-color: #0f89ac;
+        --togostanza-series-4-color: #0f5b6d;
+        --togostanza-series-5-color: #093b47;
+        --togostanza-background-color: #ffffff;
+        --togostanza-font-family: 'Roboto Condensed', sans-serif;
+        --togostanza-axis-color: #444444;
+        --togostanza-axis-width: 1;
+        --togostanza-grid-color: #f5f5f5;
+        --togostanza-grid-dash-length: 0;
+        --togostanza-grid-dash-opacity: 1;
+        --togostanza-grid-width: 0;
+        --togostanza-tick-color: #444444;
+        --togostanza-tick-length: 1.5;
+        --togostanza-tick-width: 0.5;
+        --togostanza-label-font-color: #444444;
+        --togostanza-label-font-size: 10;
+        --togostanza-border-color: #444444;
+        --togostanza-border-width: 0.5;
+        --togostanza-title-font-color: #444444;
+        --togostanza-title-font-size: 12;
+        --togostanza-title-font-weight: 400;
+        --togostanza-line-width: 1;
+        --togostanza-opacity: 0.8;
+        --togostanza-node-size: 100;
+        --togostanza-edge-color: #eeeeee;
+        --togostanza-text-font-color: #444444;
+        --togostanza-text-font-size: 12px;
+        --togostanza-text-font-weight: 400;
+        --togostanza-table-border: 0px solid #cccccc;
+        --togostanza-table-shadow: 1px 1px 3px 1px #eeeeee;
+        --togostanza-thead-border-bottom: 1px solid #444444;
+        --togostanza-thead-font-color: #94928d;
+        --togostanza-thead-background-color: #ffffff;
+        --togostanza-thead-font-size: 12px;
+        --togostanza-thead-font-weight: 400;
+        --togostanza-tbody-border-bottom: 1px solid #dee2e6;
+        --togostanza-tbody-font-color: #444444;
+        --togostanza-tbody-font-size: 14px;
+        --togostanza-tbody-font-weight: 400;
+        --togostanza-tbody-odd-background-color: #ffffff;
+        --togostanza-tbody-even-background-color: #ffffff;
+        --togostanza-control-border: 1px solid #aaa;
+        --togostanza-control-active-color: #249eb3;
+        --togostanza-non-active-color: #94928d;
+        --togostanza-control-font-color: #444444;
+        --togostanza-control-font-size: 14px;
+        --togostanza-control-border-radius: 3px;
+        --togostanza-pagination-font-color: #444444;
+        --togostanza-pagination-font-size: 14px;
+        --togostanza-pagination-background-color: #ffffff;
+        --togostanza-pagination-border: 1px solid rgba(0, 0, 0, 0.1);
+        --togostanza-pagination-border-radius: 3px;
+        --togostanza-pagination-padding: 2px 8px;
+        --togostanza-pagination-current-font-color: #ffffff;
+        --togostanza-pagination-current-background-color: #249eb3;
+        --togostanza-pagination-current-border: 1px solid #aaa;
+        --togostanza-pagination-arrow-color: #333333;
+        --togostanza-vertical-pagination-placement: column;
+        --togostanza-horizonal-pagination-placement: center;
+        --column-count: 1;
+        --table-background-color: rgba(255, 255, 255, 0);
+        --row-padding: 5px;
+        --key-width-percentage: 30%;
+      }
+
+      /* page-specific tuning moved to SCSS (_stats.scss) */
+    </style>
+
+    <!-- Stanza default attributes (columns以外の共通設定) -->
+    <script type="application/json" id="stanza-default-config">
+      {
+        "customCssUrl": "https://togostanza.github.io/togostanza-themes/contrib/nanbyodata.css",
+        "fixedColumns": "1",
+        "padding": "0px",
+        "pageSizeOption": "10,20,50,100",
+        "pageSlider": "true"
+      }
+    </script>
+    <!-- Navigation -->
+    {% include 'component/navigation.html' %}
+
+    <!--- Stats page --->
+    <section class="page-layout">
+      <header class="page-title">
+        <h2>Stats</h2>
+      </header>
+
+      <div class="contents-wrapper">
+        <!-- 難病 -->
+        <div class="content-block" id="nbd-disease">
+          <h3 class="content-title">難病</h3>
+          <div id="stats-disease" class="table-contents"></div>
+        </div>
+
+        <!-- 疾患原因遺伝子 -->
+        <div class="content-block" id="nbd-causal-genes">
+          <h3 class="content-title">疾患原因遺伝子</h3>
+          <div id="stats-causal-genes" class="table-contents"></div>
+        </div>
+
+        <!-- 糖鎖関連遺伝子 -->
+        <div class="content-block" id="nbd-glycan-genes">
+          <h3 class="content-title">糖鎖関連遺伝子</h3>
+          <div id="stats-glycan-genes" class="table-contents"></div>
+        </div>
+
+        <!-- 診療用遺伝学的検査 -->
+        <div class="content-block" id="nbd-genetic-testing">
+          <h3 class="content-title">診療用遺伝学的検査</h3>
+          <div id="stats-genetic-testing" class="table-contents"></div>
+        </div>
+
+        <!-- 臨床的特徴 -->
+        <div class="content-block" id="nbd-phenotypes">
+          <h3 class="content-title">臨床的特徴</h3>
+          <div id="stats-phenotypes" class="table-contents"></div>
+        </div>
+
+        <!-- 難病特異的バイオリソース -->
+        <div class="content-block" id="nbd-bioresources">
+          <h3 class="content-title">難病特異的バイオリソース</h3>
+          <div class="table-contents">
+            <section class="section" id="nbd-cell">
+              <h4 class="sub-title">細胞</h4>
+              <div id="stats-cell"></div>
+            </section>
+            <section class="section" id="nbd-mouse">
+              <h4 class="sub-title">マウス</h4>
+              <div id="stats-mouse"></div>
+            </section>
+            <section class="section" id="nbd-dna">
+              <h4 class="sub-title">DNA</h4>
+              <div id="stats-dna"></div>
+            </section>
+          </div>
+        </div>
+
+        <!-- リンク -->
+        <div class="content-block" id="nbd-links">
+          <h3 class="content-title">リンク</h3>
+          <div class="table-contents">
+            <section class="section" id="nbd-link-orphanet">
+              <h4 class="sub-title">Orphanet</h4>
+              <div id="stats-link-orphanet"></div>
+            </section>
+            <section class="section" id="nbd-link-monarch">
+              <h4 class="sub-title">Monarch</h4>
+              <div id="stats-link-monarch"></div>
+            </section>
+            <section class="section" id="nbd-link-medgen">
+              <h4 class="sub-title">MedGen</h4>
+              <div id="stats-link-medgen"></div>
+            </section>
+            <section class="section" id="nbd-link-kegg">
+              <h4 class="sub-title">KEGG</h4>
+              <div id="stats-link-kegg"></div>
+            </section>
+          </div>
+        </div>
+
+        <!-- バリアント -->
+        <div class="content-block" id="nbd-variants">
+          <h3 class="content-title">Variants</h3>
+          <div class="table-contents">
+            <section class="section" id="nbd-variant-mgend">
+              <h4 class="sub-title">MGeND</h4>
+              <div id="stats-variant-mgend"></div>
+            </section>
+          </div>
+        </div>
+
+        <!-- 疾患定義 -->
+        <div class="content-block" id="nbd-definitions">
+          <h3 class="content-title">疾患定義</h3>
+          <div class="table-contents">
+            <section class="section" id="nbd-def-mhlw">
+              <h4 class="sub-title">MHLW</h4>
+              <div id="stats-def-mhlw"></div>
+            </section>
+            <section class="section" id="nbd-def-orphanet">
+              <h4 class="sub-title">Orphanet</h4>
+              <div id="stats-def-orphanet"></div>
+            </section>
+            <section class="section" id="nbd-def-monarch">
+              <h4 class="sub-title">Monarch</h4>
+              <div id="stats-def-monarch"></div>
+            </section>
+            <section class="section" id="nbd-def-medgen">
+              <h4 class="sub-title">MedGen</h4>
+              <div id="stats-def-medgen"></div>
+            </section>
+            <section class="section" id="nbd-def-kegg">
+              <h4 class="sub-title">KEGG</h4>
+              <div id="stats-def-kegg"></div>
+            </section>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!--- footer --->
+    {% include 'component/footer.html' %}
+
+    <!--- NanbyoData利用規約 modal -->
+    {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
+    {% include 'component/modal-tos.html' %}
+    {% else %}
+    {% include 'component/modal-tos_en.html' %}
+    {% endif %}
+
+  </main>
+
+  <!-- Optional JavaScript -->
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    crossorigin="anonymous"></script>
+  <script type="module" src="/static/js/main.js"></script>
+  <script type="module" src="/static/js/stats/stats.js"></script>
+</body>
+
+</html>

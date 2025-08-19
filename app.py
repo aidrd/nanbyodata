@@ -93,6 +93,13 @@ def datasets():
     return render_template('datasets.html')
 
 #####
+# STATSについて
+## GET: 
+@app.route('/stats')
+def stats():
+    return render_template('stats.html')
+
+#####
 # TEAM
 ## GET: 
 # TODO: チームページを作成したら表示
