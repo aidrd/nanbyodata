@@ -12,6 +12,7 @@ export function makeSideNavigation() {
     'dna',
     'clinvar',
     'mgend',
+    'gestalt-matcher',
   ];
 
   items.forEach((itemId) => {
@@ -105,36 +106,28 @@ export function makeSideNavigation() {
 }
 
 export function switchingDisplayContents(selectedItemId) {
-  const items = [
-    '#overview',
-    '#temp-disease-definition',
-    '#causal-genes',
-    '#glycan-related-genes',
-    '#genetic-testing',
-    '#phenotypes',
-    '#bio-resource',
-    '#variant',
-  ];
+  const items = ['#overview'];
 
-  // ローディングスピナーを追加
-  const contentElement = document.getElementById('content');
-  if (contentElement) {
-    // 既存のローディングスピナーがあれば削除
-    const existingSpinner = contentElement.querySelector('.loading-spinner');
-    if (existingSpinner) {
-      existingSpinner.remove();
-    }
-
-    // ローディングスピナーを追加
-    const loadingSpinner = document.createElement('div');
-    loadingSpinner.className = 'loading-spinner';
-    contentElement.appendChild(loadingSpinner);
-  }
-
-  // Hide all elements
-  items.forEach((selector) => toggleDisplay(selector));
   const currentItemEl = document.querySelector(`.${selectedItemId}`);
   if (!currentItemEl.classList.contains('-disabled')) {
+    // まず、全てのコンテンツを非表示にする
+    const allContentSections = [
+      '#overview',
+      '#causal-genes',
+      '#glycan-related-genes',
+      '#genetic-testing',
+      '#phenotypes',
+      '#bio-resource',
+      '#variant',
+      '#gestalt-matcher',
+    ];
+
+    allContentSections.forEach((selector) => {
+      if (selector !== `#${selectedItemId}`) {
+        toggleDisplay(selector, 'none');
+      }
+    });
+
     // Show selected items
     switch (selectedItemId) {
       case 'overview':
@@ -178,6 +171,10 @@ export function switchingDisplayContents(selectedItemId) {
         if (checkBoxVariant) checkBoxVariant.checked = true;
         updateVariantSelection('#variant .tab-switch:checked');
         break;
+      case 'gestalt-matcher':
+        prepareDataWrapper();
+        toggleDisplay(`#${selectedItemId}`, 'block');
+        break;
       default:
         window.location.href = window.location.href.split('#')[0];
     }
@@ -189,9 +186,12 @@ export function switchingDisplayContents(selectedItemId) {
     }
 
     // コンテンツの可視性を戻す
-    const contentChildren = contentElement.children;
-    for (let i = 0; i < contentChildren.length; i++) {
-      contentChildren[i].style.visibility = 'visible';
+    const contentElement = document.getElementById('content');
+    if (contentElement) {
+      const contentChildren = contentElement.children;
+      for (let i = 0; i < contentChildren.length; i++) {
+        contentChildren[i].style.visibility = 'visible';
+      }
     }
   }
 }

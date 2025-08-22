@@ -24,6 +24,7 @@ import {
   makeDNA,
   makeClinvar,
   makeMgend,
+  makeGestaltMatcher,
 } from './diseaseContent.js';
 import { switchingDisplayContents } from './diseaseSideNavigation.js';
 import { setLangChange } from '../utils/setLangChange.js';
@@ -90,6 +91,7 @@ const datasets = [
   { name: 'DNA', data: null },
   { name: 'Clinvar', data: null },
   { name: 'MGeND', data: null },
+  { name: 'GestaltMatcher', data: null },
 ];
 
 (async () => {
@@ -335,6 +337,13 @@ const datasets = [
           checkAndLogDatasets();
         }
       ),
+      // TODO: APIの差し替え
+      fetchData('test_gm').then((gestaltMatcherData) => {
+        makeGestaltMatcher(gestaltMatcherData);
+        datasets.find((d) => d.name === 'GestaltMatcher').data =
+          gestaltMatcherData;
+        checkAndLogDatasets();
+      }),
     ]);
   } catch (error) {
     console.error('Error:', error);
@@ -381,6 +390,7 @@ function trySwitchingContent(hash, retries = 0) {
     'bio-resource-dna',
     'variant-clinvar',
     'variant-mgend',
+    'gestalt-matcher',
   ];
 
   if (!items.includes(hash)) {

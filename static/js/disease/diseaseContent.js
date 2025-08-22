@@ -10,6 +10,7 @@ import {
   bioResourceDnaColumns,
   variantClinvarColumns,
   variantMgendColumns,
+  gestaltMatcherColumns,
   convertColumnToText,
 } from '../utils/stanzaColumns.js';
 
@@ -276,6 +277,26 @@ export function makeMgend(mgendData) {
     document.querySelector('#variant-mgend').remove();
     document.querySelector('.tab-label.variant-mgend').remove();
     document.querySelector('.tab-content.mgend').remove();
+  }
+}
+
+// GestaltMatcher
+export function makeGestaltMatcher(gestaltMatcherData) {
+  const currentLang = document.querySelector('.language-select').value;
+  const gestaltMatcherLang =
+    currentLang === 'ja' ? 'gestalt-matcher-ja' : 'gestalt-matcher-en';
+  const columns = convertColumnToText(gestaltMatcherColumns);
+  makeData(
+    gestaltMatcherData,
+    'gestalt-matcher',
+    gestaltMatcherLang,
+    columns,
+    gestaltMatcherData?.length || 0
+  );
+  if (gestaltMatcherData?.length > 0 && gestaltMatcherData !== null) {
+    const navLink = document.querySelector('.nav-link.gestalt-matcher');
+    navLink.style.cursor = 'pointer';
+    navLink.classList.remove('-disabled');
   }
 }
 

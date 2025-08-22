@@ -12,6 +12,7 @@ import {
   bioResourceDnaColumns,
   variantClinvarColumns,
   variantMgendColumns,
+  gestaltMatcherColumns,
   numOfPatientsColumns,
   subclassTableJaColumns,
   subclassTableEnColumns,
@@ -137,6 +138,11 @@ export const downloadDatasets = (nandoId, datasets) => {
           return {
             name,
             data: reconstructionData(variantMgendColumns, data),
+          };
+        case 'GestaltMatcher':
+          return {
+            name,
+            data: reconstructionData(gestaltMatcherColumns, data),
           };
       }
     });

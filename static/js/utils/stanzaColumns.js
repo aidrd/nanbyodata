@@ -229,6 +229,46 @@ export const variantMgendColumns = [
   { id: 'mondo_label', label: 'MONDO', link: 'mondo_url', target: '_blank' },
 ];
 
+export const gestaltMatcherColumns = [
+  {
+    id: 'id',
+    label: 'Patient ID',
+    rowspan: true,
+    link: 'person',
+    target: '_blank',
+  },
+  { id: 'gender', label: 'Gender', rowspan: true },
+  {
+    id: 'gene',
+    label: 'Gene symbol',
+    rowspan: true,
+    link: 'ncbi',
+    target: '_blank',
+  },
+  { id: 'minzoku', label: 'Ethnicity', rowspan: true },
+  { id: 'minzokumemo', label: 'Ethnicity note', rowspan: true },
+  { id: 'disease', label: 'Disease', rowspan: true },
+  {
+    id: 'omim_id',
+    label: 'OMIM',
+    link: 'omim_url',
+    rowspan: true,
+    target: '_blank',
+  },
+  { id: 'image_id', label: 'Image ID' },
+  { id: 'image_desc', label: 'Type' },
+  { id: 'age_year', label: 'Age (at photo)' },
+  { id: 'age_month', label: 'Month (at photo)' },
+  { id: 'age_memo', label: 'Age note (at photo)' },
+  {
+    id: 'pmid',
+    label: 'PMID',
+    rowspan: true,
+    link: 'pmid_url',
+    target: '_blank',
+  },
+];
+
 // Overview Sub-classes
 export const subclassTableJaColumns = [
   {
