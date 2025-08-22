@@ -7,6 +7,7 @@ export function makeSideNavigation() {
     'glycan-related-genes',
     'genetic-testing',
     'phenotypes',
+    'hum-data',
     'cell',
     'mouse',
     'dna',
@@ -116,6 +117,19 @@ export function switchingDisplayContents(selectedItemId) {
     '#variant',
   ];
 
+  // まず、全てのコンテンツを非表示にする
+  const allContentSections = [
+    '#overview',
+    '#causal-genes',
+    '#glycan-related-genes',
+    '#genetic-testing',
+    '#phenotypes',
+    '#hum-data',
+    '#bio-resource',
+    '#variant',
+    '#gestalt-matcher',
+  ];
+
   // ローディングスピナーを追加
   const contentElement = document.getElementById('content');
   if (contentElement) {
@@ -132,7 +146,7 @@ export function switchingDisplayContents(selectedItemId) {
   }
 
   // Hide all elements
-  items.forEach((selector) => toggleDisplay(selector));
+  allContentSections.forEach((selector) => toggleDisplay(selector));
   const currentItemEl = document.querySelector(`.${selectedItemId}`);
   if (!currentItemEl.classList.contains('-disabled')) {
     // Show selected items
@@ -148,6 +162,10 @@ export function switchingDisplayContents(selectedItemId) {
       case 'glycan-related-genes':
       case 'genetic-testing':
       case 'phenotypes':
+        prepareDataWrapper();
+        toggleDisplay(`#${selectedItemId}`, 'block');
+        break;
+      case 'hum-data':
         prepareDataWrapper();
         toggleDisplay(`#${selectedItemId}`, 'block');
         break;

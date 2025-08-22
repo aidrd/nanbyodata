@@ -192,6 +192,14 @@
                 {% endif %}
                 <span class="data-num"><span class="loading-spinner -sidenav"></span></span></a>
             </li>
+            <li><a href="#hum-data" class="nav-link hum-data -disabled">
+                {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
+                ヒトデータベース
+                {% else %}
+                Human DataBase
+                {% endif %}
+                <span class="data-num"><span class="loading-spinner -sidenav"></span></span></a>
+            </li>
             <li>
               <div class="bio-resource -disabled">
                 {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
@@ -676,6 +684,23 @@
               </h4>
               <div id="phenotype-ja"></div>
               <div id="phenotype-en"></div>
+            </div>
+
+            <div id="hum-data" open="">
+              <h4 class="temp-title">
+                {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
+                ヒトデータベース
+                {% else %}
+                Human DataBase
+                {% endif %}
+                <span class="data-num"></span>
+                <small>
+                  &nbsp;from&nbsp;
+                  <a href="https://humandbs.dbcls.jp/" target="_blank" rel="noopener noreferrer">Human Database</a>
+                </small>
+              </h4>
+              <div id="hum-data-ja"></div>
+              <div id="hum-data-en"></div>
             </div>
 
             <div id="bio-resource" open="">

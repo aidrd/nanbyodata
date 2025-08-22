@@ -5,6 +5,8 @@ import {
   geneticTestingColumns,
   phenotypesJaColumns,
   phenotypesEnColumns,
+  humDataJaColumns,
+  humDataEnColumns,
   bioResourceCellColumns,
   bioResourceMouseColumns,
   bioResourceDnaColumns,
@@ -132,6 +134,28 @@ export function makePhenotypes(phenotypesData) {
   );
   if (phenotypesData?.length > 0 && phenotypesData !== null) {
     const navLink = document.querySelector('.nav-link.phenotypes');
+    navLink.style.cursor = 'pointer';
+    navLink.classList.remove('-disabled');
+  }
+}
+
+// humData(Hum Data)
+export function makeHumData(humData) {
+  const currentLang = document.querySelector('.language-select').value;
+  const humDataLang = currentLang === 'ja' ? 'hum-data-ja' : 'hum-data-en';
+  const columns = {
+    ja: convertColumnToText(humDataJaColumns),
+    en: convertColumnToText(humDataEnColumns),
+  };
+  makeData(
+    humData,
+    'hum-data',
+    humDataLang,
+    columns[currentLang],
+    humData?.length || 0
+  );
+  if (humData?.length > 0 && humData !== null) {
+    const navLink = document.querySelector('.nav-link.hum-data');
     navLink.style.cursor = 'pointer';
     navLink.classList.remove('-disabled');
   }
