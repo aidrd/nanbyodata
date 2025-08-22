@@ -236,18 +236,16 @@ function addTableOrTree(content, item, displayType, linkedListData) {
           id="${uniqueTreeId}" 
           data-url="${objectUrl}" 
           data-type="json" 
-          sort-key="id" 
-          sort-order="ascending" 
-          graph-layout="horizontal" 
-          node-label-key="id" 
-          node-label-margin="8" 
-          node-size-key="size" 
-          node-size-min="8" 
-          node-size-max="8" 
-          node-color-key="color" 
-          node-color-group="group" 
-          node-color-blend="normal" 
-          tooltips-key="name"
+          layout-orientation="horizontal" 
+          node-label_key="id" 
+          node-label_margin="8" 
+          node-size_key="size" 
+          node-size_min="8" 
+          node-size_max="8" 
+          node-color_key="color" 
+          group-key="group" 
+          node-color_blend="normal" 
+          tooltip="{{#if url}}&lt;a href&#x3D;{{url}}&gt;{{id}}&lt;/a&gt;{{else}}&lt;span&gt;{{id}}&lt;/span&gt;{{/if}}"
           togostanza-custom_css_url="">
         </togostanza-tree>
       `;
@@ -266,7 +264,7 @@ function addTableOrTree(content, item, displayType, linkedListData) {
           '#29697a'
         );
         treeElement.style.setProperty(
-          '--togostanza-fonts-font_size_primary',
+          '--togostanza-fonts-font_size_default',
           '14'
         );
         treeElement.style.setProperty(
