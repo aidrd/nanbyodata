@@ -231,6 +231,7 @@ function addTableOrTree(content, item, displayType, linkedListData) {
       const uniqueTreeId = `tree-${item.class}`;
       const objectUrl = createObjectUrlFromData(linkedListData[item.class]);
       const treeDepth = calcTreeLength(linkedListData[item.class]);
+      // TODO: リンク一覧で飛ばしたいurlをAPIに追加する必要がある
       content.innerHTML += `
         <togostanza-tree 
           id="${uniqueTreeId}" 
@@ -245,7 +246,7 @@ function addTableOrTree(content, item, displayType, linkedListData) {
           node-color_key="color" 
           group-key="group" 
           node-color_blend="normal" 
-          tooltip="{{#if url}}&lt;a href&#x3D;{{url}}&gt;{{id}}&lt;/a&gt;{{else}}&lt;span&gt;{{id}}&lt;/span&gt;{{/if}}"
+          tooltip="{{#if url}}&lt;a href&#x3D;{{url}} target&#x3D;&quot;_blank&quot;&gt;{{id}}&lt;/a&gt;{{else}}&lt;span&gt;{{id}}&lt;/span&gt;{{/if}}"
           togostanza-custom_css_url="">
         </togostanza-tree>
       `;
