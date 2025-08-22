@@ -1,11 +1,11 @@
 import { makeSideNavigation } from './diseaseSideNavigation.js';
 import {
-  pubmedPapersColumns,
   causalGeneColumns,
   glycanRelatedGeneColumns,
   geneticTestingColumns,
   phenotypesJaColumns,
   phenotypesEnColumns,
+  referencesColumns,
   bioResourceCellColumns,
   bioResourceMouseColumns,
   bioResourceDnaColumns,
@@ -20,20 +20,6 @@ import {
 } from '../utils/stanzaUtils.js';
 
 makeSideNavigation();
-
-export function makePubMedPapers(pubmedPapersData) {
-  makeData(
-    pubmedPapersData,
-    'publications',
-    'publications-table',
-    convertColumnToText(pubmedPapersColumns)
-  );
-  if (pubmedPapersData?.length > 0 && pubmedPapersData !== null) {
-    const navLink = document.querySelector('.nav-link.publications');
-    navLink.style.cursor = 'pointer';
-    navLink.classList.remove('-disabled');
-  }
-}
 
 // causalGene(疾患原因遺伝子)
 export function makeCausalGene(causalGeneData) {
@@ -147,6 +133,23 @@ export function makePhenotypes(phenotypesData) {
   );
   if (phenotypesData?.length > 0 && phenotypesData !== null) {
     const navLink = document.querySelector('.nav-link.phenotypes');
+    navLink.style.cursor = 'pointer';
+    navLink.classList.remove('-disabled');
+  }
+}
+
+// references(参考文献)
+export function makeReferences(referencesData) {
+  const columns = convertColumnToText(referencesColumns);
+  makeData(
+    referencesData,
+    'references',
+    'references-table',
+    columns,
+    referencesData?.length || 0
+  );
+  if (referencesData?.length > 0 && referencesData !== null) {
+    const navLink = document.querySelector('.nav-link.references');
     navLink.style.cursor = 'pointer';
     navLink.classList.remove('-disabled');
   }

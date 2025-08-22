@@ -3,7 +3,6 @@ export function makeSideNavigation() {
 
   const items = [
     'overview',
-    'publications',
     'causal-genes',
     'glycan-related-genes',
     'genetic-testing',
@@ -13,6 +12,7 @@ export function makeSideNavigation() {
     'dna',
     'clinvar',
     'mgend',
+    'references',
   ];
 
   items.forEach((itemId) => {
@@ -109,7 +109,7 @@ export function switchingDisplayContents(selectedItemId) {
   const items = [
     '#overview',
     '#temp-disease-definition',
-    '#publications',
+    '#references',
     '#causal-genes',
     '#glycan-related-genes',
     '#genetic-testing',
@@ -146,7 +146,7 @@ export function switchingDisplayContents(selectedItemId) {
         });
         break;
       case 'temp-disease-definition':
-      case 'publications':
+      case 'references':
       case 'causal-genes':
       case 'glycan-related-genes':
       case 'genetic-testing':

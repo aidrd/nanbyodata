@@ -15,7 +15,7 @@ import { makeDiseaseDefinition } from './overview/makeDiseaseDefinition.js';
 import { updateOverviewDisplay } from './overview/updateOverviewDisplay.js';
 
 import {
-  makePubMedPapers,
+  makeReferences,
   makeCausalGene,
   makeGlycanRelatedGene,
   makeGeneticTesting,
@@ -82,7 +82,7 @@ const datasets = [
     data: null,
   },
   { name: 'Sub-classes', data: null },
-  { name: 'PubMed Papers', data: null },
+  { name: 'References', data: null },
   { name: 'Causal Genes', data: null },
   { name: 'Glycan-related Genes', data: null },
   { name: 'Genetic Testing', data: null },
@@ -273,10 +273,9 @@ const datasets = [
         }
       }),
       // TODO: check API name
-      fetchData('test_pubmed').then((pubmedPapersData) => {
-        makePubMedPapers(pubmedPapersData);
-        datasets.find((d) => d.name === 'PubMed Papers').data =
-          pubmedPapersData;
+      fetchData('test_pubmed').then((referencesData) => {
+        makeReferences(referencesData);
+        datasets.find((d) => d.name === 'References').data = referencesData;
         checkAndLogDatasets();
       }),
       fetchData('nanbyodata_get_causal_gene_by_nando_id').then(
@@ -381,7 +380,6 @@ function trySwitchingContent(hash, retries = 0) {
 
   const items = [
     'overview',
-    'publications',
     'causal-genes',
     'glycan-related-genes',
     'genetic-testing',
@@ -391,6 +389,7 @@ function trySwitchingContent(hash, retries = 0) {
     'bio-resource-dna',
     'variant-clinvar',
     'variant-mgend',
+    'references',
   ];
 
   if (!items.includes(hash)) {

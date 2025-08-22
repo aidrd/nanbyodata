@@ -7,6 +7,7 @@ import {
   geneticTestingColumns,
   phenotypesJaColumns,
   phenotypesEnColumns,
+  referencesColumns,
   bioResourceCellColumns,
   bioResourceMouseColumns,
   bioResourceDnaColumns,
@@ -138,6 +139,8 @@ export const downloadDatasets = (nandoId, datasets) => {
             name,
             data: reconstructionData(variantMgendColumns, data),
           };
+        case 'References':
+          return { name, data: reconstructionData(referencesColumns, data) };
       }
     });
 
