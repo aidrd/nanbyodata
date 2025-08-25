@@ -13,7 +13,7 @@ export function makeSideNavigation() {
     'dna',
     'clinvar',
     'mgend',
-    'gestalt-matcher',
+    'facial-features',
     'references',
   ];
 
@@ -130,7 +130,7 @@ export function switchingDisplayContents(selectedItemId) {
     '#hum-data',
     '#bio-resource',
     '#variant',
-    '#gestalt-matcher',
+    '#facial-features',
     '#references',
   ];
 
@@ -162,7 +162,7 @@ export function switchingDisplayContents(selectedItemId) {
       '#phenotypes',
       '#bio-resource',
       '#variant',
-      '#gestalt-matcher',
+      '#facial-features',
       '#references',
     ];
 
@@ -220,7 +220,7 @@ export function switchingDisplayContents(selectedItemId) {
         if (checkBoxVariant) checkBoxVariant.checked = true;
         updateVariantSelection('#variant .tab-switch:checked');
         break;
-      case 'gestalt-matcher':
+      case 'facial-features':
         prepareDataWrapper();
         toggleDisplay(`#${selectedItemId}`, 'block');
         break;

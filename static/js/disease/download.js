@@ -15,7 +15,7 @@ import {
   bioResourceDnaColumns,
   variantClinvarColumns,
   variantMgendColumns,
-  gestaltMatcherColumns,
+  facialFeaturesColumns,
   numOfPatientsColumns,
   subclassTableJaColumns,
   subclassTableEnColumns,
@@ -146,10 +146,10 @@ export const downloadDatasets = (nandoId, datasets) => {
             name,
             data: reconstructionData(variantMgendColumns, data),
           };
-        case 'GestaltMatcher':
+        case 'Facial Features':
           return {
             name,
-            data: reconstructionData(gestaltMatcherColumns, data),
+            data: reconstructionData(facialFeaturesColumns, data),
           };
         case 'References':
           return { name, data: reconstructionData(referencesColumns, data) };

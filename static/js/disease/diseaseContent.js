@@ -13,7 +13,7 @@ import {
   bioResourceDnaColumns,
   variantClinvarColumns,
   variantMgendColumns,
-  gestaltMatcherColumns,
+  facialFeaturesColumns,
   convertColumnToText,
 } from '../utils/stanzaColumns.js';
 
@@ -322,21 +322,21 @@ export function makeMgend(mgendData) {
   }
 }
 
-// GestaltMatcher
-export function makeGestaltMatcher(gestaltMatcherData) {
+// Facial Features
+export function makeFacialFeatures(facialFeaturesData) {
   const currentLang = document.querySelector('.language-select').value;
-  const gestaltMatcherLang =
-    currentLang === 'ja' ? 'gestalt-matcher-ja' : 'gestalt-matcher-en';
-  const columns = convertColumnToText(gestaltMatcherColumns);
+  const facialFeaturesLang =
+    currentLang === 'ja' ? 'facial-features-ja' : 'facial-features-en';
+  const columns = convertColumnToText(facialFeaturesColumns);
   makeData(
-    gestaltMatcherData,
-    'gestalt-matcher',
-    gestaltMatcherLang,
+    facialFeaturesData,
+    'facial-features',
+    facialFeaturesLang,
     columns,
-    gestaltMatcherData?.length || 0
+    facialFeaturesData?.length || 0
   );
-  if (gestaltMatcherData?.length > 0 && gestaltMatcherData !== null) {
-    const navLink = document.querySelector('.nav-link.gestalt-matcher');
+  if (facialFeaturesData?.length > 0 && facialFeaturesData !== null) {
+    const navLink = document.querySelector('.nav-link.facial-features');
     navLink.style.cursor = 'pointer';
     navLink.classList.remove('-disabled');
   }

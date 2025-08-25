@@ -261,7 +261,7 @@ export const variantMgendColumns = [
   { id: 'mondo_label', label: 'MONDO', link: 'mondo_url', target: '_blank' },
 ];
 
-export const gestaltMatcherColumns = [
+export const facialFeaturesColumns = [
   { id: 'disease', label: 'Disease', rowspan: true },
   {
     id: 'omim_id',
