@@ -7,6 +7,8 @@ import {
   geneticTestingColumns,
   phenotypesJaColumns,
   phenotypesEnColumns,
+  humDataJaColumns,
+  humDataEnColumns,
   bioResourceCellColumns,
   bioResourceMouseColumns,
   bioResourceDnaColumns,
@@ -114,6 +116,10 @@ export const downloadDatasets = (nandoId, datasets) => {
           const currentColumns =
             currentLang === 'ja' ? phenotypesJaColumns : phenotypesEnColumns;
           return { name, data: reconstructionData(currentColumns, data) };
+        case 'Hum Data':
+          const humDataColumns =
+            currentLang === 'ja' ? humDataJaColumns : humDataEnColumns;
+          return { name, data: reconstructionData(humDataColumns, data) };
         case 'Cell':
           return {
             name,

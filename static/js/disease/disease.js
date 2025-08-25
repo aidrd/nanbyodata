@@ -19,6 +19,7 @@ import {
   makeGlycanRelatedGene,
   makeGeneticTesting,
   makePhenotypes,
+  makeHumData,
   makeCell,
   makeMouse,
   makeDNA,
@@ -86,6 +87,7 @@ const datasets = [
   { name: 'Glycan-related Genes', data: null },
   { name: 'Genetic Testing', data: null },
   { name: 'Phenotypes', data: null },
+  { name: 'Hum Data', data: null },
   { name: 'Cell', data: null },
   { name: 'Mouse', data: null },
   { name: 'DNA', data: null },
@@ -302,6 +304,11 @@ const datasets = [
           checkAndLogDatasets();
         }
       ),
+      fetchData('test_humdb').then((humData) => {
+        makeHumData(humData);
+        datasets.find((d) => d.name === 'Hum Data').data = humData;
+        checkAndLogDatasets();
+      }),
       fetchData('nanbyodata_get_riken_brc_cell_info_by_nando_id').then(
         (cellData) => {
           makeCell(cellData);
@@ -385,6 +392,7 @@ function trySwitchingContent(hash, retries = 0) {
     'glycan-related-genes',
     'genetic-testing',
     'phenotypes',
+    'hum-data',
     'bio-resource-cell',
     'bio-resource-mouse',
     'bio-resource-dna',

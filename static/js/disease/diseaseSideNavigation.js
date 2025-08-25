@@ -7,6 +7,7 @@ export function makeSideNavigation() {
     'glycan-related-genes',
     'genetic-testing',
     'phenotypes',
+    'hum-data',
     'cell',
     'mouse',
     'dna',
@@ -106,8 +107,47 @@ export function makeSideNavigation() {
 }
 
 export function switchingDisplayContents(selectedItemId) {
-  const items = ['#overview'];
+  const items = [
+    '#overview',
+    '#temp-disease-definition',
+    '#causal-genes',
+    '#glycan-related-genes',
+    '#genetic-testing',
+    '#phenotypes',
+    '#bio-resource',
+    '#variant',
+  ];
 
+  // まず、全てのコンテンツを非表示にする
+  const allContentSections = [
+    '#overview',
+    '#causal-genes',
+    '#glycan-related-genes',
+    '#genetic-testing',
+    '#phenotypes',
+    '#hum-data',
+    '#bio-resource',
+    '#variant',
+    '#gestalt-matcher',
+  ];
+
+  // ローディングスピナーを追加
+  const contentElement = document.getElementById('content');
+  if (contentElement) {
+    // 既存のローディングスピナーがあれば削除
+    const existingSpinner = contentElement.querySelector('.loading-spinner');
+    if (existingSpinner) {
+      existingSpinner.remove();
+    }
+
+    // ローディングスピナーを追加
+    const loadingSpinner = document.createElement('div');
+    loadingSpinner.className = 'loading-spinner';
+    contentElement.appendChild(loadingSpinner);
+  }
+
+  // Hide all elements
+  allContentSections.forEach((selector) => toggleDisplay(selector));
   const currentItemEl = document.querySelector(`.${selectedItemId}`);
   if (!currentItemEl.classList.contains('-disabled')) {
     // まず、全てのコンテンツを非表示にする
@@ -141,6 +181,10 @@ export function switchingDisplayContents(selectedItemId) {
       case 'glycan-related-genes':
       case 'genetic-testing':
       case 'phenotypes':
+        prepareDataWrapper();
+        toggleDisplay(`#${selectedItemId}`, 'block');
+        break;
+      case 'hum-data':
         prepareDataWrapper();
         toggleDisplay(`#${selectedItemId}`, 'block');
         break;
