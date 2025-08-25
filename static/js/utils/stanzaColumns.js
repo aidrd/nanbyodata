@@ -264,6 +264,14 @@ export const variantMgendColumns = [
 ];
 
 export const gestaltMatcherColumns = [
+  { id: 'disease', label: 'Disease', rowspan: true },
+  {
+    id: 'omim_id',
+    label: 'OMIM',
+    link: 'omim_url',
+    rowspan: true,
+    target: '_blank',
+  },
   {
     id: 'id',
     label: 'Patient ID',
@@ -281,14 +289,6 @@ export const gestaltMatcherColumns = [
   },
   { id: 'minzoku', label: 'Ethnicity', rowspan: true },
   { id: 'minzokumemo', label: 'Ethnicity note', rowspan: true },
-  { id: 'disease', label: 'Disease', rowspan: true },
-  {
-    id: 'omim_id',
-    label: 'OMIM',
-    link: 'omim_url',
-    rowspan: true,
-    target: '_blank',
-  },
   { id: 'image_id', label: 'Image ID' },
   { id: 'image_desc', label: 'Type' },
   { id: 'age_year', label: 'Age (at photo)' },
