@@ -163,7 +163,7 @@ export function makeHumData(humData) {
   }
 }
 
-// references(参考文献)
+// references(文献)
 export function makeReferences(referencesData) {
   const columns = convertColumnToText(referencesColumns);
   makeData(

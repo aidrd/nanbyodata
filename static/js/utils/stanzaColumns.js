@@ -53,7 +53,7 @@ export const pediatricChronicSpecificDiseaseEnColumns = [
 
 // References
 export const referencesColumns = [
-  { id: 'pmid', label: 'ID', link: 'url', target: '_blank' },
+  { id: 'pmid', label: 'PMID', link: 'url', target: '_blank' },
   { id: 'title', label: 'Title' },
   { id: 'magazine', label: 'Magazine' },
   { id: 'date', label: 'Date', type: 'date' },
@@ -262,14 +262,6 @@ export const variantMgendColumns = [
 ];
 
 export const facialFeaturesColumns = [
-  { id: 'disease', label: 'Disease', rowspan: true },
-  {
-    id: 'omim_id',
-    label: 'OMIM',
-    link: 'omim_url',
-    rowspan: true,
-    target: '_blank',
-  },
   {
     id: 'id',
     label: 'Patient ID',

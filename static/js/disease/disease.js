@@ -84,12 +84,14 @@ const datasets = [
     data: null,
   },
   { name: 'Sub-classes', data: null },
-  { name: 'References', data: null },
+  // TODO: 公開OKになったら表示
+  // { name: 'References', data: null },
   { name: 'Causal Genes', data: null },
   { name: 'Glycan-related Genes', data: null },
   { name: 'Genetic Testing', data: null },
   { name: 'Phenotypes', data: null },
-  { name: 'Hum Data', data: null },
+  // TODO: 公開OKになったら表示
+  // { name: 'Hum Data', data: null },
   { name: 'Cell', data: null },
   { name: 'Mouse', data: null },
   { name: 'DNA', data: null },
@@ -277,11 +279,11 @@ const datasets = [
         }
       }),
       // TODO: check API name
-      fetchData('test_pubmed').then((referencesData) => {
-        makeReferences(referencesData);
-        datasets.find((d) => d.name === 'References').data = referencesData;
-        checkAndLogDatasets();
-      }),
+      // fetchData('test_pubmed').then((referencesData) => {
+      //   makeReferences(referencesData);
+      //   datasets.find((d) => d.name === 'References').data = referencesData;
+      //   checkAndLogDatasets();
+      // }),
       fetchData('nanbyodata_get_causal_gene_by_nando_id').then(
         (causalGeneData) => {
           makeCausalGene(causalGeneData);
@@ -312,11 +314,12 @@ const datasets = [
           checkAndLogDatasets();
         }
       ),
-      fetchData('test_humdb').then((humData) => {
-        makeHumData(humData);
-        datasets.find((d) => d.name === 'Hum Data').data = humData;
-        checkAndLogDatasets();
-      }),
+      // TODO: APIの差し替え
+      // fetchData('test_humdb').then((humData) => {
+      //   makeHumData(humData);
+      //   datasets.find((d) => d.name === 'Hum Data').data = humData;
+      //   checkAndLogDatasets();
+      // }),
       fetchData('nanbyodata_get_riken_brc_cell_info_by_nando_id').then(
         (cellData) => {
           makeCell(cellData);

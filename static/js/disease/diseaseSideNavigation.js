@@ -7,14 +7,16 @@ export function makeSideNavigation() {
     'glycan-related-genes',
     'genetic-testing',
     'phenotypes',
-    'hum-data',
+    // TODO: 公開OKになったら表示
+    // 'hum-data',
     'cell',
     'mouse',
     'dna',
     'clinvar',
     'mgend',
     'facial-features',
-    'references',
+    // TODO: 公開OKになったら表示
+    // 'references',
   ];
 
   items.forEach((itemId) => {
@@ -111,7 +113,8 @@ export function switchingDisplayContents(selectedItemId) {
   const items = [
     '#overview',
     '#temp-disease-definition',
-    '#references',
+    // TODO: 公開OKになったら表示
+    // '#references',
     '#causal-genes',
     '#glycan-related-genes',
     '#genetic-testing',
@@ -127,11 +130,13 @@ export function switchingDisplayContents(selectedItemId) {
     '#glycan-related-genes',
     '#genetic-testing',
     '#phenotypes',
-    '#hum-data',
+    // TODO: 公開OKになったら表示
+    // '#hum-data',
     '#bio-resource',
     '#variant',
     '#facial-features',
-    '#references',
+    // TODO: 公開OKになったら表示
+    // '#references',
   ];
 
   // ローディングスピナーを追加
@@ -163,7 +168,8 @@ export function switchingDisplayContents(selectedItemId) {
       '#bio-resource',
       '#variant',
       '#facial-features',
-      '#references',
+      // TODO: 公開OKになったら表示
+      // '#references',
     ];
 
     allContentSections.forEach((selector) => {
@@ -181,7 +187,8 @@ export function switchingDisplayContents(selectedItemId) {
         });
         break;
       case 'temp-disease-definition':
-      case 'references':
+      // TODO: 公開OKになったら表示
+      // case 'references':
       case 'causal-genes':
       case 'glycan-related-genes':
       case 'genetic-testing':
@@ -189,10 +196,12 @@ export function switchingDisplayContents(selectedItemId) {
         prepareDataWrapper();
         toggleDisplay(`#${selectedItemId}`, 'block');
         break;
-      case 'hum-data':
-        prepareDataWrapper();
-        toggleDisplay(`#${selectedItemId}`, 'block');
-        break;
+      // TODO: 公開OKになったら表示
+      // case 'hum-data':
+      // 以下必要か再確認（フロント側）
+      //   prepareDataWrapper();
+      //   toggleDisplay(`#${selectedItemId}`, 'block');
+      //   break;
       case 'bio-resource':
       case 'bio-resource-cell':
       case 'bio-resource-mouse':

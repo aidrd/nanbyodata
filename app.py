@@ -95,10 +95,9 @@ def datasets():
 #####
 # TEAM
 ## GET: 
-# TODO: チームページを作成したら表示
-# @app.route('/team')
-# def team():
-#     return render_template('team.html')
+@app.route('/team')
+def team():
+    return render_template('team.html')
 
 
 #####
