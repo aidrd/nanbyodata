@@ -73,6 +73,7 @@ function initializeCharts(data) {
       axis-x-placement="bottom"
       axis-x-title="Year"
       axis-x-title_padding="40"
+      axis-x-title_visible="true"
       axis-x-ticks_label_angle="0"
       axis-x-ticks_interval="1"
       axis-y-range_max="${maxValue + maxValue * 0.2}"
@@ -83,10 +84,11 @@ function initializeCharts(data) {
       axis-y-title="# of certificate holders"
       axis-y-title_padding="60"
       axis-y-ticks_label_angle="0"
-      point_size="10"
+      axis-y-ticks_labels_format=","
+      node-size="10"
       legend-title="Year"
-      tooltips-key="num_of_patients"
-      grouping-key="group"
+      tooltip="{{num_of_patients}}"
+      group-key="group"
       >
     </togostanza-linechart>
   `;
@@ -103,11 +105,11 @@ function initializeCharts(data) {
 
   if (lineChart) {
     lineChart.style.setProperty('--togostanza-theme-series_0_color', '#29697a');
-    lineChart.style.setProperty('--togostanza-canvas-height', '230');
+    lineChart.style.setProperty('--togostanza-canvas-height', '250');
     lineChart.style.setProperty('--togostanza-canvas-width', `${stanzaWidth}`);
-    lineChart.style.setProperty('--togostanza-canvas-padding', '15');
-    lineChart.style.setProperty('--togostanza-fonts-font_size_primary', '14');
-    lineChart.style.setProperty('--togostanza-fonts-font_size_secondary', '14');
+    lineChart.style.setProperty('--togostanza-canvas-padding', '10 40 40 60');
+    lineChart.style.setProperty('--togostanza-fonts-font_size_default', '14');
+    lineChart.style.setProperty('--togostanza-fonts-font_size_small', '12');
   }
 
   addScript('https://togostanza.github.io/metastanza/barchart.js');
