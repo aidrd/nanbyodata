@@ -15,6 +15,7 @@ import { makeDiseaseDefinition } from './overview/makeDiseaseDefinition.js';
 import { updateOverviewDisplay } from './overview/updateOverviewDisplay.js';
 
 import {
+  makeReferences,
   makeCausalGene,
   makeGlycanRelatedGene,
   makeGeneticTesting,
@@ -83,6 +84,7 @@ const datasets = [
     data: null,
   },
   { name: 'Sub-classes', data: null },
+  { name: 'References', data: null },
   { name: 'Causal Genes', data: null },
   { name: 'Glycan-related Genes', data: null },
   { name: 'Genetic Testing', data: null },
@@ -274,6 +276,12 @@ const datasets = [
           }
         }
       }),
+      // TODO: check API name
+      fetchData('test_pubmed').then((referencesData) => {
+        makeReferences(referencesData);
+        datasets.find((d) => d.name === 'References').data = referencesData;
+        checkAndLogDatasets();
+      }),
       fetchData('nanbyodata_get_causal_gene_by_nando_id').then(
         (causalGeneData) => {
           makeCausalGene(causalGeneData);
@@ -399,6 +407,7 @@ function trySwitchingContent(hash, retries = 0) {
     'variant-clinvar',
     'variant-mgend',
     'gestalt-matcher',
+    'references',
   ];
 
   if (!items.includes(hash)) {

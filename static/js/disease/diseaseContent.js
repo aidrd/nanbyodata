@@ -7,6 +7,7 @@ import {
   phenotypesEnColumns,
   humDataJaColumns,
   humDataEnColumns,
+  referencesColumns,
   bioResourceCellColumns,
   bioResourceMouseColumns,
   bioResourceDnaColumns,
@@ -157,6 +158,23 @@ export function makeHumData(humData) {
   );
   if (humData?.length > 0 && humData !== null) {
     const navLink = document.querySelector('.nav-link.hum-data');
+    navLink.style.cursor = 'pointer';
+    navLink.classList.remove('-disabled');
+  }
+}
+
+// references(参考文献)
+export function makeReferences(referencesData) {
+  const columns = convertColumnToText(referencesColumns);
+  makeData(
+    referencesData,
+    'references',
+    'references-table',
+    columns,
+    referencesData?.length || 0
+  );
+  if (referencesData?.length > 0 && referencesData !== null) {
+    const navLink = document.querySelector('.nav-link.references');
     navLink.style.cursor = 'pointer';
     navLink.classList.remove('-disabled');
   }

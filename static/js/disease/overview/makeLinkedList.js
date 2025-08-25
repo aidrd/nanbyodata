@@ -228,6 +228,15 @@ function addTableOrTree(content, item, displayType, linkedListData) {
     if (tree) {
       tree.style.display = 'block';
     } else {
+      // データの存在チェックを追加
+      if (
+        !linkedListData[item.class] ||
+        !Array.isArray(linkedListData[item.class])
+      ) {
+        console.warn(`Tree data not available for class: ${item.class}`);
+        return;
+      }
+
       const uniqueTreeId = `tree-${item.class}`;
       const objectUrl = createObjectUrlFromData(linkedListData[item.class]);
       const treeDepth = calcTreeLength(linkedListData[item.class]);

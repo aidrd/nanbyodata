@@ -90,6 +90,14 @@ export async function makeSubClass(data) {
     } else if (chartType === 'tree') {
       tableView.style.display = 'none';
 
+      // データの存在チェックを追加
+      if (!data || !Array.isArray(data)) {
+        console.warn('Tree data not available');
+        treeView.innerHTML = '<p>データが利用できません</p>';
+        treeView.style.display = 'block';
+        return;
+      }
+
       // データを元にツリーの深さを計算
       const treeDepth = calcTreeLength(data);
 

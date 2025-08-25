@@ -9,6 +9,7 @@ import {
   phenotypesEnColumns,
   humDataJaColumns,
   humDataEnColumns,
+  referencesColumns,
   bioResourceCellColumns,
   bioResourceMouseColumns,
   bioResourceDnaColumns,
@@ -150,6 +151,8 @@ export const downloadDatasets = (nandoId, datasets) => {
             name,
             data: reconstructionData(gestaltMatcherColumns, data),
           };
+        case 'References':
+          return { name, data: reconstructionData(referencesColumns, data) };
       }
     });
 

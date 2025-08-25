@@ -14,6 +14,7 @@ export function makeSideNavigation() {
     'clinvar',
     'mgend',
     'gestalt-matcher',
+    'references',
   ];
 
   items.forEach((itemId) => {
@@ -110,6 +111,7 @@ export function switchingDisplayContents(selectedItemId) {
   const items = [
     '#overview',
     '#temp-disease-definition',
+    '#references',
     '#causal-genes',
     '#glycan-related-genes',
     '#genetic-testing',
@@ -129,6 +131,7 @@ export function switchingDisplayContents(selectedItemId) {
     '#bio-resource',
     '#variant',
     '#gestalt-matcher',
+    '#references',
   ];
 
   // ローディングスピナーを追加
@@ -160,6 +163,7 @@ export function switchingDisplayContents(selectedItemId) {
       '#bio-resource',
       '#variant',
       '#gestalt-matcher',
+      '#references',
     ];
 
     allContentSections.forEach((selector) => {
@@ -177,6 +181,7 @@ export function switchingDisplayContents(selectedItemId) {
         });
         break;
       case 'temp-disease-definition':
+      case 'references':
       case 'causal-genes':
       case 'glycan-related-genes':
       case 'genetic-testing':

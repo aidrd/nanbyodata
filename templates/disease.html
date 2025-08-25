@@ -160,6 +160,7 @@
                 Overview
                 {% endif %}
                 <span class="data-num"><span class="loading-spinner -sidenav"></span></span></a>
+            </li>
             <li><a href="#causal-genes" class="nav-link causal-genes -disabled">
                 {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
                 疾患原因遺伝子
@@ -256,6 +257,13 @@
                 {% endif %}
                 <span class="data-num"><span class="loading-spinner -sidenav"></span></span>
               </a>
+            <li><a href="#references" class="nav-link references -disabled">
+                {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
+                文献
+                {% else %}
+                References
+                {% endif %}
+                <span class="data-num"><span class="loading-spinner -sidenav"></span></span></a>
             </li>
           </ul>
         </section>
@@ -619,6 +627,22 @@
                   <div id="temp-sub-class"></div>
                 </section>
               </div>
+            </div>
+
+            <div id="references" open="">
+              <h4 class="temp-title">
+                {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
+                文献
+                {% else %}
+                References
+                {% endif %}
+                <span class="data-num"></span>
+                <small>
+                  &nbsp;from&nbsp;
+                  <a href="https://pubmed.ncbi.nlm.nih.gov/" target="_blank" rel="noopener noreferrer">PubMed</a>
+                </small>
+              </h4>
+              <div id="references-table"></div>
             </div>
 
             <div id="causal-genes" open="">
