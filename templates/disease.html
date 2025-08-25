@@ -161,26 +161,26 @@
                 {% endif %}
                 <span class="data-num"><span class="loading-spinner -sidenav"></span></span></a>
             <li>
-              <div class="causal-genes -disabled">
+              <div class="genes -disabled">
                 {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
-                疾患原因遺伝子
+                疾患関連遺伝子
                 {% else %}
-                Causal Genes
+                Genes
                 {% endif %}
                 <ul>
-                  <li><a href="#causal-genes" class="reference nav-link -disabled">
+                  <li><a href="#genes" class="japan-curated nav-link -disabled">
                       {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
-                      リファレンス遺伝子
+                      国内基準由来
                       {% else %}
-                      Reference Genes
+                      Japan-curated
                       {% endif %}
                       <span class="data-num"><span class="loading-spinner -sidenav"></span></span></a>
                   </li>
-                  <li><a href="#causal-genes" class="disease-associated nav-link -disabled">
+                  <li><a href="#genes" class="internationally-curated nav-link -disabled">
                       {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
-                      関連遺伝子
+                      国際リソース由来
                       {% else %}
-                      Associated Genes
+                      Internationally curated
                       {% endif %}
                       <span class="data-num"><span class="loading-spinner -sidenav"></span></span></a>
                   </li>
@@ -482,27 +482,6 @@
                   </div>
                 </section>
 
-                <!-- リファレンス遺伝子セクションは疾患原因遺伝子のタブに移動したため削除 -->
-                <!-- 
-                <section class="overview-section">
-                  <div class="sub-title-wrapper">
-                    {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
-                    <h5 class="sub-title -reference-gene">リファレンス遺伝子</h5>
-                    {% else %}
-                    <h5 class="sub-title -reference-gene">Reference Genes</h5>
-                    {% endif %}
-                  </div>
-                  <div class="temp-wrapper">
-                    <div class="reference-genes">
-                      <dl class="linked-items reference-gene">
-                        <dt>
-                        </dt>
-                      </dl>
-                    </div>
-                  </div>
-                </section>
-                -->
-
                 <section class="overview-section">
                   <div class="sub-title-wrapper -select">
                     {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
@@ -643,37 +622,37 @@
               </div>
             </div>
 
-            <div id="causal-genes" open="">
+            <div id="genes" open="">
               <h4 class="temp-title">
                 {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
-                疾患原因遺伝子
+                疾患関連遺伝子
                 {% else %}
-                Causal Genes
+                Genes
                 {% endif %}
               </h4>
 
               <div class="tab-wrap">
-                <input type="radio" name="causal-genes" class="tab-switch" id="causal-genes-reference" />
-                <label class="tab-label causal-genes-reference" for="causal-genes-reference">
+                <input type="radio" name="genes" class="tab-switch" id="genes-japan-curated" />
+                <label class="tab-label genes-japan-curated" for="genes-japan-curated">
                   {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
-                  リファレンス遺伝子
+                  国内基準由来
                   {% else %}
-                  Reference Genes
+                  Japan-curated
                   {% endif %}
                   <span class="data-num"></span>
                   <small>
                     &nbsp;from&nbsp;
-                    <a href="https://www.mhlw.go.jp/" target="_blank" rel="noopener noreferrer">厚労省</a>
+                    <a href="https://www.mhlw.go.jp/" target="_blank" rel="noopener noreferrer">MHLW</a>
                   </small>
                 </label>
-                <div class="tab-content reference"></div>
+                <div class="tab-content japan-curated"></div>
 
-                <input type="radio" name="causal-genes" class="tab-switch" id="causal-genes-disease-associated" />
-                <label class="tab-label causal-genes-disease-associated" for="causal-genes-disease-associated">
+                <input type="radio" name="genes" class="tab-switch" id="genes-internationally-curated" />
+                <label class="tab-label genes-internationally-curated" for="genes-internationally-curated">
                   {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
-                  関連遺伝子
+                  国際リソース由来
                   {% else %}
-                  Associated Genes
+                  Internationally curated
                   {% endif %}
                   <span class="data-num"></span>
                   <small>
@@ -685,7 +664,7 @@
                     <a href="https://thegencc.org/" target="_blank" rel="noopener noreferrer">GenCC</a>
                   </small>
                 </label>
-                <div class="tab-content disease-associated"></div>
+                <div class="tab-content internationally-curated"></div>
 
                 <span class="tab-label -flex"></span>
               </div>

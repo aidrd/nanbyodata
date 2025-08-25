@@ -3,8 +3,8 @@ export function makeSideNavigation() {
 
   const items = [
     'overview',
-    'disease-associated',
-    'reference',
+    'internationally-curated',
+    'japan-curated',
     'glycan-related-genes',
     'genetic-testing',
     'phenotypes',
@@ -48,7 +48,7 @@ export function makeSideNavigation() {
     });
   });
 
-  document.querySelectorAll('a[href="#causal-genes"]').forEach(function (aTag) {
+  document.querySelectorAll('a[href="#genes"]').forEach(function (aTag) {
     aTag.addEventListener('click', function (event) {
       if (this.classList.contains('-disabled')) {
         event.preventDefault();
@@ -56,7 +56,7 @@ export function makeSideNavigation() {
       }
       event.preventDefault();
       const classList = this.classList[0];
-      const selectName = 'causal-genes-' + classList;
+      const selectName = 'genes-' + classList;
       window.location.hash = selectName;
       const checkBox = document.getElementById(selectName);
       if (checkBox && !checkBox.checked) {
@@ -83,25 +83,21 @@ export function makeSideNavigation() {
   });
 
   // processing when tabs are switched
-  document
-    .querySelectorAll('#causal-genes .tab-switch')
-    .forEach(function (tabSwitch) {
-      tabSwitch.addEventListener('change', function () {
-        const selectedTabId = this.id.replace('causal-genes-', '');
-        const tocItem = document.querySelector(
-          '.causal-genes a.' + selectedTabId
-        );
-        document.querySelectorAll('a').forEach(function (item) {
-          item.classList.remove('selected');
-        });
-        if (tocItem) {
-          if (!tocItem.classList.contains('-disabled')) {
-            tocItem.classList.add('selected');
-            window.location.hash = this.id;
-          }
-        }
+  document.querySelectorAll('#genes .tab-switch').forEach(function (tabSwitch) {
+    tabSwitch.addEventListener('change', function () {
+      const selectedTabId = this.id.replace('genes-', '');
+      const tocItem = document.querySelector('.genes a.' + selectedTabId);
+      document.querySelectorAll('a').forEach(function (item) {
+        item.classList.remove('selected');
       });
+      if (tocItem) {
+        if (!tocItem.classList.contains('-disabled')) {
+          tocItem.classList.add('selected');
+          window.location.hash = this.id;
+        }
+      }
     });
+  });
 
   document
     .querySelectorAll('#bio-resource .tab-switch')
@@ -146,7 +142,7 @@ export function switchingDisplayContents(selectedItemId) {
   const items = [
     '#overview',
     '#temp-disease-definition',
-    '#causal-genes',
+    '#genes',
     '#glycan-related-genes',
     '#genetic-testing',
     '#phenotypes',
@@ -188,18 +184,18 @@ export function switchingDisplayContents(selectedItemId) {
         prepareDataWrapper();
         toggleDisplay(`#${selectedItemId}`, 'block');
         break;
-      case 'causal-genes':
-      case 'causal-genes-disease-associated':
-      case 'causal-genes-reference':
+      case 'genes':
+      case 'genes-internationally-curated':
+      case 'genes-japan-curated':
         prepareDataWrapper();
         window.scrollTo({
           top: 0,
           behavior: 'smooth',
         });
-        toggleDisplay('#causal-genes', 'block');
-        let checkBoxCausal = document.getElementById(selectedItemId);
-        if (checkBoxCausal) checkBoxCausal.checked = true;
-        updateCausalGenesSelection('#causal-genes .tab-switch:checked');
+        toggleDisplay('#genes', 'block');
+        let checkBoxGenes = document.getElementById(selectedItemId);
+        if (checkBoxGenes) checkBoxGenes.checked = true;
+        updateGenesSelection('#genes .tab-switch:checked');
         break;
       case 'bio-resource':
       case 'bio-resource-cell':
@@ -266,7 +262,7 @@ function updateBioSelection(selector) {
   }
 }
 
-function updateCausalGenesSelection(selector) {
+function updateGenesSelection(selector) {
   const checkedSwitch = document.querySelector(selector);
   if (checkedSwitch) {
     window.location.hash = checkedSwitch.id;

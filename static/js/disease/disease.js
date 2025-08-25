@@ -8,7 +8,6 @@ import { makeLinkedList } from './overview/makeLinkedList.js';
 import { makeExternalLinks } from './overview/makeExternalLinks.js';
 import { makeAlternativeName } from './overview/makeAlternativeName.js';
 import { makeInheritanceUris } from './overview/makeInheritanceUris.js';
-import { makeReferenceGenes } from './overview/makeReferenceGenes.js';
 import { makeNumOfPatients } from './overview/makeNumOfPatients.js';
 import { makeSubClass } from './overview/makeSubclass.js';
 import { checkSummaryData } from './overview/checkSummaryData.js';
@@ -16,8 +15,8 @@ import { makeDiseaseDefinition } from './overview/makeDiseaseDefinition.js';
 import { updateOverviewDisplay } from './overview/updateOverviewDisplay.js';
 
 import {
-  makeCausalGene,
-  makeReferenceGene,
+  makeGene,
+  makeJapanCuratedGene,
   makeGlycanRelatedGene,
   makeGeneticTesting,
   makePhenotypes,
@@ -78,13 +77,13 @@ const datasets = [
   { name: 'MedGen', data: null },
   { name: 'KEGG', data: null },
   { name: 'Descriptions', data: null },
-  { name: 'Reference Genes', data: null },
+  { name: 'Japan-curated', data: null },
   {
     name: 'Number of Specific Medical Expenses Beneficiary Certificate Holders',
     data: null,
   },
   { name: 'Sub-classes', data: null },
-  { name: 'Causal Genes', data: null },
+  { name: 'Genes', data: null },
   { name: 'Glycan-related Genes', data: null },
   { name: 'Genetic Testing', data: null },
   { name: 'Phenotypes', data: null },
@@ -141,10 +140,10 @@ const datasets = [
 
       // 他のAPI呼び出し
       fetchData('test_reference_gene').then((response) => {
-        const referenceGeneData = response;
-        makeReferenceGene(referenceGeneData);
-        datasets.find((d) => d.name === 'Reference Genes').data =
-          referenceGeneData;
+        const japanCuratedGeneData = response;
+        makeJapanCuratedGene(japanCuratedGeneData);
+        datasets.find((d) => d.name === 'Japan-curated').data =
+          japanCuratedGeneData;
         checkAndLogDatasets();
       }),
       fetchData('nanbyodata_get_stats_on_patient_number_by_nando_id').then(
@@ -280,13 +279,11 @@ const datasets = [
           }
         }
       }),
-      fetchData('nanbyodata_get_causal_gene_by_nando_id').then(
-        (causalGeneData) => {
-          makeCausalGene(causalGeneData);
-          datasets.find((d) => d.name === 'Causal Genes').data = causalGeneData;
-          checkAndLogDatasets();
-        }
-      ),
+      fetchData('nanbyodata_get_causal_gene_by_nando_id').then((geneData) => {
+        makeGene(geneData);
+        datasets.find((d) => d.name === 'Genes').data = geneData;
+        checkAndLogDatasets();
+      }),
       fetchData('nanbyodata_get_glycosmos_gene_by_nando_id').then(
         (glycanRelatedGeneData) => {
           makeGlycanRelatedGene(glycanRelatedGeneData);
@@ -382,8 +379,8 @@ function trySwitchingContent(hash, retries = 0) {
 
   const items = [
     'overview',
-    'causal-genes-disease-associated',
-    'causal-genes-reference',
+    'genes-internationally-curated',
+    'genes-japan-curated',
     'glycan-related-genes',
     'genetic-testing',
     'phenotypes',
@@ -402,9 +399,9 @@ function trySwitchingContent(hash, retries = 0) {
 
   let modifiedHash = hash;
   switch (hash) {
-    case 'causal-genes-disease-associated':
-    case 'causal-genes-reference':
-      modifiedHash = hash.substring('causal-genes-'.length);
+    case 'genes-internationally-curated':
+    case 'genes-japan-curated':
+      modifiedHash = hash.substring('genes-'.length);
       break;
     case 'bio-resource-cell':
     case 'bio-resource-mouse':
