@@ -355,13 +355,14 @@ const datasets = [
           checkAndLogDatasets();
         }
       ),
-      // TODO: APIの差し替え
-      fetchData('test_gm').then((facialFeaturesData) => {
-        makeFacialFeatures(facialFeaturesData);
-        datasets.find((d) => d.name === 'Facial Features').data =
-          facialFeaturesData;
-        checkAndLogDatasets();
-      }),
+      fetchData('nanbyodata_get_gestaltmatcher_data_by_nando_id').then(
+        (facialFeaturesData) => {
+          makeFacialFeatures(facialFeaturesData);
+          datasets.find((d) => d.name === 'Facial Features').data =
+            facialFeaturesData;
+          checkAndLogDatasets();
+        }
+      ),
     ]);
   } catch (error) {
     console.error('Error:', error);
