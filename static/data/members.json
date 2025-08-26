@@ -85,7 +85,7 @@
         },
         "affiliation": {
           "ja": "",
-          "en": ""
+          "en": "AMED"
         },
         "location": "domestic",
         "image_name": "kazuhito_satou.jpg",
@@ -126,7 +126,7 @@
           "yomi": "かわい ようすけ"
         },
         "affiliation": {
-          "ja": "国立国際医療研究センター",
+          "ja": "",
           "en": "JIHS"
         },
         "location": "domestic",
@@ -153,7 +153,7 @@
         },
         "affiliation": {
           "ja": "",
-          "en": "Orphanet,Orpha Data"
+          "en": "INSERM"
         },
         "location": "international",
         "image_name": "david_lagorce.jpg",
