@@ -5,11 +5,15 @@ import {
   geneticTestingColumns,
   phenotypesJaColumns,
   phenotypesEnColumns,
+  humDataJaColumns,
+  humDataEnColumns,
+  referencesColumns,
   bioResourceCellColumns,
   bioResourceMouseColumns,
   bioResourceDnaColumns,
   variantClinvarColumns,
   variantMgendColumns,
+  facialFeaturesColumns,
   convertColumnToText,
 } from '../utils/stanzaColumns.js';
 
@@ -132,6 +136,45 @@ export function makePhenotypes(phenotypesData) {
   );
   if (phenotypesData?.length > 0 && phenotypesData !== null) {
     const navLink = document.querySelector('.nav-link.phenotypes');
+    navLink.style.cursor = 'pointer';
+    navLink.classList.remove('-disabled');
+  }
+}
+
+// humData(Hum Data)
+export function makeHumData(humData) {
+  const currentLang = document.querySelector('.language-select').value;
+  const humDataLang = currentLang === 'ja' ? 'hum-data-ja' : 'hum-data-en';
+  const columns = {
+    ja: convertColumnToText(humDataJaColumns),
+    en: convertColumnToText(humDataEnColumns),
+  };
+  makeData(
+    humData,
+    'hum-data',
+    humDataLang,
+    columns[currentLang],
+    humData?.length || 0
+  );
+  if (humData?.length > 0 && humData !== null) {
+    const navLink = document.querySelector('.nav-link.hum-data');
+    navLink.style.cursor = 'pointer';
+    navLink.classList.remove('-disabled');
+  }
+}
+
+// references(文献)
+export function makeReferences(referencesData) {
+  const columns = convertColumnToText(referencesColumns);
+  makeData(
+    referencesData,
+    'references',
+    'references-table',
+    columns,
+    referencesData?.length || 0
+  );
+  if (referencesData?.length > 0 && referencesData !== null) {
+    const navLink = document.querySelector('.nav-link.references');
     navLink.style.cursor = 'pointer';
     navLink.classList.remove('-disabled');
   }
@@ -276,6 +319,26 @@ export function makeMgend(mgendData) {
     document.querySelector('#variant-mgend').remove();
     document.querySelector('.tab-label.variant-mgend').remove();
     document.querySelector('.tab-content.mgend').remove();
+  }
+}
+
+// Facial Features
+export function makeFacialFeatures(facialFeaturesData) {
+  const currentLang = document.querySelector('.language-select').value;
+  const facialFeaturesLang =
+    currentLang === 'ja' ? 'facial-features-ja' : 'facial-features-en';
+  const columns = convertColumnToText(facialFeaturesColumns);
+  makeData(
+    facialFeaturesData,
+    'facial-features',
+    facialFeaturesLang,
+    columns,
+    facialFeaturesData?.length || 0
+  );
+  if (facialFeaturesData?.length > 0 && facialFeaturesData !== null) {
+    const navLink = document.querySelector('.nav-link.facial-features');
+    navLink.style.cursor = 'pointer';
+    navLink.classList.remove('-disabled');
   }
 }
 

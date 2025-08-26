@@ -74,7 +74,7 @@
           "en": "RIKEN BRC"
         },
         "location": "domestic",
-        "image_name": "tatsuya_kushida.png",
+        "image_name": "tatsuya_kushida.jpg",
         "url": ""
       },
       {
@@ -102,7 +102,7 @@
           "en": "Tottori University"
         },
         "location": "domestic",
-        "image_name": "",
+        "image_name": "kaori_adachi.png",
         "url": ""
       },
       {
@@ -127,10 +127,10 @@
         },
         "affiliation": {
           "ja": "国立国際医療研究センター",
-          "en": "National Center for Global Health and Medicine"
+          "en": "JIHS"
         },
         "location": "domestic",
-        "image_name": "",
+        "image_name": "yosuke_kawai.png",
         "url": ""
       },
       {
@@ -143,7 +143,7 @@
           "en": "Monarch Initiative"
         },
         "location": "international",
-        "image_name": "",
+        "image_name": "nicolas_matentzoglu.jpeg",
         "url": ""
       },
       {
@@ -156,7 +156,7 @@
           "en": "Orphanet,Orpha Data"
         },
         "location": "international",
-        "image_name": "",
+        "image_name": "david_lagorce.jpg",
         "url": ""
       },
       {
@@ -169,7 +169,7 @@
           "en": "University Hospital Bonn"
         },
         "location": "international",
-        "image_name": "",
+        "image_name": "tzung-chien_hsieh.jpeg",
         "url": ""
       },
       {
@@ -312,7 +312,7 @@
           "en": "Tohoku University"
         },
         "location": "",
-        "image_name": "",
+        "image_name": "atsuo_kikuchi.webp",
         "url": ""
       }
     ]
@@ -322,8 +322,8 @@
     "members": [
       {
         "name": {
-          "ja": "野原",
-          "en": "Nohara"
+          "ja": "野原 里江",
+          "en": "Rie Nohara"
         },
         "affiliation": {
           "ja": "",

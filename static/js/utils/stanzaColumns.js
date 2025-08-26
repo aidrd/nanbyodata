@@ -51,6 +51,14 @@ export const pediatricChronicSpecificDiseaseEnColumns = [
   { id: 'num_of_2018', label: '2018', type: 'number' },
 ];
 
+// References
+export const referencesColumns = [
+  { id: 'pmid', label: 'PMID', link: 'url', target: '_blank' },
+  { id: 'title', label: 'Title' },
+  { id: 'magazine', label: 'Magazine' },
+  { id: 'date', label: 'Date', type: 'date' },
+];
+
 // Disease
 export const causalGeneColumns = [
   {
@@ -169,6 +177,30 @@ export const phenotypesEnColumns = [
   },
 ];
 
+export const humDataJaColumns = [
+  { id: 'label_ja', label: 'Name', rowspan: true },
+  {
+    id: 'hum_id',
+    label: 'Hum ID',
+    link: 'hum_uri',
+    target: '_blank',
+    rowspan: true,
+  },
+  { id: 'type_data_ja', label: 'Type' },
+];
+
+export const humDataEnColumns = [
+  { id: 'label_en', label: 'Name', rowspan: true },
+  {
+    id: 'hum_id',
+    label: 'Hum ID',
+    link: 'hum_uri',
+    target: '_blank',
+    rowspan: true,
+  },
+  { id: 'type_data_en', label: 'Type' },
+];
+
 export const bioResourceCellColumns = [
   { id: 'ID', label: 'Cell No.' },
   { id: 'Cell_name', label: 'Cell name' },
@@ -227,6 +259,38 @@ export const variantMgendColumns = [
   { id: 'hgncID', label: 'HGNC ID', link: 'hgncurl', target: '_blank' },
   { id: 'omim_id', label: 'OMIM ID', link: 'omim_url', target: '_blank' },
   { id: 'mondo_label', label: 'MONDO', link: 'mondo_url', target: '_blank' },
+];
+
+export const facialFeaturesColumns = [
+  {
+    id: 'id',
+    label: 'Patient ID',
+    rowspan: true,
+    link: 'person',
+    target: '_blank',
+  },
+  { id: 'gender', label: 'Gender', rowspan: true },
+  {
+    id: 'gene',
+    label: 'Gene symbol',
+    rowspan: true,
+    link: 'ncbi',
+    target: '_blank',
+  },
+  { id: 'minzoku', label: 'Ethnicity', rowspan: true },
+  { id: 'minzokumemo', label: 'Ethnicity note', rowspan: true },
+  { id: 'image_id', label: 'Image ID' },
+  { id: 'image_desc', label: 'Type' },
+  { id: 'age_year', label: 'Age (at photo)' },
+  { id: 'age_month', label: 'Month (at photo)' },
+  { id: 'age_memo', label: 'Age note (at photo)' },
+  {
+    id: 'pmid',
+    label: 'PMID',
+    rowspan: true,
+    link: 'pmid_url',
+    target: '_blank',
+  },
 ];
 
 // Overview Sub-classes
