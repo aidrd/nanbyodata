@@ -202,27 +202,24 @@ export const humDataEnColumns = [
 ];
 
 export const bioResourceCellColumns = [
-  { id: 'ID', label: 'Cell No.' },
+  { id: 'ID', label: 'Cell No.', link: 'Homepage', target: '_blank' },
   { id: 'Cell_name', label: 'Cell name' },
-  { id: 'Homepage', label: 'Homepage', link: 'Homepage', target: '_blank' },
   { id: 'Description_e', label: 'Description (EN)' },
   { id: 'Description_j', label: 'Description (JA)' },
 ];
 
 export const bioResourceMouseColumns = [
-  { id: 'mouse_id', label: 'RIKEN_BRC No.' },
-  { id: 'hp', label: 'Homepage', link: 'hp', target: '_blank' },
+  { id: 'mouse_id', label: 'RIKEN_BRC No.', link: 'hp', target: '_blank' },
   { id: 'mouse_name', label: 'Strain name' },
   { id: 'description', label: 'Strain description' },
 ];
 
 export const bioResourceDnaColumns = [
-  { id: 'gene_id', label: 'Catalog number' },
-  { id: 'hp', label: 'Homepage', link: 'hp', target: '_blank' },
+  { id: 'gene_id', label: 'Catalog number', link: 'hp', target: '_blank' },
   { id: 'gene_label', label: 'Name' },
   {
-    id: 'ncbi_gene',
-    label: 'NCBI gene link',
+    id: 'ncbi_gene_id',
+    label: 'NCBI gene ID',
     link: 'ncbi_gene',
     target: '_blank',
   },
