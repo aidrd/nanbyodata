@@ -107,6 +107,7 @@ export const causalGeneColumns = [
     label: 'Mondo label (JA)',
     lineClamp: 1,
   },
+  { id: 'source', label: 'Source' },
 ];
 
 export const glycanRelatedGeneColumns = [
