@@ -3,7 +3,7 @@ import {
   linkedListEnColumns,
 } from '../utils/linkedListColumns.js';
 import {
-  causalGeneColumns,
+  geneColumns,
   geneticTestingColumns,
   phenotypesJaColumns,
   phenotypesEnColumns,
@@ -101,8 +101,8 @@ export const downloadDatasets = (nandoId, datasets) => {
               data
             ),
           };
-        case 'Causal Genes':
-          return { name, data: reconstructionData(causalGeneColumns, data) };
+        case 'Genes':
+          return { name, data: reconstructionData(geneColumns, data) };
         case 'Glycan-related Genes':
           return {
             name,
@@ -236,7 +236,7 @@ export const downloadDatasets = (nandoId, datasets) => {
       Descriptions: [],
       'Number of Specific Medical Expenses Beneficiary Certificate Holders': [],
       'Sub-classes': [],
-      'Causal Genes': [],
+      Genes: [],
       'Glycan-related Genes': [],
       'Genetic Testing': [],
       Phenotypes: [],

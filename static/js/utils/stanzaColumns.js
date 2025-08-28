@@ -60,7 +60,7 @@ export const referencesColumns = [
 ];
 
 // Disease
-export const causalGeneColumns = [
+export const geneColumns = [
   {
     id: 'gene_symbol',
     label: 'Gene symbol',

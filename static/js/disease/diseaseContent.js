@@ -1,6 +1,6 @@
 import { makeSideNavigation } from './diseaseSideNavigation.js';
 import {
-  causalGeneColumns,
+  geneColumns,
   glycanRelatedGeneColumns,
   geneticTestingColumns,
   phenotypesJaColumns,
@@ -24,17 +24,13 @@ import {
 
 makeSideNavigation();
 
-// causalGene(疾患原因遺伝子)
-export function makeCausalGene(causalGeneData) {
+// genes(疾患関連遺伝子)
+export function makeGenes(geneData) {
   // gene_symbolの重複を除外したユニークな値の数を計算
   let uniqueGeneSymbolCount = 0;
-  if (
-    causalGeneData &&
-    Array.isArray(causalGeneData) &&
-    causalGeneData.length > 0
-  ) {
+  if (geneData && Array.isArray(geneData) && geneData.length > 0) {
     const uniqueGeneSymbols = new Set();
-    causalGeneData.forEach((gene) => {
+    geneData.forEach((gene) => {
       if (gene.gene_symbol) {
         uniqueGeneSymbols.add(gene.gene_symbol);
       }
@@ -43,14 +39,14 @@ export function makeCausalGene(causalGeneData) {
   }
 
   makeData(
-    causalGeneData,
-    'causal-genes',
-    'causal-genes-table',
-    convertColumnToText(causalGeneColumns),
+    geneData,
+    'genes',
+    'genes-table',
+    convertColumnToText(geneColumns),
     uniqueGeneSymbolCount // 重複のないgene_symbolの数を渡す
   );
-  if (causalGeneData?.length > 0 && causalGeneData !== null) {
-    const navLink = document.querySelector('.nav-link.causal-genes');
+  if (geneData?.length > 0 && geneData !== null) {
+    const navLink = document.querySelector('.nav-link.genes');
     navLink.style.cursor = 'pointer';
     navLink.classList.remove('-disabled');
   }
