@@ -160,11 +160,11 @@
                 {% endif %}
                 <span class="data-num"><span class="loading-spinner -sidenav"></span></span></a>
             </li>
-            <li><a href="#causal-genes" class="nav-link causal-genes -disabled">
+            <li><a href="#genes" class="nav-link genes -disabled">
                 {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
-                疾患原因遺伝子
+                疾患関連遺伝子
                 {% else %}
-                Causal Genes
+                Genes
                 {% endif %}
                 <span class="data-num"><span class="loading-spinner -sidenav"></span></span></a>
             </li>
@@ -647,12 +647,12 @@
               <div id="references-table"></div>
             </div> -->
 
-            <div id="causal-genes" open="">
+            <div id="genes" open="">
               <h4 class="temp-title">
                 {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
-                疾患原因遺伝子
+                疾患関連遺伝子
                 {% else %}
-                Causal Genes
+                Genes
                 {% endif %}
                 <span class="data-num"></span>
                 <small>
@@ -664,7 +664,7 @@
                   <a href="https://thegencc.org/" target="_blank" rel="noopener noreferrer">GenCC</a>
                 </small>
               </h4>
-              <div id="causal-genes-table"></div>
+              <div id="genes-table"></div>
             </div>
 
             <div id="glycan-related-genes" open="">

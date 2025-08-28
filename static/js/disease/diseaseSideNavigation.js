@@ -3,7 +3,7 @@ export function makeSideNavigation() {
 
   const items = [
     'overview',
-    'causal-genes',
+    'genes',
     'glycan-related-genes',
     'genetic-testing',
     'phenotypes',
@@ -126,7 +126,7 @@ export function switchingDisplayContents(selectedItemId) {
   // まず、全てのコンテンツを非表示にする
   const allContentSections = [
     '#overview',
-    '#causal-genes',
+    '#genes',
     '#glycan-related-genes',
     '#genetic-testing',
     '#phenotypes',
@@ -189,7 +189,7 @@ export function switchingDisplayContents(selectedItemId) {
       case 'temp-disease-definition':
       // TODO: 公開OKになったら表示
       // case 'references':
-      case 'causal-genes':
+      case 'genes':
       case 'glycan-related-genes':
       case 'genetic-testing':
       case 'phenotypes':
