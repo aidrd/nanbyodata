@@ -1,15 +1,19 @@
 import { makeSideNavigation } from './diseaseSideNavigation.js';
 import {
-  causalGeneColumns,
+  geneColumns,
   glycanRelatedGeneColumns,
   geneticTestingColumns,
   phenotypesJaColumns,
   phenotypesEnColumns,
+  humDataJaColumns,
+  humDataEnColumns,
+  referencesColumns,
   bioResourceCellColumns,
   bioResourceMouseColumns,
   bioResourceDnaColumns,
   variantClinvarColumns,
   variantMgendColumns,
+  facialFeaturesColumns,
   convertColumnToText,
 } from '../utils/stanzaColumns.js';
 
@@ -20,17 +24,13 @@ import {
 
 makeSideNavigation();
 
-// causalGene(疾患原因遺伝子)
-export function makeCausalGene(causalGeneData) {
+// genes(疾患関連遺伝子)
+export function makeGenes(geneData) {
   // gene_symbolの重複を除外したユニークな値の数を計算
   let uniqueGeneSymbolCount = 0;
-  if (
-    causalGeneData &&
-    Array.isArray(causalGeneData) &&
-    causalGeneData.length > 0
-  ) {
+  if (geneData && Array.isArray(geneData) && geneData.length > 0) {
     const uniqueGeneSymbols = new Set();
-    causalGeneData.forEach((gene) => {
+    geneData.forEach((gene) => {
       if (gene.gene_symbol) {
         uniqueGeneSymbols.add(gene.gene_symbol);
       }
@@ -39,14 +39,14 @@ export function makeCausalGene(causalGeneData) {
   }
 
   makeData(
-    causalGeneData,
-    'causal-genes',
-    'causal-genes-table',
-    convertColumnToText(causalGeneColumns),
+    geneData,
+    'genes',
+    'genes-table',
+    convertColumnToText(geneColumns),
     uniqueGeneSymbolCount // 重複のないgene_symbolの数を渡す
   );
-  if (causalGeneData?.length > 0 && causalGeneData !== null) {
-    const navLink = document.querySelector('.nav-link.causal-genes');
+  if (geneData?.length > 0 && geneData !== null) {
+    const navLink = document.querySelector('.nav-link.genes');
     navLink.style.cursor = 'pointer';
     navLink.classList.remove('-disabled');
   }
@@ -101,15 +101,76 @@ export function makeGeneticTesting(geneticTestingData) {
 
 // phenotypes(臨床的特徴)
 export function makePhenotypes(phenotypesData) {
+  // hpo_idの重複を除外したユニークな値の数を計算
+  let uniqueHpoIdCount = 0;
+  if (
+    phenotypesData &&
+    Array.isArray(phenotypesData) &&
+    phenotypesData.length > 0
+  ) {
+    const uniqueHpoIds = new Set();
+    phenotypesData.forEach((phenotype) => {
+      if (phenotype.hpo_id) {
+        uniqueHpoIds.add(phenotype.hpo_id);
+      }
+    });
+    uniqueHpoIdCount = uniqueHpoIds.size;
+  }
+
   const currentLang = document.querySelector('.language-select').value;
   const phenotypeLang = currentLang === 'ja' ? 'phenotype-ja' : 'phenotype-en';
   const columns = {
     ja: convertColumnToText(phenotypesJaColumns),
     en: convertColumnToText(phenotypesEnColumns),
   };
-  makeData(phenotypesData, 'phenotypes', phenotypeLang, columns[currentLang]);
+  makeData(
+    phenotypesData,
+    'phenotypes',
+    phenotypeLang,
+    columns[currentLang],
+    uniqueHpoIdCount
+  );
   if (phenotypesData?.length > 0 && phenotypesData !== null) {
     const navLink = document.querySelector('.nav-link.phenotypes');
+    navLink.style.cursor = 'pointer';
+    navLink.classList.remove('-disabled');
+  }
+}
+
+// humData(Hum Data)
+export function makeHumData(humData) {
+  const currentLang = document.querySelector('.language-select').value;
+  const humDataLang = currentLang === 'ja' ? 'hum-data-ja' : 'hum-data-en';
+  const columns = {
+    ja: convertColumnToText(humDataJaColumns),
+    en: convertColumnToText(humDataEnColumns),
+  };
+  makeData(
+    humData,
+    'hum-data',
+    humDataLang,
+    columns[currentLang],
+    humData?.length || 0
+  );
+  if (humData?.length > 0 && humData !== null) {
+    const navLink = document.querySelector('.nav-link.hum-data');
+    navLink.style.cursor = 'pointer';
+    navLink.classList.remove('-disabled');
+  }
+}
+
+// references(文献)
+export function makeReferences(referencesData) {
+  const columns = convertColumnToText(referencesColumns);
+  makeData(
+    referencesData,
+    'references',
+    'references-table',
+    columns,
+    referencesData?.length || 0
+  );
+  if (referencesData?.length > 0 && referencesData !== null) {
+    const navLink = document.querySelector('.nav-link.references');
     navLink.style.cursor = 'pointer';
     navLink.classList.remove('-disabled');
   }
@@ -254,6 +315,26 @@ export function makeMgend(mgendData) {
     document.querySelector('#variant-mgend').remove();
     document.querySelector('.tab-label.variant-mgend').remove();
     document.querySelector('.tab-content.mgend').remove();
+  }
+}
+
+// Facial Features
+export function makeFacialFeatures(facialFeaturesData) {
+  const currentLang = document.querySelector('.language-select').value;
+  const facialFeaturesLang =
+    currentLang === 'ja' ? 'facial-features-ja' : 'facial-features-en';
+  const columns = convertColumnToText(facialFeaturesColumns);
+  makeData(
+    facialFeaturesData,
+    'facial-features',
+    facialFeaturesLang,
+    columns,
+    facialFeaturesData?.length || 0
+  );
+  if (facialFeaturesData?.length > 0 && facialFeaturesData !== null) {
+    const navLink = document.querySelector('.nav-link.facial-features');
+    navLink.style.cursor = 'pointer';
+    navLink.classList.remove('-disabled');
   }
 }
 

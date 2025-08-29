@@ -3,15 +3,20 @@ export function makeSideNavigation() {
 
   const items = [
     'overview',
-    'causal-genes',
+    'genes',
     'glycan-related-genes',
     'genetic-testing',
     'phenotypes',
+    // TODO: 公開OKになったら表示
+    // 'hum-data',
     'cell',
     'mouse',
     'dna',
     'clinvar',
     'mgend',
+    'facial-features',
+    // TODO: 公開OKになったら表示
+    // 'references',
   ];
 
   items.forEach((itemId) => {
@@ -108,12 +113,30 @@ export function switchingDisplayContents(selectedItemId) {
   const items = [
     '#overview',
     '#temp-disease-definition',
+    // TODO: 公開OKになったら表示
+    // '#references',
     '#causal-genes',
     '#glycan-related-genes',
     '#genetic-testing',
     '#phenotypes',
     '#bio-resource',
     '#variant',
+  ];
+
+  // まず、全てのコンテンツを非表示にする
+  const allContentSections = [
+    '#overview',
+    '#genes',
+    '#glycan-related-genes',
+    '#genetic-testing',
+    '#phenotypes',
+    // TODO: 公開OKになったら表示
+    // '#hum-data',
+    '#bio-resource',
+    '#variant',
+    '#facial-features',
+    // TODO: 公開OKになったら表示
+    // '#references',
   ];
 
   // ローディングスピナーを追加
@@ -132,9 +155,29 @@ export function switchingDisplayContents(selectedItemId) {
   }
 
   // Hide all elements
-  items.forEach((selector) => toggleDisplay(selector));
+  allContentSections.forEach((selector) => toggleDisplay(selector));
   const currentItemEl = document.querySelector(`.${selectedItemId}`);
   if (!currentItemEl.classList.contains('-disabled')) {
+    // まず、全てのコンテンツを非表示にする
+    const allContentSections = [
+      '#overview',
+      '#causal-genes',
+      '#glycan-related-genes',
+      '#genetic-testing',
+      '#phenotypes',
+      '#bio-resource',
+      '#variant',
+      '#facial-features',
+      // TODO: 公開OKになったら表示
+      // '#references',
+    ];
+
+    allContentSections.forEach((selector) => {
+      if (selector !== `#${selectedItemId}`) {
+        toggleDisplay(selector, 'none');
+      }
+    });
+
     // Show selected items
     switch (selectedItemId) {
       case 'overview':
@@ -144,13 +187,21 @@ export function switchingDisplayContents(selectedItemId) {
         });
         break;
       case 'temp-disease-definition':
-      case 'causal-genes':
+      // TODO: 公開OKになったら表示
+      // case 'references':
+      case 'genes':
       case 'glycan-related-genes':
       case 'genetic-testing':
       case 'phenotypes':
         prepareDataWrapper();
         toggleDisplay(`#${selectedItemId}`, 'block');
         break;
+      // TODO: 公開OKになったら表示
+      // case 'hum-data':
+      // 以下必要か再確認（フロント側）
+      //   prepareDataWrapper();
+      //   toggleDisplay(`#${selectedItemId}`, 'block');
+      //   break;
       case 'bio-resource':
       case 'bio-resource-cell':
       case 'bio-resource-mouse':
@@ -178,6 +229,10 @@ export function switchingDisplayContents(selectedItemId) {
         if (checkBoxVariant) checkBoxVariant.checked = true;
         updateVariantSelection('#variant .tab-switch:checked');
         break;
+      case 'facial-features':
+        prepareDataWrapper();
+        toggleDisplay(`#${selectedItemId}`, 'block');
+        break;
       default:
         window.location.href = window.location.href.split('#')[0];
     }
@@ -189,9 +244,12 @@ export function switchingDisplayContents(selectedItemId) {
     }
 
     // コンテンツの可視性を戻す
-    const contentChildren = contentElement.children;
-    for (let i = 0; i < contentChildren.length; i++) {
-      contentChildren[i].style.visibility = 'visible';
+    const contentElement = document.getElementById('content');
+    if (contentElement) {
+      const contentChildren = contentElement.children;
+      for (let i = 0; i < contentChildren.length; i++) {
+        contentChildren[i].style.visibility = 'visible';
+      }
     }
   }
 }

@@ -51,8 +51,16 @@ export const pediatricChronicSpecificDiseaseEnColumns = [
   { id: 'num_of_2018', label: '2018', type: 'number' },
 ];
 
+// References
+export const referencesColumns = [
+  { id: 'pmid', label: 'PMID', link: 'url', target: '_blank' },
+  { id: 'title', label: 'Title' },
+  { id: 'magazine', label: 'Magazine' },
+  { id: 'date', label: 'Date', type: 'date' },
+];
+
 // Disease
-export const causalGeneColumns = [
+export const geneColumns = [
   {
     id: 'gene_symbol',
     label: 'Gene symbol',
@@ -99,6 +107,7 @@ export const causalGeneColumns = [
     label: 'Mondo label (JA)',
     lineClamp: 1,
   },
+  { id: 'source', label: 'Source' },
 ];
 
 export const glycanRelatedGeneColumns = [
@@ -135,9 +144,15 @@ export const geneticTestingColumns = [
 ];
 
 export const phenotypesJaColumns = [
-  { id: 'hpo_label_ja', label: 'Symptom (JA)' },
-  { id: 'hpo_label_en', label: 'Symptom (EN)' },
-  { id: 'hpo_id', label: 'HPO ID', link: 'hpo_url', target: '_blank' },
+  { id: 'hpo_label_ja', label: 'Symptom (JA)', rowspan: true },
+  { id: 'hpo_label_en', label: 'Symptom (EN)', rowspan: true },
+  {
+    id: 'hpo_id',
+    label: 'HPO ID',
+    link: 'hpo_url',
+    target: '_blank',
+    rowspan: true,
+  },
   {
     id: 'hpo_category_name_en',
     label: 'Symptom category',
@@ -147,8 +162,14 @@ export const phenotypesJaColumns = [
 ];
 
 export const phenotypesEnColumns = [
-  { id: 'hpo_label_en', label: 'Symptom' },
-  { id: 'hpo_id', label: 'HPO ID', link: 'hpo_url', target: '_blank' },
+  { id: 'hpo_label_en', label: 'Symptom', rowspan: true },
+  {
+    id: 'hpo_id',
+    label: 'HPO ID',
+    link: 'hpo_url',
+    target: '_blank',
+    rowspan: true,
+  },
   {
     id: 'hpo_category_name_en',
     label: 'Symptom category',
@@ -157,28 +178,49 @@ export const phenotypesEnColumns = [
   },
 ];
 
+export const humDataJaColumns = [
+  { id: 'label_ja', label: 'Name', rowspan: true },
+  {
+    id: 'hum_id',
+    label: 'Hum ID',
+    link: 'hum_uri',
+    target: '_blank',
+    rowspan: true,
+  },
+  { id: 'type_data_ja', label: 'Type' },
+];
+
+export const humDataEnColumns = [
+  { id: 'label_en', label: 'Name', rowspan: true },
+  {
+    id: 'hum_id',
+    label: 'Hum ID',
+    link: 'hum_uri',
+    target: '_blank',
+    rowspan: true,
+  },
+  { id: 'type_data_en', label: 'Type' },
+];
+
 export const bioResourceCellColumns = [
-  { id: 'ID', label: 'Cell No.' },
+  { id: 'ID', label: 'Cell No.', link: 'Homepage', target: '_blank' },
   { id: 'Cell_name', label: 'Cell name' },
-  { id: 'Homepage', label: 'Homepage', link: 'Homepage', target: '_blank' },
   { id: 'Description_e', label: 'Description (EN)' },
   { id: 'Description_j', label: 'Description (JA)' },
 ];
 
 export const bioResourceMouseColumns = [
-  { id: 'mouse_id', label: 'RIKEN_BRC No.' },
-  { id: 'hp', label: 'Homepage', link: 'hp', target: '_blank' },
+  { id: 'mouse_id', label: 'RIKEN_BRC No.', link: 'hp', target: '_blank' },
   { id: 'mouse_name', label: 'Strain name' },
   { id: 'description', label: 'Strain description' },
 ];
 
 export const bioResourceDnaColumns = [
-  { id: 'gene_id', label: 'Catalog number' },
-  { id: 'hp', label: 'Homepage', link: 'hp', target: '_blank' },
+  { id: 'gene_id', label: 'Catalog number', link: 'hp', target: '_blank' },
   { id: 'gene_label', label: 'Name' },
   {
-    id: 'ncbi_gene',
-    label: 'NCBI gene link',
+    id: 'ncbi_gene_id',
+    label: 'NCBI gene ID',
     link: 'ncbi_gene',
     target: '_blank',
   },
@@ -215,6 +257,38 @@ export const variantMgendColumns = [
   { id: 'hgncID', label: 'HGNC ID', link: 'hgncurl', target: '_blank' },
   { id: 'omim_id', label: 'OMIM ID', link: 'omim_url', target: '_blank' },
   { id: 'mondo_label', label: 'MONDO', link: 'mondo_url', target: '_blank' },
+];
+
+export const facialFeaturesColumns = [
+  {
+    id: 'id',
+    label: 'Patient ID',
+    rowspan: true,
+    link: 'person',
+    target: '_blank',
+  },
+  { id: 'gender', label: 'Gender', rowspan: true },
+  {
+    id: 'gene',
+    label: 'Gene symbol',
+    rowspan: true,
+    link: 'ncbi',
+    target: '_blank',
+  },
+  { id: 'minzoku', label: 'Ethnicity', rowspan: true },
+  { id: 'minzokumemo', label: 'Ethnicity note', rowspan: true },
+  { id: 'image_id', label: 'Image ID' },
+  { id: 'image_desc', label: 'Type' },
+  { id: 'age_year', label: 'Age (at photo)' },
+  { id: 'age_month', label: 'Month (at photo)' },
+  { id: 'age_memo', label: 'Age note (at photo)' },
+  {
+    id: 'pmid',
+    label: 'PMID',
+    rowspan: true,
+    link: 'pmid_url',
+    target: '_blank',
+  },
 ];
 
 // Overview Sub-classes

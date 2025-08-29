@@ -3,15 +3,19 @@ import {
   linkedListEnColumns,
 } from '../utils/linkedListColumns.js';
 import {
-  causalGeneColumns,
+  geneColumns,
   geneticTestingColumns,
   phenotypesJaColumns,
   phenotypesEnColumns,
+  humDataJaColumns,
+  humDataEnColumns,
+  referencesColumns,
   bioResourceCellColumns,
   bioResourceMouseColumns,
   bioResourceDnaColumns,
   variantClinvarColumns,
   variantMgendColumns,
+  facialFeaturesColumns,
   numOfPatientsColumns,
   subclassTableJaColumns,
   subclassTableEnColumns,
@@ -97,8 +101,8 @@ export const downloadDatasets = (nandoId, datasets) => {
               data
             ),
           };
-        case 'Causal Genes':
-          return { name, data: reconstructionData(causalGeneColumns, data) };
+        case 'Genes':
+          return { name, data: reconstructionData(geneColumns, data) };
         case 'Glycan-related Genes':
           return {
             name,
@@ -113,6 +117,16 @@ export const downloadDatasets = (nandoId, datasets) => {
           const currentColumns =
             currentLang === 'ja' ? phenotypesJaColumns : phenotypesEnColumns;
           return { name, data: reconstructionData(currentColumns, data) };
+        case 'Facial Features':
+          return {
+            name,
+            data: reconstructionData(facialFeaturesColumns, data),
+          };
+        // TODO: 公開OKになったら表示
+        // case 'Hum Data':
+        //   const humDataColumns =
+        //     currentLang === 'ja' ? humDataJaColumns : humDataEnColumns;
+        //   return { name, data: reconstructionData(humDataColumns, data) };
         case 'Cell':
           return {
             name,
@@ -138,6 +152,9 @@ export const downloadDatasets = (nandoId, datasets) => {
             name,
             data: reconstructionData(variantMgendColumns, data),
           };
+        // TODO: 公開OKになったら表示
+        // case 'References':
+        //   return { name, data: reconstructionData(referencesColumns, data) };
       }
     });
 
@@ -219,12 +236,17 @@ export const downloadDatasets = (nandoId, datasets) => {
       Descriptions: [],
       'Number of Specific Medical Expenses Beneficiary Certificate Holders': [],
       'Sub-classes': [],
-      'Causal Genes': [],
+      Genes: [],
       'Glycan-related Genes': [],
       'Genetic Testing': [],
       Phenotypes: [],
+      'Facial Features': [],
+      // TODO: 公開OKになったら表示
+      // 'Hum Data': [],
       'Bio Resource': ['Cell', 'Mouse', 'DNA'],
       Variant: ['Clinvar', 'MGeND'],
+      // TODO: 公開OKになったら表示
+      // 'References': [],
     };
     // 初期jsonData作成
     const jsonData = Object.fromEntries(

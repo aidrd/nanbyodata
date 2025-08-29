@@ -93,8 +93,7 @@
                 <ul class="dropdown-menu" style="display: none;">
                   <li><a class="dropdown-item" href="/about_nanbyodata">NanbyoData</a></li>
                   <li><a class="dropdown-item" href="/about_nando">NANDO</a></li>
-                  <!-- TODO: チームページを作成したら表示 -->
-                  <!-- <li><a class="dropdown-item" href="/team">TEAM</a></li> -->
+                  <li><a class="dropdown-item" href="/team">TEAM</a></li>
                 </ul>
               </li>
               <li class="nav-item dropdown">
@@ -160,11 +159,12 @@
                 Overview
                 {% endif %}
                 <span class="data-num"><span class="loading-spinner -sidenav"></span></span></a>
-            <li><a href="#causal-genes" class="nav-link causal-genes -disabled">
+            </li>
+            <li><a href="#genes" class="nav-link genes -disabled">
                 {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
-                疾患原因遺伝子
+                疾患関連遺伝子
                 {% else %}
-                Causal Genes
+                Genes
                 {% endif %}
                 <span class="data-num"><span class="loading-spinner -sidenav"></span></span></a>
             </li>
@@ -192,6 +192,24 @@
                 {% endif %}
                 <span class="data-num"><span class="loading-spinner -sidenav"></span></span></a>
             </li>
+            <li><a href="#facial-features" class="nav-link facial-features -disabled">
+                {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
+                顔貌特徴
+                {% else %}
+                Facial Features
+                {% endif %}
+                <span class="data-num"><span class="loading-spinner -sidenav"></span></span>
+              </a>
+            </li>
+            <!-- TODO: 公開OKになったら表示 -->
+            <!-- <li><a href="#hum-data" class="nav-link hum-data -disabled">
+                {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
+                ヒト公開データ
+                {% else %}
+                Public Human Data
+                {% endif %}
+                <span class="data-num"><span class="loading-spinner -sidenav"></span></span></a>
+            </li> -->
             <li>
               <div class="bio-resource -disabled">
                 {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
@@ -239,6 +257,15 @@
                 </ul>
               </div>
             </li>
+            <!-- TODO: 文献データ公開OKになったら表示 -->
+            <!-- <li><a href="#references" class="nav-link references -disabled">
+                {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
+                文献
+                {% else %}
+                References
+                {% endif %}
+                <span class="data-num"><span class="loading-spinner -sidenav"></span></span></a>
+            </li> -->
           </ul>
         </section>
       </aside>
@@ -288,7 +315,7 @@
               --togostanza-thead-background-color: #FFFFFF;
               --togostanza-thead-font-size: 12px;
               --togostanza-thead-font-weight: 400;
-              --togostanza-tbody-border-bottom: 1px solid #dee2e6;
+              --togostanza-tbody-border-bottom: 1px solid #808080;
               --togostanza-tbody-font-color: #444444;
               --togostanza-tbody-font-size: 14px;
               --togostanza-tbody-font-weight: 400;
@@ -603,12 +630,29 @@
               </div>
             </div>
 
-            <div id="causal-genes" open="">
+            <!-- TODO: 文献データ公開OKになったら表示 -->
+            <!-- <div id="references" open="">
               <h4 class="temp-title">
                 {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
-                疾患原因遺伝子
+                文献
                 {% else %}
-                Causal Genes
+                References
+                {% endif %}
+                <span class="data-num"></span>
+                <small>
+                  &nbsp;from&nbsp;
+                  <a href="https://pubmed.ncbi.nlm.nih.gov/" target="_blank" rel="noopener noreferrer">PubMed</a>
+                </small>
+              </h4>
+              <div id="references-table"></div>
+            </div> -->
+
+            <div id="genes" open="">
+              <h4 class="temp-title">
+                {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
+                疾患関連遺伝子
+                {% else %}
+                Genes
                 {% endif %}
                 <span class="data-num"></span>
                 <small>
@@ -620,7 +664,7 @@
                   <a href="https://thegencc.org/" target="_blank" rel="noopener noreferrer">GenCC</a>
                 </small>
               </h4>
-              <div id="causal-genes-table"></div>
+              <div id="genes-table"></div>
             </div>
 
             <div id="glycan-related-genes" open="">
@@ -677,6 +721,41 @@
               <div id="phenotype-ja"></div>
               <div id="phenotype-en"></div>
             </div>
+
+            <div id="facial-features" open="">
+              <h4 class="temp-title">
+                {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
+                顔貌特徴
+                {% else %}
+                Facial Features
+                {% endif %}
+                <span class="data-num"></span>
+                <small>
+                  &nbsp;from&nbsp;
+                  <a href="https://www.gestaltmatcher.org/" target="_blank" rel="noopener noreferrer">GestaltMatcher</a>
+                </small>
+              </h4>
+              <div id="facial-features-ja"></div>
+              <div id="facial-features-en"></div>
+            </div>
+
+            <!-- TODO: 公開OKになったら表示 -->
+            <!-- <div id="hum-data" open="">
+              <h4 class="temp-title">
+                {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
+                ヒト公開データ
+                {% else %}
+                Public Human Data
+                {% endif %}
+                <span class="data-num"></span>
+                <small>
+                  &nbsp;from&nbsp;
+                  <a href="https://humandbs.dbcls.jp/" target="_blank" rel="noopener noreferrer">NBDC Human Database</a>
+                </small>
+              </h4>
+              <div id="hum-data-ja"></div>
+              <div id="hum-data-en"></div>
+            </div> -->
 
             <div id="bio-resource" open="">
               <h4 class="temp-title">
@@ -752,6 +831,7 @@
                 <span class="tab-label -flex"></span>
               </div>
             </div>
+
           </div>
         </main>
       </div>

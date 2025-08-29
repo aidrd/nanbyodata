@@ -15,15 +15,18 @@ import { makeDiseaseDefinition } from './overview/makeDiseaseDefinition.js';
 import { updateOverviewDisplay } from './overview/updateOverviewDisplay.js';
 
 import {
-  makeCausalGene,
+  makeReferences,
+  makeGenes,
   makeGlycanRelatedGene,
   makeGeneticTesting,
   makePhenotypes,
+  makeHumData,
   makeCell,
   makeMouse,
   makeDNA,
   makeClinvar,
   makeMgend,
+  makeFacialFeatures,
 } from './diseaseContent.js';
 import { switchingDisplayContents } from './diseaseSideNavigation.js';
 import { setLangChange } from '../utils/setLangChange.js';
@@ -81,15 +84,20 @@ const datasets = [
     data: null,
   },
   { name: 'Sub-classes', data: null },
-  { name: 'Causal Genes', data: null },
+  // TODO: 公開OKになったら表示
+  // { name: 'References', data: null },
+  { name: 'Genes', data: null },
   { name: 'Glycan-related Genes', data: null },
   { name: 'Genetic Testing', data: null },
   { name: 'Phenotypes', data: null },
+  // TODO: 公開OKになったら表示
+  // { name: 'Hum Data', data: null },
   { name: 'Cell', data: null },
   { name: 'Mouse', data: null },
   { name: 'DNA', data: null },
   { name: 'Clinvar', data: null },
   { name: 'MGeND', data: null },
+  { name: 'Facial Features', data: null },
 ];
 
 (async () => {
@@ -270,13 +278,17 @@ const datasets = [
           }
         }
       }),
-      fetchData('nanbyodata_get_causal_gene_by_nando_id').then(
-        (causalGeneData) => {
-          makeCausalGene(causalGeneData);
-          datasets.find((d) => d.name === 'Causal Genes').data = causalGeneData;
-          checkAndLogDatasets();
-        }
-      ),
+      // TODO: check API name
+      // fetchData('test_pubmed').then((referencesData) => {
+      //   makeReferences(referencesData);
+      //   datasets.find((d) => d.name === 'References').data = referencesData;
+      //   checkAndLogDatasets();
+      // }),
+      fetchData('nanbyodata_get_causal_gene_by_nando_id').then((geneData) => {
+        makeGenes(geneData);
+        datasets.find((d) => d.name === 'Genes').data = geneData;
+        checkAndLogDatasets();
+      }),
       fetchData('nanbyodata_get_glycosmos_gene_by_nando_id').then(
         (glycanRelatedGeneData) => {
           makeGlycanRelatedGene(glycanRelatedGeneData);
@@ -300,6 +312,12 @@ const datasets = [
           checkAndLogDatasets();
         }
       ),
+      // TODO: APIの差し替え
+      // fetchData('test_humdb').then((humData) => {
+      //   makeHumData(humData);
+      //   datasets.find((d) => d.name === 'Hum Data').data = humData;
+      //   checkAndLogDatasets();
+      // }),
       fetchData('nanbyodata_get_riken_brc_cell_info_by_nando_id').then(
         (cellData) => {
           makeCell(cellData);
@@ -332,6 +350,14 @@ const datasets = [
         (mgendData) => {
           makeMgend(mgendData);
           datasets.find((d) => d.name === 'MGeND').data = mgendData;
+          checkAndLogDatasets();
+        }
+      ),
+      fetchData('nanbyodata_get_gestaltmatcher_data_by_nando_id').then(
+        (facialFeaturesData) => {
+          makeFacialFeatures(facialFeaturesData);
+          datasets.find((d) => d.name === 'Facial Features').data =
+            facialFeaturesData;
           checkAndLogDatasets();
         }
       ),
@@ -372,15 +398,18 @@ function trySwitchingContent(hash, retries = 0) {
 
   const items = [
     'overview',
-    'causal-genes',
+    'genes',
     'glycan-related-genes',
     'genetic-testing',
     'phenotypes',
+    'hum-data',
     'bio-resource-cell',
     'bio-resource-mouse',
     'bio-resource-dna',
     'variant-clinvar',
     'variant-mgend',
+    'facial-features',
+    'references',
   ];
 
   if (!items.includes(hash)) {
