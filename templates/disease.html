@@ -160,13 +160,32 @@
                 {% endif %}
                 <span class="data-num"><span class="loading-spinner -sidenav"></span></span></a>
             </li>
-            <li><a href="#genes" class="nav-link genes -disabled">
+            <li>
+              <div class="genes -disabled">
                 {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
                 疾患関連遺伝子
                 {% else %}
                 Genes
                 {% endif %}
-                <span class="data-num"><span class="loading-spinner -sidenav"></span></span></a>
+                <ul>
+                  <li><a href="#genes" class="japan-curated nav-link -disabled">
+                      {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
+                      国内基準由来
+                      {% else %}
+                      Japan-curated
+                      {% endif %}
+                      <span class="data-num"><span class="loading-spinner -sidenav"></span></span></a>
+                  </li>
+                  <li><a href="#genes" class="internationally-curated nav-link -disabled">
+                      {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
+                      国際リソース由来
+                      {% else %}
+                      Internationally curated
+                      {% endif %}
+                      <span class="data-num"><span class="loading-spinner -sidenav"></span></span></a>
+                  </li>
+                </ul>
+              </div>
             </li>
             <li><a href="#glycan-related-genes" class="nav-link glycan-related-genes -disabled">
                 {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
@@ -654,17 +673,45 @@
                 {% else %}
                 Genes
                 {% endif %}
-                <span class="data-num"></span>
-                <small>
-                  &nbsp;from&nbsp;
-                  <a href="https://www.ncbi.nlm.nih.gov/medgen/" target="_blank" rel="noopener noreferrer">MedGen</a>
-                  ,&nbsp;
-                  <a href="https://www.orphadata.com/" target="_blank" rel="noopener noreferrer">Orphadata</a>
-                  ,&nbsp;
-                  <a href="https://thegencc.org/" target="_blank" rel="noopener noreferrer">GenCC</a>
-                </small>
               </h4>
-              <div id="genes-table"></div>
+
+              <div class="tab-wrap">
+                <input type="radio" name="genes" class="tab-switch" id="genes-japan-curated" />
+                <label class="tab-label genes-japan-curated" for="genes-japan-curated">
+                  {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
+                  国内基準由来
+                  {% else %}
+                  Japan-curated
+                  {% endif %}
+                  <span class="data-num"></span>
+                  <small>
+                    &nbsp;from&nbsp;
+                    <a href="https://www.mhlw.go.jp/" target="_blank" rel="noopener noreferrer">MHLW</a>
+                  </small>
+                </label>
+                <div class="tab-content japan-curated"></div>
+
+                <input type="radio" name="genes" class="tab-switch" id="genes-internationally-curated" />
+                <label class="tab-label genes-internationally-curated" for="genes-internationally-curated">
+                  {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
+                  国際リソース由来
+                  {% else %}
+                  Internationally curated
+                  {% endif %}
+                  <span class="data-num"></span>
+                  <small>
+                    &nbsp;from&nbsp;
+                    <a href="https://www.ncbi.nlm.nih.gov/medgen/" target="_blank" rel="noopener noreferrer">MedGen</a>
+                    ,&nbsp;
+                    <a href="https://www.orphadata.com/" target="_blank" rel="noopener noreferrer">Orphadata</a>
+                    ,&nbsp;
+                    <a href="https://thegencc.org/" target="_blank" rel="noopener noreferrer">GenCC</a>
+                  </small>
+                </label>
+                <div class="tab-content internationally-curated"></div>
+
+                <span class="tab-label -flex"></span>
+              </div>
             </div>
 
             <div id="glycan-related-genes" open="">

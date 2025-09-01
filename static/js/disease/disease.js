@@ -15,8 +15,8 @@ import { makeDiseaseDefinition } from './overview/makeDiseaseDefinition.js';
 import { updateOverviewDisplay } from './overview/updateOverviewDisplay.js';
 
 import {
-  makeReferences,
-  makeGenes,
+  makeGene,
+  makeJapanCuratedGene,
   makeGlycanRelatedGene,
   makeGeneticTesting,
   makePhenotypes,
@@ -79,13 +79,12 @@ const datasets = [
   { name: 'MedGen', data: null },
   { name: 'KEGG', data: null },
   { name: 'Descriptions', data: null },
+  { name: 'Japan-curated', data: null },
   {
     name: 'Number of Specific Medical Expenses Beneficiary Certificate Holders',
     data: null,
   },
   { name: 'Sub-classes', data: null },
-  // TODO: 公開OKになったら表示
-  // { name: 'References', data: null },
   { name: 'Genes', data: null },
   { name: 'Glycan-related Genes', data: null },
   { name: 'Genetic Testing', data: null },
@@ -145,6 +144,13 @@ const datasets = [
       }),
 
       // 他のAPI呼び出し
+      fetchData('test_reference_gene').then((response) => {
+        const japanCuratedGeneData = response;
+        makeJapanCuratedGene(japanCuratedGeneData);
+        datasets.find((d) => d.name === 'Japan-curated').data =
+          japanCuratedGeneData;
+        checkAndLogDatasets();
+      }),
       fetchData('nanbyodata_get_stats_on_patient_number_by_nando_id').then(
         (response) => {
           const numOfPatientsData = response;
@@ -285,7 +291,7 @@ const datasets = [
       //   checkAndLogDatasets();
       // }),
       fetchData('nanbyodata_get_causal_gene_by_nando_id').then((geneData) => {
-        makeGenes(geneData);
+        makeGene(geneData);
         datasets.find((d) => d.name === 'Genes').data = geneData;
         checkAndLogDatasets();
       }),
@@ -398,7 +404,8 @@ function trySwitchingContent(hash, retries = 0) {
 
   const items = [
     'overview',
-    'genes',
+    'genes-internationally-curated',
+    'genes-japan-curated',
     'glycan-related-genes',
     'genetic-testing',
     'phenotypes',
@@ -420,6 +427,10 @@ function trySwitchingContent(hash, retries = 0) {
 
   let modifiedHash = hash;
   switch (hash) {
+    case 'genes-internationally-curated':
+    case 'genes-japan-curated':
+      modifiedHash = hash.substring('genes-'.length);
+      break;
     case 'bio-resource-cell':
     case 'bio-resource-mouse':
     case 'bio-resource-dna':
