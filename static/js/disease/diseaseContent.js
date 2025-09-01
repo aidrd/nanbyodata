@@ -1,6 +1,6 @@
 import { makeSideNavigation } from './diseaseSideNavigation.js';
 import {
-  causalGeneColumns,
+  geneColumns,
   referenceGeneColumns,
   glycanRelatedGeneColumns,
   geneticTestingColumns,
@@ -55,7 +55,7 @@ export function makeGenes(geneData) {
 
   const items = {
     id: 'internationally-curated',
-    columns: convertColumnToText(causalGeneColumns),
+    columns: convertColumnToText(geneColumns),
     data: geneData,
     object: genesDataset.dataObject,
   };
