@@ -6,8 +6,8 @@ import {
   geneticTestingColumns,
   phenotypesJaColumns,
   phenotypesEnColumns,
-  humDataJaColumns,
-  humDataEnColumns,
+  publicHumanDataJaColumns,
+  publicHumanDataEnColumns,
   referencesColumns,
   bioResourceCellColumns,
   bioResourceMouseColumns,
@@ -25,18 +25,8 @@ import {
 
 makeSideNavigation();
 
-// gene(疾患関連遺伝子)
-export function makeGene(geneData) {
-  makeGenes(geneData);
-}
-
-// japanCuratedGene(国内基準由来)
-export function makeJapanCuratedGene(japanCuratedGeneData) {
-  makeJapanCuratedGenes(japanCuratedGeneData);
-}
-
-// genes(疾患関連遺伝子)
-export function makeGenes(geneData) {
+// internationallyCuratedGenes(国際リソース由来の疾患関連遺伝子)
+export function makeInternationallyCuratedGenes(geneData) {
   const genes = document.getElementById('genes');
   const tabWrap = genes.querySelector('.tab-wrap');
 
@@ -74,7 +64,7 @@ export function makeGenes(geneData) {
   }
 }
 
-// japanCuratedGenes(国内基準由来)
+// japanCuratedGenes(国内基準由来の疾患関連遺伝子)
 export function makeJapanCuratedGenes(japanCuratedGeneData) {
   const genes = document.getElementById('genes');
   const tabWrap = genes.querySelector('.tab-wrap');
@@ -203,23 +193,24 @@ export function makePhenotypes(phenotypesData) {
   }
 }
 
-// humData(Hum Data)
-export function makeHumData(humData) {
+// publicHumanData(ヒト公開データ)
+export function makePublicHumanData(publicHumanData) {
   const currentLang = document.querySelector('.language-select').value;
-  const humDataLang = currentLang === 'ja' ? 'hum-data-ja' : 'hum-data-en';
+  const publicHumanDataLang =
+    currentLang === 'ja' ? 'public-human-data-ja' : 'public-human-data-en';
   const columns = {
-    ja: convertColumnToText(humDataJaColumns),
-    en: convertColumnToText(humDataEnColumns),
+    ja: convertColumnToText(publicHumanDataJaColumns),
+    en: convertColumnToText(publicHumanDataEnColumns),
   };
   makeData(
-    humData,
-    'hum-data',
-    humDataLang,
+    publicHumanData,
+    'public-human-data',
+    publicHumanDataLang,
     columns[currentLang],
-    humData?.length || 0
+    publicHumanData?.length || 0
   );
-  if (humData?.length > 0 && humData !== null) {
-    const navLink = document.querySelector('.nav-link.hum-data');
+  if (publicHumanData?.length > 0 && publicHumanData !== null) {
+    const navLink = document.querySelector('.nav-link.public-human-data');
     navLink.style.cursor = 'pointer';
     navLink.classList.remove('-disabled');
   }

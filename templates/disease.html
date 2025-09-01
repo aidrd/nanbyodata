@@ -221,14 +221,14 @@
               </a>
             </li>
             <!-- TODO: 公開OKになったら表示 -->
-            <!-- <li><a href="#hum-data" class="nav-link hum-data -disabled">
+            <li><a href="#public-human-data" class="nav-link public-human-data -disabled">
                 {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
                 ヒト公開データ
                 {% else %}
                 Public Human Data
                 {% endif %}
                 <span class="data-num"><span class="loading-spinner -sidenav"></span></span></a>
-            </li> -->
+            </li>
             <li>
               <div class="bio-resource -disabled">
                 {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
@@ -277,14 +277,14 @@
               </div>
             </li>
             <!-- TODO: 文献データ公開OKになったら表示 -->
-            <!-- <li><a href="#references" class="nav-link references -disabled">
+            <li><a href="#references" class="nav-link references -disabled">
                 {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
                 文献
                 {% else %}
                 References
                 {% endif %}
                 <span class="data-num"><span class="loading-spinner -sidenav"></span></span></a>
-            </li> -->
+            </li>
           </ul>
         </section>
       </aside>
@@ -650,7 +650,7 @@
             </div>
 
             <!-- TODO: 文献データ公開OKになったら表示 -->
-            <!-- <div id="references" open="">
+            <div id="references" open="">
               <h4 class="temp-title">
                 {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
                 文献
@@ -664,7 +664,7 @@
                 </small>
               </h4>
               <div id="references-table"></div>
-            </div> -->
+            </div>
 
             <div id="genes" open="">
               <h4 class="temp-title">
@@ -787,7 +787,7 @@
             </div>
 
             <!-- TODO: 公開OKになったら表示 -->
-            <!-- <div id="hum-data" open="">
+            <div id="public-human-data" open="">
               <h4 class="temp-title">
                 {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
                 ヒト公開データ
@@ -800,9 +800,9 @@
                   <a href="https://humandbs.dbcls.jp/" target="_blank" rel="noopener noreferrer">NBDC Human Database</a>
                 </small>
               </h4>
-              <div id="hum-data-ja"></div>
-              <div id="hum-data-en"></div>
-            </div> -->
+              <div id="public-human-data-ja"></div>
+              <div id="public-human-data-en"></div>
+            </div>
 
             <div id="bio-resource" open="">
               <h4 class="temp-title">

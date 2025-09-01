@@ -9,7 +9,7 @@ export function makeSideNavigation() {
     'genetic-testing',
     'phenotypes',
     // TODO: 公開OKになったら表示
-    // 'hum-data',
+    'public-human-data',
     'cell',
     'mouse',
     'dna',
@@ -17,7 +17,7 @@ export function makeSideNavigation() {
     'mgend',
     'facial-features',
     // TODO: 公開OKになったら表示
-    // 'references',
+    'references',
   ];
 
   items.forEach((itemId) => {
@@ -163,12 +163,12 @@ export function switchingDisplayContents(selectedItemId) {
     '#genetic-testing',
     '#phenotypes',
     // TODO: 公開OKになったら表示
-    // '#hum-data',
+    '#public-human-data',
     '#bio-resource',
     '#variant',
     '#facial-features',
     // TODO: 公開OKになったら表示
-    // '#references',
+    '#references',
   ];
 
   // ローディングスピナーを追加
@@ -193,7 +193,7 @@ export function switchingDisplayContents(selectedItemId) {
     // まず、全てのコンテンツを非表示にする
     const allContentSections = [
       '#overview',
-      '#causal-genes',
+      '#genes',
       '#glycan-related-genes',
       '#genetic-testing',
       '#phenotypes',
@@ -201,7 +201,7 @@ export function switchingDisplayContents(selectedItemId) {
       '#variant',
       '#facial-features',
       // TODO: 公開OKになったら表示
-      // '#references',
+      '#references',
     ];
 
     allContentSections.forEach((selector) => {
@@ -266,6 +266,14 @@ export function switchingDisplayContents(selectedItemId) {
         updateVariantSelection('#variant .tab-switch:checked');
         break;
       case 'facial-features':
+        prepareDataWrapper();
+        toggleDisplay(`#${selectedItemId}`, 'block');
+        break;
+      case 'public-human-data':
+        prepareDataWrapper();
+        toggleDisplay(`#${selectedItemId}`, 'block');
+        break;
+      case 'references':
         prepareDataWrapper();
         toggleDisplay(`#${selectedItemId}`, 'block');
         break;

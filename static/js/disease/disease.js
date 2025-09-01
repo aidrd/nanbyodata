@@ -15,18 +15,19 @@ import { makeDiseaseDefinition } from './overview/makeDiseaseDefinition.js';
 import { updateOverviewDisplay } from './overview/updateOverviewDisplay.js';
 
 import {
-  makeGene,
-  makeJapanCuratedGene,
+  makeInternationallyCuratedGenes,
+  makeJapanCuratedGenes,
   makeGlycanRelatedGene,
   makeGeneticTesting,
   makePhenotypes,
-  makeHumData,
+  makePublicHumanData,
   makeCell,
   makeMouse,
   makeDNA,
   makeClinvar,
   makeMgend,
   makeFacialFeatures,
+  makeReferences,
 } from './diseaseContent.js';
 import { switchingDisplayContents } from './diseaseSideNavigation.js';
 import { setLangChange } from '../utils/setLangChange.js';
@@ -90,13 +91,15 @@ const datasets = [
   { name: 'Genetic Testing', data: null },
   { name: 'Phenotypes', data: null },
   // TODO: 公開OKになったら表示
-  // { name: 'Hum Data', data: null },
+  { name: 'Public Human Data', data: null },
   { name: 'Cell', data: null },
   { name: 'Mouse', data: null },
   { name: 'DNA', data: null },
   { name: 'Clinvar', data: null },
   { name: 'MGeND', data: null },
   { name: 'Facial Features', data: null },
+  // TODO: 公開OKになったら表示
+  { name: 'References', data: null },
 ];
 
 (async () => {
@@ -146,7 +149,7 @@ const datasets = [
       // 他のAPI呼び出し
       fetchData('test_reference_gene').then((response) => {
         const japanCuratedGeneData = response;
-        makeJapanCuratedGene(japanCuratedGeneData);
+        makeJapanCuratedGenes(japanCuratedGeneData);
         datasets.find((d) => d.name === 'Japan-curated').data =
           japanCuratedGeneData;
         checkAndLogDatasets();
@@ -285,13 +288,13 @@ const datasets = [
         }
       }),
       // TODO: check API name
-      // fetchData('test_pubmed').then((referencesData) => {
-      //   makeReferences(referencesData);
-      //   datasets.find((d) => d.name === 'References').data = referencesData;
-      //   checkAndLogDatasets();
-      // }),
+      fetchData('test_pubmed').then((referencesData) => {
+        makeReferences(referencesData);
+        datasets.find((d) => d.name === 'References').data = referencesData;
+        checkAndLogDatasets();
+      }),
       fetchData('nanbyodata_get_causal_gene_by_nando_id').then((geneData) => {
-        makeGene(geneData);
+        makeInternationallyCuratedGenes(geneData);
         datasets.find((d) => d.name === 'Genes').data = geneData;
         checkAndLogDatasets();
       }),
@@ -319,11 +322,12 @@ const datasets = [
         }
       ),
       // TODO: APIの差し替え
-      // fetchData('test_humdb').then((humData) => {
-      //   makeHumData(humData);
-      //   datasets.find((d) => d.name === 'Hum Data').data = humData;
-      //   checkAndLogDatasets();
-      // }),
+      fetchData('test_humdb').then((publicHumanData) => {
+        makePublicHumanData(publicHumanData);
+        datasets.find((d) => d.name === 'Public Human Data').data =
+          publicHumanData;
+        checkAndLogDatasets();
+      }),
       fetchData('nanbyodata_get_riken_brc_cell_info_by_nando_id').then(
         (cellData) => {
           makeCell(cellData);
@@ -409,7 +413,7 @@ function trySwitchingContent(hash, retries = 0) {
     'glycan-related-genes',
     'genetic-testing',
     'phenotypes',
-    'hum-data',
+    'public-human-data',
     'bio-resource-cell',
     'bio-resource-mouse',
     'bio-resource-dna',

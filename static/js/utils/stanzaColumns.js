@@ -208,7 +208,7 @@ export const phenotypesEnColumns = [
   },
 ];
 
-export const humDataJaColumns = [
+export const publicHumanDataJaColumns = [
   { id: 'label_ja', label: 'Name', rowspan: true },
   {
     id: 'hum_id',
@@ -220,7 +220,7 @@ export const humDataJaColumns = [
   { id: 'type_data_ja', label: 'Type' },
 ];
 
-export const humDataEnColumns = [
+export const publicHumanDataEnColumns = [
   { id: 'label_en', label: 'Name', rowspan: true },
   {
     id: 'hum_id',

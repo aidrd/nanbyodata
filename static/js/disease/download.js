@@ -7,8 +7,8 @@ import {
   geneticTestingColumns,
   phenotypesJaColumns,
   phenotypesEnColumns,
-  humDataJaColumns,
-  humDataEnColumns,
+  publicHumanDataJaColumns,
+  publicHumanDataEnColumns,
   referencesColumns,
   bioResourceCellColumns,
   bioResourceMouseColumns,
@@ -123,10 +123,15 @@ export const downloadDatasets = (nandoId, datasets) => {
             data: reconstructionData(facialFeaturesColumns, data),
           };
         // TODO: 公開OKになったら表示
-        // case 'Hum Data':
-        //   const humDataColumns =
-        //     currentLang === 'ja' ? humDataJaColumns : humDataEnColumns;
-        //   return { name, data: reconstructionData(humDataColumns, data) };
+        case 'Public Human Data':
+          const publicHumanDataColumns =
+            currentLang === 'ja'
+              ? publicHumanDataJaColumns
+              : publicHumanDataEnColumns;
+          return {
+            name,
+            data: reconstructionData(publicHumanDataColumns, data),
+          };
         case 'Cell':
           return {
             name,
@@ -153,8 +158,8 @@ export const downloadDatasets = (nandoId, datasets) => {
             data: reconstructionData(variantMgendColumns, data),
           };
         // TODO: 公開OKになったら表示
-        // case 'References':
-        //   return { name, data: reconstructionData(referencesColumns, data) };
+        case 'References':
+          return { name, data: reconstructionData(referencesColumns, data) };
       }
     });
 
@@ -242,11 +247,11 @@ export const downloadDatasets = (nandoId, datasets) => {
       Phenotypes: [],
       'Facial Features': [],
       // TODO: 公開OKになったら表示
-      // 'Hum Data': [],
+      'Hum Data': [],
       'Bio Resource': ['Cell', 'Mouse', 'DNA'],
       Variant: ['Clinvar', 'MGeND'],
       // TODO: 公開OKになったら表示
-      // 'References': [],
+      References: [],
     };
     // 初期jsonData作成
     const jsonData = Object.fromEntries(
