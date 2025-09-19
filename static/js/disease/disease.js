@@ -325,13 +325,12 @@ const datasets = [
           checkAndLogDatasets();
         }
       ),
-      fetchData('nanbyodata_get_riken_brc_mouse_info_by_nando_id').then(
-        (mouseData) => {
-          makeMouse(mouseData);
-          datasets.find((d) => d.name === 'Mouse').data = mouseData;
-          checkAndLogDatasets();
-        }
-      ),
+      // TODO: APIの差し替え
+      fetchData('test_mouse').then((mouseData) => {
+        makeMouse(mouseData);
+        datasets.find((d) => d.name === 'Mouse').data = mouseData;
+        checkAndLogDatasets();
+      }),
       fetchData('nanbyodata_get_riken_brc_dna_info_by_nando_id').then(
         (dnaData) => {
           makeDNA(dnaData);

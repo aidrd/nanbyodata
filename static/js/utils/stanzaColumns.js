@@ -209,10 +209,18 @@ export const bioResourceCellColumns = [
   { id: 'Description_j', label: 'Description (JA)' },
 ];
 
-export const bioResourceMouseColumns = [
+export const bioResourceMouseJaColumns = [
   { id: 'mouse_id', label: 'RIKEN_BRC No.', link: 'hp', target: '_blank' },
   { id: 'mouse_name', label: 'Strain name' },
   { id: 'description', label: 'Strain description' },
+  { id: 'label_ja', label: '表現型', link: 'mp', target: '_blank' },
+];
+
+export const bioResourceMouseEnColumns = [
+  { id: 'mouse_id', label: 'RIKEN_BRC No.', link: 'hp', target: '_blank' },
+  { id: 'mouse_name', label: 'Strain name' },
+  { id: 'description', label: 'Strain description' },
+  { id: 'label_en', label: 'Phenotype', link: 'mp', target: '_blank' },
 ];
 
 export const bioResourceDnaColumns = [
@@ -265,6 +273,7 @@ export const facialFeaturesColumns = [
     label: 'Patient ID',
     link: 'person',
     target: '_blank',
+    rowspan: true,
   },
   { id: 'gender', label: 'Gender' },
   {

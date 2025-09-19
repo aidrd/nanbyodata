@@ -9,7 +9,8 @@ import {
   humDataEnColumns,
   referencesColumns,
   bioResourceCellColumns,
-  bioResourceMouseColumns,
+  bioResourceMouseJaColumns,
+  bioResourceMouseEnColumns,
   bioResourceDnaColumns,
   variantClinvarColumns,
   variantMgendColumns,
@@ -211,10 +212,15 @@ export function makeMouse(mouseData) {
   const tabWrap = bioResource.querySelector('.tab-wrap');
 
   const mouseDataset = processData(mouseData);
+  const currentLang = document.querySelector('.language-select').value;
+  const mouseColumns =
+    currentLang === 'ja'
+      ? bioResourceMouseJaColumns
+      : bioResourceMouseEnColumns;
 
   const items = {
     id: 'mouse',
-    columns: convertColumnToText(bioResourceMouseColumns),
+    columns: convertColumnToText(mouseColumns),
     data: mouseData,
     object: mouseDataset.dataObject,
   };
