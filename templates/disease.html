@@ -240,6 +240,15 @@
                 </ul>
               </div>
             </li>
+            <li><a href="#chemical-information" class="nav-link chemical-information -disabled">
+                {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
+                化学物質
+                {% else %}
+                Chemical Information
+                {% endif %}
+                <span class="data-num"><span class="loading-spinner -sidenav"></span></span>
+              </a>
+            </li>
             <li>
               <div class="variant -disabled">
                 {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
@@ -800,6 +809,23 @@
               </div>
             </div>
 
+            <div id="chemical-information" open="">
+              <h4 class="temp-title">
+                {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
+                化学物質
+                {% else %}
+                Chemical Information
+                {% endif %}
+                <span class="data-num"></span>
+                <small>
+                  &nbsp;from&nbsp;
+                  <a href="https://pubchem.ncbi.nlm.nih.gov/" target="_blank" rel="noopener noreferrer">PubChem</a>
+                </small>
+              </h4>
+              <div id="chemical-information-ja"></div>
+              <div id="chemical-information-en"></div>
+            </div>
+
             <div id="variant" open="">
               <h4 class="temp-title">
                 {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
@@ -831,6 +857,7 @@
                 <span class="tab-label -flex"></span>
               </div>
             </div>
+
 
           </div>
         </main>

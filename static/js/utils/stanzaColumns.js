@@ -298,6 +298,16 @@ export const facialFeaturesColumns = [
   },
 ];
 
+export const chemicalInformationColumns = [
+  {
+    id: 'id',
+    label: 'Compound CID',
+    link: 'id_url',
+    target: '_blank',
+  },
+  { id: 'label', label: 'Chemical Name' },
+];
+
 // Overview Sub-classes
 export const subclassTableJaColumns = [
   {

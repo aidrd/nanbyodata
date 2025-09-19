@@ -15,6 +15,7 @@ import {
   variantClinvarColumns,
   variantMgendColumns,
   facialFeaturesColumns,
+  chemicalInformationColumns,
   convertColumnToText,
 } from '../utils/stanzaColumns.js';
 
@@ -339,6 +340,28 @@ export function makeFacialFeatures(facialFeaturesData) {
   );
   if (facialFeaturesData?.length > 0 && facialFeaturesData !== null) {
     const navLink = document.querySelector('.nav-link.facial-features');
+    navLink.style.cursor = 'pointer';
+    navLink.classList.remove('-disabled');
+  }
+}
+
+// Chemical Information
+export function makeChemicalInformation(chemicalInformationData) {
+  const currentLang = document.querySelector('.language-select').value;
+  const chemicalInformationLang =
+    currentLang === 'ja'
+      ? 'chemical-information-ja'
+      : 'chemical-information-en';
+  const columns = convertColumnToText(chemicalInformationColumns);
+  makeData(
+    chemicalInformationData,
+    'chemical-information',
+    chemicalInformationLang,
+    columns,
+    chemicalInformationData?.length || 0
+  );
+  if (chemicalInformationData?.length > 0 && chemicalInformationData !== null) {
+    const navLink = document.querySelector('.nav-link.chemical-information');
     navLink.style.cursor = 'pointer';
     navLink.classList.remove('-disabled');
   }

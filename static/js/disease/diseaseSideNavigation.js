@@ -15,6 +15,7 @@ export function makeSideNavigation() {
     'clinvar',
     'mgend',
     'facial-features',
+    'chemical-information',
     // TODO: 公開OKになったら表示
     // 'references',
   ];
@@ -168,6 +169,7 @@ export function switchingDisplayContents(selectedItemId) {
       '#bio-resource',
       '#variant',
       '#facial-features',
+      '#chemical-information',
       // TODO: 公開OKになったら表示
       // '#references',
     ];
@@ -230,6 +232,10 @@ export function switchingDisplayContents(selectedItemId) {
         updateVariantSelection('#variant .tab-switch:checked');
         break;
       case 'facial-features':
+        prepareDataWrapper();
+        toggleDisplay(`#${selectedItemId}`, 'block');
+        break;
+      case 'chemical-information':
         prepareDataWrapper();
         toggleDisplay(`#${selectedItemId}`, 'block');
         break;
