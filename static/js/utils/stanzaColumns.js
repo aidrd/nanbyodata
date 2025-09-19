@@ -210,16 +210,28 @@ export const bioResourceCellColumns = [
 ];
 
 export const bioResourceMouseJaColumns = [
-  { id: 'mouse_id', label: 'RIKEN_BRC No.', link: 'hp', target: '_blank' },
-  { id: 'mouse_name', label: 'Strain name' },
-  { id: 'description', label: 'Strain description' },
+  {
+    id: 'mouse_id',
+    label: 'RIKEN_BRC No.',
+    link: 'hp',
+    target: '_blank',
+    rowspan: true,
+  },
+  { id: 'mouse_name', label: 'Strain name', rowspan: true },
+  { id: 'description', label: 'Strain description', rowspan: true },
   { id: 'label_ja', label: '表現型', link: 'mp', target: '_blank' },
 ];
 
 export const bioResourceMouseEnColumns = [
-  { id: 'mouse_id', label: 'RIKEN_BRC No.', link: 'hp', target: '_blank' },
-  { id: 'mouse_name', label: 'Strain name' },
-  { id: 'description', label: 'Strain description' },
+  {
+    id: 'mouse_id',
+    label: 'RIKEN_BRC No.',
+    link: 'hp',
+    target: '_blank',
+    rowspan: true,
+  },
+  { id: 'mouse_name', label: 'Strain name', rowspan: true },
+  { id: 'description', label: 'Strain description', rowspan: true },
   { id: 'label_en', label: 'Phenotype', link: 'mp', target: '_blank' },
 ];
 
