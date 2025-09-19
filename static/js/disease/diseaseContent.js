@@ -9,11 +9,13 @@ import {
   humDataEnColumns,
   referencesColumns,
   bioResourceCellColumns,
-  bioResourceMouseColumns,
+  bioResourceMouseJaColumns,
+  bioResourceMouseEnColumns,
   bioResourceDnaColumns,
   variantClinvarColumns,
   variantMgendColumns,
   facialFeaturesColumns,
+  chemicalInformationColumns,
   convertColumnToText,
 } from '../utils/stanzaColumns.js';
 
@@ -211,10 +213,15 @@ export function makeMouse(mouseData) {
   const tabWrap = bioResource.querySelector('.tab-wrap');
 
   const mouseDataset = processData(mouseData);
+  const currentLang = document.querySelector('.language-select').value;
+  const mouseColumns =
+    currentLang === 'ja'
+      ? bioResourceMouseJaColumns
+      : bioResourceMouseEnColumns;
 
   const items = {
     id: 'mouse',
-    columns: convertColumnToText(bioResourceMouseColumns),
+    columns: convertColumnToText(mouseColumns),
     data: mouseData,
     object: mouseDataset.dataObject,
   };
@@ -333,6 +340,28 @@ export function makeFacialFeatures(facialFeaturesData) {
   );
   if (facialFeaturesData?.length > 0 && facialFeaturesData !== null) {
     const navLink = document.querySelector('.nav-link.facial-features');
+    navLink.style.cursor = 'pointer';
+    navLink.classList.remove('-disabled');
+  }
+}
+
+// Chemical Information
+export function makeChemicalInformation(chemicalInformationData) {
+  const currentLang = document.querySelector('.language-select').value;
+  const chemicalInformationLang =
+    currentLang === 'ja'
+      ? 'chemical-information-ja'
+      : 'chemical-information-en';
+  const columns = convertColumnToText(chemicalInformationColumns);
+  makeData(
+    chemicalInformationData,
+    'chemical-information',
+    chemicalInformationLang,
+    columns,
+    chemicalInformationData?.length || 0
+  );
+  if (chemicalInformationData?.length > 0 && chemicalInformationData !== null) {
+    const navLink = document.querySelector('.nav-link.chemical-information');
     navLink.style.cursor = 'pointer';
     navLink.classList.remove('-disabled');
   }

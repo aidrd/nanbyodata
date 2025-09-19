@@ -27,6 +27,7 @@ import {
   makeClinvar,
   makeMgend,
   makeFacialFeatures,
+  makeChemicalInformation,
 } from './diseaseContent.js';
 import { switchingDisplayContents } from './diseaseSideNavigation.js';
 import { setLangChange } from '../utils/setLangChange.js';
@@ -98,6 +99,7 @@ const datasets = [
   { name: 'Clinvar', data: null },
   { name: 'MGeND', data: null },
   { name: 'Facial Features', data: null },
+  { name: 'Chemical Information', data: null },
 ];
 
 (async () => {
@@ -325,13 +327,12 @@ const datasets = [
           checkAndLogDatasets();
         }
       ),
-      fetchData('nanbyodata_get_riken_brc_mouse_info_by_nando_id').then(
-        (mouseData) => {
-          makeMouse(mouseData);
-          datasets.find((d) => d.name === 'Mouse').data = mouseData;
-          checkAndLogDatasets();
-        }
-      ),
+      // TODO: APIの差し替え
+      fetchData('test_mouse').then((mouseData) => {
+        makeMouse(mouseData);
+        datasets.find((d) => d.name === 'Mouse').data = mouseData;
+        checkAndLogDatasets();
+      }),
       fetchData('nanbyodata_get_riken_brc_dna_info_by_nando_id').then(
         (dnaData) => {
           makeDNA(dnaData);
@@ -361,6 +362,13 @@ const datasets = [
           checkAndLogDatasets();
         }
       ),
+      // TODO: APIの差し替え
+      fetchData('test_pubchem').then((chemicalInformationData) => {
+        makeChemicalInformation(chemicalInformationData);
+        datasets.find((d) => d.name === 'Chemical Information').data =
+          chemicalInformationData;
+        checkAndLogDatasets();
+      }),
     ]);
   } catch (error) {
     console.error('Error:', error);
@@ -409,6 +417,7 @@ function trySwitchingContent(hash, retries = 0) {
     'variant-clinvar',
     'variant-mgend',
     'facial-features',
+    'chemical-information',
     'references',
   ];
 

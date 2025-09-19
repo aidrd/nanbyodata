@@ -209,10 +209,18 @@ export const bioResourceCellColumns = [
   { id: 'Description_j', label: 'Description (JA)' },
 ];
 
-export const bioResourceMouseColumns = [
+export const bioResourceMouseJaColumns = [
   { id: 'mouse_id', label: 'RIKEN_BRC No.', link: 'hp', target: '_blank' },
   { id: 'mouse_name', label: 'Strain name' },
   { id: 'description', label: 'Strain description' },
+  { id: 'label_ja', label: '表現型', link: 'mp', target: '_blank' },
+];
+
+export const bioResourceMouseEnColumns = [
+  { id: 'mouse_id', label: 'RIKEN_BRC No.', link: 'hp', target: '_blank' },
+  { id: 'mouse_name', label: 'Strain name' },
+  { id: 'description', label: 'Strain description' },
+  { id: 'label_en', label: 'Phenotype', link: 'mp', target: '_blank' },
 ];
 
 export const bioResourceDnaColumns = [
@@ -263,20 +271,19 @@ export const facialFeaturesColumns = [
   {
     id: 'id',
     label: 'Patient ID',
-    rowspan: true,
     link: 'person',
     target: '_blank',
+    rowspan: true,
   },
-  { id: 'gender', label: 'Gender', rowspan: true },
+  { id: 'gender', label: 'Gender' },
   {
     id: 'gene',
     label: 'Gene symbol',
-    rowspan: true,
     link: 'ncbi',
     target: '_blank',
   },
-  { id: 'minzoku', label: 'Ethnicity', rowspan: true },
-  { id: 'minzokumemo', label: 'Ethnicity note', rowspan: true },
+  { id: 'minzoku', label: 'Ethnicity' },
+  { id: 'minzokumemo', label: 'Ethnicity note' },
   { id: 'image_id', label: 'Image ID' },
   { id: 'image_desc', label: 'Type' },
   { id: 'age_year', label: 'Age (at photo)' },
@@ -289,6 +296,16 @@ export const facialFeaturesColumns = [
     link: 'pmid_url',
     target: '_blank',
   },
+];
+
+export const chemicalInformationColumns = [
+  {
+    id: 'id',
+    label: 'Compound CID',
+    link: 'id_url',
+    target: '_blank',
+  },
+  { id: 'label', label: 'Chemical Name' },
 ];
 
 // Overview Sub-classes

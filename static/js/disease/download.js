@@ -11,7 +11,8 @@ import {
   humDataEnColumns,
   referencesColumns,
   bioResourceCellColumns,
-  bioResourceMouseColumns,
+  bioResourceMouseJaColumns,
+  bioResourceMouseEnColumns,
   bioResourceDnaColumns,
   variantClinvarColumns,
   variantMgendColumns,
@@ -133,9 +134,13 @@ export const downloadDatasets = (nandoId, datasets) => {
             data: reconstructionData(bioResourceCellColumns, data),
           };
         case 'Mouse':
+          const mouseColumns =
+            currentLang === 'ja'
+              ? bioResourceMouseJaColumns
+              : bioResourceMouseEnColumns;
           return {
             name,
-            data: reconstructionData(bioResourceMouseColumns, data),
+            data: reconstructionData(mouseColumns, data),
           };
         case 'DNA':
           return {
