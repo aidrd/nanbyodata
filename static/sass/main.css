@@ -470,12 +470,14 @@ footer .container .footer__bottom .footer__lisence small:before {
 .content-wrapper {
   position: relative;
   top: 76px;
+  display: flex;
 }
 .content-wrapper #sidebar {
   overflow-y: auto;
   height: calc(100vh - 76px);
   width: 270px;
   background-color: var(--color-background-gray);
+  flex-shrink: 0;
 }
 .content-wrapper #sidebar > section {
   padding: var(--spacing-disease-content);
@@ -490,14 +492,61 @@ footer .container .footer__bottom .footer__lisence small:before {
   opacity: 0.6;
   margin-bottom: var(--spacing-heading-bottom);
 }
+.content-wrapper #sidebar > section .sidebar-title .sidebar-title-text {
+  writing-mode: initial;
+  writing-mode: sideways-rl;
+}
+.content-wrapper #temp-side-navigation {
+  overflow-y: auto;
+  height: calc(100vh - 76px);
+  width: 300px;
+  background-color: var(--color-background-gray);
+  flex-shrink: 0;
+  border-left: 1px solid rgba(112, 112, 112, 0.4);
+  display: flex;
+  flex-direction: row;
+}
+.content-wrapper #temp-side-navigation .sidebar-title {
+  display: flex;
+  gap: 10px;
+  font-weight: bold;
+  color: var(--color-secondary);
+  opacity: 0.6;
+  margin: 0;
+  padding: 20px 0px 20px 10px;
+  flex-shrink: 0;
+  flex-direction: column;
+  align-items: center;
+}
+.content-wrapper #temp-side-navigation .sidebar-title .list-icon {
+  cursor: pointer;
+  font-size: 18px;
+  color: var(--color-secondary);
+  opacity: 0.8;
+}
+.content-wrapper #temp-side-navigation .sidebar-title .list-icon:hover {
+  opacity: 1;
+}
+.content-wrapper #temp-side-navigation .sidebar-title .sidebar-title-text {
+  writing-mode: sideways-rl;
+  white-space: nowrap;
+}
+.content-wrapper #temp-side-navigation > ul {
+  padding: 20px;
+  margin-top: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  flex: 1;
+}
 .content-wrapper #content {
   position: fixed;
   top: 76px;
-  left: 270px;
+  left: 570px;
   overflow-y: auto;
   height: calc(100vh - 76px);
-  width: calc(100% - 270px);
-  padding: var(--spacing-disease-content);
+  width: calc(100% - 570px);
+  padding: 40px 60px;
   display: none;
 }
 .content-wrapper #content #data-wrapper {
@@ -1016,7 +1065,9 @@ header.search-area .intro-text .keyword a {
   border-top: 1px dashed var(--color-secondary);
 }
 #temp-side-navigation > ul > li > a {
-  display: block;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   font-weight: bold;
   padding: 10px;
   color: var(--color-secondary);

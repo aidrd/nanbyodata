@@ -17,12 +17,14 @@
 .content-wrapper {
   position: relative;
   top: 76px;
+  display: flex;
 
   #sidebar {
     overflow-y: auto;
     height: calc(100vh - 76px);
     width: 270px;
     background-color: var(--color-background-gray);
+    flex-shrink: 0;
 
     > section {
       padding: var(--spacing-disease-content);
@@ -37,18 +39,73 @@
         color: var(--color-secondary);
         opacity: 0.6;
         margin-bottom: var(--spacing-heading-bottom);
+        .sidebar-title-text {
+          writing-mode: initial;
+          writing-mode: sideways-rl;
+        }
       }
+    }
+  }
+
+  // 目次を横並びで表示
+  #temp-side-navigation {
+    overflow-y: auto;
+    height: calc(100vh - 76px);
+    width: 300px;
+    background-color: var(--color-background-gray);
+    flex-shrink: 0;
+    border-left: 1px solid rgba(112, 112, 112, 0.4);
+    display: flex;
+    flex-direction: row;
+
+    .sidebar-title {
+      display: flex;
+      gap: 10px;
+      font-weight: bold;
+      color: var(--color-secondary);
+      opacity: 0.6;
+      margin: 0;
+      padding: 20px 0px 20px 10px;
+      flex-shrink: 0;
+      flex-direction: column;
+      align-items: center;
+
+      .list-icon {
+        cursor: pointer;
+        font-size: 18px;
+        color: var(--color-secondary);
+        opacity: 0.8;
+
+        &:hover {
+          opacity: 1;
+        }
+      }
+
+      .sidebar-title-text {
+        writing-mode: sideways-rl;
+        white-space: nowrap;
+      }
+    }
+
+    // 目次のコンテンツエリア
+    > ul {
+      padding: 20px;
+      margin-top: 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      flex: 1;
     }
   }
 
   #content {
     position: fixed;
     top: 76px;
-    left: 270px;
+    left: 570px; // 疾患選択(270px) + 目次(300px)
     overflow-y: auto;
     height: calc(100vh - 76px);
-    width: calc(100% - 270px);
-    padding: var(--spacing-disease-content);
+    width: calc(100% - 570px);
+    padding: 40px 60px;
     display: none;
 
     #data-wrapper {
