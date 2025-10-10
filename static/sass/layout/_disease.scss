@@ -25,25 +25,46 @@
     width: 270px;
     background-color: var(--color-background-gray);
     flex-shrink: 0;
+    display: flex;
+    flex-direction: row;
 
-    > section {
-      padding: var(--spacing-disease-content);
+    .sidebar-title {
+      display: flex;
+      gap: 10px;
+      font-weight: bold;
+      color: var(--color-secondary);
+      opacity: 0.6;
+      margin: 0;
+      padding: 20px 0px 20px 10px;
+      flex-shrink: 0;
+      flex-direction: column;
+      align-items: center;
 
-      &:first-child {
-        padding-bottom: 35px;
-        border-bottom: 1px solid rgba(112, 112, 112, 0.4);
-      }
-
-      .sidebar-title {
-        font-weight: bold;
+      .sitemap-icon {
+        cursor: pointer;
+        font-size: 18px;
         color: var(--color-secondary);
-        opacity: 0.6;
-        margin-bottom: var(--spacing-heading-bottom);
-        .sidebar-title-text {
-          writing-mode: initial;
-          writing-mode: sideways-rl;
+        opacity: 0.8;
+
+        &:hover {
+          opacity: 1;
         }
       }
+
+      .sidebar-title-text {
+        writing-mode: sideways-rl;
+        white-space: nowrap;
+      }
+    }
+
+    // コンテンツエリア（タイトルを除く）
+    > section {
+      padding: 20px;
+      margin-top: 28px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      overflow-x: hidden;
     }
   }
 

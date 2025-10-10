@@ -1,5 +1,8 @@
 /* Breadcrumb List */
 .breadcrumb-list {
+  section {
+    width: 200px;
+  }
   .breadcrumb-title {
     color: var(--color-secondary);
     font-weight: bold;
