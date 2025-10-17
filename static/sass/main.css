@@ -12,6 +12,8 @@ Foundation
   --color-secondary: #13295a;
   --color-font: #696969;
   --color-background-gray: #dadede;
+  --color-sidebar-toc: #f6f8f8;
+  --color-sidebar-disease: #eceeee;
   --color-button-background: #efefef;
   --color-blue: #495aff;
   --color-link: #004098;
@@ -25,7 +27,7 @@ Foundation
   --color-summary-link: #90959b;
   --color-nav-hover: rgba(255, 255, 255, 0.5);
   --color-footer-bg: #f9f8f5;
-  --color-breadcrumb-hover: rgba(255, 255, 255, 0.5);
+  --color-breadcrumb-hover: rgba(22, 35, 78, 0.1);
   --font-size-xs: 0.625rem; /* 10px */
   --font-size-small: 0.75rem; /* 12px */
   --font-size-base: 0.875rem; /* 14px */
@@ -475,23 +477,28 @@ footer .container .footer__bottom .footer__lisence small:before {
 .content-wrapper #sidebar {
   overflow-y: auto;
   height: calc(100vh - 76px);
-  width: 270px;
-  background-color: var(--color-background-gray);
+  min-width: auto;
+  max-width: 270px;
+  background-color: var(--color-sidebar-disease);
   flex-shrink: 0;
   display: flex;
   flex-direction: row;
+  transition: all 0.3s ease;
+}
+.content-wrapper #sidebar.collapsed {
+  max-width: auto;
 }
 .content-wrapper #sidebar .sidebar-title {
   display: flex;
   gap: 10px;
   font-weight: bold;
   color: var(--color-secondary);
-  opacity: 0.6;
   margin: 0;
-  padding: 20px 0px 20px 10px;
+  padding: 20px 10px 20px 10px;
   flex-shrink: 0;
   flex-direction: column;
   align-items: center;
+  cursor: pointer;
 }
 .content-wrapper #sidebar .sidebar-title .sitemap-icon {
   cursor: pointer;
@@ -506,6 +513,12 @@ footer .container .footer__bottom .footer__lisence small:before {
   writing-mode: sideways-rl;
   white-space: nowrap;
 }
+.content-wrapper #sidebar .sidebar-title:hover {
+  opacity: 1;
+}
+.content-wrapper #sidebar:not(.collapsed) .sidebar-title {
+  padding-right: 0;
+}
 .content-wrapper #sidebar > section {
   padding: 20px;
   margin-top: 28px;
@@ -513,28 +526,38 @@ footer .container .footer__bottom .footer__lisence small:before {
   flex-direction: column;
   flex: 1;
   overflow-x: hidden;
+  transition: all 0.3s ease;
+}
+.content-wrapper #sidebar > section.collapsed {
+  display: none;
 }
 .content-wrapper #temp-side-navigation {
   overflow-y: auto;
   height: calc(100vh - 76px);
-  width: 300px;
-  background-color: var(--color-background-gray);
+  min-width: auto;
+  max-width: 350px;
+  background-color: var(--color-sidebar-toc);
   flex-shrink: 0;
   border-left: 1px solid rgba(112, 112, 112, 0.4);
+  border-right: 1px solid rgba(112, 112, 112, 0.4);
   display: flex;
   flex-direction: row;
+  transition: all 0.3s ease;
+}
+.content-wrapper #temp-side-navigation.collapsed {
+  max-width: auto;
 }
 .content-wrapper #temp-side-navigation .sidebar-title {
   display: flex;
   gap: 10px;
   font-weight: bold;
   color: var(--color-secondary);
-  opacity: 0.6;
   margin: 0;
-  padding: 20px 0px 20px 10px;
+  padding: 20px 10px 20px 10px;
   flex-shrink: 0;
   flex-direction: column;
   align-items: center;
+  cursor: pointer;
 }
 .content-wrapper #temp-side-navigation .sidebar-title .list-icon {
   cursor: pointer;
@@ -549,23 +572,31 @@ footer .container .footer__bottom .footer__lisence small:before {
   writing-mode: sideways-rl;
   white-space: nowrap;
 }
+.content-wrapper #temp-side-navigation .sidebar-title:hover {
+  opacity: 1;
+}
+.content-wrapper #temp-side-navigation:not(.collapsed) .sidebar-title {
+  padding-right: 0;
+}
 .content-wrapper #temp-side-navigation > ul {
-  padding: 20px;
+  padding: 20px 15px;
   margin-top: 28px;
   display: flex;
   flex-direction: column;
   gap: 0;
   flex: 1;
+  min-width: 250px;
+  transition: all 0.3s ease;
+}
+.content-wrapper #temp-side-navigation > ul.collapsed {
+  display: none;
 }
 .content-wrapper #content {
-  position: fixed;
-  top: 76px;
-  left: 570px;
   overflow-y: auto;
   height: calc(100vh - 76px);
-  width: calc(100% - 570px);
   padding: 40px 60px;
   display: none;
+  flex: 1;
 }
 .content-wrapper #content #data-wrapper {
   display: flex;
@@ -925,7 +956,7 @@ header.search-area .intro-text .keyword a {
 }
 .loading-spinner.-sidenav {
   display: block;
-  top: -9px;
+  top: -16px;
   border: 4px var(--color-white) solid;
   border-top: 4px var(--color-primary) solid;
   right: 0;
@@ -976,7 +1007,7 @@ header.search-area .intro-text .keyword a {
   width: 10px;
   border-top: 1px solid;
   margin-top: -1px;
-  background-color: var(--color-background-gray);
+  background-color: var(--color-sidebar-disease);
 }
 .breadcrumb-list .breadcrumb-tree .inner-tree .wrapper:hover {
   background-color: var(--color-breadcrumb-hover);

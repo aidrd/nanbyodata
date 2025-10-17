@@ -1,6 +1,34 @@
 export function makeSideNavigation() {
   const sideNavigation = document.getElementById('temp-side-navigation');
 
+  // 疾患選択の折り畳み機能
+  const sidebar = document.getElementById('sidebar');
+  const sidebarTitle = document.querySelector('#sidebar .sidebar-title');
+  const breadcrumbSection = document.querySelector('#sidebar > section');
+  if (sidebarTitle && breadcrumbSection && sidebar) {
+    // 初期状態：疾患選択を閉じた状態にする
+    breadcrumbSection.classList.add('collapsed');
+    sidebar.classList.add('collapsed');
+
+    sidebarTitle.addEventListener('click', function () {
+      breadcrumbSection.classList.toggle('collapsed');
+      sidebar.classList.toggle('collapsed');
+    });
+  }
+
+  // 目次の折り畳み機能
+  const tempSideNav = document.getElementById('temp-side-navigation');
+  const navTitle = document.querySelector(
+    '#temp-side-navigation .sidebar-title'
+  );
+  const navList = document.querySelector('#temp-side-navigation > ul');
+  if (navTitle && navList && tempSideNav) {
+    navTitle.addEventListener('click', function () {
+      navList.classList.toggle('collapsed');
+      tempSideNav.classList.toggle('collapsed');
+    });
+  }
+
   const items = [
     'overview',
     'genes',

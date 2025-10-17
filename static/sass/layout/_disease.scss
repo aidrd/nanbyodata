@@ -22,23 +22,29 @@
   #sidebar {
     overflow-y: auto;
     height: calc(100vh - 76px);
-    width: 270px;
-    background-color: var(--color-background-gray);
+    min-width: auto;
+    max-width: 270px;
+    background-color: var(--color-sidebar-disease);
     flex-shrink: 0;
     display: flex;
     flex-direction: row;
+    transition: all 0.3s ease;
+
+    &.collapsed {
+      max-width: auto;
+    }
 
     .sidebar-title {
       display: flex;
       gap: 10px;
       font-weight: bold;
       color: var(--color-secondary);
-      opacity: 0.6;
       margin: 0;
-      padding: 20px 0px 20px 10px;
+      padding: 20px 10px 20px 10px;
       flex-shrink: 0;
       flex-direction: column;
       align-items: center;
+      cursor: pointer;
 
       .sitemap-icon {
         cursor: pointer;
@@ -55,6 +61,15 @@
         writing-mode: sideways-rl;
         white-space: nowrap;
       }
+
+      &:hover {
+        opacity: 1;
+      }
+    }
+
+    // 開いている状態の時のsidebar-titleのスタイル
+    &:not(.collapsed) .sidebar-title {
+      padding-right: 0;
     }
 
     // コンテンツエリア（タイトルを除く）
@@ -65,6 +80,11 @@
       flex-direction: column;
       flex: 1;
       overflow-x: hidden;
+      transition: all 0.3s ease;
+
+      &.collapsed {
+        display: none;
+      }
     }
   }
 
@@ -72,24 +92,31 @@
   #temp-side-navigation {
     overflow-y: auto;
     height: calc(100vh - 76px);
-    width: 300px;
-    background-color: var(--color-background-gray);
+    min-width: auto;
+    max-width: 350px;
+    background-color: var(--color-sidebar-toc);
     flex-shrink: 0;
     border-left: 1px solid rgba(112, 112, 112, 0.4);
+    border-right: 1px solid rgba(112, 112, 112, 0.4);
     display: flex;
     flex-direction: row;
+    transition: all 0.3s ease;
+
+    &.collapsed {
+      max-width: auto;
+    }
 
     .sidebar-title {
       display: flex;
       gap: 10px;
       font-weight: bold;
       color: var(--color-secondary);
-      opacity: 0.6;
       margin: 0;
-      padding: 20px 0px 20px 10px;
+      padding: 20px 10px 20px 10px;
       flex-shrink: 0;
       flex-direction: column;
       align-items: center;
+      cursor: pointer;
 
       .list-icon {
         cursor: pointer;
@@ -106,28 +133,40 @@
         writing-mode: sideways-rl;
         white-space: nowrap;
       }
+
+      &:hover {
+        opacity: 1;
+      }
+    }
+
+    // 開いている状態の時のsidebar-titleのスタイル
+    &:not(.collapsed) .sidebar-title {
+      padding-right: 0;
     }
 
     // 目次のコンテンツエリア
     > ul {
-      padding: 20px;
+      padding: 20px 15px;
       margin-top: 28px;
       display: flex;
       flex-direction: column;
       gap: 0;
       flex: 1;
+      min-width: 250px;
+      transition: all 0.3s ease;
+
+      &.collapsed {
+        display: none;
+      }
     }
   }
 
   #content {
-    position: fixed;
-    top: 76px;
-    left: 570px; // 疾患選択(270px) + 目次(300px)
     overflow-y: auto;
     height: calc(100vh - 76px);
-    width: calc(100% - 570px);
     padding: 40px 60px;
     display: none;
+    flex: 1;
 
     #data-wrapper {
       display: flex;
