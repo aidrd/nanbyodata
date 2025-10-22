@@ -41,6 +41,10 @@
   <!-- SmartBox Style -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/PubCaseFinder/pubcasefinder_tools@main/smartbox/style.css">
 
+  <!-- zTree CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ztree/ztree_v3@3.5.48/css/zTreeStyle/zTreeStyle.min.css"
+    type="text/css">
+
   <!-- favicon -->
   <link rel="icon" type="image/x-icon" href="/static/img/favicon.ico">
 
@@ -143,9 +147,8 @@
         </h2>
         <section class="breadcrumb-list">
           <!-- パンくずリスト -->
-          <!-- TODO: bitsさんの埋め込みを行う -->
-          <p>bitsさんのTree埋め込みを行う</p>
-          {{ breadcrumb_list_html |safe }}
+          {% include 'component/treeview_component.html' %}
+          <!-- {{ breadcrumb_list_html |safe }} -->
         </section>
       </aside>
 
@@ -889,6 +892,9 @@
     integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
     crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+  <!-- zTree JavaScript -->
+  <script src="https://cdn.jsdelivr.net/npm/@ztree/ztree_v3@3.5.48/js/jquery.ztree.core.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@ztree/ztree_v3@3.5.48/js/jquery.ztree.excheck.min.js"></script>
   <script type="module" src="/static/js/disease/disease.js"></script>
   <script type="module"
     src="https://cdn.jsdelivr.net/gh/PubCaseFinder/pubcasefinder_tools@main/smartbox/smartbox.js"></script>
