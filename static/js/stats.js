@@ -2,6 +2,27 @@
 document.addEventListener('DOMContentLoaded', function () {
   // 統計データを読み込んで表示
   loadStatsData();
+
+  // 言語切り替えイベントリスナーを追加
+  const languageSelect = document.querySelector('.language-select');
+  if (languageSelect) {
+    languageSelect.addEventListener('change', function () {
+      const value = this.value;
+      const currentHash = window.location.hash;
+      const currentPath = window.location.pathname;
+      const search = window.location.search;
+      let newUrl = '';
+
+      if (search.includes('post')) {
+        const params = new URLSearchParams(search);
+        params.set('lang', value);
+        newUrl = currentPath + '?' + params.toString() + currentHash;
+      } else {
+        newUrl = currentPath + '?lang=' + value + currentHash;
+      }
+      window.location.href = newUrl;
+    });
+  }
 });
 
 async function loadStatsData() {
@@ -212,7 +233,10 @@ async function fetchLinkData2() {
 
 // エラーメッセージを表示する関数
 function showErrorMessage() {
-  const errorMessage = 'データの読み込みに失敗しました';
+  // 言語を取得
+  const locale = document.querySelector('.language-select')?.value || 'en';
+  const errorMessage =
+    locale === 'ja' ? 'データの読み込みに失敗しました' : 'Failed to load data';
 
   // 全てのテーブルセルにエラーメッセージを表示
   const allCells = document.querySelectorAll(

@@ -698,6 +698,16 @@ Stats Overview Component
   grid-column: 2;
 }
 
+.stats-card-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+.stats-card-link:hover {
+  text-decoration: none;
+  color: inherit;
+}
+
 .stats-card {
   background: white;
   border-radius: 12px;
@@ -708,7 +718,7 @@ Stats Overview Component
   height: 170px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  position: relative;
 }
 .stats-card:hover {
   transform: translateY(-2px);
@@ -716,7 +726,11 @@ Stats Overview Component
 }
 
 .stats-icon {
-  margin-bottom: 16px;
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-bottom: 0;
 }
 .stats-icon i {
   font-size: 2.5rem;
@@ -724,18 +738,32 @@ Stats Overview Component
 }
 
 .stats-number {
+  position: absolute;
+  top: 53%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   font-size: 2.5rem;
   font-weight: 700;
-  color: #2c3e50;
-  margin-bottom: 8px;
+  color: var(--color-secondary);
+  margin: 0;
   line-height: 1;
 }
 
 .stats-label {
+  position: absolute;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
   font-size: 1rem;
-  color: #2c3e50;
+  color: var(--color-secondary);
   font-weight: 500;
-  line-height: 1.3;
+  line-height: 1.2;
+  width: calc(100% - 20px);
+  text-align: center;
+  min-height: 2.4em; /* 2行分の高さを確保 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 @media (max-width: 1200px) {
@@ -784,6 +812,9 @@ Stats Overview Component
     padding: 20px 16px;
     height: 120px;
   }
+  .stats-icon {
+    top: 16px;
+  }
   .stats-icon i {
     font-size: 2rem;
   }
@@ -791,7 +822,9 @@ Stats Overview Component
     font-size: 2rem;
   }
   .stats-label {
+    bottom: 12px;
     font-size: 0.9rem;
+    min-height: 2.2em;
   }
 }
 @media (max-width: 576px) {
@@ -807,6 +840,9 @@ Stats Overview Component
     padding: 16px 12px;
     height: 100px;
   }
+  .stats-icon {
+    top: 12px;
+  }
   .stats-icon i {
     font-size: 1.8rem;
   }
@@ -814,7 +850,9 @@ Stats Overview Component
     font-size: 1.8rem;
   }
   .stats-label {
+    bottom: 8px;
     font-size: 0.85rem;
+    min-height: 2em;
   }
 }
 .card-wrapper {

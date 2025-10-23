@@ -104,106 +104,118 @@
 
           <div class="stats-grid">
             <!-- 難病 -->
-            <div class="stats-card">
-              <div class="stats-icon">
-                <i class="fas fa-virus"></i>
+            <a href="/stats" class="stats-card-link">
+              <div class="stats-card">
+                <div class="stats-icon">
+                  <i class="fas fa-virus"></i>
+                </div>
+                <div class="stats-number" data-api="intractable_diseases">
+                  <div class="loading-spinner -stats"></div>
+                </div>
+                <div class="stats-label">
+                  {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
+                  難病
+                  {% else %}
+                  Rare Diseases
+                  {% endif %}
+                </div>
               </div>
-              <div class="stats-number" data-api="intractable_diseases">
-                <div class="loading-spinner -stats"></div>
-              </div>
-              <div class="stats-label">
-                {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
-                難病
-                {% else %}
-                Intractable Diseases
-                {% endif %}
-              </div>
-            </div>
+            </a>
 
             <!-- 疾患関連遺伝子 -->
-            <div class="stats-card">
-              <div class="stats-icon">
-                <i class="fas fa-dna"></i>
+            <a href="/stats" class="stats-card-link">
+              <div class="stats-card">
+                <div class="stats-icon">
+                  <i class="fas fa-dna"></i>
+                </div>
+                <div class="stats-number" data-api="disease_genes">
+                  <div class="loading-spinner -stats"></div>
+                </div>
+                <div class="stats-label">
+                  {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
+                  疾患関連遺伝子
+                  {% else %}
+                  Genes
+                  {% endif %}
+                </div>
               </div>
-              <div class="stats-number" data-api="disease_genes">
-                <div class="loading-spinner -stats"></div>
-              </div>
-              <div class="stats-label">
-                {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
-                疾患関連遺伝子
-                {% else %}
-                Disease-related Genes
-                {% endif %}
-              </div>
-            </div>
+            </a>
 
             <!-- 糖鎖関連遺伝子 -->
-            <div class="stats-card">
-              <div class="stats-icon">
-                <i class="fas fa-cubes"></i>
+            <a href="/stats" class="stats-card-link">
+              <div class="stats-card">
+                <div class="stats-icon">
+                  <i class="fas fa-cubes"></i>
+                </div>
+                <div class="stats-number" data-api="glycan_genes">
+                  <div class="loading-spinner -stats"></div>
+                </div>
+                <div class="stats-label">
+                  {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
+                  糖鎖関連遺伝子
+                  {% else %}
+                  Glycan-related Genes
+                  {% endif %}
+                </div>
               </div>
-              <div class="stats-number" data-api="glycan_genes">
-                <div class="loading-spinner -stats"></div>
-              </div>
-              <div class="stats-label">
-                {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
-                糖鎖関連遺伝子
-                {% else %}
-                Glycan-related Genes
-                {% endif %}
-              </div>
-            </div>
+            </a>
 
             <!-- 診療用遺伝学的検査 -->
-            <div class="stats-card">
-              <div class="stats-icon">
-                <i class="fas fa-briefcase-medical"></i>
+            <a href="/stats" class="stats-card-link">
+              <div class="stats-card">
+                <div class="stats-icon">
+                  <i class="fas fa-briefcase-medical"></i>
+                </div>
+                <div class="stats-number" data-api="clinical_tests">
+                  <div class="loading-spinner -stats"></div>
+                </div>
+                <div class="stats-label">
+                  {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
+                  診療用遺伝学的検査
+                  {% else %}
+                  Genetic Testings
+                  {% endif %}
+                </div>
               </div>
-              <div class="stats-number" data-api="clinical_tests">
-                <div class="loading-spinner -stats"></div>
-              </div>
-              <div class="stats-label">
-                {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
-                診療用遺伝学的検査
-                {% else %}
-                Clinical Genetic Tests
-                {% endif %}
-              </div>
-            </div>
+            </a>
 
             <!-- 臨床的特徴 -->
-            <div class="stats-card">
-              <div class="stats-icon">
-                <i class="fas fa-stethoscope"></i>
+            <a href="/stats" class="stats-card-link">
+              <div class="stats-card">
+                <div class="stats-icon">
+                  <i class="fas fa-stethoscope"></i>
+                </div>
+                <div class="stats-number" data-api="clinical_features">
+                  <div class="loading-spinner -stats"></div>
+                </div>
+                <div class="stats-label">
+                  {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
+                  臨床的特徴
+                  {% else %}
+                  Clinical Features
+                  {% endif %}
+                </div>
               </div>
-              <div class="stats-number" data-api="clinical_features">
-                <div class="loading-spinner -stats"></div>
-              </div>
-              <div class="stats-label">
-                {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
-                臨床的特徴
-                {% else %}
-                Clinical Features
-                {% endif %}
-              </div>
-            </div>
+            </a>
 
             <!-- 難病特異的バイオリソース -->
-            <div class="stats-card">
-              <div class="stats-icon">
-                <i class="fas fa-flask"></i>
+            <a href="/stats" class="stats-card-link">
+              <div class="stats-card">
+                <div class="stats-icon">
+                  <i class="fas fa-flask"></i>
+                </div>
+                <div class="stats-number" data-api="bioresources">
+                  <div class="loading-spinner -stats"></div>
+                </div>
+                <div class="stats-label">
+                  {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
+                  難病特異的<br>バイオリソース
+                  {% else %}
+                  Bioresources
+                  {% endif %}
+                </div>
               </div>
-              <div class="stats-number" data-api="bioresources">
-                <div class="loading-spinner -stats"></div>
-              </div>
-              <div class="stats-label">
-                {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
-                難病特異的<br>バイオリソース
-                {% else %}
-                Intractable Disease-specific Bioresources
-                {% endif %}
-              </div>
-            </div>
+            </a>
           </div>
         </section>
 
