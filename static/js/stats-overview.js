@@ -121,6 +121,11 @@ class StatsOverview {
     updates.forEach(({ selector, value }) => {
       const element = document.querySelector(selector);
       if (element) {
+        // spinnerを削除して数値を表示
+        const spinner = element.querySelector('.loading-spinner');
+        if (spinner) {
+          spinner.remove();
+        }
         element.textContent = value;
       }
     });
@@ -130,7 +135,16 @@ class StatsOverview {
   showLoading() {
     const loadingElements = document.querySelectorAll('[data-api]');
     loadingElements.forEach((element) => {
-      element.textContent = '...';
+      // 既存のspinnerがあれば削除
+      const existingSpinner = element.querySelector('.loading-spinner');
+      if (existingSpinner) {
+        existingSpinner.remove();
+      }
+
+      // 新しいspinnerを追加
+      const spinner = document.createElement('div');
+      spinner.className = 'loading-spinner -stats';
+      element.appendChild(spinner);
     });
   }
 
@@ -138,6 +152,11 @@ class StatsOverview {
   showError() {
     const errorElements = document.querySelectorAll('[data-api]');
     errorElements.forEach((element) => {
+      // spinnerを削除してエラーメッセージを表示
+      const spinner = element.querySelector('.loading-spinner');
+      if (spinner) {
+        spinner.remove();
+      }
       element.textContent = 'N/A';
     });
   }

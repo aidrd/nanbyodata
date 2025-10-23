@@ -691,11 +691,6 @@ Stats Overview Component
   max-width: 1200px;
   margin: 0 auto;
 }
-.stats-grid .stats-card:nth-child(6),
-.stats-grid .stats-card:nth-child(7) {
-  grid-column: span 1;
-  text-align: left;
-}
 .stats-grid .stats-card:nth-child(6) {
   grid-column: 1;
 }
@@ -706,26 +701,18 @@ Stats Overview Component
 .stats-card {
   background: white;
   border-radius: 12px;
-  padding: 24px 20px;
+  padding: 24px 10px;
   text-align: center;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
+  height: 170px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 .stats-card:hover {
   transform: translateY(-2px);
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
-}
-.stats-card.stats-card-large {
-  padding: 24px 20px 20px;
-}
-.stats-card.stats-card-large .stats-icon {
-  text-align: center;
-}
-.stats-card.stats-card-large .stats-number {
-  text-align: center;
-}
-.stats-card.stats-card-large .stats-label {
-  text-align: center;
 }
 
 .stats-icon {
@@ -749,44 +736,6 @@ Stats Overview Component
   color: #2c3e50;
   font-weight: 500;
   line-height: 1.3;
-}
-
-.stats-subitems {
-  margin-top: 20px;
-  padding-top: 20px;
-  border-top: 1px solid #e9ecef;
-}
-
-.stats-subitem {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 12px;
-}
-.stats-subitem:last-child {
-  margin-bottom: 0;
-}
-
-.stats-subicon {
-  margin-right: 8px;
-}
-.stats-subicon i {
-  font-size: 0.8rem;
-  color: #20b2aa;
-}
-
-.stats-sublabel {
-  flex: 1;
-  text-align: left;
-  font-size: 0.9rem;
-  color: #2c3e50;
-  font-weight: 500;
-}
-
-.stats-subnumber {
-  font-size: 1.1rem;
-  font-weight: 600;
-  color: #2c3e50;
 }
 
 @media (max-width: 1200px) {
@@ -833,9 +782,7 @@ Stats Overview Component
   }
   .stats-card {
     padding: 20px 16px;
-  }
-  .stats-card.stats-card-large {
-    padding: 20px 16px 16px;
+    height: 120px;
   }
   .stats-icon i {
     font-size: 2rem;
@@ -858,9 +805,7 @@ Stats Overview Component
   }
   .stats-card {
     padding: 16px 12px;
-  }
-  .stats-card.stats-card-large {
-    padding: 16px 12px 12px;
+    height: 100px;
   }
   .stats-icon i {
     font-size: 1.8rem;
@@ -870,15 +815,6 @@ Stats Overview Component
   }
   .stats-label {
     font-size: 0.85rem;
-  }
-  .stats-subitem {
-    margin-bottom: 8px;
-  }
-  .stats-sublabel {
-    font-size: 0.8rem;
-  }
-  .stats-subnumber {
-    font-size: 1rem;
   }
 }
 .card-wrapper {
@@ -1077,6 +1013,16 @@ Stats Overview Component
   width: 20px;
   height: 20px;
   opacity: 0.5;
+}
+.loading-spinner.-stats {
+  position: relative;
+  top: unset;
+  left: unset;
+  width: 24px;
+  height: 24px;
+  margin: 0 auto;
+  border: 3px #e9ecef solid;
+  border-top: 3px #20b2aa solid;
 }
 
 @keyframes sp-anime {
