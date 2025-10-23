@@ -1,0 +1,17 @@
+/* ================================================
+Stats Page Styles
+================================================ */
+
+// Stats Section
+.stats-section {
+  margin: 2rem 0;
+
+  &-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--color-secondary);
+    margin-bottom: 1rem;
+    padding-left: 0.75rem;
+    border-left: 6px solid var(--color-secondary);
+  }
+}

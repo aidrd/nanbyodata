@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+  <!-- SEO -->
+  <title>Statistics | NanbyoData</title>
+  <meta name="description" content="NanbyoDataの統計情報ページです." />
+  <meta property="og:site_name" content="NanbyoData" />
+  <meta property="og:title" content="Statistics | NanbyoData" />
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://nanbyodata.jp/stats" />
+  <meta property="og:description" content="NanbyoDataの統計情報ページです." />
+  <meta property="og:image" content="/static/img/ogp_img.png" />
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://indestructibletype-fonthosting.github.io/renner.css" type="text/css"
+    charset="utf-8" />
+  <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet" />
+
+  <!-- CSS -->
+  <link rel="stylesheet" type="text/css" href="/static/sass/main.css" />
+
+  <!-- favicon -->
+  <link rel="icon" type="image/x-icon" href="/static/img/favicon.ico">
+
+</head>
+
+<body>
+  <main>
+    <!-- Navigation -->
+    {% include 'component/navigation.html' %}
+
+    <!--- Stats page --->
+    <section class="page-layout">
+      <header class="page-title">
+        <h2>Statistics</h2>
+      </header>
+
+      <div class="contents-wrapper">
+        <div class="content-block">
+
+          <!-- 難病統計テーブル -->
+          <div class="stats-section">
+            <h4 class="stats-section-title">難病</h4>
+            <div class="table-contents">
+              <section class="section">
+                <table class="table stats-table">
+                  <thead>
+                    <tr>
+                      <th>区分</th>
+                      <th>全て</th>
+                      <th>グループ</th>
+                      <th>グループサブクラス</th>
+                      <th>サブタイプ</th>
+                      <th>サマリー</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>指定</td>
+                      <td id="specified-all">-</td>
+                      <td id="specified-group">-</td>
+                      <td id="specified-group-subclass">-</td>
+                      <td id="specified-subtype">-</td>
+                      <td id="specified-summary">-</td>
+                    </tr>
+                    <tr>
+                      <td>小慢</td>
+                      <td id="pediatric-all">-</td>
+                      <td id="pediatric-group">-</td>
+                      <td id="pediatric-group-subclass">-</td>
+                      <td id="pediatric-subtype">-</td>
+                      <td id="pediatric-summary">-</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+            </div>
+          </div>
+
+          <!-- 疾患概要テーブル -->
+          <div class="stats-section">
+            <h4 class="stats-section-title">疾患概要</h4>
+            <div class="table-contents">
+              <section class="section">
+                <table class="table stats-table">
+                  <thead>
+                    <tr>
+                      <th>区分</th>
+                      <th>遺伝形式</th>
+                      <th>データ元</th>
+                      <th>リンク</th>
+                      <th>疾患定義</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td rowspan="5">指定</td>
+                      <td rowspan="5" id="specified-inheritance">-</td>
+                      <td>MHLW</td>
+                      <td id="specified-mhlw-link">-</td>
+                      <td id="specified-mhlw-definition">-</td>
+                    </tr>
+                    <tr>
+                      <td>Orphanet</td>
+                      <td id="specified-orphanet-link">-</td>
+                      <td id="specified-orphanet-definition">-</td>
+                    </tr>
+                    <tr>
+                      <td>Monarch</td>
+                      <td id="specified-monarch-link">-</td>
+                      <td id="specified-monarch-definition">-</td>
+                    </tr>
+                    <tr>
+                      <td>MedGen</td>
+                      <td id="specified-medgen-link">-</td>
+                      <td id="specified-medgen-definition">-</td>
+                    </tr>
+                    <tr>
+                      <td>KEGG</td>
+                      <td id="specified-kegg-link">-</td>
+                      <td id="specified-kegg-definition">-</td>
+                    </tr>
+                    <tr>
+                      <td rowspan="5">小慢</td>
+                      <td rowspan="5" id="pediatric-inheritance">-</td>
+                      <td>MHLW</td>
+                      <td id="pediatric-mhlw-link">-</td>
+                      <td id="pediatric-mhlw-definition">-</td>
+                    </tr>
+                    <tr>
+                      <td>Orphanet</td>
+                      <td id="pediatric-orphanet-link">-</td>
+                      <td id="pediatric-orphanet-definition">-</td>
+                    </tr>
+                    <tr>
+                      <td>Monarch</td>
+                      <td id="pediatric-monarch-link">-</td>
+                      <td id="pediatric-monarch-definition">-</td>
+                    </tr>
+                    <tr>
+                      <td>MedGen</td>
+                      <td id="pediatric-medgen-link">-</td>
+                      <td id="pediatric-medgen-definition">-</td>
+                    </tr>
+                    <tr>
+                      <td>KEGG</td>
+                      <td id="pediatric-kegg-link">-</td>
+                      <td id="pediatric-kegg-definition">-</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+            </div>
+          </div>
+
+          <!-- 疾患関連データテーブル -->
+          <div class="stats-section">
+            <h4 class="stats-section-title">疾患関連データ</h4>
+            <div class="table-contents">
+              <section class="section">
+                <table class="table stats-table">
+                  <thead>
+                    <tr>
+                      <th>区分</th>
+                      <th>糖鎖関連遺伝子</th>
+                      <th>診療用遺伝学的検査</th>
+                      <th>臨床的特徴</th>
+                      <th>顔貌特徴</th>
+                      <th>ヒト公開データ</th>
+                      <th>化学物質</th>
+                      <th>文献</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>指定</td>
+                      <td id="specified-glycan-genes">-</td>
+                      <td id="specified-genetic-tests">-</td>
+                      <td id="specified-clinical-features">-</td>
+                      <td id="specified-facial-features">-</td>
+                      <td id="specified-human-data">-</td>
+                      <td id="specified-chemicals">-</td>
+                      <td id="specified-literature">-</td>
+                    </tr>
+                    <tr>
+                      <td>小慢</td>
+                      <td id="pediatric-glycan-genes">-</td>
+                      <td id="pediatric-genetic-tests">-</td>
+                      <td id="pediatric-clinical-features">-</td>
+                      <td id="pediatric-facial-features">-</td>
+                      <td id="pediatric-human-data">-</td>
+                      <td id="pediatric-chemicals">-</td>
+                      <td id="pediatric-literature">-</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+            </div>
+          </div>
+
+          <!-- 疾患関連遺伝子テーブル -->
+          <div class="stats-section">
+            <h4 class="stats-section-title">疾患関連遺伝子</h4>
+            <div class="table-contents">
+              <section class="section">
+                <table class="table stats-table">
+                  <thead>
+                    <tr>
+                      <th>区分</th>
+                      <th>国内基準由来</th>
+                      <th>国際リソース由来</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>指定</td>
+                      <td id="specified-domestic-genes">-</td>
+                      <td id="specified-international-genes">-</td>
+                    </tr>
+                    <tr>
+                      <td>小慢</td>
+                      <td id="pediatric-domestic-genes">-</td>
+                      <td id="pediatric-international-genes">-</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+            </div>
+          </div>
+
+          <!-- バリアントテーブル -->
+          <div class="stats-section">
+            <h4 class="stats-section-title">バリアント</h4>
+            <div class="table-contents">
+              <section class="section">
+                <table class="table stats-table">
+                  <thead>
+                    <tr>
+                      <th>区分</th>
+                      <th>ClinVar</th>
+                      <th>MGEND</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>指定</td>
+                      <td id="specified-clinvar">-</td>
+                      <td id="specified-mgend">-</td>
+                    </tr>
+                    <tr>
+                      <td>小慢</td>
+                      <td id="pediatric-clinvar">-</td>
+                      <td id="pediatric-mgend">-</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+            </div>
+          </div>
+
+          <!-- 難病特異的バイオリソーステーブル -->
+          <div class="stats-section">
+            <h4 class="stats-section-title">難病特異的バイオリソース</h4>
+            <div class="table-contents">
+              <section class="section">
+                <table class="table stats-table">
+                  <thead>
+                    <tr>
+                      <th>区分</th>
+                      <th>細胞</th>
+                      <th>マウス</th>
+                      <th>DNA</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>指定</td>
+                      <td id="specified-cells">-</td>
+                      <td id="specified-mouse">-</td>
+                      <td id="specified-dna">-</td>
+                    </tr>
+                    <tr>
+                      <td>小慢</td>
+                      <td id="pediatric-cells">-</td>
+                      <td id="pediatric-mouse">-</td>
+                      <td id="pediatric-dna">-</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!--- footer --->
+    {% include 'component/footer.html' %}
+
+    <!--- NanbyoData利用規約 modal -->
+    {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
+    {% include 'component/modal-tos.html' %}
+    {% else %}
+    {% include 'component/modal-tos_en.html' %}
+    {% endif %}
+
+  </main>
+
+  <!-- Optional JavaScript -->
+  <!-- jQuery first, then Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    crossorigin="anonymous"></script>
+  <script type="module" src="/static/js/main.js"></script>
+  <script src="/static/js/stats.js"></script>
+</body>
+
+</html>
