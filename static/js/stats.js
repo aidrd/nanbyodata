@@ -385,13 +385,13 @@ function updateVariants(data) {
 
 function updateBioresources(data) {
   // バイオリソーステーブル
-  document.getElementById('specified-cells').textContent =
+  document.getElementById('specified-cell').textContent =
     data.bioresources.specified.cells.toLocaleString();
   document.getElementById('specified-mouse').textContent =
     data.bioresources.specified.mouse.toLocaleString();
   document.getElementById('specified-dna').textContent =
     data.bioresources.specified.dna.toLocaleString();
-  document.getElementById('pediatric-cells').textContent =
+  document.getElementById('pediatric-cell').textContent =
     data.bioresources.pediatric.cells.toLocaleString();
   document.getElementById('pediatric-mouse').textContent =
     data.bioresources.pediatric.mouse.toLocaleString();
