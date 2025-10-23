@@ -7,9 +7,11 @@ document.addEventListener('DOMContentLoaded', function () {
 async function loadStatsData() {
   try {
     // 複数のAPIから実際のデータを取得
-    const [nandoData, brcData] = await Promise.all([
+    const [nandoData, brcData, linkData, linkData2] = await Promise.all([
       fetchNANDOData(),
       fetchBRCData(),
+      fetchLinkData(),
+      fetchLinkData2(),
     ]);
 
     // 取得したデータをstatsData形式に変換
@@ -31,66 +33,72 @@ async function loadStatsData() {
       },
       // 疾患概要
       inheritance: {
-        specified: 123,
-        pediatric: 123,
+        specified: parseInt(linkData2.shitei_inheritance.inheritance),
+        pediatric: parseInt(linkData2.shoman_inheritance.inheritance),
       },
       dataSources: {
         specified: {
-          mhlw: { link: '-', definition: 1234 },
-          orphanet: { link: 140, definition: 532 },
-          monarch: { link: 245, definition: 324 },
-          medgen: { link: 345, definition: 453 },
-          kegg: { link: 232, definition: 243 },
+          mhlw: {
+            link: '-',
+            definition: parseInt(linkData2.shitei_description.desc),
+          }, // MHLW定義数
+          orphanet: { link: '-', definition: '-' }, // 後回し
+          monarch: { link: parseInt(linkData.name8.mondo), definition: '-' }, // shitei mondo close count
+          medgen: { link: parseInt(linkData.name10.medgen), definition: '-' }, // shitei medgen count
+          kegg: { link: parseInt(linkData.name5.kegg), definition: '-' }, // shitei kegg count
         },
         pediatric: {
-          mhlw: { link: '-', definition: 1234 },
-          orphanet: { link: 140, definition: 532 },
-          monarch: { link: 245, definition: 324 },
-          medgen: { link: 345, definition: 453 },
-          kegg: { link: 232, definition: 243 },
+          mhlw: {
+            link: '-',
+            definition: parseInt(linkData2.shoman_description.desc),
+          }, // MHLW定義数
+          orphanet: { link: '-', definition: '-' }, // 後回し
+          monarch: { link: parseInt(linkData.name7.mondo), definition: '-' }, // shoman mondo close count
+          medgen: { link: parseInt(linkData.name9.medgen), definition: '-' }, // shoman medgen count
+          kegg: { link: parseInt(linkData.name6.kegg), definition: '-' }, // shoman kegg count
         },
       },
       // 疾患関連データ
       relatedData: {
         specified: {
-          glycanGenes: 394,
-          geneticTests: 394,
-          clinicalFeatures: 394,
-          facialFeatures: 394,
-          humanData: 394,
-          chemicals: 394,
-          literature: 394,
+          glycanGenes: '-', // まだない
+          geneticTests: parseInt(linkData2.shitei_genetest.genetest),
+          clinicalFeatures: parseInt(linkData2.shitei_hp.hp),
+          facialFeatures: '-', // まだない
+          humanData: '-', // まだない
+          chemicals: '-', // まだない
+          literature: '-', // まだない
         },
         pediatric: {
-          glycanGenes: 394,
-          geneticTests: 394,
-          clinicalFeatures: 394,
-          facialFeatures: 394,
-          humanData: 394,
-          chemicals: 394,
-          literature: 394,
+          glycanGenes: '-', // まだない
+          geneticTests: parseInt(linkData2.shoman_genetest.genetest),
+          clinicalFeatures: parseInt(linkData2.shoman_hp.hp),
+          facialFeatures: '-', // まだない
+          humanData: '-', // まだない
+          chemicals: '-', // まだない
+          literature: '-', // まだない
         },
       },
       // 疾患関連遺伝子
       genes: {
         specified: {
-          domestic: 394,
-          international: 394,
+          domestic: parseInt(linkData2.shitei_gene.gene),
+          international: '-', // まだない
         },
         pediatric: {
-          domestic: 394,
-          international: 394,
+          domestic: parseInt(linkData2.shoman_gene.gene),
+          international: '-', // まだない
         },
       },
       // バリアント
       variants: {
         specified: {
-          clinvar: 394,
-          mgend: 394,
+          clinvar: '-', // まだない
+          mgend: parseInt(linkData2.shitei_mgened.mgend),
         },
         pediatric: {
-          clinvar: 394,
-          mgend: 394,
+          clinvar: '-', // まだない
+          mgend: parseInt(linkData2.shoman_mgend.mgend),
         },
       },
       // バイオリソース
@@ -117,8 +125,8 @@ async function loadStatsData() {
     updateBioresources(statsData);
   } catch (error) {
     console.error('統計データの読み込みに失敗しました:', error);
-    // エラーの場合はサンプルデータを使用
-    loadFallbackData();
+    // エラーの場合はテーブルにエラーメッセージを表示
+    showErrorMessage();
   }
 }
 
@@ -162,110 +170,59 @@ async function fetchBRCData() {
   return await response.json();
 }
 
-// フォールバック用のサンプルデータ
-function loadFallbackData() {
-  const statsData = {
-    // 難病統計
-    specified: {
-      all: 1133,
-      group: 15,
-      groupSubclass: 1117, // 指定難病サブクラスカウント
-      subtype: '-', // 未確定のため非表示
-      summary: '-', // 未確定のため非表示
-    },
-    pediatric: {
-      all: 1842,
-      group: 309,
-      groupSubclass: 1532, // 小児慢性疾患サブクラスカウント
-      subtype: '-', // 未確定のため非表示
-      summary: '-', // 未確定のため非表示
-    },
-    // 疾患概要
-    inheritance: {
-      specified: 123,
-      pediatric: 123,
-    },
-    dataSources: {
-      specified: {
-        mhlw: { link: '-', definition: 1234 },
-        orphanet: { link: 140, definition: 532 },
-        monarch: { link: 245, definition: 324 },
-        medgen: { link: 345, definition: 453 },
-        kegg: { link: 232, definition: 243 },
-      },
-      pediatric: {
-        mhlw: { link: '-', definition: 1234 },
-        orphanet: { link: 140, definition: 532 },
-        monarch: { link: 245, definition: 324 },
-        medgen: { link: 345, definition: 453 },
-        kegg: { link: 232, definition: 243 },
-      },
-    },
-    // 疾患関連データ
-    relatedData: {
-      specified: {
-        glycanGenes: 394,
-        geneticTests: 394,
-        clinicalFeatures: 394,
-        facialFeatures: 394,
-        humanData: 394,
-        chemicals: 394,
-        literature: 394,
-      },
-      pediatric: {
-        glycanGenes: 394,
-        geneticTests: 394,
-        clinicalFeatures: 394,
-        facialFeatures: 394,
-        humanData: 394,
-        chemicals: 394,
-        literature: 394,
-      },
-    },
-    // 疾患関連遺伝子
-    genes: {
-      specified: {
-        domestic: 394,
-        international: 394,
-      },
-      pediatric: {
-        domestic: 394,
-        international: 394,
-      },
-    },
-    // バリアント
-    variants: {
-      specified: {
-        clinvar: 394,
-        mgend: 394,
-      },
-      pediatric: {
-        clinvar: 394,
-        mgend: 394,
-      },
-    },
-    // バイオリソース
-    bioresources: {
-      specified: {
-        cells: parseInt(brcData.shitei_cell.cell),
-        mouse: parseInt(brcData.shitei_mouse.mouse),
-        dna: parseInt(brcData.shitei_DNA.gene),
-      },
-      pediatric: {
-        cells: parseInt(brcData.shoman_cell.cell),
-        mouse: parseInt(brcData.shoman_mouse.mouse),
-        dna: parseInt(brcData.shoman_DNA.gene),
-      },
-    },
-  };
+// NANDO_link_count APIからデータを取得する関数
+async function fetchLinkData() {
+  const response = await fetch(
+    'http://localhost:8888/sparqlist/api/NANDO_link_count'
+  );
+  if (!response.ok) {
+    throw new Error(`Link API request failed: ${response.status}`);
+  }
 
-  // 各テーブルの数値を更新
-  updateDiseaseStats(statsData);
-  updateDiseaseOverview(statsData);
-  updateRelatedData(statsData);
-  updateGenes(statsData);
-  updateVariants(statsData);
-  updateBioresources(statsData);
+  const contentType = response.headers.get('content-type');
+  if (!contentType || !contentType.includes('application/json')) {
+    const text = await response.text();
+    console.error('Expected JSON but got:', contentType);
+    console.error('Response text:', text.substring(0, 200) + '...');
+    throw new Error(`Expected JSON response but got ${contentType}`);
+  }
+
+  return await response.json();
+}
+
+// NANDO_link_count2 APIからデータを取得する関数
+async function fetchLinkData2() {
+  const response = await fetch(
+    'http://localhost:8888/sparqlist/api/NANDO_link_count2'
+  );
+  if (!response.ok) {
+    throw new Error(`Link2 API request failed: ${response.status}`);
+  }
+
+  const contentType = response.headers.get('content-type');
+  if (!contentType || !contentType.includes('application/json')) {
+    const text = await response.text();
+    console.error('Expected JSON but got:', contentType);
+    console.error('Response text:', text.substring(0, 200) + '...');
+    throw new Error(`Expected JSON response but got ${contentType}`);
+  }
+
+  return await response.json();
+}
+
+// エラーメッセージを表示する関数
+function showErrorMessage() {
+  const errorMessage = 'データの読み込みに失敗しました';
+
+  // 全てのテーブルセルにエラーメッセージを表示
+  const allCells = document.querySelectorAll(
+    '[id$="-all"], [id$="-group"], [id$="-group-subclass"], [id$="-subtype"], [id$="-summary"], [id$="-inheritance"], [id$="-link"], [id$="-definition"], [id$="-genes"], [id$="-genetic-tests"], [id$="-clinical-features"], [id$="-facial-features"], [id$="-human-data"], [id$="-chemicals"], [id$="-literature"], [id$="-domestic-genes"], [id$="-international-genes"], [id$="-clinvar"], [id$="-mgend"], [id$="-cells"], [id$="-mouse"], [id$="-dna"]'
+  );
+
+  allCells.forEach((cell) => {
+    cell.textContent = errorMessage;
+    cell.style.color = '#dc3545'; // 赤色で表示
+  });
 }
 
 function updateDiseaseStats(data) {
