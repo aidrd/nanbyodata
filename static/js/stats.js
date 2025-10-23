@@ -4,26 +4,181 @@ document.addEventListener('DOMContentLoaded', function () {
   loadStatsData();
 });
 
-function loadStatsData() {
-  // 実際のAPIエンドポイントからデータを取得する場合
-  // 現在はサンプルデータを使用
+async function loadStatsData() {
+  try {
+    // 複数のAPIから実際のデータを取得
+    const [nandoData, brcData] = await Promise.all([
+      fetchNANDOData(),
+      fetchBRCData(),
+    ]);
 
-  // サンプル統計データ（画像の内容に基づく）
+    // 取得したデータをstatsData形式に変換
+    const statsData = {
+      // 難病統計
+      specified: {
+        all: parseInt(nandoData.shitei_all['callret-0']),
+        group: parseInt(nandoData.shitei_group['callret-0']),
+        groupSubclass: parseInt(nandoData.name8['callret-0']), // 指定難病サブクラスカウント
+        subtype: '-', // 未確定のため非表示
+        summary: '-', // 未確定のため非表示
+      },
+      pediatric: {
+        all: parseInt(nandoData.shoman_all['callret-0']),
+        group: parseInt(nandoData.shoman_group['callret-0']),
+        groupSubclass: parseInt(nandoData.name7['callret-0']), // 小児慢性疾患サブクラスカウント
+        subtype: '-', // 未確定のため非表示
+        summary: '-', // 未確定のため非表示
+      },
+      // 疾患概要
+      inheritance: {
+        specified: 123,
+        pediatric: 123,
+      },
+      dataSources: {
+        specified: {
+          mhlw: { link: '-', definition: 1234 },
+          orphanet: { link: 140, definition: 532 },
+          monarch: { link: 245, definition: 324 },
+          medgen: { link: 345, definition: 453 },
+          kegg: { link: 232, definition: 243 },
+        },
+        pediatric: {
+          mhlw: { link: '-', definition: 1234 },
+          orphanet: { link: 140, definition: 532 },
+          monarch: { link: 245, definition: 324 },
+          medgen: { link: 345, definition: 453 },
+          kegg: { link: 232, definition: 243 },
+        },
+      },
+      // 疾患関連データ
+      relatedData: {
+        specified: {
+          glycanGenes: 394,
+          geneticTests: 394,
+          clinicalFeatures: 394,
+          facialFeatures: 394,
+          humanData: 394,
+          chemicals: 394,
+          literature: 394,
+        },
+        pediatric: {
+          glycanGenes: 394,
+          geneticTests: 394,
+          clinicalFeatures: 394,
+          facialFeatures: 394,
+          humanData: 394,
+          chemicals: 394,
+          literature: 394,
+        },
+      },
+      // 疾患関連遺伝子
+      genes: {
+        specified: {
+          domestic: 394,
+          international: 394,
+        },
+        pediatric: {
+          domestic: 394,
+          international: 394,
+        },
+      },
+      // バリアント
+      variants: {
+        specified: {
+          clinvar: 394,
+          mgend: 394,
+        },
+        pediatric: {
+          clinvar: 394,
+          mgend: 394,
+        },
+      },
+      // バイオリソース
+      bioresources: {
+        specified: {
+          cells: 2483, // shitei_cell.cell
+          mouse: 238, // shitei_mouse.mouse
+          dna: 5651, // shitei_DNA.gene
+        },
+        pediatric: {
+          cells: 1635, // shoman_cell.cell
+          mouse: 300, // shoman_mouse.mouse
+          dna: 6070, // shoman_DNA.gene
+        },
+      },
+    };
+
+    // 各テーブルの数値を更新
+    updateDiseaseStats(statsData);
+    updateDiseaseOverview(statsData);
+    updateRelatedData(statsData);
+    updateGenes(statsData);
+    updateVariants(statsData);
+    updateBioresources(statsData);
+  } catch (error) {
+    console.error('統計データの読み込みに失敗しました:', error);
+    // エラーの場合はサンプルデータを使用
+    loadFallbackData();
+  }
+}
+
+// NANDO_count APIからデータを取得する関数
+async function fetchNANDOData() {
+  const response = await fetch(
+    'http://localhost:8888/sparqlist/api/NANDO_count'
+  );
+  if (!response.ok) {
+    throw new Error(`API request failed: ${response.status}`);
+  }
+
+  const contentType = response.headers.get('content-type');
+  if (!contentType || !contentType.includes('application/json')) {
+    const text = await response.text();
+    console.error('Expected JSON but got:', contentType);
+    console.error('Response text:', text.substring(0, 200) + '...');
+    throw new Error(`Expected JSON response but got ${contentType}`);
+  }
+
+  return await response.json();
+}
+
+// BRC APIからデータを取得する関数
+async function fetchBRCData() {
+  const response = await fetch(
+    'http://localhost:8888/sparqlist/api/NANDO_link_count3_brc'
+  );
+  if (!response.ok) {
+    throw new Error(`BRC API request failed: ${response.status}`);
+  }
+
+  const contentType = response.headers.get('content-type');
+  if (!contentType || !contentType.includes('application/json')) {
+    const text = await response.text();
+    console.error('Expected JSON but got:', contentType);
+    console.error('Response text:', text.substring(0, 200) + '...');
+    throw new Error(`Expected JSON response but got ${contentType}`);
+  }
+
+  return await response.json();
+}
+
+// フォールバック用のサンプルデータ
+function loadFallbackData() {
   const statsData = {
     // 難病統計
     specified: {
       all: 1133,
-      group: 150,
-      groupSubclass: 348,
-      subtype: 394,
-      summary: 1117,
+      group: 15,
+      groupSubclass: 1117, // 指定難病サブクラスカウント
+      subtype: '-', // 未確定のため非表示
+      summary: '-', // 未確定のため非表示
     },
     pediatric: {
-      all: 1841,
-      group: 308,
-      groupSubclass: 858,
-      subtype: 1532,
-      summary: 978,
+      all: 1842,
+      group: 309,
+      groupSubclass: 1532, // 小児慢性疾患サブクラスカウント
+      subtype: '-', // 未確定のため非表示
+      summary: '-', // 未確定のため非表示
     },
     // 疾患概要
     inheritance: {
@@ -92,14 +247,14 @@ function loadStatsData() {
     // バイオリソース
     bioresources: {
       specified: {
-        cells: 1133,
-        mouse: 348,
-        dna: 394,
+        cells: parseInt(brcData.shitei_cell.cell),
+        mouse: parseInt(brcData.shitei_mouse.mouse),
+        dna: parseInt(brcData.shitei_DNA.gene),
       },
       pediatric: {
-        cells: 1841,
-        mouse: 858,
-        dna: 1532,
+        cells: parseInt(brcData.shoman_cell.cell),
+        mouse: parseInt(brcData.shoman_mouse.mouse),
+        dna: parseInt(brcData.shoman_DNA.gene),
       },
     },
   };
@@ -261,21 +416,4 @@ function updateBioresources(data) {
     data.bioresources.pediatric.mouse.toLocaleString();
   document.getElementById('pediatric-dna').textContent =
     data.bioresources.pediatric.dna.toLocaleString();
-}
-
-// 実際のAPIからデータを取得する関数（将来の実装用）
-async function fetchStatsFromAPI() {
-  try {
-    // 実際のAPIエンドポイントに置き換える
-    const response = await fetch('/api/stats');
-    if (!response.ok) {
-      throw new Error('API request failed');
-    }
-    const data = await response.json();
-    return data;
-  } catch (error) {
-    console.error('Failed to fetch stats data:', error);
-    // エラーの場合はサンプルデータを使用
-    return null;
-  }
 }
