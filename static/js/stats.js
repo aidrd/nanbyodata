@@ -82,12 +82,12 @@ async function loadStatsData() {
       // 疾患関連遺伝子
       genes: {
         specified: {
-          domestic: parseInt(linkData2.shitei_gene.gene),
-          international: '-', // まだない
+          domestic: '-', // まだない
+          international: parseInt(linkData2.shitei_gene.gene),
         },
         pediatric: {
-          domestic: parseInt(linkData2.shoman_gene.gene),
-          international: '-', // まだない
+          domestic: '-', // まだない
+          international: parseInt(linkData2.shoman_gene.gene),
         },
       },
       // バリアント
