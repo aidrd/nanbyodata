@@ -28,7 +28,7 @@
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   <link rel="stylesheet" href="https://indestructibletype-fonthosting.github.io/renner.css" type="text/css"
     charset="utf-8" />
-  <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
+  <link href="https://use.fontawesome.com/releases/v6.7.2/css/all.css" rel="stylesheet">
 
   <!-- CSS -->
   <link rel="stylesheet" type="text/css" href="/static/sass/main.css">
@@ -94,6 +94,172 @@
           </div>
         </section>
 
+        <!-- 統計情報概要セクション -->
+        <section class="stats-overview section-block">
+          {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
+          <h2 class="section-title">統計情報概要</h2>
+          {% else %}
+          <h2 class="section-title">Statistical Information Overview</h2>
+          {% endif %}
+
+          <div class="stats-grid">
+            <!-- 難病 -->
+            <div class="stats-card">
+              <div class="stats-icon">
+                <i class="fas fa-virus"></i>
+              </div>
+              <div class="stats-number" data-api="intractable_diseases">1,133</div>
+              <div class="stats-label">
+                {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
+                難病
+                {% else %}
+                Intractable Diseases
+                {% endif %}
+              </div>
+            </div>
+
+            <!-- 疾患関連遺伝子 -->
+            <div class="stats-card">
+              <div class="stats-icon">
+                <i class="fas fa-dna"></i>
+              </div>
+              <div class="stats-number" data-api="disease_genes">533</div>
+              <div class="stats-label">
+                {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
+                疾患関連遺伝子
+                {% else %}
+                Disease-related Genes
+                {% endif %}
+              </div>
+            </div>
+
+            <!-- 糖鎖関連遺伝子 -->
+            <div class="stats-card">
+              <div class="stats-icon">
+                <i class="fas fa-cubes"></i>
+              </div>
+              <div class="stats-number" data-api="glycan_genes">345</div>
+              <div class="stats-label">
+                {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
+                糖鎖関連遺伝子
+                {% else %}
+                Glycan-related Genes
+                {% endif %}
+              </div>
+            </div>
+
+            <!-- 診療用遺伝学的検査 -->
+            <div class="stats-card">
+              <div class="stats-icon">
+                <i class="fas fa-briefcase-medical"></i>
+              </div>
+              <div class="stats-number" data-api="clinical_tests">234</div>
+              <div class="stats-label">
+                {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
+                診療用遺伝学的検査
+                {% else %}
+                Clinical Genetic Tests
+                {% endif %}
+              </div>
+            </div>
+
+            <!-- 臨床的特徴 -->
+            <div class="stats-card">
+              <div class="stats-icon">
+                <i class="fas fa-stethoscope"></i>
+              </div>
+              <div class="stats-number" data-api="clinical_features">345</div>
+              <div class="stats-label">
+                {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
+                臨床的特徴
+                {% else %}
+                Clinical Features
+                {% endif %}
+              </div>
+            </div>
+
+            <!-- 難病特異的バイオリソース -->
+            <div class="stats-card stats-card-large">
+              <div class="stats-icon">
+                <i class="fas fa-flask"></i>
+              </div>
+              <div class="stats-number" data-api="bioresources">999</div>
+              <div class="stats-label">
+                {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
+                難病特異的バイオリソース
+                {% else %}
+                Intractable Disease-specific Bioresources
+                {% endif %}
+              </div>
+              <div class="stats-subitems">
+                <div class="stats-subitem">
+                  <div class="stats-subicon">
+                    <i class="fas fa-circle"></i>
+                  </div>
+                  <div class="stats-sublabel">
+                    {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
+                    細胞
+                    {% else %}
+                    Cells
+                    {% endif %}
+                  </div>
+                  <div class="stats-subnumber" data-api="cells">333</div>
+                </div>
+                <div class="stats-subitem">
+                  <div class="stats-subicon">
+                    <i class="fas fa-circle"></i>
+                  </div>
+                  <div class="stats-sublabel">
+                    {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
+                    マウス
+                    {% else %}
+                    Mice
+                    {% endif %}
+                  </div>
+                  <div class="stats-subnumber" data-api="mice">333</div>
+                </div>
+                <div class="stats-subitem">
+                  <div class="stats-subicon">
+                    <i class="fas fa-circle"></i>
+                  </div>
+                  <div class="stats-sublabel">DNA</div>
+                  <div class="stats-subnumber" data-api="dna">333</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- バリアント -->
+            <div class="stats-card stats-card-large">
+              <div class="stats-icon">
+                <i class="fas fa-project-diagram"></i>
+              </div>
+              <div class="stats-number" data-api="variants">666</div>
+              <div class="stats-label">
+                {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
+                バリアント
+                {% else %}
+                Variants
+                {% endif %}
+              </div>
+              <div class="stats-subitems">
+                <div class="stats-subitem">
+                  <div class="stats-subicon">
+                    <i class="fas fa-circle"></i>
+                  </div>
+                  <div class="stats-sublabel">ClinVar</div>
+                  <div class="stats-subnumber" data-api="clinvar">333</div>
+                </div>
+                <div class="stats-subitem">
+                  <div class="stats-subicon">
+                    <i class="fas fa-circle"></i>
+                  </div>
+                  <div class="stats-sublabel">MGeND</div>
+                  <div class="stats-subnumber" data-api="mgend">333</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
 
         <section id="download" class="section-block">
           {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
