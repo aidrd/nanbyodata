@@ -149,13 +149,15 @@ const datasets = [
       }),
 
       // 他のAPI呼び出し
-      fetchData('test_reference_gene').then((response) => {
-        const japanCuratedGeneData = response;
-        makeJapanCuratedGenes(japanCuratedGeneData);
-        datasets.find((d) => d.name === 'Japan-curated').data =
-          japanCuratedGeneData;
-        checkAndLogDatasets();
-      }),
+      fetchData('nanbyodata_get_japan_curated_gene_by_nando_id').then(
+        (response) => {
+          const japanCuratedGeneData = response;
+          makeJapanCuratedGenes(japanCuratedGeneData);
+          datasets.find((d) => d.name === 'Japan-curated').data =
+            japanCuratedGeneData;
+          checkAndLogDatasets();
+        }
+      ),
       fetchData('nanbyodata_get_stats_on_patient_number_by_nando_id').then(
         (response) => {
           const numOfPatientsData = response;
@@ -297,12 +299,14 @@ const datasets = [
           checkAndLogDatasets();
         }
       ),
-      fetchData('test_reference_gene').then((referenceGenesData) => {
-        makeReferenceGenes(referenceGenesData);
-        datasets.find((d) => d.name === 'Reference Genes').data =
-          referenceGenesData;
-        checkAndLogDatasets();
-      }),
+      fetchData('nanbyodata_get_japan_curated_gene_by_nando_id').then(
+        (referenceGenesData) => {
+          makeReferenceGenes(referenceGenesData);
+          datasets.find((d) => d.name === 'Reference Genes').data =
+            referenceGenesData;
+          checkAndLogDatasets();
+        }
+      ),
       fetchData('nanbyodata_get_causal_gene_by_nando_id').then((geneData) => {
         makeInternationallyCuratedGenes(geneData);
         datasets.find((d) => d.name === 'Genes').data = geneData;
