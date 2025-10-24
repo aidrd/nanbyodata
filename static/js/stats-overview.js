@@ -8,14 +8,21 @@ class StatsOverview {
   // APIからデータを取得
   async fetchStatsData() {
     try {
-      const url = `/sparqlist/api/${this.apiEndpoint}?timestamp=${this.timestamp}`;
-      const response = await fetch(url);
+      // 複数のAPIを並列で呼び出し
+      const [linkData2, linkData] = await Promise.all([
+        fetch(
+          `/sparqlist/api/${this.apiEndpoint}?timestamp=${this.timestamp}`
+        ).then((res) => (res.ok ? res.json() : null)),
+        fetch(
+          `/sparqlist/api/NANDO_link_count?timestamp=${this.timestamp}`
+        ).then((res) => (res.ok ? res.json() : null)),
+      ]);
 
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-      return await response.json();
+      // データをマージ
+      return {
+        ...linkData2,
+        ...linkData,
+      };
     } catch (error) {
       console.error('Error fetching stats data:', error.message);
       return null;
@@ -54,6 +61,15 @@ class StatsOverview {
             2
         ).toString(),
       },
+      facial_features: data.shitei_facial_features?.facial_features || '0',
+      external_links: (
+        parseInt(data.name8?.mondo || '0') +
+        parseInt(data.name10?.medgen || '0') +
+        parseInt(data.name5?.kegg || '0') +
+        parseInt(data.name7?.mondo || '0') +
+        parseInt(data.name9?.medgen || '0') +
+        parseInt(data.name6?.kegg || '0')
+      ).toString(),
     };
   }
 
@@ -115,6 +131,14 @@ class StatsOverview {
       {
         selector: '[data-api="mgend"]',
         value: this.formatNumber(statsData.variants.mgend),
+      },
+      {
+        selector: '[data-api="facial_features"]',
+        value: this.formatNumber(statsData.facial_features),
+      },
+      {
+        selector: '[data-api="external_links"]',
+        value: this.formatNumber(statsData.external_links),
       },
     ];
 

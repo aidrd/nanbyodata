@@ -216,6 +216,44 @@
                 </div>
               </div>
             </a>
+
+            <!-- 顔貌特徴 -->
+            <a href="/stats" class="stats-card-link">
+              <div class="stats-card">
+                <div class="stats-icon">
+                  <i class="fas fa-user-circle"></i>
+                </div>
+                <div class="stats-number" data-api="facial_features">
+                  <div class="loading-spinner -stats"></div>
+                </div>
+                <div class="stats-label">
+                  {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
+                  顔貌特徴
+                  {% else %}
+                  Facial Features
+                  {% endif %}
+                </div>
+              </div>
+            </a>
+
+            <!-- 外部リンク -->
+            <a href="/stats" class="stats-card-link">
+              <div class="stats-card">
+                <div class="stats-icon">
+                  <i class="fas fa-external-link-alt"></i>
+                </div>
+                <div class="stats-number" data-api="external_links">
+                  <div class="loading-spinner -stats"></div>
+                </div>
+                <div class="stats-label">
+                  {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
+                  外部リンク
+                  {% else %}
+                  External Links
+                  {% endif %}
+                </div>
+              </div>
+            </a>
           </div>
         </section>
 

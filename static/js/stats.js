@@ -165,7 +165,9 @@ function transformApiDataToStatsData(nandoData, brcData, linkData, linkData2) {
           glycanGenes: '-',
           geneticTests: safeParseInt(linkData2.shitei_genetest?.genetest),
           clinicalFeatures: safeParseInt(linkData2.shitei_hp?.hp),
-          facialFeatures: '-',
+          facialFeatures: safeParseInt(
+            linkData2.shitei_facial_features?.facial_features || '0'
+          ),
           humanData: '-',
           chemicals: '-',
           literature: '-',
@@ -174,7 +176,9 @@ function transformApiDataToStatsData(nandoData, brcData, linkData, linkData2) {
           glycanGenes: '-',
           geneticTests: safeParseInt(linkData2.shoman_genetest?.genetest),
           clinicalFeatures: safeParseInt(linkData2.shoman_hp?.hp),
-          facialFeatures: '-',
+          facialFeatures: safeParseInt(
+            linkData2.shoman_facial_features?.facial_features || '0'
+          ),
           humanData: '-',
           chemicals: '-',
           literature: '-',
@@ -215,6 +219,17 @@ function transformApiDataToStatsData(nandoData, brcData, linkData, linkData2) {
           dna: safeParseInt(brcData.shoman_DNA?.gene),
         },
       },
+      // 顔貌特徴と外部リンクの合計
+      facial_features:
+        safeParseInt(linkData2.shitei_facial_features?.facial_features || '0') +
+        safeParseInt(linkData2.shoman_facial_features?.facial_features || '0'),
+      external_links:
+        safeParseInt(linkData.name8?.mondo || '0') +
+        safeParseInt(linkData.name10?.medgen || '0') +
+        safeParseInt(linkData.name5?.kegg || '0') +
+        safeParseInt(linkData.name7?.mondo || '0') +
+        safeParseInt(linkData.name9?.medgen || '0') +
+        safeParseInt(linkData.name6?.kegg || '0'),
     };
   } catch (error) {
     console.error('データ変換中にエラーが発生しました:', error);
