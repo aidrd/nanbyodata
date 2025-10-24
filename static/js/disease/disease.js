@@ -290,11 +290,13 @@ const datasets = [
         }
       }),
       // TODO: check API name
-      fetchData('test_pubmed').then((referencesData) => {
-        makeReferences(referencesData);
-        datasets.find((d) => d.name === 'References').data = referencesData;
-        checkAndLogDatasets();
-      }),
+      fetchData('nanbyodata_get_pubmed_data_by_nando_id').then(
+        (referencesData) => {
+          makeReferences(referencesData);
+          datasets.find((d) => d.name === 'References').data = referencesData;
+          checkAndLogDatasets();
+        }
+      ),
       fetchData('test_reference_gene').then((referenceGenesData) => {
         makeReferenceGenes(referenceGenesData);
         datasets.find((d) => d.name === 'Reference Genes').data =
@@ -330,12 +332,14 @@ const datasets = [
         }
       ),
       // TODO: APIの差し替え
-      fetchData('test_humdb').then((publicHumanData) => {
-        makePublicHumanData(publicHumanData);
-        datasets.find((d) => d.name === 'Public Human Data').data =
-          publicHumanData;
-        checkAndLogDatasets();
-      }),
+      fetchData('nanbyodata_get_nbdc_human_databases_info_by_nando_id').then(
+        (publicHumanData) => {
+          makePublicHumanData(publicHumanData);
+          datasets.find((d) => d.name === 'Public Human Data').data =
+            publicHumanData;
+          checkAndLogDatasets();
+        }
+      ),
       fetchData('nanbyodata_get_riken_brc_cell_info_by_nando_id').then(
         (cellData) => {
           makeCell(cellData);

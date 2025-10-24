@@ -209,27 +209,27 @@ export const phenotypesEnColumns = [
 ];
 
 export const publicHumanDataJaColumns = [
-  { id: 'label_ja', label: 'Name', rowspan: true },
+  { id: 'label_ja', label: 'Study Title', rowspan: true },
   {
     id: 'hum_id',
-    label: 'Hum ID',
+    label: 'Research ID',
     link: 'hum_uri',
     target: '_blank',
     rowspan: true,
   },
-  { id: 'type_data_ja', label: 'Type' },
+  { id: 'type_data_ja', label: 'Type of Data' },
 ];
 
 export const publicHumanDataEnColumns = [
-  { id: 'label_en', label: 'Name', rowspan: true },
+  { id: 'label_en', label: 'Study Title', rowspan: true },
   {
     id: 'hum_id',
-    label: 'Hum ID',
+    label: 'Research ID',
     link: 'hum_uri',
     target: '_blank',
     rowspan: true,
   },
-  { id: 'type_data_en', label: 'Type' },
+  { id: 'type_data_en', label: 'Type of Data' },
 ];
 
 export const bioResourceCellColumns = [
