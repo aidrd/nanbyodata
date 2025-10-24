@@ -69,7 +69,12 @@ Stats Overview Component
 
   i {
     font-size: 2.5rem;
-    color: #20b2aa; // ティール色
+    color: #20b2aa;
+  }
+
+  .stats-icon-svg {
+    width: 3rem;
+    height: 3rem;
   }
 }
 
@@ -167,6 +172,11 @@ Stats Overview Component
     i {
       font-size: 2rem;
     }
+
+    .stats-icon-svg {
+      width: 2.5rem;
+      height: 2.5rem;
+    }
   }
 
   .stats-number {
@@ -201,6 +211,11 @@ Stats Overview Component
 
     i {
       font-size: 1.8rem;
+    }
+
+    .stats-icon-svg {
+      width: 2.2rem;
+      height: 2.2rem;
     }
   }
 
