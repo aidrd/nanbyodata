@@ -212,6 +212,18 @@ export function makeMouse(mouseData) {
   const bioResource = document.getElementById('bio-resource');
   const tabWrap = bioResource.querySelector('.tab-wrap');
 
+  // mouse_idの重複を除外したユニークな値の数を計算
+  let uniqueMouseIdCount = 0;
+  if (mouseData && Array.isArray(mouseData) && mouseData.length > 0) {
+    const uniqueMouseIds = new Set();
+    mouseData.forEach((mouse) => {
+      if (mouse.mouse_id) {
+        uniqueMouseIds.add(mouse.mouse_id);
+      }
+    });
+    uniqueMouseIdCount = uniqueMouseIds.size;
+  }
+
   const mouseDataset = processData(mouseData);
   const currentLang = document.querySelector('.language-select').value;
   const mouseColumns =
@@ -226,7 +238,7 @@ export function makeMouse(mouseData) {
     object: mouseDataset.dataObject,
   };
 
-  processTabs(items, 'bio-resource', tabWrap);
+  processTabs(items, 'bio-resource', tabWrap, uniqueMouseIdCount);
   if (mouseData?.length > 0 && mouseData !== null) {
     const navLink = document.querySelector('.nav-link.mouse');
     const bioResource = document.querySelector('.bio-resource');
