@@ -8,6 +8,7 @@ import { makeLinkedList } from './overview/makeLinkedList.js';
 import { makeExternalLinks } from './overview/makeExternalLinks.js';
 import { makeAlternativeName } from './overview/makeAlternativeName.js';
 import { makeInheritanceUris } from './overview/makeInheritanceUris.js';
+import { makeReferenceGenes } from './overview/makeReferenceGenes.js';
 import { makeNumOfPatients } from './overview/makeNumOfPatients.js';
 import { makeSubClass } from './overview/makeSubclass.js';
 import { checkSummaryData } from './overview/checkSummaryData.js';
@@ -74,6 +75,7 @@ const datasets = [
   { name: 'Overview', data: null },
   { name: 'Synonyms', data: null },
   { name: 'Modes of Inheritance', data: null },
+  { name: 'Reference Genes', data: null },
   { name: 'OMIM', data: null },
   { name: 'Orphanet', data: null },
   { name: 'Monarch Initiative', data: null },
@@ -291,6 +293,12 @@ const datasets = [
       fetchData('test_pubmed').then((referencesData) => {
         makeReferences(referencesData);
         datasets.find((d) => d.name === 'References').data = referencesData;
+        checkAndLogDatasets();
+      }),
+      fetchData('test_reference_gene').then((referenceGenesData) => {
+        makeReferenceGenes(referenceGenesData);
+        datasets.find((d) => d.name === 'Reference Genes').data =
+          referenceGenesData;
         checkAndLogDatasets();
       }),
       fetchData('nanbyodata_get_causal_gene_by_nando_id').then((geneData) => {
