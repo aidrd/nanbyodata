@@ -316,8 +316,15 @@ export const chemicalInformationColumns = [
     label: 'Compound CID',
     link: 'id_url',
     target: '_blank',
+    rowspan: true,
   },
-  { id: 'label', label: 'Chemical Name' },
+  { id: 'label', label: 'Chemical Name', rowspan: true },
+  {
+    id: 'title',
+    label: 'Title',
+    link: 'ref_url',
+    target: '_blank',
+  },
 ];
 
 // Overview Sub-classes

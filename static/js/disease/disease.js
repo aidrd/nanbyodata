@@ -365,12 +365,14 @@ const datasets = [
         }
       ),
       // TODO: APIの差し替え
-      fetchData('test_pubchem').then((chemicalInformationData) => {
-        makeChemicalInformation(chemicalInformationData);
-        datasets.find((d) => d.name === 'Chemical Information').data =
-          chemicalInformationData;
-        checkAndLogDatasets();
-      }),
+      fetchData('nanbyodata_get_pubchem_chemical_information_by_nando_id').then(
+        (chemicalInformationData) => {
+          makeChemicalInformation(chemicalInformationData);
+          datasets.find((d) => d.name === 'Chemical Information').data =
+            chemicalInformationData;
+          checkAndLogDatasets();
+        }
+      ),
     ]);
   } catch (error) {
     console.error('Error:', error);
