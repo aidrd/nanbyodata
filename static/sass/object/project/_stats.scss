@@ -15,3 +15,20 @@ Stats Page Styles
     border-left: 6px solid var(--color-secondary);
   }
 }
+
+// Stats Table
+.stats-table {
+  // 数値セルを右寄せにする
+  tbody td {
+    &:not(:first-child) {
+      text-align: right;
+    }
+  }
+  
+  // ヘッダーも右寄せにする（区分列以外）
+  thead th {
+    &:not(:first-child) {
+      text-align: right;
+    }
+  }
+}

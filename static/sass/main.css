@@ -1799,4 +1799,11 @@ Stats Page Styles
   margin-bottom: 1rem;
   padding-left: 0.75rem;
   border-left: 6px solid var(--color-secondary);
+}
+
+.stats-table tbody td:not(:first-child) {
+  text-align: right;
+}
+.stats-table thead th:not(:first-child) {
+  text-align: right;
 }/*# sourceMappingURL=main.css.map */

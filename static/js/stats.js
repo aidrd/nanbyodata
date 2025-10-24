@@ -29,12 +29,26 @@ async function loadStatsData() {
   try {
     console.log('統計データの読み込みを開始...');
 
+    // 各セクションのローディング表示を開始
+    const sections = [
+      'nando',
+      'disease-overview',
+      'links',
+      'related-data',
+      'genes',
+      'bioresources',
+    ];
+    sections.forEach((sectionId) => {
+      showSectionLoading(sectionId);
+    });
+
     // 各APIを個別に呼び出してエラーハンドリング
     const apiResults = await Promise.allSettled([
       fetchNANDOData(),
       fetchBRCData(),
       fetchLinkData(),
       fetchLinkData2(),
+      fetchLinkData4(),
     ]);
 
     // 各APIの結果を処理
@@ -54,10 +68,34 @@ async function loadStatsData() {
       apiResults[3].status === 'fulfilled'
         ? apiResults[3].value
         : getDefaultLinkData2();
+    const linkData4 =
+      apiResults[4].status === 'fulfilled'
+        ? apiResults[4].value
+        : getDefaultLinkData4();
+
+    // 失敗したAPIに対応するセクションを非表示にする
+    if (apiResults[0].status === 'rejected') {
+      hideSection('nando');
+    }
+    if (apiResults[1].status === 'rejected') {
+      hideSection('bioresources');
+    }
+    if (apiResults[2].status === 'rejected') {
+      hideSection('links');
+    }
+    if (apiResults[3].status === 'rejected') {
+      hideSection('disease-overview');
+      hideSection('related-data');
+      hideSection('genes');
+    }
+    if (apiResults[4].status === 'rejected') {
+      // linkData4はrelated-dataの一部で使用されるため、関連セクションをチェック
+      // 既にlinkData2が失敗している場合は既に非表示になっている
+    }
 
     // エラーが発生したAPIをログ出力
     apiResults.forEach((result, index) => {
-      const apiNames = ['NANDO_count', 'BRC', 'Link', 'Link2'];
+      const apiNames = ['NANDO_count', 'BRC', 'Link', 'Link2', 'Link4'];
       if (result.status === 'rejected') {
         console.warn(`${apiNames[index]} API エラー:`, result.reason);
       }
@@ -68,6 +106,7 @@ async function loadStatsData() {
       brcData,
       linkData,
       linkData2,
+      linkData4,
     });
 
     // 取得したデータを構造化されたJSON形式に変換
@@ -75,7 +114,8 @@ async function loadStatsData() {
       nandoData,
       brcData,
       linkData,
-      linkData2
+      linkData2,
+      linkData4
     );
 
     console.log('変換された統計データ:', statsData);
@@ -83,137 +123,141 @@ async function loadStatsData() {
     // 各テーブルの数値を更新
     updateAllTables(statsData);
 
+    // 成功したセクションのみコンテンツを表示
+    sections.forEach((sectionId) => {
+      // セクションが非表示になっていない場合のみ表示
+      const section = document
+        .querySelector(`#${sectionId}-content`)
+        ?.closest('.stats-section');
+      if (section && section.style.display !== 'none') {
+        showSectionContent(sectionId);
+      }
+    });
+
     console.log('統計データの読み込み完了');
   } catch (error) {
     console.error('統計データの読み込みに失敗しました:', error);
     console.error('エラーの詳細:', error.message);
     console.error('エラースタック:', error.stack);
-    // エラーの場合はテーブルにエラーメッセージを表示
-    showErrorMessage();
+    // エラーの場合は各セクションをエラー表示
+    sections.forEach((sectionId) => {
+      showSectionError(sectionId);
+    });
   }
 }
 
 // APIデータを統計データ形式に変換する関数
-function transformApiDataToStatsData(nandoData, brcData, linkData, linkData2) {
+function transformApiDataToStatsData(
+  nandoData,
+  brcData,
+  linkData,
+  linkData2,
+  linkData4
+) {
   try {
-    console.log('データ変換開始...');
-    console.log('nandoData:', nandoData);
-    console.log('linkData2:', linkData2);
-
     return {
       // 難病統計
       diseaseStats: {
-        specified: {
+        shitei: {
           all: safeParseInt(nandoData.shitei_all?.['callret-0']),
-          group: safeParseInt(nandoData.shitei_group?.['callret-0']),
-          groupSubclass: safeParseInt(nandoData.name8?.['callret-0']),
-          subtype: '-',
-          summary: '-',
+          nanbyo_group: safeParseInt(nandoData.shitei_group?.['callret-0']),
+          nanbyo_disease: safeParseInt(nandoData.shitei_disease?.['callret-0']),
+          nanbyo_subtype: (function () {
+            const all = safeParseInt(nandoData.shitei_all?.['callret-0']);
+            const group = safeParseInt(nandoData.shitei_group?.['callret-0']);
+            const disease = safeParseInt(
+              nandoData.shitei_disease?.['callret-0']
+            );
+            if (all === '-' || group === '-' || disease === '-') return '-';
+            return all - group - disease;
+          })(),
         },
-        pediatric: {
+        shoman: {
           all: safeParseInt(nandoData.shoman_all?.['callret-0']),
-          group: safeParseInt(nandoData.shoman_group?.['callret-0']),
-          groupSubclass: safeParseInt(nandoData.name7?.['callret-0']),
-          subtype: '-',
-          summary: '-',
+          nanbyo_group: safeParseInt(nandoData.shoman_group?.['callret-0']),
+          nanbyo_disease: safeParseInt(nandoData.shoman_disease?.['callret-0']),
+          nanbyo_subtype: (function () {
+            const all = safeParseInt(nandoData.shoman_all?.['callret-0']);
+            const group = safeParseInt(nandoData.shoman_group?.['callret-0']);
+            const disease = safeParseInt(
+              nandoData.shoman_disease?.['callret-0']
+            );
+            if (all === '-' || group === '-' || disease === '-') return '-';
+            return all - group - disease;
+          })(),
         },
       },
       // 疾患概要
       diseaseOverview: {
-        inheritance: {
-          specified: safeParseInt(linkData2.shitei_inheritance?.inheritance),
-          pediatric: safeParseInt(linkData2.shoman_inheritance?.inheritance),
+        shitei: {
+          definition: safeParseInt(linkData2.shitei_description?.desc),
+          inheritance: safeParseInt(linkData2.shitei_inheritance?.inheritance),
+          alternativeNames: safeParseInt(linkData2.shitei_altlabel?.alt),
         },
-        dataSources: {
-          specified: {
-            mhlw: {
-              link: '-',
-              definition: safeParseInt(linkData2.shitei_description?.desc),
-            },
-            orphanet: { link: '-', definition: '-' },
-            monarch: {
-              link: safeParseInt(linkData.name8?.mondo),
-              definition: '-',
-            },
-            medgen: {
-              link: safeParseInt(linkData.name10?.medgen),
-              definition: '-',
-            },
-            kegg: { link: safeParseInt(linkData.name5?.kegg), definition: '-' },
-          },
-          pediatric: {
-            mhlw: {
-              link: '-',
-              definition: safeParseInt(linkData2.shoman_description?.desc),
-            },
-            orphanet: { link: '-', definition: '-' },
-            monarch: {
-              link: safeParseInt(linkData.name7?.mondo),
-              definition: '-',
-            },
-            medgen: {
-              link: safeParseInt(linkData.name9?.medgen),
-              definition: '-',
-            },
-            kegg: { link: safeParseInt(linkData.name6?.kegg), definition: '-' },
-          },
+        shoman: {
+          definition: safeParseInt(linkData2.shoman_description?.desc),
+          inheritance: safeParseInt(linkData2.shoman_inheritance?.inheritance),
+          alternativeNames: safeParseInt(linkData2.shoman_altlabel?.alt),
+        },
+      },
+      // リンク
+      links: {
+        shitei: {
+          monarchExact: safeParseInt(linkData.name2?.mondo),
+          monarchClose: safeParseInt(linkData.name4?.mondo),
+          orphanet: safeParseInt(linkData.name12?.mondo),
+          medgen: safeParseInt(linkData.name10?.medgen),
+          kegg: safeParseInt(linkData.name5?.kegg),
+        },
+        shoman: {
+          monarchExact: safeParseInt(linkData.name1?.mondo),
+          monarchClose: safeParseInt(linkData.name3?.mondo),
+          orphanet: safeParseInt(linkData.name11?.mondo),
+          medgen: safeParseInt(linkData.name9?.medgen),
+          kegg: safeParseInt(linkData.name6?.kegg),
         },
       },
       // 疾患関連データ
       relatedData: {
-        specified: {
+        shitei: {
           glycanGenes: '-',
           geneticTests: safeParseInt(linkData2.shitei_genetest?.genetest),
           clinicalFeatures: safeParseInt(linkData2.shitei_hp?.hp),
-          facialFeatures: safeParseInt(
-            linkData2.shitei_facial_features?.facial_features || '0'
-          ),
-          humanData: '-',
+          facialFeatures: safeParseInt(linkData4.shitei_gm?.GM || '0'),
+          humanData: safeParseInt(linkData4.shitei_hum?.hum || '0'),
           chemicals: '-',
           literature: '-',
         },
-        pediatric: {
+        shoman: {
           glycanGenes: '-',
           geneticTests: safeParseInt(linkData2.shoman_genetest?.genetest),
           clinicalFeatures: safeParseInt(linkData2.shoman_hp?.hp),
-          facialFeatures: safeParseInt(
-            linkData2.shoman_facial_features?.facial_features || '0'
-          ),
-          humanData: '-',
+          facialFeatures: safeParseInt(linkData4.shoman_gm?.GM || '0'),
+          humanData: safeParseInt(linkData4.shoman_hum?.hum || '0'),
           chemicals: '-',
           literature: '-',
         },
       },
       // 疾患関連遺伝子
       genes: {
-        specified: {
+        shitei: {
           domestic: '-',
           international: safeParseInt(linkData2.shitei_gene?.gene),
         },
-        pediatric: {
+        shoman: {
           domestic: '-',
           international: safeParseInt(linkData2.shoman_gene?.gene),
         },
       },
-      // バリアント
-      variants: {
-        specified: {
-          clinvar: '-',
-          mgend: safeParseInt(linkData2.shitei_mgened?.mgend),
-        },
-        pediatric: {
-          clinvar: '-',
-          mgend: parseInt(linkData2.shoman_mgend.mgend),
-        },
-      },
+
       // バイオリソース
       bioresources: {
-        specified: {
+        shitei: {
           cells: safeParseInt(brcData.shitei_cell?.cell),
           mouse: safeParseInt(brcData.shitei_mouse?.mouse),
           dna: safeParseInt(brcData.shitei_DNA?.gene),
         },
-        pediatric: {
+        shoman: {
           cells: safeParseInt(brcData.shoman_cell?.cell),
           mouse: safeParseInt(brcData.shoman_mouse?.mouse),
           dna: safeParseInt(brcData.shoman_DNA?.gene),
@@ -221,8 +265,8 @@ function transformApiDataToStatsData(nandoData, brcData, linkData, linkData2) {
       },
       // 顔貌特徴と外部リンクの合計
       facial_features:
-        safeParseInt(linkData2.shitei_facial_features?.facial_features || '0') +
-        safeParseInt(linkData2.shoman_facial_features?.facial_features || '0'),
+        safeParseInt(linkData4.shitei_gm?.GM || '0') +
+        safeParseInt(linkData4.shoman_gm?.GM || '0'),
       external_links:
         safeParseInt(linkData.name8?.mondo || '0') +
         safeParseInt(linkData.name10?.medgen || '0') +
@@ -241,9 +285,9 @@ function transformApiDataToStatsData(nandoData, brcData, linkData, linkData2) {
 function updateAllTables(statsData) {
   updateDiseaseStats(statsData.diseaseStats);
   updateDiseaseOverview(statsData.diseaseOverview);
+  updateLinks(statsData.links);
   updateRelatedData(statsData.relatedData);
   updateGenes(statsData.genes);
-  updateVariants(statsData.variants);
   updateBioresources(statsData.bioresources);
 }
 
@@ -387,7 +431,84 @@ async function fetchLinkData2() {
   }
 }
 
-// エラーメッセージを表示する関数
+// NANDO_link_count4 APIからデータを取得する関数
+async function fetchLinkData4() {
+  try {
+    console.log('Link4 API呼び出し開始...');
+    const response = await fetch(
+      'http://localhost:8888/sparqlist/api/NANDO_link_count4'
+    );
+    console.log('Link4 API レスポンス:', response.status, response.statusText);
+
+    if (!response.ok) {
+      throw new Error(
+        `Link4 API request failed: ${response.status} ${response.statusText}`
+      );
+    }
+
+    const contentType = response.headers.get('content-type');
+    console.log('Link4 API Content-Type:', contentType);
+
+    if (!contentType || !contentType.includes('application/json')) {
+      const text = await response.text();
+      console.error('Expected JSON but got:', contentType);
+      console.error('Response text:', text.substring(0, 200) + '...');
+      throw new Error(`Expected JSON response but got ${contentType}`);
+    }
+
+    const data = await response.json();
+    console.log('Link4 API データ取得成功:', data);
+    return data;
+  } catch (error) {
+    console.error('Link4 API エラー:', error);
+    throw error;
+  }
+}
+
+// 各セクションのローディング状態を表示する関数
+function showSectionLoading(sectionId) {
+  const loadingDiv = document.getElementById(`${sectionId}-loading`);
+  const errorDiv = document.getElementById(`${sectionId}-error`);
+  const contentDiv = document.getElementById(`${sectionId}-content`);
+
+  if (loadingDiv) loadingDiv.style.display = 'block';
+  if (errorDiv) errorDiv.style.display = 'none';
+  if (contentDiv) contentDiv.style.display = 'none';
+}
+
+// 各セクションのコンテンツを表示する関数
+function showSectionContent(sectionId) {
+  const loadingDiv = document.getElementById(`${sectionId}-loading`);
+  const errorDiv = document.getElementById(`${sectionId}-error`);
+  const contentDiv = document.getElementById(`${sectionId}-content`);
+
+  if (loadingDiv) loadingDiv.style.display = 'none';
+  if (errorDiv) errorDiv.style.display = 'none';
+  if (contentDiv) contentDiv.style.display = 'block';
+}
+
+// 各セクションのエラー状態を表示する関数
+function showSectionError(sectionId) {
+  const loadingDiv = document.getElementById(`${sectionId}-loading`);
+  const errorDiv = document.getElementById(`${sectionId}-error`);
+  const contentDiv = document.getElementById(`${sectionId}-content`);
+
+  if (loadingDiv) loadingDiv.style.display = 'none';
+  if (errorDiv) errorDiv.style.display = 'block';
+  if (contentDiv) contentDiv.style.display = 'none';
+}
+
+// セクションを非表示にする関数
+function hideSection(sectionId) {
+  const section = document
+    .querySelector(`#${sectionId}-content`)
+    .closest('.stats-section');
+  if (section) {
+    section.style.display = 'none';
+  }
+}
+
+// エラーメッセージを表示する関数（既存のテーブルセル用）
 function showErrorMessage() {
   // 言語を取得
   const locale = document.querySelector('.language-select')?.value || 'en';
@@ -396,7 +517,7 @@ function showErrorMessage() {
 
   // 全てのテーブルセルにエラーメッセージを表示
   const allCells = document.querySelectorAll(
-    '[id$="-all"], [id$="-group"], [id$="-group-subclass"], [id$="-subtype"], [id$="-summary"], [id$="-inheritance"], [id$="-link"], [id$="-definition"], [id$="-genes"], [id$="-genetic-tests"], [id$="-clinical-features"], [id$="-facial-features"], [id$="-human-data"], [id$="-chemicals"], [id$="-literature"], [id$="-domestic-genes"], [id$="-international-genes"], [id$="-clinvar"], [id$="-mgend"], [id$="-cells"], [id$="-mouse"], [id$="-dna"]'
+    '[id$="-all"], [id$="-nanbyo-group"], [id$="-nanbyo-disease"], [id$="-nanbyo-subtype"], [id$="-definition"], [id$="-inheritance"], [id$="-alternative-names"], [id$="-monarch-exact"], [id$="-monarch-close"], [id$="-orphanet"], [id$="-medgen"], [id$="-kegg"], [id$="-genes"], [id$="-genetic-tests"], [id$="-clinical-features"], [id$="-facial-features"], [id$="-human-data"], [id$="-chemicals"], [id$="-literature"], [id$="-domestic-genes"], [id$="-international-genes"], [id$="-clinvar"], [id$="-mgend"], [id$="-cells"], [id$="-mouse"], [id$="-dna"]'
   );
 
   allCells.forEach((cell) => {
@@ -407,18 +528,17 @@ function showErrorMessage() {
 
 function updateDiseaseStats(diseaseStats) {
   // 難病統計テーブル
-  updateDiseaseStatsRow('specified', diseaseStats.specified);
-  updateDiseaseStatsRow('pediatric', diseaseStats.pediatric);
+  updateDiseaseStatsRow('shitei', diseaseStats.shitei);
+  updateDiseaseStatsRow('shoman', diseaseStats.shoman);
 }
 
 function updateDiseaseStatsRow(category, data) {
   try {
     const fieldMapping = {
       all: 'all',
-      group: 'group',
-      'group-subclass': 'groupSubclass',
-      subtype: 'subtype',
-      summary: 'summary',
+      'nanbyo-group': 'nanbyo_group',
+      'nanbyo-disease': 'nanbyo_disease',
+      'nanbyo-subtype': 'nanbyo_subtype',
     };
 
     Object.entries(fieldMapping).forEach(([field, dataKey]) => {
@@ -446,39 +566,86 @@ function updateDiseaseStatsRow(category, data) {
 
 function updateDiseaseOverview(diseaseOverview) {
   // 疾患概要テーブル
-  updateInheritanceData(diseaseOverview.inheritance);
-  updateDataSourceData(diseaseOverview.dataSources);
+  updateDiseaseOverviewData(diseaseOverview);
 }
 
-function updateInheritanceData(inheritance) {
-  document.getElementById('specified-inheritance').textContent =
-    inheritance.specified.toLocaleString();
-  document.getElementById('pediatric-inheritance').textContent =
-    inheritance.pediatric.toLocaleString();
+function updateDiseaseOverviewData(diseaseOverview) {
+  // 指定の疾患概要データを更新
+  document.getElementById('shitei-definition').textContent =
+    diseaseOverview.shitei.definition === '-'
+      ? '-'
+      : diseaseOverview.shitei.definition.toLocaleString();
+  document.getElementById('shitei-inheritance').textContent =
+    diseaseOverview.shitei.inheritance === '-'
+      ? '-'
+      : diseaseOverview.shitei.inheritance.toLocaleString();
+  document.getElementById('shitei-alternative-names').textContent =
+    diseaseOverview.shitei.alternativeNames === '-'
+      ? '-'
+      : diseaseOverview.shitei.alternativeNames.toLocaleString();
+
+  // 小慢の疾患概要データを更新
+  document.getElementById('shoman-definition').textContent =
+    diseaseOverview.shoman.definition === '-'
+      ? '-'
+      : diseaseOverview.shoman.definition.toLocaleString();
+  document.getElementById('shoman-inheritance').textContent =
+    diseaseOverview.shoman.inheritance === '-'
+      ? '-'
+      : diseaseOverview.shoman.inheritance.toLocaleString();
+  document.getElementById('shoman-alternative-names').textContent =
+    diseaseOverview.shoman.alternativeNames === '-'
+      ? '-'
+      : diseaseOverview.shoman.alternativeNames.toLocaleString();
 }
 
-function updateDataSourceData(dataSources) {
-  updateDataSourceRow('specified', dataSources.specified);
-  updateDataSourceRow('pediatric', dataSources.pediatric);
+function updateLinks(links) {
+  // リンクテーブル
+  updateLinksData(links);
 }
 
-function updateDataSourceRow(category, data) {
-  const sources = ['mhlw', 'orphanet', 'monarch', 'medgen', 'kegg'];
+function updateLinksData(links) {
+  // 指定のリンクデータを更新
+  document.getElementById('shitei-monarch-exact').textContent =
+    links.shitei.monarchExact === '-'
+      ? '-'
+      : links.shitei.monarchExact.toLocaleString();
+  document.getElementById('shitei-monarch-close').textContent =
+    links.shitei.monarchClose === '-'
+      ? '-'
+      : links.shitei.monarchClose.toLocaleString();
+  document.getElementById('shitei-orphanet').textContent =
+    links.shitei.orphanet === '-'
+      ? '-'
+      : links.shitei.orphanet.toLocaleString();
+  document.getElementById('shitei-medgen').textContent =
+    links.shitei.medgen === '-' ? '-' : links.shitei.medgen.toLocaleString();
+  document.getElementById('shitei-kegg').textContent =
+    links.shitei.kegg === '-' ? '-' : links.shitei.kegg.toLocaleString();
 
-  sources.forEach((source) => {
-    document.getElementById(`${category}-${source}-link`).textContent =
-      data[source].link;
-    document.getElementById(`${category}-${source}-definition`).textContent =
-      data[source].definition === '-'
-        ? '-'
-        : data[source].definition.toLocaleString();
-  });
+  // 小慢のリンクデータを更新
+  document.getElementById('shoman-monarch-exact').textContent =
+    links.shoman.monarchExact === '-'
+      ? '-'
+      : links.shoman.monarchExact.toLocaleString();
+  document.getElementById('shoman-monarch-close').textContent =
+    links.shoman.monarchClose === '-'
+      ? '-'
+      : links.shoman.monarchClose.toLocaleString();
+  document.getElementById('shoman-orphanet').textContent =
+    links.shoman.orphanet === '-'
+      ? '-'
+      : links.shoman.orphanet.toLocaleString();
+  document.getElementById('shoman-medgen').textContent =
+    links.shoman.medgen === '-' ? '-' : links.shoman.medgen.toLocaleString();
+  document.getElementById('shoman-kegg').textContent =
+    links.shoman.kegg === '-' ? '-' : links.shoman.kegg.toLocaleString();
 }
 
 function updateRelatedData(relatedData) {
   // 疾患関連データテーブル
-  updateRelatedDataRow('specified', relatedData.specified);
-  updateRelatedDataRow('pediatric', relatedData.pediatric);
+  updateRelatedDataRow('shitei', relatedData.shitei);
+  updateRelatedDataRow('shoman', relatedData.shoman);
 }
 
 function updateRelatedDataRow(category, data) {
@@ -522,8 +689,8 @@ function updateRelatedDataRow(category, data) {
 
 function updateGenes(genes) {
   // 疾患関連遺伝子テーブル
-  updateGenesRow('specified', genes.specified);
-  updateGenesRow('pediatric', genes.pediatric);
+  updateGenesRow('shitei', genes.shitei);
+  updateGenesRow('shoman', genes.shoman);
 }
 
 function updateGenesRow(category, data) {
@@ -557,43 +724,10 @@ function updateGenesRow(category, data) {
   }
 }
 
-function updateVariants(variants) {
-  // バリアントテーブル
-  updateVariantsRow('specified', variants.specified);
-  updateVariantsRow('pediatric', variants.pediatric);
-}
-
-function updateVariantsRow(category, data) {
-  try {
-    const clinvarElement = document.getElementById(`${category}-clinvar`);
-    const mgendElement = document.getElementById(`${category}-mgend`);
-
-    if (!clinvarElement) {
-      console.error(`Element not found: ${category}-clinvar`);
-    } else {
-      const clinvarValue = data.clinvar;
-      clinvarElement.textContent =
-        clinvarValue === '-' ? '-' : clinvarValue.toLocaleString();
-    }
-
-    if (!mgendElement) {
-      console.error(`Element not found: ${category}-mgend`);
-    } else {
-      const mgendValue = data.mgend;
-      mgendElement.textContent =
-        mgendValue === '-' ? '-' : mgendValue.toLocaleString();
-    }
-
-    console.log(`Variants updated for ${category}:`, data);
-  } catch (error) {
-    console.error(`Error updating variants for ${category}:`, error);
-  }
-}
-
 function updateBioresources(bioresources) {
   // バイオリソーステーブル
-  updateBioresourcesRow('specified', bioresources.specified);
-  updateBioresourcesRow('pediatric', bioresources.pediatric);
+  updateBioresourcesRow('shitei', bioresources.shitei);
+  updateBioresourcesRow('shoman', bioresources.shoman);
 }
 
 function updateBioresourcesRow(category, data) {
@@ -642,10 +776,10 @@ function getDefaultNandoData() {
   return {
     shitei_all: { 'callret-0': '0' },
     shitei_group: { 'callret-0': '0' },
-    name8: { 'callret-0': '0' },
+    shitei_disease: { 'callret-0': '0' },
     shoman_all: { 'callret-0': '0' },
     shoman_group: { 'callret-0': '0' },
-    name7: { 'callret-0': '0' },
+    shoman_disease: { 'callret-0': '0' },
   };
 }
 
@@ -688,5 +822,17 @@ function getDefaultLinkData2() {
     shoman_gene: { gene: '0' },
     shitei_mgened: { mgend: '0' },
     shoman_mgened: { mgend: '0' },
+    shitei_altlabel: { alt: '0' },
+    shoman_altlabel: { alt: '0' },
+  };
+}
+
+function getDefaultLinkData4() {
+  console.log('Link4 API エラーのためデフォルトデータを使用');
+  return {
+    shitei_gm: { GM: '0' },
+    shoman_gm: { GM: '0' },
+    shitei_hum: { hum: '0' },
+    shoman_hum: { hum: '0' },
   };
 }
