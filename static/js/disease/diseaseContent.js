@@ -1,12 +1,13 @@
 import { makeSideNavigation } from './diseaseSideNavigation.js';
 import {
   geneColumns,
+  referenceGeneColumns,
   glycanRelatedGeneColumns,
   geneticTestingColumns,
   phenotypesJaColumns,
   phenotypesEnColumns,
-  humDataJaColumns,
-  humDataEnColumns,
+  publicHumanDataJaColumns,
+  publicHumanDataEnColumns,
   referencesColumns,
   bioResourceCellColumns,
   bioResourceMouseJaColumns,
@@ -26,8 +27,12 @@ import {
 
 makeSideNavigation();
 
-// genes(疾患関連遺伝子)
-export function makeGenes(geneData) {
+// internationallyCuratedGenes(国際リソース由来の疾患関連遺伝子)
+export function makeInternationallyCuratedGenes(geneData) {
+  const genes = document.getElementById('genes');
+  const tabWrap = genes.querySelector('.tab-wrap');
+
+  const genesDataset = processData(geneData);
   // gene_symbolの重複を除外したユニークな値の数を計算
   let uniqueGeneSymbolCount = 0;
   if (geneData && Array.isArray(geneData) && geneData.length > 0) {
@@ -40,17 +45,68 @@ export function makeGenes(geneData) {
     uniqueGeneSymbolCount = uniqueGeneSymbols.size;
   }
 
-  makeData(
-    geneData,
-    'genes',
-    'genes-table',
-    convertColumnToText(geneColumns),
-    uniqueGeneSymbolCount // 重複のないgene_symbolの数を渡す
-  );
+  const items = {
+    id: 'internationally-curated',
+    columns: convertColumnToText(geneColumns),
+    data: geneData,
+    object: genesDataset.dataObject,
+  };
+
+  processTabs(items, 'genes', tabWrap, uniqueGeneSymbolCount);
   if (geneData?.length > 0 && geneData !== null) {
-    const navLink = document.querySelector('.nav-link.genes');
+    const navLink = document.querySelector('.nav-link.internationally-curated');
+    const genesWrapper = document.querySelector('.genes');
     navLink.style.cursor = 'pointer';
     navLink.classList.remove('-disabled');
+    genesWrapper.classList.remove('-disabled');
+  } else {
+    document.querySelector('#genes-internationally-curated').remove();
+    document.querySelector('.tab-label.genes-internationally-curated').remove();
+    document.querySelector('.tab-content.internationally-curated').remove();
+  }
+}
+
+// japanCuratedGenes(国内基準由来の疾患関連遺伝子)
+export function makeJapanCuratedGenes(japanCuratedGeneData) {
+  const genes = document.getElementById('genes');
+  const tabWrap = genes.querySelector('.tab-wrap');
+
+  const japanCuratedGenesDataset = processData(japanCuratedGeneData);
+
+  // symbolの重複を除外したユニークな値の数を計算
+  let uniqueJapanCuratedSymbolCount = 0;
+  if (
+    japanCuratedGeneData &&
+    Array.isArray(japanCuratedGeneData) &&
+    japanCuratedGeneData.length > 0
+  ) {
+    const uniqueJapanCuratedSymbols = new Set();
+    japanCuratedGeneData.forEach((gene) => {
+      if (gene.symbol) {
+        uniqueJapanCuratedSymbols.add(gene.symbol);
+      }
+    });
+    uniqueJapanCuratedSymbolCount = uniqueJapanCuratedSymbols.size;
+  }
+
+  const items = {
+    id: 'japan-curated',
+    columns: convertColumnToText(referenceGeneColumns),
+    data: japanCuratedGeneData,
+    object: japanCuratedGenesDataset.dataObject,
+  };
+
+  processTabs(items, 'genes', tabWrap, uniqueJapanCuratedSymbolCount);
+  if (japanCuratedGeneData?.length > 0 && japanCuratedGeneData !== null) {
+    const navLink = document.querySelector('.nav-link.japan-curated');
+    const genesWrapper = document.querySelector('.genes');
+    navLink.style.cursor = 'pointer';
+    navLink.classList.remove('-disabled');
+    genesWrapper.classList.remove('-disabled');
+  } else {
+    document.querySelector('#genes-japan-curated').remove();
+    document.querySelector('.tab-label.genes-japan-curated').remove();
+    document.querySelector('.tab-content.japan-curated').remove();
   }
 }
 
@@ -139,23 +195,24 @@ export function makePhenotypes(phenotypesData) {
   }
 }
 
-// humData(Hum Data)
-export function makeHumData(humData) {
+// publicHumanData(ヒト公開データ)
+export function makePublicHumanData(publicHumanData) {
   const currentLang = document.querySelector('.language-select').value;
-  const humDataLang = currentLang === 'ja' ? 'hum-data-ja' : 'hum-data-en';
+  const publicHumanDataLang =
+    currentLang === 'ja' ? 'public-human-data-ja' : 'public-human-data-en';
   const columns = {
-    ja: convertColumnToText(humDataJaColumns),
-    en: convertColumnToText(humDataEnColumns),
+    ja: convertColumnToText(publicHumanDataJaColumns),
+    en: convertColumnToText(publicHumanDataEnColumns),
   };
   makeData(
-    humData,
-    'hum-data',
-    humDataLang,
+    publicHumanData,
+    'public-human-data',
+    publicHumanDataLang,
     columns[currentLang],
-    humData?.length || 0
+    publicHumanData?.length || 0
   );
-  if (humData?.length > 0 && humData !== null) {
-    const navLink = document.querySelector('.nav-link.hum-data');
+  if (publicHumanData?.length > 0 && publicHumanData !== null) {
+    const navLink = document.querySelector('.nav-link.public-human-data');
     navLink.style.cursor = 'pointer';
     navLink.classList.remove('-disabled');
   }
@@ -380,10 +437,10 @@ export function makeChemicalInformation(chemicalInformationData) {
 }
 
 /**
- * Generates and updates data table for causalGene, geneticTesting and phenotypes.
- * @param {Array} data - Data from API (e.g., causalGeneData, geneticTestingData, phenotypesData).
- * @param {string} categoryName - Category name (e.g., 'causal-genes', 'genetic-testing', 'phenotypes').
- * @param {string} tableId - Table element ID (e.g., 'causal-genes-table', 'genetic-testing-table', 'phenotype-ja', 'phenotype-en').
+ * Generates and updates data table for genes, geneticTesting and phenotypes.
+ * @param {Array} data - Data from API (e.g., geneData, geneticTestingData, phenotypesData).
+ * @param {string} categoryName - Category name (e.g., 'genes', 'genetic-testing', 'phenotypes').
+ * @param {string} tableId - Table element ID (e.g., 'genes-table', 'genetic-testing-table', 'phenotype-ja', 'phenotype-en').
  * @param {string} columns - Columns for togostanza-pagination-table.
  * @param {number} customCount - Optional custom count for data-num (used for unique gene counts).
  */

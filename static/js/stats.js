@@ -27,8 +27,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
 async function loadStatsData() {
   try {
-    console.log('統計データの読み込みを開始...');
-
     // 各セクションのローディング表示を開始
     const sections = [
       'nando',
@@ -49,6 +47,7 @@ async function loadStatsData() {
       fetchLinkData(),
       fetchLinkData2(),
       fetchLinkData4(),
+      fetchLinkData5(),
     ]);
 
     // 各APIの結果を処理
@@ -72,6 +71,10 @@ async function loadStatsData() {
       apiResults[4].status === 'fulfilled'
         ? apiResults[4].value
         : getDefaultLinkData4();
+    const linkData5 =
+      apiResults[5]?.status === 'fulfilled'
+        ? apiResults[5].value
+        : getDefaultLinkData5();
 
     // 失敗したAPIに対応するセクションを非表示にする
     if (apiResults[0].status === 'rejected') {
@@ -92,21 +95,24 @@ async function loadStatsData() {
       // linkData4はrelated-dataの一部で使用されるため、関連セクションをチェック
       // 既にlinkData2が失敗している場合は既に非表示になっている
     }
+    if (apiResults[5]?.status === 'rejected') {
+      // linkData5はrelated-dataの化学物質で使用されるため、関連セクションをチェック
+      // 既にlinkData2が失敗している場合は既に非表示になっている
+    }
 
     // エラーが発生したAPIをログ出力
     apiResults.forEach((result, index) => {
-      const apiNames = ['NANDO_count', 'BRC', 'Link', 'Link2', 'Link4'];
+      const apiNames = [
+        'NANDO_count',
+        'BRC',
+        'Link',
+        'Link2',
+        'Link4',
+        'Link5',
+      ];
       if (result.status === 'rejected') {
         console.warn(`${apiNames[index]} API エラー:`, result.reason);
       }
-    });
-
-    console.log('APIデータ取得成功:', {
-      nandoData,
-      brcData,
-      linkData,
-      linkData2,
-      linkData4,
     });
 
     // 取得したデータを構造化されたJSON形式に変換
@@ -115,10 +121,9 @@ async function loadStatsData() {
       brcData,
       linkData,
       linkData2,
-      linkData4
+      linkData4,
+      linkData5
     );
-
-    console.log('変換された統計データ:', statsData);
 
     // 各テーブルの数値を更新
     updateAllTables(statsData);
@@ -131,14 +136,23 @@ async function loadStatsData() {
         ?.closest('.stats-section');
       if (section && section.style.display !== 'none') {
         showSectionContent(sectionId);
+      } else {
+        // セクションが非表示の場合はローディングを非表示にする
+        hideSectionLoading(sectionId);
       }
     });
-
-    console.log('統計データの読み込み完了');
   } catch (error) {
     console.error('統計データの読み込みに失敗しました:', error);
     console.error('エラーの詳細:', error.message);
     console.error('エラースタック:', error.stack);
+    console.error(
+      'API結果の状態:',
+      apiResults?.map((result, index) => ({
+        index,
+        status: result?.status,
+        reason: result?.reason?.message || result?.reason,
+      }))
+    );
     // エラーの場合は各セクションをエラー表示
     sections.forEach((sectionId) => {
       showSectionError(sectionId);
@@ -152,7 +166,8 @@ function transformApiDataToStatsData(
   brcData,
   linkData,
   linkData2,
-  linkData4
+  linkData4,
+  linkData5
 ) {
   try {
     return {
@@ -225,8 +240,7 @@ function transformApiDataToStatsData(
           clinicalFeatures: safeParseInt(linkData2.shitei_hp?.hp),
           facialFeatures: safeParseInt(linkData4.shitei_gm?.GM || '0'),
           humanData: safeParseInt(linkData4.shitei_hum?.hum || '0'),
-          chemicals: '-',
-          literature: '-',
+          chemicals: safeParseInt(linkData5.shitei_pubchem?.pubchem),
         },
         shoman: {
           glycanGenes: '-',
@@ -234,18 +248,17 @@ function transformApiDataToStatsData(
           clinicalFeatures: safeParseInt(linkData2.shoman_hp?.hp),
           facialFeatures: safeParseInt(linkData4.shoman_gm?.GM || '0'),
           humanData: safeParseInt(linkData4.shoman_hum?.hum || '0'),
-          chemicals: '-',
-          literature: '-',
+          chemicals: safeParseInt(linkData5.shoman_pubchem?.pubchem),
         },
       },
       // 疾患関連遺伝子
       genes: {
         shitei: {
-          domestic: '-',
+          domestic: safeParseInt(linkData4.shitei_CG?.curatedGene),
           international: safeParseInt(linkData2.shitei_gene?.gene),
         },
         shoman: {
-          domestic: '-',
+          domestic: safeParseInt(linkData4.shoman_CG?.curatedGene),
           international: safeParseInt(linkData2.shoman_gene?.gene),
         },
       },
@@ -294,14 +307,8 @@ function updateAllTables(statsData) {
 // NANDO_count APIからデータを取得する関数
 async function fetchNANDOData() {
   try {
-    console.log('NANDO_count API呼び出し開始...');
     const response = await fetch(
       'http://localhost:8888/sparqlist/api/NANDO_count'
-    );
-    console.log(
-      'NANDO_count API レスポンス:',
-      response.status,
-      response.statusText
     );
 
     if (!response.ok) {
@@ -311,7 +318,6 @@ async function fetchNANDOData() {
     }
 
     const contentType = response.headers.get('content-type');
-    console.log('NANDO_count API Content-Type:', contentType);
 
     if (!contentType || !contentType.includes('application/json')) {
       const text = await response.text();
@@ -321,7 +327,6 @@ async function fetchNANDOData() {
     }
 
     const data = await response.json();
-    console.log('NANDO_count API データ取得成功:', data);
     return data;
   } catch (error) {
     console.error('NANDO_count API エラー:', error);
@@ -332,11 +337,9 @@ async function fetchNANDOData() {
 // BRC APIからデータを取得する関数
 async function fetchBRCData() {
   try {
-    console.log('BRC API呼び出し開始...');
     const response = await fetch(
       'http://localhost:8888/sparqlist/api/NANDO_link_count3_brc'
     );
-    console.log('BRC API レスポンス:', response.status, response.statusText);
 
     if (!response.ok) {
       throw new Error(
@@ -345,7 +348,6 @@ async function fetchBRCData() {
     }
 
     const contentType = response.headers.get('content-type');
-    console.log('BRC API Content-Type:', contentType);
 
     if (!contentType || !contentType.includes('application/json')) {
       const text = await response.text();
@@ -355,7 +357,6 @@ async function fetchBRCData() {
     }
 
     const data = await response.json();
-    console.log('BRC API データ取得成功:', data);
     return data;
   } catch (error) {
     console.error('BRC API エラー:', error);
@@ -366,11 +367,9 @@ async function fetchBRCData() {
 // NANDO_link_count APIからデータを取得する関数
 async function fetchLinkData() {
   try {
-    console.log('Link API呼び出し開始...');
     const response = await fetch(
       'http://localhost:8888/sparqlist/api/NANDO_link_count'
     );
-    console.log('Link API レスポンス:', response.status, response.statusText);
 
     if (!response.ok) {
       throw new Error(
@@ -379,7 +378,6 @@ async function fetchLinkData() {
     }
 
     const contentType = response.headers.get('content-type');
-    console.log('Link API Content-Type:', contentType);
 
     if (!contentType || !contentType.includes('application/json')) {
       const text = await response.text();
@@ -389,7 +387,6 @@ async function fetchLinkData() {
     }
 
     const data = await response.json();
-    console.log('Link API データ取得成功:', data);
     return data;
   } catch (error) {
     console.error('Link API エラー:', error);
@@ -400,11 +397,9 @@ async function fetchLinkData() {
 // NANDO_link_count2 APIからデータを取得する関数
 async function fetchLinkData2() {
   try {
-    console.log('Link2 API呼び出し開始...');
     const response = await fetch(
       'http://localhost:8888/sparqlist/api/NANDO_link_count2'
     );
-    console.log('Link2 API レスポンス:', response.status, response.statusText);
 
     if (!response.ok) {
       throw new Error(
@@ -413,7 +408,6 @@ async function fetchLinkData2() {
     }
 
     const contentType = response.headers.get('content-type');
-    console.log('Link2 API Content-Type:', contentType);
 
     if (!contentType || !contentType.includes('application/json')) {
       const text = await response.text();
@@ -423,7 +417,6 @@ async function fetchLinkData2() {
     }
 
     const data = await response.json();
-    console.log('Link2 API データ取得成功:', data);
     return data;
   } catch (error) {
     console.error('Link2 API エラー:', error);
@@ -434,11 +427,9 @@ async function fetchLinkData2() {
 // NANDO_link_count4 APIからデータを取得する関数
 async function fetchLinkData4() {
   try {
-    console.log('Link4 API呼び出し開始...');
     const response = await fetch(
       'http://localhost:8888/sparqlist/api/NANDO_link_count4'
     );
-    console.log('Link4 API レスポンス:', response.status, response.statusText);
 
     if (!response.ok) {
       throw new Error(
@@ -447,7 +438,6 @@ async function fetchLinkData4() {
     }
 
     const contentType = response.headers.get('content-type');
-    console.log('Link4 API Content-Type:', contentType);
 
     if (!contentType || !contentType.includes('application/json')) {
       const text = await response.text();
@@ -457,10 +447,39 @@ async function fetchLinkData4() {
     }
 
     const data = await response.json();
-    console.log('Link4 API データ取得成功:', data);
     return data;
   } catch (error) {
     console.error('Link4 API エラー:', error);
+    throw error;
+  }
+}
+
+// NANDO_link_count5 APIからデータを取得する関数
+async function fetchLinkData5() {
+  try {
+    const response = await fetch(
+      'http://localhost:8888/sparqlist/api/NANDO_link_count5'
+    );
+
+    if (!response.ok) {
+      throw new Error(
+        `Link5 API request failed: ${response.status} ${response.statusText}`
+      );
+    }
+
+    const contentType = response.headers.get('content-type');
+
+    if (!contentType || !contentType.includes('application/json')) {
+      const text = await response.text();
+      console.error('Expected JSON but got:', contentType);
+      console.error('Response text:', text.substring(0, 200) + '...');
+      throw new Error(`Expected JSON response but got ${contentType}`);
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Link5 API エラー:', error);
     throw error;
   }
 }
@@ -485,6 +504,17 @@ function showSectionContent(sectionId) {
   if (loadingDiv) loadingDiv.style.display = 'none';
   if (errorDiv) errorDiv.style.display = 'none';
   if (contentDiv) contentDiv.style.display = 'block';
+}
+
+// 各セクションのローディングを非表示にする関数
+function hideSectionLoading(sectionId) {
+  const loadingDiv = document.getElementById(`${sectionId}-loading`);
+  const errorDiv = document.getElementById(`${sectionId}-error`);
+  const contentDiv = document.getElementById(`${sectionId}-content`);
+
+  if (loadingDiv) loadingDiv.style.display = 'none';
+  if (errorDiv) errorDiv.style.display = 'none';
+  if (contentDiv) contentDiv.style.display = 'none';
 }
 
 // 各セクションのエラー状態を表示する関数
@@ -517,7 +547,7 @@ function showErrorMessage() {
 
   // 全てのテーブルセルにエラーメッセージを表示
   const allCells = document.querySelectorAll(
-    '[id$="-all"], [id$="-nanbyo-group"], [id$="-nanbyo-disease"], [id$="-nanbyo-subtype"], [id$="-definition"], [id$="-inheritance"], [id$="-alternative-names"], [id$="-monarch-exact"], [id$="-monarch-close"], [id$="-orphanet"], [id$="-medgen"], [id$="-kegg"], [id$="-genes"], [id$="-genetic-tests"], [id$="-clinical-features"], [id$="-facial-features"], [id$="-human-data"], [id$="-chemicals"], [id$="-literature"], [id$="-domestic-genes"], [id$="-international-genes"], [id$="-clinvar"], [id$="-mgend"], [id$="-cells"], [id$="-mouse"], [id$="-dna"]'
+    '[id$="-all"], [id$="-nanbyo-group"], [id$="-nanbyo-disease"], [id$="-nanbyo-subtype"], [id$="-definition"], [id$="-inheritance"], [id$="-alternative-names"], [id$="-monarch-exact"], [id$="-monarch-close"], [id$="-orphanet"], [id$="-medgen"], [id$="-kegg"], [id$="-genes"], [id$="-genetic-tests"], [id$="-clinical-features"], [id$="-facial-features"], [id$="-human-data"], [id$="-chemicals"], [id$="-domestic-genes"], [id$="-international-genes"], [id$="-clinvar"], [id$="-mgend"], [id$="-cells"], [id$="-mouse"], [id$="-dna"]'
   );
 
   allCells.forEach((cell) => {
@@ -557,8 +587,6 @@ function updateDiseaseStatsRow(category, data) {
 
       element.textContent = value === '-' ? '-' : value.toLocaleString();
     });
-
-    console.log(`Disease stats updated for ${category}:`, data);
   } catch (error) {
     console.error(`Error updating disease stats for ${category}:`, error);
   }
@@ -657,7 +685,6 @@ function updateRelatedDataRow(category, data) {
       'facialFeatures',
       'humanData',
       'chemicals',
-      'literature',
     ];
 
     fields.forEach((field) => {
@@ -680,8 +707,6 @@ function updateRelatedDataRow(category, data) {
 
       element.textContent = value === '-' ? '-' : value.toLocaleString();
     });
-
-    console.log(`Related data updated for ${category}:`, data);
   } catch (error) {
     console.error(`Error updating related data for ${category}:`, error);
   }
@@ -717,8 +742,6 @@ function updateGenesRow(category, data) {
       internationalElement.textContent =
         internationalValue === '-' ? '-' : internationalValue.toLocaleString();
     }
-
-    console.log(`Genes updated for ${category}:`, data);
   } catch (error) {
     console.error(`Error updating genes for ${category}:`, error);
   }
@@ -754,8 +777,6 @@ function updateBioresourcesRow(category, data) {
     mouseElement.textContent =
       data.mouse === '-' ? '-' : data.mouse.toLocaleString();
     dnaElement.textContent = data.dna === '-' ? '-' : data.dna.toLocaleString();
-
-    console.log(`Bioresources updated for ${category}:`, data);
   } catch (error) {
     console.error(`Error updating bioresources for ${category}:`, error);
   }
@@ -772,7 +793,6 @@ function safeParseInt(value) {
 
 // デフォルトデータ関数
 function getDefaultNandoData() {
-  console.log('NANDO_count API エラーのためデフォルトデータを使用');
   return {
     shitei_all: { 'callret-0': '0' },
     shitei_group: { 'callret-0': '0' },
@@ -784,7 +804,6 @@ function getDefaultNandoData() {
 }
 
 function getDefaultBRCData() {
-  console.log('BRC API エラーのためデフォルトデータを使用');
   return {
     shitei_cell: { cell: '0' },
     shitei_mouse: { mouse: '0' },
@@ -796,7 +815,6 @@ function getDefaultBRCData() {
 }
 
 function getDefaultLinkData() {
-  console.log('Link API エラーのためデフォルトデータを使用');
   return {
     name8: { mondo: '0' },
     name10: { medgen: '0' },
@@ -808,7 +826,6 @@ function getDefaultLinkData() {
 }
 
 function getDefaultLinkData2() {
-  console.log('Link2 API エラーのためデフォルトデータを使用');
   return {
     shitei_inheritance: { inheritance: '0' },
     shoman_inheritance: { inheritance: '0' },
@@ -828,11 +845,19 @@ function getDefaultLinkData2() {
 }
 
 function getDefaultLinkData4() {
-  console.log('Link4 API エラーのためデフォルトデータを使用');
   return {
     shitei_gm: { GM: '0' },
     shoman_gm: { GM: '0' },
     shitei_hum: { hum: '0' },
     shoman_hum: { hum: '0' },
+    shitei_CG: { curatedGene: '0' },
+    shoman_CG: { curatedGene: '0' },
+  };
+}
+
+function getDefaultLinkData5() {
+  return {
+    shitei_pubchem: { pubchem: '0' },
+    shoman_pubchem: { pubchem: '0' },
   };
 }

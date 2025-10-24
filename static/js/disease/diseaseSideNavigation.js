@@ -3,12 +3,13 @@ export function makeSideNavigation() {
 
   const items = [
     'overview',
-    'genes',
+    'internationally-curated',
+    'japan-curated',
     'glycan-related-genes',
     'genetic-testing',
     'phenotypes',
     // TODO: 公開OKになったら表示
-    // 'hum-data',
+    'public-human-data',
     'cell',
     'mouse',
     'dna',
@@ -17,7 +18,7 @@ export function makeSideNavigation() {
     'facial-features',
     'chemical-information',
     // TODO: 公開OKになったら表示
-    // 'references',
+    'references',
   ];
 
   items.forEach((itemId) => {
@@ -53,6 +54,23 @@ export function makeSideNavigation() {
     });
   });
 
+  document.querySelectorAll('a[href="#genes"]').forEach(function (aTag) {
+    aTag.addEventListener('click', function (event) {
+      if (this.classList.contains('-disabled')) {
+        event.preventDefault();
+        return;
+      }
+      event.preventDefault();
+      const classList = this.classList[0];
+      const selectName = 'genes-' + classList;
+      window.location.hash = selectName;
+      const checkBox = document.getElementById(selectName);
+      if (checkBox && !checkBox.checked) {
+        checkBox.checked = true;
+      }
+    });
+  });
+
   document.querySelectorAll('a[href="#variant"]').forEach(function (aTag) {
     aTag.addEventListener('click', function (event) {
       if (this.classList.contains('-disabled')) {
@@ -71,6 +89,22 @@ export function makeSideNavigation() {
   });
 
   // processing when tabs are switched
+  document.querySelectorAll('#genes .tab-switch').forEach(function (tabSwitch) {
+    tabSwitch.addEventListener('change', function () {
+      const selectedTabId = this.id.replace('genes-', '');
+      const tocItem = document.querySelector('.genes a.' + selectedTabId);
+      document.querySelectorAll('a').forEach(function (item) {
+        item.classList.remove('selected');
+      });
+      if (tocItem) {
+        if (!tocItem.classList.contains('-disabled')) {
+          tocItem.classList.add('selected');
+          window.location.hash = this.id;
+        }
+      }
+    });
+  });
+
   document
     .querySelectorAll('#bio-resource .tab-switch')
     .forEach(function (tabSwitch) {
@@ -114,9 +148,7 @@ export function switchingDisplayContents(selectedItemId) {
   const items = [
     '#overview',
     '#temp-disease-definition',
-    // TODO: 公開OKになったら表示
-    // '#references',
-    '#causal-genes',
+    '#genes',
     '#glycan-related-genes',
     '#genetic-testing',
     '#phenotypes',
@@ -132,12 +164,12 @@ export function switchingDisplayContents(selectedItemId) {
     '#genetic-testing',
     '#phenotypes',
     // TODO: 公開OKになったら表示
-    // '#hum-data',
+    '#public-human-data',
     '#bio-resource',
     '#variant',
     '#facial-features',
     // TODO: 公開OKになったら表示
-    // '#references',
+    '#references',
   ];
 
   // ローディングスピナーを追加
@@ -162,7 +194,7 @@ export function switchingDisplayContents(selectedItemId) {
     // まず、全てのコンテンツを非表示にする
     const allContentSections = [
       '#overview',
-      '#causal-genes',
+      '#genes',
       '#glycan-related-genes',
       '#genetic-testing',
       '#phenotypes',
@@ -171,7 +203,7 @@ export function switchingDisplayContents(selectedItemId) {
       '#facial-features',
       '#chemical-information',
       // TODO: 公開OKになったら表示
-      // '#references',
+      '#references',
     ];
 
     allContentSections.forEach((selector) => {
@@ -189,21 +221,25 @@ export function switchingDisplayContents(selectedItemId) {
         });
         break;
       case 'temp-disease-definition':
-      // TODO: 公開OKになったら表示
-      // case 'references':
-      case 'genes':
       case 'glycan-related-genes':
       case 'genetic-testing':
       case 'phenotypes':
         prepareDataWrapper();
         toggleDisplay(`#${selectedItemId}`, 'block');
         break;
-      // TODO: 公開OKになったら表示
-      // case 'hum-data':
-      // 以下必要か再確認（フロント側）
-      //   prepareDataWrapper();
-      //   toggleDisplay(`#${selectedItemId}`, 'block');
-      //   break;
+      case 'genes':
+      case 'genes-internationally-curated':
+      case 'genes-japan-curated':
+        prepareDataWrapper();
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth',
+        });
+        toggleDisplay('#genes', 'block');
+        let checkBoxGenes = document.getElementById(selectedItemId);
+        if (checkBoxGenes) checkBoxGenes.checked = true;
+        updateGenesSelection('#genes .tab-switch:checked');
+        break;
       case 'bio-resource':
       case 'bio-resource-cell':
       case 'bio-resource-mouse':
@@ -236,6 +272,11 @@ export function switchingDisplayContents(selectedItemId) {
         toggleDisplay(`#${selectedItemId}`, 'block');
         break;
       case 'chemical-information':
+      case 'public-human-data':
+        prepareDataWrapper();
+        toggleDisplay(`#${selectedItemId}`, 'block');
+        break;
+      case 'references':
         prepareDataWrapper();
         toggleDisplay(`#${selectedItemId}`, 'block');
         break;
@@ -274,6 +315,13 @@ function prepareDataWrapper() {
 }
 
 function updateBioSelection(selector) {
+  const checkedSwitch = document.querySelector(selector);
+  if (checkedSwitch) {
+    window.location.hash = checkedSwitch.id;
+  }
+}
+
+function updateGenesSelection(selector) {
   const checkedSwitch = document.querySelector(selector);
   if (checkedSwitch) {
     window.location.hash = checkedSwitch.id;

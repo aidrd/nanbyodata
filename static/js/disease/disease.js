@@ -8,6 +8,7 @@ import { makeLinkedList } from './overview/makeLinkedList.js';
 import { makeExternalLinks } from './overview/makeExternalLinks.js';
 import { makeAlternativeName } from './overview/makeAlternativeName.js';
 import { makeInheritanceUris } from './overview/makeInheritanceUris.js';
+import { makeReferenceGenes } from './overview/makeReferenceGenes.js';
 import { makeNumOfPatients } from './overview/makeNumOfPatients.js';
 import { makeSubClass } from './overview/makeSubclass.js';
 import { checkSummaryData } from './overview/checkSummaryData.js';
@@ -15,12 +16,12 @@ import { makeDiseaseDefinition } from './overview/makeDiseaseDefinition.js';
 import { updateOverviewDisplay } from './overview/updateOverviewDisplay.js';
 
 import {
-  makeReferences,
-  makeGenes,
+  makeInternationallyCuratedGenes,
+  makeJapanCuratedGenes,
   makeGlycanRelatedGene,
   makeGeneticTesting,
   makePhenotypes,
-  makeHumData,
+  makePublicHumanData,
   makeCell,
   makeMouse,
   makeDNA,
@@ -28,6 +29,7 @@ import {
   makeMgend,
   makeFacialFeatures,
   makeChemicalInformation,
+  makeReferences,
 } from './diseaseContent.js';
 import { switchingDisplayContents } from './diseaseSideNavigation.js';
 import { setLangChange } from '../utils/setLangChange.js';
@@ -74,25 +76,26 @@ const datasets = [
   { name: 'Overview', data: null },
   { name: 'Synonyms', data: null },
   { name: 'Modes of Inheritance', data: null },
+  { name: 'Reference Genes', data: null },
   { name: 'OMIM', data: null },
   { name: 'Orphanet', data: null },
   { name: 'Monarch Initiative', data: null },
   { name: 'MedGen', data: null },
   { name: 'KEGG', data: null },
   { name: 'Descriptions', data: null },
+  { name: 'Japan-curated', data: null },
+  { name: 'Internationally curated', data: null },
   {
     name: 'Number of Specific Medical Expenses Beneficiary Certificate Holders',
     data: null,
   },
   { name: 'Sub-classes', data: null },
-  // TODO: 公開OKになったら表示
-  // { name: 'References', data: null },
   { name: 'Genes', data: null },
   { name: 'Glycan-related Genes', data: null },
   { name: 'Genetic Testing', data: null },
-  { name: 'Phenotypes', data: null },
+  { name: 'Clinical Features', data: null },
   // TODO: 公開OKになったら表示
-  // { name: 'Hum Data', data: null },
+  { name: 'Public Human Data', data: null },
   { name: 'Cell', data: null },
   { name: 'Mouse', data: null },
   { name: 'DNA', data: null },
@@ -100,6 +103,7 @@ const datasets = [
   { name: 'MGeND', data: null },
   { name: 'Facial Features', data: null },
   { name: 'Chemical Information', data: null },
+  { name: 'References', data: null },
 ];
 
 (async () => {
@@ -147,6 +151,15 @@ const datasets = [
       }),
 
       // 他のAPI呼び出し
+      fetchData('nanbyodata_get_japan_curated_gene_by_nando_id').then(
+        (response) => {
+          const japanCuratedGeneData = response;
+          makeJapanCuratedGenes(japanCuratedGeneData);
+          datasets.find((d) => d.name === 'Japan-curated').data =
+            japanCuratedGeneData;
+          checkAndLogDatasets();
+        }
+      ),
       fetchData('nanbyodata_get_stats_on_patient_number_by_nando_id').then(
         (response) => {
           const numOfPatientsData = response;
@@ -281,14 +294,26 @@ const datasets = [
         }
       }),
       // TODO: check API name
-      // fetchData('test_pubmed').then((referencesData) => {
-      //   makeReferences(referencesData);
-      //   datasets.find((d) => d.name === 'References').data = referencesData;
-      //   checkAndLogDatasets();
-      // }),
+      fetchData('nanbyodata_get_pubmed_data_by_nando_id').then(
+        (referencesData) => {
+          makeReferences(referencesData);
+          datasets.find((d) => d.name === 'References').data = referencesData;
+          checkAndLogDatasets();
+        }
+      ),
+      fetchData('nanbyodata_get_japan_curated_gene_by_nando_id').then(
+        (referenceGenesData) => {
+          makeReferenceGenes(referenceGenesData);
+          datasets.find((d) => d.name === 'Reference Genes').data =
+            referenceGenesData;
+          checkAndLogDatasets();
+        }
+      ),
       fetchData('nanbyodata_get_causal_gene_by_nando_id').then((geneData) => {
-        makeGenes(geneData);
+        makeInternationallyCuratedGenes(geneData);
         datasets.find((d) => d.name === 'Genes').data = geneData;
+        datasets.find((d) => d.name === 'Internationally curated').data =
+          geneData;
         checkAndLogDatasets();
       }),
       fetchData('nanbyodata_get_glycosmos_gene_by_nando_id').then(
@@ -310,16 +335,20 @@ const datasets = [
       fetchData('nanbyodata_get_hpo_data_by_nando_id').then(
         (phenotypesData) => {
           makePhenotypes(phenotypesData);
-          datasets.find((d) => d.name === 'Phenotypes').data = phenotypesData;
+          datasets.find((d) => d.name === 'Clinical Features').data =
+            phenotypesData;
           checkAndLogDatasets();
         }
       ),
       // TODO: APIの差し替え
-      // fetchData('test_humdb').then((humData) => {
-      //   makeHumData(humData);
-      //   datasets.find((d) => d.name === 'Hum Data').data = humData;
-      //   checkAndLogDatasets();
-      // }),
+      fetchData('nanbyodata_get_nbdc_human_databases_info_by_nando_id').then(
+        (publicHumanData) => {
+          makePublicHumanData(publicHumanData);
+          datasets.find((d) => d.name === 'Public Human Data').data =
+            publicHumanData;
+          checkAndLogDatasets();
+        }
+      ),
       fetchData('nanbyodata_get_riken_brc_cell_info_by_nando_id').then(
         (cellData) => {
           makeCell(cellData);
@@ -380,7 +409,16 @@ const datasets = [
 })();
 
 function checkAndLogDatasets() {
+  const nullDatasets = datasets.filter((dataset) => dataset.data === null);
+  if (nullDatasets.length > 0) {
+    console.log(
+      'Still waiting for datasets:',
+      nullDatasets.map((d) => d.name)
+    );
+  }
+
   if (datasets.every((dataset) => dataset.data !== null)) {
+    console.log('All datasets loaded, enabling download button');
     downloadDatasets(nandoId, datasets);
     document.querySelector(
       '.summary-download > .open-popup-btn'
@@ -410,11 +448,12 @@ function trySwitchingContent(hash, retries = 0) {
 
   const items = [
     'overview',
-    'genes',
+    'genes-internationally-curated',
+    'genes-japan-curated',
     'glycan-related-genes',
     'genetic-testing',
     'phenotypes',
-    'hum-data',
+    'public-human-data',
     'bio-resource-cell',
     'bio-resource-mouse',
     'bio-resource-dna',
@@ -433,6 +472,10 @@ function trySwitchingContent(hash, retries = 0) {
 
   let modifiedHash = hash;
   switch (hash) {
+    case 'genes-internationally-curated':
+    case 'genes-japan-curated':
+      modifiedHash = hash.substring('genes-'.length);
+      break;
     case 'bio-resource-cell':
     case 'bio-resource-mouse':
     case 'bio-resource-dna':

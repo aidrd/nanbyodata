@@ -7,8 +7,8 @@ import {
   geneticTestingColumns,
   phenotypesJaColumns,
   phenotypesEnColumns,
-  humDataJaColumns,
-  humDataEnColumns,
+  publicHumanDataJaColumns,
+  publicHumanDataEnColumns,
   referencesColumns,
   bioResourceCellColumns,
   bioResourceMouseJaColumns,
@@ -35,133 +35,164 @@ export const downloadDatasets = (nandoId, datasets) => {
   }
 
   function prepareDatasets() {
-    const convertedDatasets = Object.values(datasets).map(({ name, data }) => {
-      switch (name) {
-        case 'Overview':
-          return { name, data };
-        case 'Synonyms':
-          return { name, data };
-        case 'Modes of Inheritance':
-          return { name, data };
-        case 'OMIM':
-          return {
-            name,
-            data: reconstructLinkedListData(
-              currentLang === 'ja' ? linkedListJaColumns : linkedListEnColumns,
-              'omim',
-              data
-            ),
-          };
-        case 'Orphanet':
-          return {
-            name,
-            data: reconstructLinkedListData(
-              currentLang === 'ja' ? linkedListJaColumns : linkedListEnColumns,
-              'orphanet',
-              data
-            ),
-          };
-        case 'Monarch Initiative':
-          return {
-            name,
-            data: reconstructLinkedListData(
-              currentLang === 'ja' ? linkedListJaColumns : linkedListEnColumns,
-              'monarch-initiative',
-              data
-            ),
-          };
-        case 'MedGen':
-          return {
-            name,
-            data: reconstructLinkedListData(
-              currentLang === 'ja' ? linkedListJaColumns : linkedListEnColumns,
-              'medgen',
-              data
-            ),
-          };
-        case 'KEGG':
-          return {
-            name,
-            data: reconstructLinkedListData(
-              currentLang === 'ja' ? linkedListJaColumns : linkedListEnColumns,
-              'kegg',
-              data
-            ),
-          };
-        case 'Descriptions':
-          return { name, data };
-        case 'Number of Specific Medical Expenses Beneficiary Certificate Holders':
-          return { name, data: reconstructionData(numOfPatientsColumns, data) };
-        case 'Sub-classes':
-          return {
-            name,
-            data: reconstructionData(
+    const convertedDatasets = Object.values(datasets)
+      .filter((dataset) => dataset && dataset.name && dataset.data !== null)
+      .map(({ name, data }) => {
+        switch (name) {
+          case 'Overview':
+            return { name, data };
+          case 'Synonyms':
+            return { name, data };
+          case 'Modes of Inheritance':
+            return { name, data };
+          case 'OMIM':
+            return {
+              name,
+              data: reconstructLinkedListData(
+                currentLang === 'ja'
+                  ? linkedListJaColumns
+                  : linkedListEnColumns,
+                'omim',
+                data
+              ),
+            };
+          case 'Orphanet':
+            return {
+              name,
+              data: reconstructLinkedListData(
+                currentLang === 'ja'
+                  ? linkedListJaColumns
+                  : linkedListEnColumns,
+                'orphanet',
+                data
+              ),
+            };
+          case 'Monarch Initiative':
+            return {
+              name,
+              data: reconstructLinkedListData(
+                currentLang === 'ja'
+                  ? linkedListJaColumns
+                  : linkedListEnColumns,
+                'monarch-initiative',
+                data
+              ),
+            };
+          case 'MedGen':
+            return {
+              name,
+              data: reconstructLinkedListData(
+                currentLang === 'ja'
+                  ? linkedListJaColumns
+                  : linkedListEnColumns,
+                'medgen',
+                data
+              ),
+            };
+          case 'KEGG':
+            return {
+              name,
+              data: reconstructLinkedListData(
+                currentLang === 'ja'
+                  ? linkedListJaColumns
+                  : linkedListEnColumns,
+                'kegg',
+                data
+              ),
+            };
+          case 'Descriptions':
+            return { name, data };
+          case 'Number of Specific Medical Expenses Beneficiary Certificate Holders':
+            return {
+              name,
+              data: reconstructionData(numOfPatientsColumns, data),
+            };
+          case 'Sub-classes':
+            return {
+              name,
+              data: reconstructionData(
+                currentLang === 'ja'
+                  ? subclassTableJaColumns
+                  : subclassTableEnColumns,
+                data
+              ),
+            };
+          case 'Genes':
+            const reconstructedData = reconstructionData(geneColumns, data);
+            console.log('Genes case - original data:', data);
+            console.log('Genes case - reconstructed data:', reconstructedData);
+            console.log('Genes case - geneColumns:', geneColumns);
+            return {
+              name: 'Overview',
+              data: reconstructedData,
+            };
+          case 'Glycan-related Genes':
+            return {
+              name,
+              data: reconstructionData(glycanRelatedGeneColumns, data),
+            };
+          case 'Genetic Testing':
+            return {
+              name,
+              data: reconstructionData(geneticTestingColumns, data),
+            };
+          case 'Clinical Features':
+            const currentColumns =
+              currentLang === 'ja' ? phenotypesJaColumns : phenotypesEnColumns;
+            return { name, data: reconstructionData(currentColumns, data) };
+          case 'Facial Features':
+            return {
+              name,
+              data: reconstructionData(facialFeaturesColumns, data),
+            };
+          // TODO: 公開OKになったら表示
+          case 'Public Human Data':
+            const publicHumanDataColumns =
               currentLang === 'ja'
-                ? subclassTableJaColumns
-                : subclassTableEnColumns,
-              data
-            ),
-          };
-        case 'Genes':
-          return { name, data: reconstructionData(geneColumns, data) };
-        case 'Glycan-related Genes':
-          return {
-            name,
-            data: reconstructionData(glycanRelatedGeneColumns, data),
-          };
-        case 'Genetic Testing':
-          return {
-            name,
-            data: reconstructionData(geneticTestingColumns, data),
-          };
-        case 'Phenotypes':
-          const currentColumns =
-            currentLang === 'ja' ? phenotypesJaColumns : phenotypesEnColumns;
-          return { name, data: reconstructionData(currentColumns, data) };
-        case 'Facial Features':
-          return {
-            name,
-            data: reconstructionData(facialFeaturesColumns, data),
-          };
-        // TODO: 公開OKになったら表示
-        // case 'Hum Data':
-        //   const humDataColumns =
-        //     currentLang === 'ja' ? humDataJaColumns : humDataEnColumns;
-        //   return { name, data: reconstructionData(humDataColumns, data) };
-        case 'Cell':
-          return {
-            name,
-            data: reconstructionData(bioResourceCellColumns, data),
-          };
-        case 'Mouse':
-          const mouseColumns =
-            currentLang === 'ja'
-              ? bioResourceMouseJaColumns
-              : bioResourceMouseEnColumns;
-          return {
-            name,
-            data: reconstructionData(mouseColumns, data),
-          };
-        case 'DNA':
-          return {
-            name,
-            data: reconstructionData(bioResourceDnaColumns, data),
-          };
-        case 'Clinvar':
-          return {
-            name,
-            data: reconstructionData(variantClinvarColumns, data),
-          };
-        case 'MGeND':
-          return {
-            name,
-            data: reconstructionData(variantMgendColumns, data),
-          };
-        // TODO: 公開OKになったら表示
-        // case 'References':
-        //   return { name, data: reconstructionData(referencesColumns, data) };
-      }
-    });
+                ? publicHumanDataJaColumns
+                : publicHumanDataEnColumns;
+            return {
+              name,
+              data: reconstructionData(publicHumanDataColumns, data),
+            };
+          case 'Cell':
+            return {
+              name,
+              data: reconstructionData(bioResourceCellColumns, data),
+            };
+          case 'Mouse':
+            const mouseColumns =
+              currentLang === 'ja'
+                ? bioResourceMouseJaColumns
+                : bioResourceMouseEnColumns;
+            return {
+              name,
+              data: reconstructionData(mouseColumns, data),
+            };
+          case 'DNA':
+            return {
+              name,
+              data: reconstructionData(bioResourceDnaColumns, data),
+            };
+          case 'Clinvar':
+            return {
+              name,
+              data: reconstructionData(variantClinvarColumns, data),
+            };
+          case 'MGeND':
+            return {
+              name,
+              data: reconstructionData(variantMgendColumns, data),
+            };
+          case 'Chemical Information':
+            return { name, data };
+          // TODO: 公開OKになったら表示
+          case 'References':
+            return { name, data: reconstructionData(referencesColumns, data) };
+          default:
+            return { name, data };
+        }
+      });
 
     return convertedDatasets;
   }
@@ -241,33 +272,89 @@ export const downloadDatasets = (nandoId, datasets) => {
       Descriptions: [],
       'Number of Specific Medical Expenses Beneficiary Certificate Holders': [],
       'Sub-classes': [],
-      Genes: [],
+      Genes: ['Japan-curated', 'Internationally curated'],
       'Glycan-related Genes': [],
       'Genetic Testing': [],
-      Phenotypes: [],
+      'Clinical Features': [],
       'Facial Features': [],
       // TODO: 公開OKになったら表示
-      // 'Hum Data': [],
+      'Public Human Data': [],
       'Bio Resource': ['Cell', 'Mouse', 'DNA'],
+      'Chemical Information': [],
       Variant: ['Clinvar', 'MGeND'],
       // TODO: 公開OKになったら表示
-      // 'References': [],
+      References: [],
     };
     // 初期jsonData作成
     const jsonData = Object.fromEntries(
       Object.keys(categoryMappings).map((category) => [category, {}])
     );
     //カテゴリーに分類
-    prepareDatasets().forEach(({ name, data }) => {
-      const category = Object.keys(categoryMappings).find((category) =>
-        categoryMappings[category].includes(name)
-      );
-      if (category) {
-        jsonData[category][name] = data;
-      } else {
-        jsonData[name] = data;
+    const overviewData = {};
+    console.log('All datasets:', prepareDatasets());
+    prepareDatasets().forEach((dataset) => {
+      if (dataset && dataset.name && dataset.data !== null) {
+        const { name, data } = dataset;
+        console.log('Processing dataset:', {
+          name,
+          dataType: Array.isArray(data) ? 'array' : 'object',
+        });
+
+        // Overviewのデータを統合
+        if (name === 'Overview') {
+          console.log('Processing Overview data:', {
+            name,
+            dataType: Array.isArray(data) ? 'array' : 'object',
+            dataLength: Array.isArray(data) ? data.length : 'N/A',
+          });
+
+          if (Array.isArray(data)) {
+            // Genesデータの場合、Gene symbolのみを抽出
+            const geneSymbols = data
+              .filter((item) => item && item['Gene symbol'])
+              .map((item) => item['Gene symbol'])
+              .filter((symbol) => symbol && symbol !== 'undefined');
+
+            console.log('Extracted gene symbols:', geneSymbols);
+
+            if (geneSymbols.length > 0) {
+              if (overviewData['Overview Genes']) {
+                // 既存のOverview Genesと統合（重複を除去）
+                const existingSymbols = Array.isArray(
+                  overviewData['Overview Genes']
+                )
+                  ? overviewData['Overview Genes']
+                  : [overviewData['Overview Genes']];
+                const allSymbols = [
+                  ...new Set([...existingSymbols, ...geneSymbols]),
+                ];
+                overviewData['Overview Genes'] = allSymbols;
+              } else {
+                overviewData['Overview Genes'] = geneSymbols;
+              }
+            }
+          } else {
+            // オブジェクト形式の場合はそのまま統合
+            Object.assign(overviewData, data);
+          }
+        } else {
+          const category = Object.keys(categoryMappings).find((category) =>
+            categoryMappings[category].includes(name)
+          );
+          if (category) {
+            jsonData[category][name] = data;
+          } else {
+            jsonData[name] = data;
+          }
+        }
       }
     });
+
+    // Overviewの統合データを設定
+    if (Object.keys(overviewData).length > 0) {
+      jsonData['Overview'] = overviewData;
+    }
+
     return jsonData;
   }
 
