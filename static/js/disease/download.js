@@ -39,6 +39,7 @@ export const downloadDatasets = (nandoId, datasets) => {
   function prepareDatasets() {
     const convertedDatasets = Object.values(datasets)
       .filter((dataset) => dataset && dataset.name && dataset.data !== null)
+      .filter((dataset) => dataset.name !== 'Reference Genes')
       .map(({ name, data }) => {
         switch (name) {
           case 'Overview':
