@@ -12,12 +12,23 @@
     min-width: 250px;
     max-width: 100%;
     box-sizing: border-box;
+    /* スクロールバーを非表示 */
+    scrollbar-width: none;
+    /* Firefox */
+    -ms-overflow-style: none;
+    /* IE and Edge */
+  }
+
+  .treeview-container::-webkit-scrollbar {
+    display: none;
+    /* Chrome, Safari, Opera */
   }
 
   /* 親要素の幅制限を考慮したスクロール設定 */
   .treeview-container .ztree {
     min-width: max-content;
     width: 100%;
+    padding: 0 15px;
   }
 
   .treeview-container .ztree * {
@@ -345,7 +356,7 @@
               ? zTreeObj.getNodesByParam("nando_id", currentSelectedNandoId, null)[0]
               : null;
             if (keepNode) {
-              zTreeObj.selectNode(keepNode, true, true);
+              zTreeObj.selectNode(keepNode, true, false); // 自動スクロールを無効化
             }
             // アイコンの状態を強制的に更新
             const button = $("#" + treeNode.tId + "_switch");
@@ -356,6 +367,8 @@
               button.css('content', '"▼"');
               button.attr('data-icon', 'open');
             }
+            // コンテンツ幅に応じて自動調整（手動リサイズされていない場合のみ）
+            adjustSidebarToContent();
           }, 50);
         },
         onCollapse: function (treeId, treeNode) {
@@ -365,7 +378,7 @@
               ? zTreeObj.getNodesByParam("nando_id", currentSelectedNandoId, null)[0]
               : null;
             if (keepNode) {
-              zTreeObj.selectNode(keepNode, true, true);
+              zTreeObj.selectNode(keepNode, true, false); // 自動スクロールを無効化
             }
             // アイコンの状態を強制的に更新
             const button = $("#" + treeNode.tId + "_switch");
@@ -420,16 +433,68 @@
   // -------------------------------
   function adjustTreeviewWidth() {
     const container = $('.treeview-container');
-    const parent = container.parent();
+    const sidebar = $('#sidebar');
 
-    if (parent.length > 0) {
-      const parentWidth = parent.width();
-      const availableWidth = parentWidth - 20; // パディング分を考慮
+    if (sidebar.length > 0) {
+      // sidebarが開いているかどうかをチェック
+      const isCollapsed = sidebar.hasClass('collapsed');
 
-      if (availableWidth > 0) {
-        container.css('max-width', availableWidth + 'px');
+      if (!isCollapsed) {
+        // 開いている時は100%を使用（親要素のセクション幅いっぱい）
+        container.css('max-width', '100%');
+
+        // コンテンツの最大幅に応じてサイドバーの幅を自動調整（開いた瞬間のみ）
+        adjustSidebarToContent();
+      } else {
+        // 閉じている時は親要素の幅に基づいて調整
+        const parent = container.parent();
+        if (parent.length > 0) {
+          const parentWidth = parent.width();
+          const availableWidth = parentWidth - 20; // パディング分を考慮
+          if (availableWidth > 0) {
+            container.css('max-width', availableWidth + 'px');
+          }
+        }
       }
     }
+  }
+
+  // コンテンツの最大幅に応じてサイドバーの幅を自動調整
+  // -------------------------------
+  function adjustSidebarToContent() {
+    const sidebar = $('#sidebar');
+    const treeview = $('#treeview');
+
+    if (sidebar.length === 0 || treeview.length === 0) return;
+    if (sidebar.hasClass('collapsed')) return;
+
+    // 手動リサイズされている場合はスキップ
+    if (window.sidebarManuallyResized) return;
+
+    // すべてのノードの幅を計算
+    let maxWidth = 0;
+    treeview.find('a').each(function () {
+      const $this = $(this);
+      const width = $this.outerWidth(true);
+      if (width > maxWidth) {
+        maxWidth = width;
+      }
+    });
+
+    // パディングやマージンを考慮
+    const padding = 60; // 左右のパディング + スクロールバー領域
+    const calculatedWidth = maxWidth + padding;
+
+    // 最小幅と最大幅の制限
+    const minWidth = 250;
+    const maxWidthLimit = 1200;
+    const finalWidth = Math.max(minWidth, Math.min(maxWidthLimit, calculatedWidth));
+
+    // サイドバーの幅を設定
+    sidebar.css('width', finalWidth + 'px');
+
+    // 自動調整完了後、フラグを立てる（これ以降は手動リサイズのみ）
+    window.sidebarManuallyResized = true;
   }
 
   // -------------------------------

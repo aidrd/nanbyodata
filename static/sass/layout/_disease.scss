@@ -21,17 +21,32 @@
 
   #sidebar {
     overflow-y: auto;
+    overflow-x: visible;
     height: calc(100vh - 76px);
     min-width: auto;
-    max-width: 270px;
+    max-width: 1200px;
+    width: 350px;
+    max-height: auto;
     background-color: var(--color-sidebar-disease);
     flex-shrink: 0;
     display: flex;
-    flex-direction: row;
-    transition: all 0.3s ease;
+    flex-direction: column;
+    transition: none;
+    position: relative;
 
     &.collapsed {
+      width: auto;
+      min-width: auto;
       max-width: auto;
+
+      .resize-handle {
+        display: none;
+      }
+    }
+
+    // 開いている時のみリサイズ可能な幅を設定
+    &:not(.collapsed) {
+      min-width: 250px;
     }
 
     .sidebar-title {
@@ -70,11 +85,17 @@
     // 開いている状態の時のsidebar-titleのスタイル
     &:not(.collapsed) .sidebar-title {
       padding-right: 0;
+      flex-direction: row;
+      padding: 20px 0 0 15px;
+
+      .sidebar-title-text {
+        writing-mode: horizontal-tb;
+      }
     }
 
     // コンテンツエリア（タイトルを除く）
     > section {
-      padding: 20px 0;
+      padding: 20px 0 0 0;
       margin-top: 28px;
       display: flex;
       flex-direction: column;
@@ -86,24 +107,61 @@
         display: none;
       }
     }
+
+    // 開いている状態の時のコンテンツエリアのマージン調整
+    &:not(.collapsed) > section {
+      margin-top: 0;
+    }
+
+    // リサイズハンドル
+    .resize-handle {
+      position: absolute;
+      top: 0;
+      right: -4px;
+      width: 10px;
+      height: 100%;
+      cursor: col-resize;
+      background-color: transparent;
+      z-index: 1000;
+      transition: background-color 0.2s ease;
+
+      &:hover {
+        background-color: rgba(36, 158, 179, 0.4);
+        right: -2px;
+        width: 6px;
+      }
+
+      &:active {
+        background-color: rgba(36, 158, 179, 0.7);
+      }
+    }
   }
 
   // 目次を横並びで表示
   #temp-side-navigation {
     overflow-y: auto;
+    overflow-x: visible;
     height: calc(100vh - 76px);
-    min-width: auto;
+    min-width: 250px;
     max-width: 350px;
+    width: 250px;
     background-color: var(--color-sidebar-toc);
     flex-shrink: 0;
     border-left: 1px solid rgba(112, 112, 112, 0.4);
     border-right: 1px solid rgba(112, 112, 112, 0.4);
     display: flex;
-    flex-direction: row;
-    transition: all 0.3s ease;
+    flex-direction: column;
+    transition: none;
+    position: relative;
 
     &.collapsed {
+      width: auto;
+      min-width: auto;
       max-width: auto;
+
+      .resize-handle {
+        display: none;
+      }
     }
 
     .sidebar-title {
@@ -142,6 +200,12 @@
     // 開いている状態の時のsidebar-titleのスタイル
     &:not(.collapsed) .sidebar-title {
       padding-right: 0;
+      flex-direction: row;
+      padding: 20px 0 0 15px;
+
+      .sidebar-title-text {
+        writing-mode: horizontal-tb;
+      }
     }
 
     // 目次のコンテンツエリア
@@ -157,6 +221,34 @@
 
       &.collapsed {
         display: none;
+      }
+    }
+
+    // 開いている状態の時のコンテンツエリアのマージン調整
+    &:not(.collapsed) > ul {
+      margin-top: 0;
+    }
+
+    // リサイズハンドル
+    .resize-handle {
+      position: absolute;
+      top: 0;
+      right: -4px;
+      width: 10px;
+      height: 100%;
+      cursor: col-resize;
+      background-color: transparent;
+      z-index: 1000;
+      transition: background-color 0.2s ease;
+
+      &:hover {
+        background-color: rgba(36, 158, 179, 0.4);
+        right: -2px;
+        width: 6px;
+      }
+
+      &:active {
+        background-color: rgba(36, 158, 179, 0.7);
       }
     }
   }
