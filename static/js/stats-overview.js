@@ -5,110 +5,88 @@ class StatsOverview {
     this.timestamp = Date.now();
   }
 
-  // APIからデータを取得
+  // 各APIを個別に取得して、取得できたものから順次表示
   async fetchStatsData() {
-    try {
-      // 複数のAPIを並列で呼び出し（Promise.allSettledを使用）
-      const apiResults = await Promise.allSettled([
-        fetch(
-          `/sparqlist/api/${this.apiEndpoint}?timestamp=${this.timestamp}`
-        ).then((res) => (res.ok ? res.json() : null)),
-        fetch(
-          `/sparqlist/api/NANDO_link_count?timestamp=${this.timestamp}`
-        ).then((res) => (res.ok ? res.json() : null)),
-        fetch(
-          `/sparqlist/api/NANDO_link_count3_brc?timestamp=${this.timestamp}`
-        ).then((res) => (res.ok ? res.json() : null)),
-        fetch(`/sparqlist/api/NANDO_count?timestamp=${this.timestamp}`).then(
-          (res) => (res.ok ? res.json() : null)
-        ),
-        fetch(
-          `/sparqlist/api/NANDO_link_count4?timestamp=${this.timestamp}`
-        ).then((res) => (res.ok ? res.json() : null)),
-      ]);
+    const allData = {};
 
-      // 各APIの結果を処理
-      const linkData2 =
-        apiResults[0].status === 'fulfilled' ? apiResults[0].value : null;
-      const linkData =
-        apiResults[1].status === 'fulfilled' ? apiResults[1].value : null;
-      const brcData =
-        apiResults[2].status === 'fulfilled' ? apiResults[2].value : null;
-      const nandoData =
-        apiResults[3].status === 'fulfilled' ? apiResults[3].value : null;
-      const linkData4 =
-        apiResults[4].status === 'fulfilled' ? apiResults[4].value : null;
-
-      // 失敗したAPIをログ出力
-      apiResults.forEach((result, index) => {
-        const apiNames = ['Link2', 'Link', 'BRC', 'NANDO_count', 'Link4'];
-        if (result.status === 'rejected') {
-          console.error(`${apiNames[index]} API failed:`, result.reason);
+    // NANDO_count APIからNANDOデータを取得
+    fetch(`/sparqlist/api/NANDO_count?timestamp=${this.timestamp}`)
+      .then((res) => (res.ok ? res.json() : null))
+      .then((nandoData) => {
+        if (nandoData) {
+          allData.nandoData = nandoData;
+          const shiteiAll = parseInt(nandoData.shitei_all?.['callret-0'] || 0);
+          const shomanAll = parseInt(nandoData.shoman_all?.['callret-0'] || 0);
+          const nandoTotal = shiteiAll + shomanAll;
+          this.updateCard(
+            'intractable_diseases',
+            nandoTotal > 0 ? nandoTotal.toString() : '-'
+          );
         }
+      })
+      .catch((error) => {
+        console.error('NANDO_count API failed:', error);
+        this.updateCard('intractable_diseases', 'N/A');
       });
 
-      // データをマージ
-      return {
-        ...linkData2,
-        ...linkData,
-        ...brcData,
-        ...nandoData,
-        ...linkData4,
-        // APIの成功/失敗状態を追加
-        apiStatus: {
-          linkData2: apiResults[0].status,
-          linkData: apiResults[1].status,
-          brcData: apiResults[2].status,
-          nandoData: apiResults[3].status,
-          linkData4: apiResults[4].status,
-        },
-      };
-    } catch (error) {
-      console.error('Error fetching stats data:', error.message);
-      return null;
-    }
-  }
+    // NANDO_link_count2 APIから遺伝子・検査・臨床特徴データを取得
+    fetch(`/sparqlist/api/NANDO_link_count2?timestamp=${this.timestamp}`)
+      .then((res) => (res.ok ? res.json() : null))
+      .then((linkData2) => {
+        if (linkData2) {
+          allData.linkData2 = linkData2;
 
-  // データを統計情報にマッピング
-  mapDataToStats(data) {
-    if (!data) return null;
+          // 疾患関連遺伝子
+          const shiteiGenes = parseInt(linkData2.shitei_gene?.gene || 0);
+          const shomanGenes = parseInt(linkData2.shoman_gene?.gene || 0);
+          const totalGenes = shiteiGenes + shomanGenes;
+          this.updateCard(
+            'disease_genes',
+            totalGenes > 0 ? totalGenes.toString() : '-'
+          );
 
-    // バイオリソースの合計を計算
-    const shiteiCells = parseInt(data.shitei_cell?.cell || 0);
-    const shomanCells = parseInt(data.shoman_cell?.cell || 0);
-    const shiteiMice = parseInt(data.shitei_mouse?.mouse || 0);
-    const shomanMice = parseInt(data.shoman_mouse?.mouse || 0);
-    const shiteiDna = parseInt(data.shitei_DNA?.gene || 0);
-    const shomanDna = parseInt(data.shoman_DNA?.gene || 0);
+          // 診療用遺伝学的検査
+          const shiteiTests = parseInt(
+            linkData2.shitei_genetest?.genetest || 0
+          );
+          const shomanTests = parseInt(
+            linkData2.shoman_genetest?.genetest || 0
+          );
+          const totalTests = shiteiTests + shomanTests;
+          this.updateCard(
+            'clinical_tests',
+            totalTests > 0 ? totalTests.toString() : '-'
+          );
 
-    // NANDOの合計を計算
-    const shiteiAll = parseInt(data.shitei_all?.['callret-0'] || 0);
-    const shomanAll = parseInt(data.shoman_all?.['callret-0'] || 0);
-    const nandoTotal = shiteiAll + shomanAll;
+          // 臨床的特徴
+          const shiteiFeatures = parseInt(linkData2.shitei_hp?.hp || 0);
+          const shomanFeatures = parseInt(linkData2.shoman_hp?.hp || 0);
+          const totalFeatures = shiteiFeatures + shomanFeatures;
+          this.updateCard(
+            'clinical_features',
+            totalFeatures > 0 ? totalFeatures.toString() : '-'
+          );
+        }
+      })
+      .catch((error) => {
+        console.error('NANDO_link_count2 API failed:', error);
+        this.updateCard('disease_genes', 'N/A');
+        this.updateCard('clinical_tests', 'N/A');
+        this.updateCard('clinical_features', 'N/A');
+      });
 
-    // 疾患関連遺伝子の合計を計算
-    const shiteiGenes = parseInt(data.shitei_gene?.gene || 0);
-    const shomanGenes = parseInt(data.shoman_gene?.gene || 0);
-    const totalGenes = shiteiGenes + shomanGenes;
-
-    // 臨床検査の合計を計算
-    const shiteiTests = parseInt(data.shitei_genetest?.genetest || 0);
-    const shomanTests = parseInt(data.shoman_genetest?.genetest || 0);
-    const totalTests = shiteiTests + shomanTests;
-
-    // 臨床的特徴の合計を計算
-    const shiteiFeatures = parseInt(data.shitei_hp?.hp || 0);
-    const shomanFeatures = parseInt(data.shoman_hp?.hp || 0);
-    const totalFeatures = shiteiFeatures + shomanFeatures;
-
-    return {
-      intractable_diseases: nandoTotal > 0 ? nandoTotal.toString() : '-',
-      disease_genes: totalGenes > 0 ? totalGenes.toString() : '-',
-      glycan_genes: '-',
-      clinical_tests: totalTests > 0 ? totalTests.toString() : '-',
-      clinical_features: totalFeatures > 0 ? totalFeatures.toString() : '-',
-      bioresources: {
-        total: (() => {
+    // NANDO_link_count3_brc APIからバイオリソースデータを取得
+    fetch(`/sparqlist/api/NANDO_link_count3_brc?timestamp=${this.timestamp}`)
+      .then((res) => (res.ok ? res.json() : null))
+      .then((brcData) => {
+        if (brcData) {
+          allData.brcData = brcData;
+          const shiteiCells = parseInt(brcData.shitei_cell?.cell || 0);
+          const shomanCells = parseInt(brcData.shoman_cell?.cell || 0);
+          const shiteiMice = parseInt(brcData.shitei_mouse?.mouse || 0);
+          const shomanMice = parseInt(brcData.shoman_mouse?.mouse || 0);
+          const shiteiDna = parseInt(brcData.shitei_DNA?.gene || 0);
+          const shomanDna = parseInt(brcData.shoman_DNA?.gene || 0);
           const total =
             shiteiCells +
             shomanCells +
@@ -116,135 +94,61 @@ class StatsOverview {
             shomanMice +
             shiteiDna +
             shomanDna;
-          return total > 0 ? total.toString() : '-';
-        })(),
-        cells: (() => {
-          const total = shiteiCells + shomanCells;
-          return total > 0 ? total.toString() : '-';
-        })(),
-        mice: (() => {
-          const total = shiteiMice + shomanMice;
-          return total > 0 ? total.toString() : '-';
-        })(),
-        dna: (() => {
-          const total = shiteiDna + shomanDna;
-          return total > 0 ? total.toString() : '-';
-        })(),
-      },
-      variants: {
-        total: (() => {
-          const total =
-            parseInt(data.shoman_mgend?.mgend || 0) +
-            parseInt(data.shitei_mgend?.mgend || 0);
-          return total > 0 ? total.toString() : '-';
-        })(),
-        clinvar: (() => {
-          const total =
-            parseInt(data.shoman_mgend?.mgend || 0) +
-            parseInt(data.shitei_mgend?.mgend || 0);
-          return total > 0 ? Math.floor(total / 2).toString() : '-';
-        })(),
-        mgend: (() => {
-          const total =
-            parseInt(data.shoman_mgend?.mgend || 0) +
-            parseInt(data.shitei_mgend?.mgend || 0);
-          return total > 0 ? Math.floor(total / 2).toString() : '-';
-        })(),
-      },
-      facial_features: (() => {
-        const shiteiFacial = parseInt(data.shitei_gm?.GM || 0);
-        const shomanFacial = parseInt(data.shoman_gm?.GM || 0);
-        const totalFacial = shiteiFacial + shomanFacial;
-        return totalFacial > 0 ? totalFacial.toString() : '-';
-      })(),
-      external_links: (() => {
-        const total = '-';
-      })(),
-    };
+          this.updateCard('bioresources', total > 0 ? total.toString() : '-');
+        }
+      })
+      .catch((error) => {
+        console.error('NANDO_link_count3_brc API failed:', error);
+        this.updateCard('bioresources', 'N/A');
+      });
+
+    // NANDO_link_count4 APIから顔貌特徴データを取得
+    fetch(`/sparqlist/api/NANDO_link_count4?timestamp=${this.timestamp}`)
+      .then((res) => (res.ok ? res.json() : null))
+      .then((linkData4) => {
+        if (linkData4) {
+          allData.linkData4 = linkData4;
+          const shiteiFacial = parseInt(linkData4.shitei_gm?.GM || 0);
+          const shomanFacial = parseInt(linkData4.shoman_gm?.GM || 0);
+          const totalFacial = shiteiFacial + shomanFacial;
+          this.updateCard(
+            'facial_features',
+            totalFacial > 0 ? totalFacial.toString() : '-'
+          );
+        }
+      })
+      .catch((error) => {
+        console.error('NANDO_link_count4 API failed:', error);
+        this.updateCard('facial_features', 'N/A');
+      });
+
+    // 糖鎖関連遺伝子は常に'-'
+    this.updateCard('glycan_genes', '-');
+
+    // 外部リンクは常に'-'（または必要に応じてAPIから取得）
+    this.updateCard('external_links', '-');
+
+    return allData;
+  }
+
+  // 個別のカードを更新するヘルパーメソッド
+  updateCard(apiName, value) {
+    const element = document.querySelector(`[data-api="${apiName}"]`);
+    if (element) {
+      const spinner = element.querySelector('.loading-spinner');
+      if (spinner) {
+        spinner.remove();
+      }
+      element.textContent = this.formatNumber(value);
+    }
   }
 
   // 数値をカンマ区切りでフォーマット
   formatNumber(num) {
-    if (num === '-' || num === null || num === undefined) {
-      return '-';
+    if (num === '-' || num === null || num === undefined || num === 'N/A') {
+      return num;
     }
     return parseInt(num).toLocaleString();
-  }
-
-  // 統計情報を更新
-  updateStatsDisplay(statsData) {
-    if (!statsData) return;
-
-    // 各統計項目を更新
-    const updates = [
-      {
-        selector: '[data-api="intractable_diseases"]',
-        value: this.formatNumber(statsData.intractable_diseases),
-      },
-      {
-        selector: '[data-api="disease_genes"]',
-        value: this.formatNumber(statsData.disease_genes),
-      },
-      {
-        selector: '[data-api="glycan_genes"]',
-        value: this.formatNumber(statsData.glycan_genes),
-      },
-      {
-        selector: '[data-api="clinical_tests"]',
-        value: this.formatNumber(statsData.clinical_tests),
-      },
-      {
-        selector: '[data-api="clinical_features"]',
-        value: this.formatNumber(statsData.clinical_features),
-      },
-      {
-        selector: '[data-api="bioresources"]',
-        value: this.formatNumber(statsData.bioresources.total),
-      },
-      {
-        selector: '[data-api="cells"]',
-        value: this.formatNumber(statsData.bioresources.cells),
-      },
-      {
-        selector: '[data-api="mice"]',
-        value: this.formatNumber(statsData.bioresources.mice),
-      },
-      {
-        selector: '[data-api="dna"]',
-        value: this.formatNumber(statsData.bioresources.dna),
-      },
-      {
-        selector: '[data-api="variants"]',
-        value: this.formatNumber(statsData.variants.total),
-      },
-      {
-        selector: '[data-api="clinvar"]',
-        value: this.formatNumber(statsData.variants.clinvar),
-      },
-      {
-        selector: '[data-api="mgend"]',
-        value: this.formatNumber(statsData.variants.mgend),
-      },
-      {
-        selector: '[data-api="facial_features"]',
-        value: this.formatNumber(statsData.facial_features),
-      },
-      {
-        selector: '[data-api="external_links"]',
-        value: this.formatNumber(statsData.external_links),
-      },
-    ];
-
-    updates.forEach(({ selector, value }) => {
-      const element = document.querySelector(selector);
-      if (element) {
-        const spinner = element.querySelector('.loading-spinner');
-        if (spinner) {
-          spinner.remove();
-        }
-        element.textContent = value;
-      }
-    });
   }
 
   // ローディング状態を表示
@@ -283,18 +187,8 @@ class StatsOverview {
     this.showLoading();
 
     try {
-      // データを取得
-      const rawData = await this.fetchStatsData();
-
-      if (rawData) {
-        // データを統計情報にマッピング
-        const statsData = this.mapDataToStats(rawData);
-
-        // 表示を更新
-        this.updateStatsDisplay(statsData);
-      } else {
-        this.showError();
-      }
+      // データを取得（各APIが完了次第、個別に表示される）
+      await this.fetchStatsData();
     } catch (error) {
       console.error('Error initializing stats overview:', error);
       this.showError();

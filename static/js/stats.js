@@ -40,120 +40,216 @@ async function loadStatsData() {
       showSectionLoading(sectionId);
     });
 
-    // 各APIを個別に呼び出してエラーハンドリング
-    const apiResults = await Promise.allSettled([
-      fetchNANDOData(),
-      fetchBRCData(),
-      fetchLinkData(),
+    // データを保持するオブジェクト
+    const apiData = {
+      nandoData: null,
+      brcData: null,
+      linkData: null,
+      linkData2: null,
+      linkData4: null,
+      linkData5: null,
+    };
+
+    // NANDO_count APIを取得して即座にNANDOテーブルを更新
+    fetchNANDOData()
+      .then((data) => {
+        apiData.nandoData = data;
+        const statsData = {
+          diseaseStats: {
+            shitei: {
+              all: safeParseInt(data.shitei_all?.['callret-0']),
+              nanbyo_group: safeParseInt(data.shitei_group?.['callret-0']),
+              nanbyo_disease: safeParseInt(data.shitei_disease?.['callret-0']),
+              nanbyo_subtype: (function () {
+                const all = safeParseInt(data.shitei_all?.['callret-0']);
+                const group = safeParseInt(data.shitei_group?.['callret-0']);
+                const disease = safeParseInt(
+                  data.shitei_disease?.['callret-0']
+                );
+                if (all === '-' || group === '-' || disease === '-') return '-';
+                return all - group - disease;
+              })(),
+            },
+            shoman: {
+              all: safeParseInt(data.shoman_all?.['callret-0']),
+              nanbyo_group: safeParseInt(data.shoman_group?.['callret-0']),
+              nanbyo_disease: safeParseInt(data.shoman_disease?.['callret-0']),
+              nanbyo_subtype: (function () {
+                const all = safeParseInt(data.shoman_all?.['callret-0']);
+                const group = safeParseInt(data.shoman_group?.['callret-0']);
+                const disease = safeParseInt(
+                  data.shoman_disease?.['callret-0']
+                );
+                if (all === '-' || group === '-' || disease === '-') return '-';
+                return all - group - disease;
+              })(),
+            },
+          },
+        };
+        updateDiseaseStats(statsData.diseaseStats);
+        showSectionContent('nando');
+      })
+      .catch((error) => {
+        console.warn('NANDO_count API エラー:', error);
+        showSectionError('nando');
+      });
+
+    // BRC APIを取得して即座にバイオリソーステーブルを更新
+    fetchBRCData()
+      .then((data) => {
+        apiData.brcData = data;
+        const statsData = {
+          bioresources: {
+            shitei: {
+              cells: safeParseInt(data.shitei_cell?.cell),
+              mouse: safeParseInt(data.shitei_mouse?.mouse),
+              dna: safeParseInt(data.shitei_DNA?.gene),
+            },
+            shoman: {
+              cells: safeParseInt(data.shoman_cell?.cell),
+              mouse: safeParseInt(data.shoman_mouse?.mouse),
+              dna: safeParseInt(data.shoman_DNA?.gene),
+            },
+          },
+        };
+        updateBioresources(statsData.bioresources);
+        showSectionContent('bioresources');
+      })
+      .catch((error) => {
+        console.warn('BRC API エラー:', error);
+        showSectionError('bioresources');
+      });
+
+    // Link APIを取得して即座にリンクテーブルを更新
+    fetchLinkData()
+      .then((data) => {
+        apiData.linkData = data;
+        const statsData = {
+          links: {
+            shitei: {
+              monarchExact: safeParseInt(data.name2?.mondo),
+              monarchClose: safeParseInt(data.name4?.mondo),
+              orphanet: safeParseInt(data.name12?.mondo),
+              medgen: safeParseInt(data.name10?.medgen),
+              kegg: safeParseInt(data.name5?.kegg),
+            },
+            shoman: {
+              monarchExact: safeParseInt(data.name1?.mondo),
+              monarchClose: safeParseInt(data.name3?.mondo),
+              orphanet: safeParseInt(data.name11?.mondo),
+              medgen: safeParseInt(data.name9?.medgen),
+              kegg: safeParseInt(data.name6?.kegg),
+            },
+          },
+        };
+        updateLinks(statsData.links);
+        showSectionContent('links');
+      })
+      .catch((error) => {
+        console.warn('Link API エラー:', error);
+        showSectionError('links');
+      });
+
+    // Link2, Link4, Link5を並列取得して複数のテーブルを更新
+    // これらは相互依存しているため、すべて揃ってから表示
+    Promise.allSettled([
       fetchLinkData2(),
       fetchLinkData4(),
       fetchLinkData5(),
-    ]);
+    ]).then((results) => {
+      const linkData2 =
+        results[0].status === 'fulfilled'
+          ? results[0].value
+          : getDefaultLinkData2();
+      const linkData4 =
+        results[1].status === 'fulfilled'
+          ? results[1].value
+          : getDefaultLinkData4();
+      const linkData5 =
+        results[2].status === 'fulfilled'
+          ? results[2].value
+          : getDefaultLinkData5();
 
-    // 各APIの結果を処理
-    const nandoData =
-      apiResults[0].status === 'fulfilled'
-        ? apiResults[0].value
-        : getDefaultNandoData();
-    const brcData =
-      apiResults[1].status === 'fulfilled'
-        ? apiResults[1].value
-        : getDefaultBRCData();
-    const linkData =
-      apiResults[2].status === 'fulfilled'
-        ? apiResults[2].value
-        : getDefaultLinkData();
-    const linkData2 =
-      apiResults[3].status === 'fulfilled'
-        ? apiResults[3].value
-        : getDefaultLinkData2();
-    const linkData4 =
-      apiResults[4].status === 'fulfilled'
-        ? apiResults[4].value
-        : getDefaultLinkData4();
-    const linkData5 =
-      apiResults[5]?.status === 'fulfilled'
-        ? apiResults[5].value
-        : getDefaultLinkData5();
+      apiData.linkData2 = linkData2;
+      apiData.linkData4 = linkData4;
+      apiData.linkData5 = linkData5;
 
-    // 失敗したAPIに対応するセクションを非表示にする
-    if (apiResults[0].status === 'rejected') {
-      hideSection('nando');
-    }
-    if (apiResults[1].status === 'rejected') {
-      hideSection('bioresources');
-    }
-    if (apiResults[2].status === 'rejected') {
-      hideSection('links');
-    }
-    if (apiResults[3].status === 'rejected') {
-      hideSection('disease-overview');
-      hideSection('related-data');
-      hideSection('genes');
-    }
-    if (apiResults[4].status === 'rejected') {
-      // linkData4はrelated-dataの一部で使用されるため、関連セクションをチェック
-      // 既にlinkData2が失敗している場合は既に非表示になっている
-    }
-    if (apiResults[5]?.status === 'rejected') {
-      // linkData5はrelated-dataの化学物質で使用されるため、関連セクションをチェック
-      // 既にlinkData2が失敗している場合は既に非表示になっている
-    }
-
-    // エラーが発生したAPIをログ出力
-    apiResults.forEach((result, index) => {
-      const apiNames = [
-        'NANDO_count',
-        'BRC',
-        'Link',
-        'Link2',
-        'Link4',
-        'Link5',
-      ];
-      if (result.status === 'rejected') {
-        console.warn(`${apiNames[index]} API エラー:`, result.reason);
+      // エラーがあった場合の処理
+      const hasError = results.some((result) => result.status === 'rejected');
+      if (hasError) {
+        results.forEach((result, index) => {
+          const apiNames = ['Link2', 'Link4', 'Link5'];
+          if (result.status === 'rejected') {
+            console.warn(`${apiNames[index]} API エラー:`, result.reason);
+          }
+        });
       }
-    });
 
-    // 取得したデータを構造化されたJSON形式に変換
-    const statsData = transformApiDataToStatsData(
-      nandoData,
-      brcData,
-      linkData,
-      linkData2,
-      linkData4,
-      linkData5
-    );
+      // 疾患概要テーブルを更新
+      const diseaseOverview = {
+        shitei: {
+          definition: safeParseInt(linkData2.shitei_description?.desc),
+          inheritance: safeParseInt(linkData2.shitei_inheritance?.inheritance),
+          alternativeNames: safeParseInt(linkData2.shitei_altlabel?.alt),
+        },
+        shoman: {
+          definition: safeParseInt(linkData2.shoman_description?.desc),
+          inheritance: safeParseInt(linkData2.shoman_inheritance?.inheritance),
+          alternativeNames: safeParseInt(linkData2.shoman_altlabel?.alt),
+        },
+      };
+      updateDiseaseOverview(diseaseOverview);
+      showSectionContent('disease-overview');
 
-    // 各テーブルの数値を更新
-    updateAllTables(statsData);
+      // 疾患関連データテーブルを更新
+      const relatedData = {
+        shitei: {
+          glycanGenes: '-',
+          geneticTests: safeParseInt(linkData2.shitei_genetest?.genetest),
+          clinicalFeatures: safeParseInt(linkData2.shitei_hp?.hp),
+          facialFeatures: safeParseInt(linkData4.shitei_gm?.GM || '0'),
+          humanData: safeParseInt(linkData4.shitei_hum?.hum || '0'),
+          chemicals: safeParseInt(linkData5.shitei_pubchem?.pubchem),
+        },
+        shoman: {
+          glycanGenes: '-',
+          geneticTests: safeParseInt(linkData2.shoman_genetest?.genetest),
+          clinicalFeatures: safeParseInt(linkData2.shoman_hp?.hp),
+          facialFeatures: safeParseInt(linkData4.shoman_gm?.GM || '0'),
+          humanData: safeParseInt(linkData4.shoman_hum?.hum || '0'),
+          chemicals: safeParseInt(linkData5.shoman_pubchem?.pubchem),
+        },
+      };
+      updateRelatedData(relatedData);
+      showSectionContent('related-data');
 
-    // 成功したセクションのみコンテンツを表示
-    sections.forEach((sectionId) => {
-      // セクションが非表示になっていない場合のみ表示
-      const section = document
-        .querySelector(`#${sectionId}-content`)
-        ?.closest('.stats-section');
-      if (section && section.style.display !== 'none') {
-        showSectionContent(sectionId);
-      } else {
-        // セクションが非表示の場合はローディングを非表示にする
-        hideSectionLoading(sectionId);
-      }
+      // 疾患関連遺伝子テーブルを更新
+      const genes = {
+        shitei: {
+          domestic: safeParseInt(linkData4.shitei_CG?.curatedGene),
+          international: safeParseInt(linkData2.shitei_gene?.gene),
+        },
+        shoman: {
+          domestic: safeParseInt(linkData4.shoman_CG?.curatedGene),
+          international: safeParseInt(linkData2.shoman_gene?.gene),
+        },
+      };
+      updateGenes(genes);
+      showSectionContent('genes');
     });
   } catch (error) {
     console.error('統計データの読み込みに失敗しました:', error);
     console.error('エラーの詳細:', error.message);
     console.error('エラースタック:', error.stack);
-    console.error(
-      'API結果の状態:',
-      apiResults?.map((result, index) => ({
-        index,
-        status: result?.status,
-        reason: result?.reason?.message || result?.reason,
-      }))
-    );
     // エラーの場合は各セクションをエラー表示
+    const sections = [
+      'nando',
+      'disease-overview',
+      'links',
+      'related-data',
+      'genes',
+      'bioresources',
+    ];
     sections.forEach((sectionId) => {
       showSectionError(sectionId);
     });
