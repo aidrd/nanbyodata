@@ -4,6 +4,7 @@ import {
 } from '../utils/linkedListColumns.js';
 import {
   geneColumns,
+  referenceGeneColumns,
   geneticTestingColumns,
   phenotypesJaColumns,
   phenotypesEnColumns,
@@ -21,6 +22,7 @@ import {
   subclassTableJaColumns,
   subclassTableEnColumns,
   glycanRelatedGeneColumns,
+  chemicalInformationColumns,
 } from '../utils/stanzaColumns.js';
 
 export const downloadDatasets = (nandoId, datasets) => {
@@ -118,13 +120,24 @@ export const downloadDatasets = (nandoId, datasets) => {
               ),
             };
           case 'Genes':
-            const reconstructedData = reconstructionData(geneColumns, data);
-            console.log('Genes case - original data:', data);
-            console.log('Genes case - reconstructed data:', reconstructedData);
-            console.log('Genes case - geneColumns:', geneColumns);
+            // Japan-curatedのデータ（symbolフィールド）を使用
+            const reconstructedData = reconstructionData(
+              referenceGeneColumns,
+              data
+            );
             return {
               name: 'Overview',
               data: reconstructedData,
+            };
+          case 'Japan-curated':
+            return {
+              name,
+              data: reconstructionData(referenceGeneColumns, data),
+            };
+          case 'Internationally curated':
+            return {
+              name,
+              data: reconstructionData(geneColumns, data),
             };
           case 'Glycan-related Genes':
             return {
@@ -145,7 +158,6 @@ export const downloadDatasets = (nandoId, datasets) => {
               name,
               data: reconstructionData(facialFeaturesColumns, data),
             };
-          // TODO: 公開OKになったら表示
           case 'Public Human Data':
             const publicHumanDataColumns =
               currentLang === 'ja'
@@ -185,8 +197,10 @@ export const downloadDatasets = (nandoId, datasets) => {
               data: reconstructionData(variantMgendColumns, data),
             };
           case 'Chemical Information':
-            return { name, data };
-          // TODO: 公開OKになったら表示
+            return {
+              name,
+              data: reconstructionData(chemicalInformationColumns, data),
+            };
           case 'References':
             return { name, data: reconstructionData(referencesColumns, data) };
           default:
@@ -260,7 +274,6 @@ export const downloadDatasets = (nandoId, datasets) => {
   function prepareJsonData() {
     const categoryMappings = {
       Overview: [],
-      Synonyms: [],
       'Modes of Inheritance': [],
       'Overview/Links': [
         'OMIM',
@@ -270,6 +283,7 @@ export const downloadDatasets = (nandoId, datasets) => {
         'KEGG',
       ],
       Descriptions: [],
+      Synonyms: [],
       'Number of Specific Medical Expenses Beneficiary Certificate Holders': [],
       'Sub-classes': [],
       Genes: ['Japan-curated', 'Internationally curated'],
@@ -277,12 +291,10 @@ export const downloadDatasets = (nandoId, datasets) => {
       'Genetic Testing': [],
       'Clinical Features': [],
       'Facial Features': [],
-      // TODO: 公開OKになったら表示
       'Public Human Data': [],
-      'Bio Resource': ['Cell', 'Mouse', 'DNA'],
+      'Bio Resources': ['Cell', 'Mouse', 'DNA'],
       'Chemical Information': [],
-      Variant: ['Clinvar', 'MGeND'],
-      // TODO: 公開OKになったら表示
+      Variants: ['Clinvar', 'MGeND'],
       References: [],
     };
     // 初期jsonData作成
@@ -291,50 +303,26 @@ export const downloadDatasets = (nandoId, datasets) => {
     );
     //カテゴリーに分類
     const overviewData = {};
-    console.log('All datasets:', prepareDatasets());
     prepareDatasets().forEach((dataset) => {
       if (dataset && dataset.name && dataset.data !== null) {
         const { name, data } = dataset;
-        console.log('Processing dataset:', {
-          name,
-          dataType: Array.isArray(data) ? 'array' : 'object',
-        });
 
         // Overviewのデータを統合
         if (name === 'Overview') {
-          console.log('Processing Overview data:', {
-            name,
-            dataType: Array.isArray(data) ? 'array' : 'object',
-            dataLength: Array.isArray(data) ? data.length : 'N/A',
-          });
-
           if (Array.isArray(data)) {
-            // Genesデータの場合、Gene symbolのみを抽出
+            // Genesデータの場合、symbolのみを抽出（Japan-curatedのデータを使用）
             const geneSymbols = data
               .filter((item) => item && item['Gene symbol'])
               .map((item) => item['Gene symbol'])
               .filter((symbol) => symbol && symbol !== 'undefined');
 
-            console.log('Extracted gene symbols:', geneSymbols);
-
             if (geneSymbols.length > 0) {
-              if (overviewData['Overview Genes']) {
-                // 既存のOverview Genesと統合（重複を除去）
-                const existingSymbols = Array.isArray(
-                  overviewData['Overview Genes']
-                )
-                  ? overviewData['Overview Genes']
-                  : [overviewData['Overview Genes']];
-                const allSymbols = [
-                  ...new Set([...existingSymbols, ...geneSymbols]),
-                ];
-                overviewData['Overview Genes'] = allSymbols;
-              } else {
-                overviewData['Overview Genes'] = geneSymbols;
+              if (!jsonData['Genes']) {
+                jsonData['Genes'] = {};
               }
+              jsonData['Genes']['Gene symbol'] = geneSymbols;
             }
           } else {
-            // オブジェクト形式の場合はそのまま統合
             Object.assign(overviewData, data);
           }
         } else {
@@ -350,7 +338,6 @@ export const downloadDatasets = (nandoId, datasets) => {
       }
     });
 
-    // Overviewの統合データを設定
     if (Object.keys(overviewData).length > 0) {
       jsonData['Overview'] = overviewData;
     }
@@ -372,14 +359,46 @@ export const downloadDatasets = (nandoId, datasets) => {
 
         case 'Synonyms':
         case 'Descriptions':
-        case 'Modes of Inheritance':
           txtData += `-- Overview/${categoryName} --\n`;
           processObject(categoryData, '');
           txtData += '\n';
           break;
 
+        case 'Modes of Inheritance':
+          txtData += `-- Overview/${categoryName} --\n`;
+          processObject(categoryData, '');
+          txtData += '\n';
+          if (jsonData['Genes'] && jsonData['Genes']['Gene symbol']) {
+            txtData += `-- Overview/Genes --\n`;
+            processObject(
+              { 'Gene symbol': jsonData['Genes']['Gene symbol'] },
+              ''
+            );
+            txtData += '\n';
+          }
+          break;
+
+        case 'Genes':
+          if (Object.keys(categoryData).length > 0) {
+            Object.entries(categoryData).forEach(([key, value]) => {
+              // 'Gene symbol'はすでにOverview/Genesとして出力済みなのでスキップ
+              if (key === 'Gene symbol') return;
+
+              txtData += `-- Genes/${key} --\n`;
+              if (value.length > 0) {
+                const keysTxt = Object.keys(value[0]).join('\t') + '\n';
+                const valuesTxt = value
+                  .map((item) => Object.values(item).join('\t'))
+                  .join('\n');
+                txtData += keysTxt + valuesTxt + '\n';
+              }
+              txtData += '\n';
+            });
+          }
+          break;
+
         case 'Number of Specific Medical Expenses Beneficiary Certificate Holders':
-        case 'Subclass':
+        case 'Sub-classes':
           processCategory(`Overview/${categoryName}`, categoryData);
           break;
         default:
@@ -437,10 +456,7 @@ export const downloadDatasets = (nandoId, datasets) => {
               .join('\n');
             txtData += keysTxt + valuesTxt + '\n';
           }
-
-          if (key !== 'Clinvar') {
-            txtData += '\n';
-          }
+          txtData += '\n';
         });
       }
     }

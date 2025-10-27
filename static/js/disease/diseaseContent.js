@@ -183,13 +183,13 @@ export function makePhenotypes(phenotypesData) {
   };
   makeData(
     phenotypesData,
-    'phenotypes',
+    'clinical-features',
     phenotypeLang,
     columns[currentLang],
     uniqueHpoIdCount
   );
   if (phenotypesData?.length > 0 && phenotypesData !== null) {
-    const navLink = document.querySelector('.nav-link.phenotypes');
+    const navLink = document.querySelector('.nav-link.clinical-features');
     navLink.style.cursor = 'pointer';
     navLink.classList.remove('-disabled');
   }
@@ -250,7 +250,7 @@ export function makeCell(cellData) {
     object: cellDataset.dataObject,
   };
 
-  processTabs(items, 'bio-resource', tabWrap);
+  processTabs(items, 'bio-resources', tabWrap);
   if (cellData?.length > 0 && cellData !== null) {
     const navLink = document.querySelector('.nav-link.cell');
     const bioResource = document.querySelector('.bio-resource');
@@ -258,8 +258,8 @@ export function makeCell(cellData) {
     navLink.classList.remove('-disabled');
     bioResource.classList.remove('-disabled');
   } else {
-    document.querySelector('#bio-resource-cell').remove();
-    document.querySelector('.tab-label.bio-resource-cell').remove();
+    document.querySelector('#bio-resources-cell').remove();
+    document.querySelector('.tab-label.bio-resources-cell').remove();
     document.querySelector('.tab-content.cell').remove();
   }
 }
@@ -295,7 +295,7 @@ export function makeMouse(mouseData) {
     object: mouseDataset.dataObject,
   };
 
-  processTabs(items, 'bio-resource', tabWrap, uniqueMouseIdCount);
+  processTabs(items, 'bio-resources', tabWrap, uniqueMouseIdCount);
   if (mouseData?.length > 0 && mouseData !== null) {
     const navLink = document.querySelector('.nav-link.mouse');
     const bioResource = document.querySelector('.bio-resource');
@@ -303,8 +303,8 @@ export function makeMouse(mouseData) {
     navLink.classList.remove('-disabled');
     bioResource.classList.remove('-disabled');
   } else {
-    document.querySelector('#bio-resource-mouse').remove();
-    document.querySelector('.tab-label.bio-resource-mouse').remove();
+    document.querySelector('#bio-resources-mouse').remove();
+    document.querySelector('.tab-label.bio-resources-mouse').remove();
     document.querySelector('.tab-content.mouse').remove();
   }
 }
@@ -323,7 +323,7 @@ export function makeDNA(dnaData) {
     object: dnaDataset.dataObject,
   };
 
-  processTabs(items, 'bio-resource', tabWrap);
+  processTabs(items, 'bio-resources', tabWrap);
   if (dnaData?.length > 0 && dnaData !== null) {
     const navLink = document.querySelector('.nav-link.dna');
     const bioResource = document.querySelector('.bio-resource');
@@ -331,8 +331,8 @@ export function makeDNA(dnaData) {
     navLink.classList.remove('-disabled');
     bioResource.classList.remove('-disabled');
   } else {
-    document.querySelector('#bio-resource-dna').remove();
-    document.querySelector('.tab-label.bio-resource-dna').remove();
+    document.querySelector('#bio-resources-dna').remove();
+    document.querySelector('.tab-label.bio-resources-dna').remove();
     document.querySelector('.tab-content.dna').remove();
   }
 }
@@ -352,7 +352,7 @@ export function makeClinvar(clinvarData) {
     object: clinvarDataset.dataObject,
   };
 
-  processTabs(items, 'variant', tabWrap);
+  processTabs(items, 'variants', tabWrap);
   if (clinvarData?.length > 0 && clinvarData !== null) {
     const navLink = document.querySelector('.nav-link.clinvar');
     const variant = document.querySelector('.variant');
@@ -360,8 +360,8 @@ export function makeClinvar(clinvarData) {
     navLink.classList.remove('-disabled');
     variant.classList.remove('-disabled');
   } else {
-    document.querySelector('#variant-clinvar').remove();
-    document.querySelector('.tab-label.variant-clinvar').remove();
+    document.querySelector('#variants-clinvar').remove();
+    document.querySelector('.tab-label.variants-clinvar').remove();
     document.querySelector('.tab-content.clinvar').remove();
   }
 }
@@ -380,7 +380,7 @@ export function makeMgend(mgendData) {
     object: mgendDataset.dataObject,
   };
 
-  processTabs(items, 'variant', tabWrap);
+  processTabs(items, 'variants', tabWrap);
   if (mgendData?.length > 0 && mgendData !== null) {
     const navLink = document.querySelector('.nav-link.mgend');
     const variant = document.querySelector('.variant');
@@ -388,8 +388,8 @@ export function makeMgend(mgendData) {
     navLink.classList.remove('-disabled');
     variant.classList.remove('-disabled');
   } else {
-    document.querySelector('#variant-mgend').remove();
-    document.querySelector('.tab-label.variant-mgend').remove();
+    document.querySelector('#variants-mgend').remove();
+    document.querySelector('.tab-label.variants-mgend').remove();
     document.querySelector('.tab-content.mgend').remove();
   }
 }

@@ -94,7 +94,6 @@ const datasets = [
   { name: 'Glycan-related Genes', data: null },
   { name: 'Genetic Testing', data: null },
   { name: 'Clinical Features', data: null },
-  // TODO: 公開OKになったら表示
   { name: 'Public Human Data', data: null },
   { name: 'Cell', data: null },
   { name: 'Mouse', data: null },
@@ -156,6 +155,10 @@ const datasets = [
           const japanCuratedGeneData = response;
           makeJapanCuratedGenes(japanCuratedGeneData);
           datasets.find((d) => d.name === 'Japan-curated').data =
+            japanCuratedGeneData;
+          datasets.find((d) => d.name === 'Genes').data = japanCuratedGeneData;
+          makeReferenceGenes(japanCuratedGeneData);
+          datasets.find((d) => d.name === 'Reference Genes').data =
             japanCuratedGeneData;
           checkAndLogDatasets();
         }
@@ -293,7 +296,6 @@ const datasets = [
           }
         }
       }),
-      // TODO: check API name
       fetchData('nanbyodata_get_pubmed_data_by_nando_id').then(
         (referencesData) => {
           makeReferences(referencesData);
@@ -301,17 +303,8 @@ const datasets = [
           checkAndLogDatasets();
         }
       ),
-      fetchData('nanbyodata_get_japan_curated_gene_by_nando_id').then(
-        (referenceGenesData) => {
-          makeReferenceGenes(referenceGenesData);
-          datasets.find((d) => d.name === 'Reference Genes').data =
-            referenceGenesData;
-          checkAndLogDatasets();
-        }
-      ),
       fetchData('nanbyodata_get_causal_gene_by_nando_id').then((geneData) => {
         makeInternationallyCuratedGenes(geneData);
-        datasets.find((d) => d.name === 'Genes').data = geneData;
         datasets.find((d) => d.name === 'Internationally curated').data =
           geneData;
         checkAndLogDatasets();
@@ -340,7 +333,6 @@ const datasets = [
           checkAndLogDatasets();
         }
       ),
-      // TODO: APIの差し替え
       fetchData('nanbyodata_get_nbdc_human_databases_info_by_nando_id').then(
         (publicHumanData) => {
           makePublicHumanData(publicHumanData);
@@ -356,7 +348,6 @@ const datasets = [
           checkAndLogDatasets();
         }
       ),
-      // TODO: APIの差し替え
       fetchData('nanbyodata_get_riken_brc_mouse_info_by_nando_id').then(
         (mouseData) => {
           makeMouse(mouseData);
@@ -393,7 +384,6 @@ const datasets = [
           checkAndLogDatasets();
         }
       ),
-      // TODO: APIの差し替え
       fetchData('nanbyodata_get_pubchem_chemical_information_by_nando_id').then(
         (chemicalInformationData) => {
           makeChemicalInformation(chemicalInformationData);
@@ -409,16 +399,7 @@ const datasets = [
 })();
 
 function checkAndLogDatasets() {
-  const nullDatasets = datasets.filter((dataset) => dataset.data === null);
-  if (nullDatasets.length > 0) {
-    console.log(
-      'Still waiting for datasets:',
-      nullDatasets.map((d) => d.name)
-    );
-  }
-
   if (datasets.every((dataset) => dataset.data !== null)) {
-    console.log('All datasets loaded, enabling download button');
     downloadDatasets(nandoId, datasets);
     document.querySelector(
       '.summary-download > .open-popup-btn'
@@ -452,13 +433,13 @@ function trySwitchingContent(hash, retries = 0) {
     'genes-japan-curated',
     'glycan-related-genes',
     'genetic-testing',
-    'phenotypes',
+    'clinical-features',
     'public-human-data',
-    'bio-resource-cell',
-    'bio-resource-mouse',
-    'bio-resource-dna',
-    'variant-clinvar',
-    'variant-mgend',
+    'bio-resources-cell',
+    'bio-resources-mouse',
+    'bio-resources-dna',
+    'variants-clinvar',
+    'variants-mgend',
     'facial-features',
     'chemical-information',
     'references',
@@ -476,14 +457,14 @@ function trySwitchingContent(hash, retries = 0) {
     case 'genes-japan-curated':
       modifiedHash = hash.substring('genes-'.length);
       break;
-    case 'bio-resource-cell':
-    case 'bio-resource-mouse':
-    case 'bio-resource-dna':
-      modifiedHash = hash.substring('bio-resource-'.length);
+    case 'bio-resources-cell':
+    case 'bio-resources-mouse':
+    case 'bio-resources-dna':
+      modifiedHash = hash.substring('bio-resources-'.length);
       break;
-    case 'variant-clinvar':
-    case 'variant-mgend':
-      modifiedHash = hash.substring('variant-'.length);
+    case 'variants-clinvar':
+    case 'variants-mgend':
+      modifiedHash = hash.substring('variants-'.length);
       break;
   }
 

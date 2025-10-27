@@ -203,7 +203,7 @@
                 {% endif %}
                 <span class="data-num"><span class="loading-spinner -sidenav"></span></span></a>
             </li>
-            <li><a href="#phenotypes" class="nav-link phenotypes -disabled">
+            <li><a href="#clinical-features" class="nav-link clinical-features -disabled">
                 {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
                 臨床的特徴
                 {% else %}
@@ -220,7 +220,6 @@
                 <span class="data-num"><span class="loading-spinner -sidenav"></span></span>
               </a>
             </li>
-            <!-- TODO: 公開OKになったら表示 -->
             <li><a href="#public-human-data" class="nav-link public-human-data -disabled">
                 {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
                 ヒト公開データ
@@ -237,7 +236,7 @@
                 Bioresources
                 {% endif %}
                 <ul>
-                  <li><a href="#bio-resource" class="cell nav-link -disabled">
+                  <li><a href="#bio-resources-cell" class="cell nav-link -disabled">
                       {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
                       細胞
                       {% else %}
@@ -245,7 +244,7 @@
                       {% endif %}
                       <span class="data-num"><span class="loading-spinner -sidenav"></span></a>
                   </li>
-                  <li><a href="#bio-resource" class="mouse nav-link -disabled">
+                  <li><a href="#bio-resources-mouse" class="mouse nav-link -disabled">
                       {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
                       マウス
                       {% else %}
@@ -253,7 +252,7 @@
                       {% endif %}
                       <span class="data-num"><span class="loading-spinner -sidenav"></span></span></a>
                   </li>
-                  <li><a href="#bio-resource" class="dna nav-link -disabled">DNA<span class="data-num"><span
+                  <li><a href="#bio-resources-dna" class="dna nav-link -disabled">DNA<span class="data-num"><span
                           class="loading-spinner -sidenav"></span></span></a>
                   </li>
                 </ul>
@@ -276,16 +275,15 @@
                 Variants
                 {% endif %}
                 <ul>
-                  <li><a href="#variant" class="clinvar nav-link -disabled">ClinVar<span class="data-num"><span
+                  <li><a href="#variants-clinvar" class="clinvar nav-link -disabled">ClinVar<span class="data-num"><span
                           class="loading-spinner -sidenav"></span></span></a>
                   </li>
-                  <li><a href="#variant" class="mgend nav-link -disabled">MGeND<span class="data-num"><span
+                  <li><a href="#variants-mgend" class="mgend nav-link -disabled">MGeND<span class="data-num"><span
                           class="loading-spinner -sidenav"></span></span></a>
                   </li>
                 </ul>
               </div>
             </li>
-            <!-- TODO: 文献データ公開OKになったら表示 -->
             <li><a href="#references" class="nav-link references -disabled">
                 {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
                 文献
@@ -677,7 +675,6 @@
               </div>
             </div>
 
-            <!-- TODO: 文献データ公開OKになったら表示 -->
             <div id="references" open="">
               <h4 class="temp-title">
                 {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
@@ -780,7 +777,7 @@
               <div id="genetic-testing-table"></div>
             </div>
 
-            <div id="phenotypes" open="">
+            <div id="clinical-features" open="">
               <h4 class="temp-title">
                 {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
                 臨床的特徴
@@ -814,7 +811,6 @@
               <div id="facial-features-en"></div>
             </div>
 
-            <!-- TODO: 公開OKになったら表示 -->
             <div id="public-human-data" open="">
               <h4 class="temp-title">
                 {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
@@ -846,8 +842,8 @@
               </h4>
 
               <div class="tab-wrap">
-                <input type="radio" name="specific-brc" class="tab-switch" id="bio-resource-cell" />
-                <label class="tab-label bio-resource-cell" for="bio-resource-cell">
+                <input type="radio" name="specific-brc" class="tab-switch" id="bio-resources-cell" />
+                <label class="tab-label bio-resources-cell" for="bio-resources-cell">
                   {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
                   細胞
                   {% else %}
@@ -856,8 +852,8 @@
                   <span class="data-num"></span></label>
                 <div class="tab-content cell"></div>
 
-                <input type="radio" name="specific-brc" class="tab-switch" id="bio-resource-mouse" />
-                <label class="tab-label bio-resource-mouse" for="bio-resource-mouse">
+                <input type="radio" name="specific-brc" class="tab-switch" id="bio-resources-mouse" />
+                <label class="tab-label bio-resources-mouse" for="bio-resources-mouse">
                   {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
                   マウス
                   {% else %}
@@ -866,8 +862,8 @@
                   <span class="data-num"></span></label>
                 <div class="tab-content mouse"></div>
 
-                <input type="radio" name="specific-brc" class="tab-switch" id="bio-resource-dna" />
-                <label class="tab-label bio-resource-dna" for="bio-resource-dna">DNA<span
+                <input type="radio" name="specific-brc" class="tab-switch" id="bio-resources-dna" />
+                <label class="tab-label bio-resources-dna" for="bio-resources-dna">DNA<span
                     class="data-num"></span></label>
                 <div class="tab-content dna"></div>
 
@@ -908,14 +904,14 @@
               </h4>
 
               <div class="tab-wrap">
-                <input type="radio" name="variant" class="tab-switch" id="variant-clinvar" />
-                <label class="tab-label variant-clinvar" for="variant-clinvar">
+                <input type="radio" name="variant" class="tab-switch" id="variants-clinvar" />
+                <label class="tab-label variants-clinvar" for="variants-clinvar">
                   ClinVar<span class="data-num"></span>
                 </label>
                 <div class="tab-content clinvar"></div>
 
-                <input type="radio" name="variant" class="tab-switch" id="variant-mgend" />
-                <label class="tab-label variant-mgend" for="variant-mgend">
+                <input type="radio" name="variant" class="tab-switch" id="variants-mgend" />
+                <label class="tab-label variants-mgend" for="variants-mgend">
                   MGeND<span class="data-num"></span>
                 </label>
                 <div class="tab-content mgend"></div>

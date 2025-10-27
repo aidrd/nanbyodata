@@ -7,8 +7,7 @@ export function makeSideNavigation() {
     'japan-curated',
     'glycan-related-genes',
     'genetic-testing',
-    'phenotypes',
-    // TODO: 公開OKになったら表示
+    'clinical-features',
     'public-human-data',
     'cell',
     'mouse',
@@ -17,7 +16,6 @@ export function makeSideNavigation() {
     'mgend',
     'facial-features',
     'chemical-information',
-    // TODO: 公開OKになったら表示
     'references',
   ];
 
@@ -109,7 +107,7 @@ export function makeSideNavigation() {
     .querySelectorAll('#bio-resource .tab-switch')
     .forEach(function (tabSwitch) {
       tabSwitch.addEventListener('change', function () {
-        const selectedTabId = this.id.replace('bio-resource-', '');
+        const selectedTabId = this.id.replace('bio-resources-', '');
         const tocItem = document.querySelector(
           '.bio-resource a.' + selectedTabId
         );
@@ -129,7 +127,7 @@ export function makeSideNavigation() {
     .querySelectorAll('#variant .tab-switch')
     .forEach(function (tabSwitch) {
       tabSwitch.addEventListener('change', function () {
-        const selectedTabId = this.id.replace('variant-', '');
+        const selectedTabId = this.id.replace('variants-', '');
         const tocItem = document.querySelector('.variant a.' + selectedTabId);
         document.querySelectorAll('a').forEach(function (item) {
           item.classList.remove('selected');
@@ -151,7 +149,7 @@ export function switchingDisplayContents(selectedItemId) {
     '#genes',
     '#glycan-related-genes',
     '#genetic-testing',
-    '#phenotypes',
+    '#clinical-features',
     '#bio-resource',
     '#variant',
   ];
@@ -162,13 +160,11 @@ export function switchingDisplayContents(selectedItemId) {
     '#genes',
     '#glycan-related-genes',
     '#genetic-testing',
-    '#phenotypes',
-    // TODO: 公開OKになったら表示
+    '#clinical-features',
     '#public-human-data',
     '#bio-resource',
     '#variant',
     '#facial-features',
-    // TODO: 公開OKになったら表示
     '#references',
   ];
 
@@ -197,12 +193,11 @@ export function switchingDisplayContents(selectedItemId) {
       '#genes',
       '#glycan-related-genes',
       '#genetic-testing',
-      '#phenotypes',
+      '#clinical-features',
       '#bio-resource',
       '#variant',
       '#facial-features',
       '#chemical-information',
-      // TODO: 公開OKになったら表示
       '#references',
     ];
 
@@ -223,7 +218,7 @@ export function switchingDisplayContents(selectedItemId) {
       case 'temp-disease-definition':
       case 'glycan-related-genes':
       case 'genetic-testing':
-      case 'phenotypes':
+      case 'clinical-features':
         prepareDataWrapper();
         toggleDisplay(`#${selectedItemId}`, 'block');
         break;
@@ -241,9 +236,9 @@ export function switchingDisplayContents(selectedItemId) {
         updateGenesSelection('#genes .tab-switch:checked');
         break;
       case 'bio-resource':
-      case 'bio-resource-cell':
-      case 'bio-resource-mouse':
-      case 'bio-resource-dna':
+      case 'bio-resources-cell':
+      case 'bio-resources-mouse':
+      case 'bio-resources-dna':
         prepareDataWrapper();
         window.scrollTo({
           top: 0,
@@ -255,8 +250,8 @@ export function switchingDisplayContents(selectedItemId) {
         updateBioSelection('#bio-resource .tab-switch:checked');
         break;
       case 'variant':
-      case 'variant-clinvar':
-      case 'variant-mgend':
+      case 'variants-clinvar':
+      case 'variants-mgend':
         prepareDataWrapper();
         window.scrollTo({
           top: 0,
