@@ -136,6 +136,36 @@ export const glycanRelatedGeneColumns = [
   },
 ];
 
+export const referenceGeneColumns = [
+  {
+    id: 'symbol',
+    label: 'Gene symbol',
+    link: 'hgnc',
+    target: '_blank',
+  },
+  {
+    id: 'ncbi_id',
+    label: 'NCBI gene ID',
+    link: 'ncbi',
+    target: '_blank',
+  },
+  {
+    id: 'hgnc_id',
+    label: 'HGNC ID',
+    link: 'hgnc',
+    target: '_blank',
+  },
+  {
+    id: 'gene_name',
+    label: 'Gene name',
+  },
+  {
+    id: 'gene_description',
+    label: 'Description',
+    lineClamp: 2,
+  },
+];
+
 export const geneticTestingColumns = [
   { id: 'label', label: 'Test name' },
   { id: 'hp', label: 'More information', link: 'hp', target: '_blank' },
@@ -178,28 +208,28 @@ export const phenotypesEnColumns = [
   },
 ];
 
-export const humDataJaColumns = [
-  { id: 'label_ja', label: 'Name', rowspan: true },
+export const publicHumanDataJaColumns = [
+  { id: 'label_ja', label: 'Study Title', rowspan: true },
   {
     id: 'hum_id',
-    label: 'Hum ID',
+    label: 'Research ID',
     link: 'hum_uri',
     target: '_blank',
     rowspan: true,
   },
-  { id: 'type_data_ja', label: 'Type' },
+  { id: 'type_data_ja', label: 'Type of Data' },
 ];
 
-export const humDataEnColumns = [
-  { id: 'label_en', label: 'Name', rowspan: true },
+export const publicHumanDataEnColumns = [
+  { id: 'label_en', label: 'Study Title', rowspan: true },
   {
     id: 'hum_id',
-    label: 'Hum ID',
+    label: 'Research ID',
     link: 'hum_uri',
     target: '_blank',
     rowspan: true,
   },
-  { id: 'type_data_en', label: 'Type' },
+  { id: 'type_data_en', label: 'Type of Data' },
 ];
 
 export const bioResourceCellColumns = [
@@ -316,8 +346,15 @@ export const chemicalInformationColumns = [
     label: 'Compound CID',
     link: 'id_url',
     target: '_blank',
+    rowspan: true,
   },
-  { id: 'label', label: 'Chemical Name' },
+  { id: 'label', label: 'Chemical Name', rowspan: true },
+  {
+    id: 'title',
+    label: 'Title',
+    link: 'ref_url',
+    target: '_blank',
+  },
 ];
 
 // Overview Sub-classes
