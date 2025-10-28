@@ -1410,7 +1410,7 @@ Stats Overview Component
 .linked-items > dd {
   margin-inline-start: 0;
   display: inline-block;
-  margin: 0;
+  margin: 0 0 3px 0;
 }
 
 .data-num {
