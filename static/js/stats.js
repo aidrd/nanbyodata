@@ -91,7 +91,7 @@ async function loadStatsData() {
       })
       .catch((error) => {
         console.warn('NANDO_count API エラー:', error);
-        showSectionError('nando');
+        hideSection('nando');
       });
 
     // BRC APIを取得して即座にバイオリソーステーブルを更新
@@ -117,7 +117,7 @@ async function loadStatsData() {
       })
       .catch((error) => {
         console.warn('BRC API エラー:', error);
-        showSectionError('bioresources');
+        hideSection('bioresources');
       });
 
     // Link APIを取得して即座にリンクテーブルを更新
@@ -147,11 +147,9 @@ async function loadStatsData() {
       })
       .catch((error) => {
         console.warn('Link API エラー:', error);
-        showSectionError('links');
+        hideSection('links');
       });
 
-    // Link2, Link4, Link5を並列取得して複数のテーブルを更新
-    // これらは相互依存しているため、すべて揃ってから表示
     Promise.allSettled([
       fetchLinkData2(),
       fetchLinkData4(),
@@ -174,74 +172,97 @@ async function loadStatsData() {
       apiData.linkData4 = linkData4;
       apiData.linkData5 = linkData5;
 
-      // エラーがあった場合の処理
-      const hasError = results.some((result) => result.status === 'rejected');
-      if (hasError) {
-        results.forEach((result, index) => {
-          const apiNames = ['Link2', 'Link4', 'Link5'];
-          if (result.status === 'rejected') {
-            console.warn(`${apiNames[index]} API エラー:`, result.reason);
+      results.forEach((result, index) => {
+        const apiNames = ['Link2', 'Link4', 'Link5'];
+
+        if (result.status === 'rejected') {
+          console.warn(`${apiNames[index]} API エラー:`, result.reason);
+
+          if (index === 0) {
+            hideSection('disease-overview');
+            hideSection('related-data');
+            hideSection('genes');
           }
-        });
+          if (index === 1) {
+            hideSection('related-data');
+            hideSection('genes');
+          }
+          if (index === 2) {
+            hideSection('related-data');
+          }
+        }
+      });
+
+      if (results[0].status === 'fulfilled') {
+        const diseaseOverview = {
+          shitei: {
+            definition: safeParseInt(linkData2.shitei_description?.desc),
+            inheritance: safeParseInt(
+              linkData2.shitei_inheritance?.inheritance
+            ),
+            alternativeNames: safeParseInt(linkData2.shitei_altlabel?.alt),
+          },
+          shoman: {
+            definition: safeParseInt(linkData2.shoman_description?.desc),
+            inheritance: safeParseInt(
+              linkData2.shoman_inheritance?.inheritance
+            ),
+            alternativeNames: safeParseInt(linkData2.shoman_altlabel?.alt),
+          },
+        };
+        updateDiseaseOverview(diseaseOverview);
+        showSectionContent('disease-overview');
       }
 
-      // 疾患概要テーブルを更新
-      const diseaseOverview = {
-        shitei: {
-          definition: safeParseInt(linkData2.shitei_description?.desc),
-          inheritance: safeParseInt(linkData2.shitei_inheritance?.inheritance),
-          alternativeNames: safeParseInt(linkData2.shitei_altlabel?.alt),
-        },
-        shoman: {
-          definition: safeParseInt(linkData2.shoman_description?.desc),
-          inheritance: safeParseInt(linkData2.shoman_inheritance?.inheritance),
-          alternativeNames: safeParseInt(linkData2.shoman_altlabel?.alt),
-        },
-      };
-      updateDiseaseOverview(diseaseOverview);
-      showSectionContent('disease-overview');
+      if (
+        results[0].status === 'fulfilled' &&
+        results[1].status === 'fulfilled' &&
+        results[2].status === 'fulfilled'
+      ) {
+        const relatedData = {
+          shitei: {
+            glycanGenes: '-',
+            geneticTests: safeParseInt(linkData2.shitei_genetest?.genetest),
+            clinicalFeatures: safeParseInt(linkData2.shitei_hp?.hp),
+            facialFeatures: safeParseInt(linkData4.shitei_gm?.GM),
+            humanData: safeParseInt(linkData4.shitei_hum?.hum),
+            chemicals: safeParseInt(linkData5.shitei_pubchem?.pubchem),
+          },
+          shoman: {
+            glycanGenes: '-',
+            geneticTests: safeParseInt(linkData2.shoman_genetest?.genetest),
+            clinicalFeatures: safeParseInt(linkData2.shoman_hp?.hp),
+            facialFeatures: safeParseInt(linkData4.shoman_gm?.GM),
+            humanData: safeParseInt(linkData4.shoman_hum?.hum),
+            chemicals: safeParseInt(linkData5.shoman_pubchem?.pubchem),
+          },
+        };
+        updateRelatedData(relatedData);
+        showSectionContent('related-data');
+      }
 
-      // 疾患関連データテーブルを更新
-      const relatedData = {
-        shitei: {
-          glycanGenes: '-',
-          geneticTests: safeParseInt(linkData2.shitei_genetest?.genetest),
-          clinicalFeatures: safeParseInt(linkData2.shitei_hp?.hp),
-          facialFeatures: safeParseInt(linkData4.shitei_gm?.GM || '0'),
-          humanData: safeParseInt(linkData4.shitei_hum?.hum || '0'),
-          chemicals: safeParseInt(linkData5.shitei_pubchem?.pubchem),
-        },
-        shoman: {
-          glycanGenes: '-',
-          geneticTests: safeParseInt(linkData2.shoman_genetest?.genetest),
-          clinicalFeatures: safeParseInt(linkData2.shoman_hp?.hp),
-          facialFeatures: safeParseInt(linkData4.shoman_gm?.GM || '0'),
-          humanData: safeParseInt(linkData4.shoman_hum?.hum || '0'),
-          chemicals: safeParseInt(linkData5.shoman_pubchem?.pubchem),
-        },
-      };
-      updateRelatedData(relatedData);
-      showSectionContent('related-data');
-
-      // 疾患関連遺伝子テーブルを更新
-      const genes = {
-        shitei: {
-          domestic: safeParseInt(linkData4.shitei_CG?.curatedGene),
-          international: safeParseInt(linkData2.shitei_gene?.gene),
-        },
-        shoman: {
-          domestic: safeParseInt(linkData4.shoman_CG?.curatedGene),
-          international: safeParseInt(linkData2.shoman_gene?.gene),
-        },
-      };
-      updateGenes(genes);
-      showSectionContent('genes');
+      if (
+        results[0].status === 'fulfilled' &&
+        results[1].status === 'fulfilled'
+      ) {
+        const genes = {
+          shitei: {
+            domestic: safeParseInt(linkData4.shitei_CG?.curatedGene),
+            international: safeParseInt(linkData2.shitei_gene?.gene),
+          },
+          shoman: {
+            domestic: safeParseInt(linkData4.shoman_CG?.curatedGene),
+            international: safeParseInt(linkData2.shoman_gene?.gene),
+          },
+        };
+        updateGenes(genes);
+        showSectionContent('genes');
+      }
     });
   } catch (error) {
     console.error('統計データの読み込みに失敗しました:', error);
     console.error('エラーの詳細:', error.message);
     console.error('エラースタック:', error.stack);
-    // エラーの場合は各セクションをエラー表示
     const sections = [
       'nando',
       'disease-overview',
@@ -251,7 +272,7 @@ async function loadStatsData() {
       'bioresources',
     ];
     sections.forEach((sectionId) => {
-      showSectionError(sectionId);
+      hideSection(sectionId);
     });
   }
 }
@@ -334,16 +355,16 @@ function transformApiDataToStatsData(
           glycanGenes: '-',
           geneticTests: safeParseInt(linkData2.shitei_genetest?.genetest),
           clinicalFeatures: safeParseInt(linkData2.shitei_hp?.hp),
-          facialFeatures: safeParseInt(linkData4.shitei_gm?.GM || '0'),
-          humanData: safeParseInt(linkData4.shitei_hum?.hum || '0'),
+          facialFeatures: safeParseInt(linkData4.shitei_gm?.GM),
+          humanData: safeParseInt(linkData4.shitei_hum?.hum),
           chemicals: safeParseInt(linkData5.shitei_pubchem?.pubchem),
         },
         shoman: {
           glycanGenes: '-',
           geneticTests: safeParseInt(linkData2.shoman_genetest?.genetest),
           clinicalFeatures: safeParseInt(linkData2.shoman_hp?.hp),
-          facialFeatures: safeParseInt(linkData4.shoman_gm?.GM || '0'),
-          humanData: safeParseInt(linkData4.shoman_hum?.hum || '0'),
+          facialFeatures: safeParseInt(linkData4.shoman_gm?.GM),
+          humanData: safeParseInt(linkData4.shoman_hum?.hum),
           chemicals: safeParseInt(linkData5.shoman_pubchem?.pubchem),
         },
       },
@@ -374,15 +395,15 @@ function transformApiDataToStatsData(
       },
       // 顔貌特徴と外部リンクの合計
       facial_features:
-        safeParseInt(linkData4.shitei_gm?.GM || '0') +
-        safeParseInt(linkData4.shoman_gm?.GM || '0'),
+        safeParseInt(linkData4.shitei_gm?.GM) +
+        safeParseInt(linkData4.shoman_gm?.GM),
       external_links:
-        safeParseInt(linkData.name8?.mondo || '0') +
-        safeParseInt(linkData.name10?.medgen || '0') +
-        safeParseInt(linkData.name5?.kegg || '0') +
-        safeParseInt(linkData.name7?.mondo || '0') +
-        safeParseInt(linkData.name9?.medgen || '0') +
-        safeParseInt(linkData.name6?.kegg || '0'),
+        safeParseInt(linkData.name8?.mondo) +
+        safeParseInt(linkData.name10?.medgen) +
+        safeParseInt(linkData.name5?.kegg) +
+        safeParseInt(linkData.name7?.mondo) +
+        safeParseInt(linkData.name9?.medgen) +
+        safeParseInt(linkData.name6?.kegg),
     };
   } catch (error) {
     console.error('データ変換中にエラーが発生しました:', error);
@@ -403,9 +424,7 @@ function updateAllTables(statsData) {
 // NANDO_count APIからデータを取得する関数
 async function fetchNANDOData() {
   try {
-    const response = await fetch(
-      'http://localhost:8888/sparqlist/api/NANDO_count'
-    );
+    const response = await fetch('/sparqlist/api/NANDO_count');
 
     if (!response.ok) {
       throw new Error(
@@ -433,9 +452,7 @@ async function fetchNANDOData() {
 // BRC APIからデータを取得する関数
 async function fetchBRCData() {
   try {
-    const response = await fetch(
-      'http://localhost:8888/sparqlist/api/NANDO_link_count3_brc'
-    );
+    const response = await fetch('/sparqlist/api/NANDO_link_count3_brc');
 
     if (!response.ok) {
       throw new Error(
@@ -463,9 +480,7 @@ async function fetchBRCData() {
 // NANDO_link_count APIからデータを取得する関数
 async function fetchLinkData() {
   try {
-    const response = await fetch(
-      'http://localhost:8888/sparqlist/api/NANDO_link_count'
-    );
+    const response = await fetch('/sparqlist/api/NANDO_link_count');
 
     if (!response.ok) {
       throw new Error(
@@ -493,9 +508,7 @@ async function fetchLinkData() {
 // NANDO_link_count2 APIからデータを取得する関数
 async function fetchLinkData2() {
   try {
-    const response = await fetch(
-      'http://localhost:8888/sparqlist/api/NANDO_link_count2'
-    );
+    const response = await fetch('/sparqlist/api/NANDO_link_count2');
 
     if (!response.ok) {
       throw new Error(
@@ -523,9 +536,7 @@ async function fetchLinkData2() {
 // NANDO_link_count4 APIからデータを取得する関数
 async function fetchLinkData4() {
   try {
-    const response = await fetch(
-      'http://localhost:8888/sparqlist/api/NANDO_link_count4'
-    );
+    const response = await fetch('/sparqlist/api/NANDO_link_count4');
 
     if (!response.ok) {
       throw new Error(
@@ -553,9 +564,7 @@ async function fetchLinkData4() {
 // NANDO_link_count5 APIからデータを取得する関数
 async function fetchLinkData5() {
   try {
-    const response = await fetch(
-      'http://localhost:8888/sparqlist/api/NANDO_link_count5'
-    );
+    const response = await fetch('/sparqlist/api/NANDO_link_count5');
 
     if (!response.ok) {
       throw new Error(
