@@ -159,7 +159,7 @@ export const downloadDatasets = (nandoId, datasets) => {
               name,
               data: reconstructionData(facialFeaturesColumns, data),
             };
-          case 'Public Human Data':
+          case 'NBDC Human DB':
             const publicHumanDataColumns =
               currentLang === 'ja'
                 ? publicHumanDataJaColumns
@@ -292,7 +292,7 @@ export const downloadDatasets = (nandoId, datasets) => {
       'Genetic Testing': [],
       'Clinical Features': [],
       'Facial Features': [],
-      'Public Human Data': [],
+      'NBDC Human DB': [],
       'Bio Resources': ['Cell', 'Mouse', 'DNA'],
       'Chemical Information': [],
       Variants: ['Clinvar', 'MGeND'],

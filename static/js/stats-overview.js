@@ -125,8 +125,49 @@ class StatsOverview {
     // 糖鎖関連遺伝子は常に'-'
     this.updateCard('glycan_genes', '-');
 
-    // 外部リンクは常に'-'（または必要に応じてAPIから取得）
     this.updateCard('external_links', '-');
+
+    fetch(`/sparqlist/api/NANDO_link_count?timestamp=${this.timestamp}`)
+      .then((res) => (res.ok ? res.json() : null))
+      .then((linkData) => {
+        if (linkData) {
+          allData.linkData = linkData;
+          // 指定（shitei）
+          const shiteiMonarchExact = parseInt(linkData.name2?.mondo || 0);
+          const shiteiMonarchClose = parseInt(linkData.name4?.mondo || 0);
+          const shiteiOrphanet = parseInt(linkData.name12?.mondo || 0);
+          const shiteiMedgen = parseInt(linkData.name10?.medgen || 0);
+          const shiteiKegg = parseInt(linkData.name5?.kegg || 0);
+
+          // 小慢（shoman）
+          const shomanMonarchExact = parseInt(linkData.name1?.mondo || 0);
+          const shomanMonarchClose = parseInt(linkData.name3?.mondo || 0);
+          const shomanOrphanet = parseInt(linkData.name11?.mondo || 0);
+          const shomanMedgen = parseInt(linkData.name9?.medgen || 0);
+          const shomanKegg = parseInt(linkData.name6?.kegg || 0);
+
+          const totalExternalLinks =
+            shiteiMonarchExact +
+            shiteiMonarchClose +
+            shiteiOrphanet +
+            shiteiMedgen +
+            shiteiKegg +
+            shomanMonarchExact +
+            shomanMonarchClose +
+            shomanOrphanet +
+            shomanMedgen +
+            shomanKegg;
+
+          this.updateCard(
+            'external_links',
+            totalExternalLinks > 0 ? totalExternalLinks.toString() : '-'
+          );
+        }
+      })
+      .catch((error) => {
+        console.error('NANDO_link_count API failed:', error);
+        this.updateCard('external_links', 'N/A');
+      });
 
     return allData;
   }

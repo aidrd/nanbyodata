@@ -94,7 +94,7 @@ const datasets = [
   { name: 'Glycan-related Genes', data: null },
   { name: 'Genetic Testing', data: null },
   { name: 'Clinical Features', data: null },
-  { name: 'Public Human Data', data: null },
+  { name: 'NBDC Human DB', data: null },
   { name: 'Cell', data: null },
   { name: 'Mouse', data: null },
   { name: 'DNA', data: null },
@@ -336,7 +336,7 @@ const datasets = [
       fetchData('nanbyodata_get_nbdc_human_databases_info_by_nando_id').then(
         (publicHumanData) => {
           makePublicHumanData(publicHumanData);
-          datasets.find((d) => d.name === 'Public Human Data').data =
+          datasets.find((d) => d.name === 'NBDC Human DB').data =
             publicHumanData;
           checkAndLogDatasets();
         }
