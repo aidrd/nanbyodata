@@ -209,26 +209,28 @@ export const phenotypesEnColumns = [
 ];
 
 export const publicHumanDataJaColumns = [
-  { id: 'label_ja', label: 'Study Title', rowspan: true },
   {
     id: 'hum_id',
-    label: 'Research ID',
+    label: 'Hum ID',
     link: 'hum_uri',
     target: '_blank',
     rowspan: true,
   },
-  { id: 'type_data_ja', label: 'Type of Data' },
+  { id: 'label_ja', label: '研究題目' },
+  { id: 'type_study_ja', label: 'データの種類' },
+  { id: 'type_data_ja', label: 'アクセス制限' },
 ];
 
 export const publicHumanDataEnColumns = [
-  { id: 'label_en', label: 'Study Title', rowspan: true },
   {
     id: 'hum_id',
-    label: 'Research ID',
+    label: 'Hum ID',
     link: 'hum_uri',
     target: '_blank',
     rowspan: true,
   },
+  { id: 'label_en', label: 'Study Title' },
+  { id: 'type_study_en', label: 'Type of Study' },
   { id: 'type_data_en', label: 'Type of Data' },
 ];
 
