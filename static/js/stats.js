@@ -35,6 +35,7 @@ async function loadStatsData() {
       'related-data',
       'genes',
       'bioresources',
+      'variants',
     ];
     sections.forEach((sectionId) => {
       showSectionLoading(sectionId);
@@ -167,7 +168,6 @@ async function loadStatsData() {
         results[2].status === 'fulfilled'
           ? results[2].value
           : getDefaultLinkData5();
-
       apiData.linkData2 = linkData2;
       apiData.linkData4 = linkData4;
       apiData.linkData5 = linkData5;
@@ -222,7 +222,7 @@ async function loadStatsData() {
         const relatedData = {
           shitei: {
             glycanGenes: '-',
-            geneticTests: safeParseInt(linkData2.shitei_genetest?.genetest),
+            geneticTestings: safeParseInt(linkData2.shitei_genetest?.genetest),
             clinicalFeatures: safeParseInt(linkData2.shitei_hp?.hp),
             facialFeatures: safeParseInt(linkData4.shitei_gm?.GM),
             humanData: safeParseInt(linkData4.shitei_hum?.hum),
@@ -230,7 +230,7 @@ async function loadStatsData() {
           },
           shoman: {
             glycanGenes: '-',
-            geneticTests: safeParseInt(linkData2.shoman_genetest?.genetest),
+            geneticTestings: safeParseInt(linkData2.shoman_genetest?.genetest),
             clinicalFeatures: safeParseInt(linkData2.shoman_hp?.hp),
             facialFeatures: safeParseInt(linkData4.shoman_gm?.GM),
             humanData: safeParseInt(linkData4.shoman_hum?.hum),
@@ -259,6 +259,29 @@ async function loadStatsData() {
         showSectionContent('genes');
       }
     });
+
+    fetchLinkData7()
+      .then((data) => {
+        apiData.linkData7 = data;
+        if (apiData.linkData2) {
+          const variants = {
+            shitei: {
+              clinvar: safeParseInt(data.shitei_clinvar?.num),
+              mgend: safeParseInt(apiData.linkData2.shitei_mgened?.mgend),
+            },
+            shoman: {
+              clinvar: safeParseInt(data.shoman_clinvar?.num),
+              mgend: safeParseInt(apiData.linkData2.shoman_mgend?.mgend),
+            },
+          };
+          updateVariants(variants);
+          showSectionContent('variants');
+        }
+      })
+      .catch((error) => {
+        console.warn('Link7 API エラー:', error);
+        hideSection('variants');
+      });
   } catch (error) {
     console.error('統計データの読み込みに失敗しました:', error);
     console.error('エラーの詳細:', error.message);
@@ -270,6 +293,7 @@ async function loadStatsData() {
       'related-data',
       'genes',
       'bioresources',
+      'variants',
     ];
     sections.forEach((sectionId) => {
       hideSection(sectionId);
@@ -353,7 +377,7 @@ function transformApiDataToStatsData(
       relatedData: {
         shitei: {
           glycanGenes: '-',
-          geneticTests: safeParseInt(linkData2.shitei_genetest?.genetest),
+          geneticTestings: safeParseInt(linkData2.shitei_genetest?.genetest),
           clinicalFeatures: safeParseInt(linkData2.shitei_hp?.hp),
           facialFeatures: safeParseInt(linkData4.shitei_gm?.GM),
           humanData: safeParseInt(linkData4.shitei_hum?.hum),
@@ -361,7 +385,7 @@ function transformApiDataToStatsData(
         },
         shoman: {
           glycanGenes: '-',
-          geneticTests: safeParseInt(linkData2.shoman_genetest?.genetest),
+          geneticTestings: safeParseInt(linkData2.shoman_genetest?.genetest),
           clinicalFeatures: safeParseInt(linkData2.shoman_hp?.hp),
           facialFeatures: safeParseInt(linkData4.shoman_gm?.GM),
           humanData: safeParseInt(linkData4.shoman_hum?.hum),
@@ -589,6 +613,34 @@ async function fetchLinkData5() {
   }
 }
 
+// NANDO_link_count7 APIからデータを取得する関数（ClinVar）
+async function fetchLinkData7() {
+  try {
+    const response = await fetch('/sparqlist/api/NANDO_link_count7');
+
+    if (!response.ok) {
+      throw new Error(
+        `Link7 API request failed: ${response.status} ${response.statusText}`
+      );
+    }
+
+    const contentType = response.headers.get('content-type');
+
+    if (!contentType || !contentType.includes('application/json')) {
+      const text = await response.text();
+      console.error('Expected JSON but got:', contentType);
+      console.error('Response text:', text.substring(0, 200) + '...');
+      throw new Error(`Expected JSON response but got ${contentType}`);
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Link7 API エラー:', error);
+    throw error;
+  }
+}
+
 // 各セクションのローディング状態を表示する関数
 function showSectionLoading(sectionId) {
   const loadingDiv = document.getElementById(`${sectionId}-loading`);
@@ -652,7 +704,7 @@ function showErrorMessage() {
 
   // 全てのテーブルセルにエラーメッセージを表示
   const allCells = document.querySelectorAll(
-    '[id$="-all"], [id$="-nanbyo-group"], [id$="-nanbyo-disease"], [id$="-nanbyo-subtype"], [id$="-definition"], [id$="-inheritance"], [id$="-alternative-names"], [id$="-monarch-exact"], [id$="-monarch-close"], [id$="-orphanet"], [id$="-medgen"], [id$="-kegg"], [id$="-genes"], [id$="-genetic-tests"], [id$="-clinical-features"], [id$="-facial-features"], [id$="-human-data"], [id$="-chemicals"], [id$="-domestic-genes"], [id$="-international-genes"], [id$="-clinvar"], [id$="-mgend"], [id$="-cells"], [id$="-mouse"], [id$="-dna"]'
+    '[id$="-all"], [id$="-nanbyo-group"], [id$="-nanbyo-disease"], [id$="-nanbyo-subtype"], [id$="-definition"], [id$="-inheritance"], [id$="-alternative-names"], [id$="-monarch-exact"], [id$="-monarch-close"], [id$="-orphanet"], [id$="-medgen"], [id$="-kegg"], [id$="-genes"], [id$="-genetic-testings"], [id$="-clinical-features"], [id$="-facial-features"], [id$="-human-data"], [id$="-chemicals"], [id$="-domestic-genes"], [id$="-international-genes"], [id$="-clinvar"], [id$="-mgend"], [id$="-cells"], [id$="-mouse"], [id$="-dna"]'
   );
 
   allCells.forEach((cell) => {
@@ -785,7 +837,7 @@ function updateRelatedDataRow(category, data) {
   try {
     const fields = [
       'glycanGenes',
-      'geneticTests',
+      'geneticTestings',
       'clinicalFeatures',
       'facialFeatures',
       'humanData',
@@ -887,6 +939,35 @@ function updateBioresourcesRow(category, data) {
   }
 }
 
+function updateVariants(variants) {
+  // バリアントテーブル
+  updateVariantsRow('shitei', variants.shitei);
+  updateVariantsRow('shoman', variants.shoman);
+}
+
+function updateVariantsRow(category, data) {
+  try {
+    const clinvarElement = document.getElementById(`${category}-clinvar`);
+    const mgendElement = document.getElementById(`${category}-mgend`);
+
+    if (!clinvarElement) {
+      console.error(`Element not found: ${category}-clinvar`);
+      return;
+    }
+    if (!mgendElement) {
+      console.error(`Element not found: ${category}-mgend`);
+      return;
+    }
+
+    clinvarElement.textContent =
+      data.clinvar === '-' ? '-' : data.clinvar.toLocaleString();
+    mgendElement.textContent =
+      data.mgend === '-' ? '-' : data.mgend.toLocaleString();
+  } catch (error) {
+    console.error(`Error updating variants for ${category}:`, error);
+  }
+}
+
 // 安全な数値変換関数
 function safeParseInt(value) {
   if (value === null || value === undefined || value === '-') {
@@ -942,8 +1023,8 @@ function getDefaultLinkData2() {
     shoman_hp: { hp: '0' },
     shitei_gene: { gene: '0' },
     shoman_gene: { gene: '0' },
-    shitei_mgened: { mgend: '0' },
-    shoman_mgened: { mgend: '0' },
+    shitei_mgend: { mgend: '0' },
+    shoman_mgend: { mgend: '0' },
     shitei_altlabel: { alt: '0' },
     shoman_altlabel: { alt: '0' },
   };
@@ -964,5 +1045,12 @@ function getDefaultLinkData5() {
   return {
     shitei_pubchem: { pubchem: '0' },
     shoman_pubchem: { pubchem: '0' },
+  };
+}
+
+function getDefaultLinkData7() {
+  return {
+    shitei_clinvar: { num: '0' },
+    shoman_clinvar: { num: '0' },
   };
 }

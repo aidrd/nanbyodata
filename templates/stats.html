@@ -275,7 +275,7 @@
                       {% else %}
                       <th>Category</th>
                       <th>Glycan-Related Genes</th>
-                      <th>Genetic Tests</th>
+                      <th>Genetic Testings</th>
                       <th>Clinical Features</th>
                       <th>Facial Features</th>
                       <th>NBDC Human DB</th>
@@ -292,7 +292,7 @@
                       <td>Shitei</td>
                       {% endif %}
                       <td id="shitei-glycan-genes">-</td>
-                      <td id="shitei-genetic-tests">-</td>
+                      <td id="shitei-genetic-testings">-</td>
                       <td id="shitei-clinical-features">-</td>
                       <td id="shitei-facial-features">-</td>
                       <td id="shitei-human-data">-</td>
@@ -306,7 +306,7 @@
                       <td>Shoman</td>
                       {% endif %}
                       <td id="shoman-glycan-genes">-</td>
-                      <td id="shoman-genetic-tests">-</td>
+                      <td id="shoman-genetic-testings">-</td>
                       <td id="shoman-clinical-features">-</td>
                       <td id="shoman-facial-features">-</td>
                       <td id="shoman-human-data">-</td>
@@ -424,6 +424,60 @@
                       <td id="shoman-cells">-</td>
                       <td id="shoman-mouse">-</td>
                       <td id="shoman-dna">-</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+            </div>
+          </div>
+
+          <!-- バリアントテーブル -->
+          <div class="stats-section">
+            {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
+            <h4 class="stats-section-title">バリアント</h4>
+            {% else %}
+            <h4 class="stats-section-title">Variants</h4>
+            {% endif %}
+            <div class="table-contents">
+              <div id="variants-loading" class="loading-container" style="display: none;">
+                <div class="loading-spinner -stats"></div>
+              </div>
+              <div id="variants-error" class="error-container" style="display: none;">
+                <p>データの読み込みに失敗しました</p>
+              </div>
+              <section class="section" id="variants-content">
+                <table class="table stats-table">
+                  <thead>
+                    <tr>
+                      {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
+                      <th>区分</th>
+                      <th>ClinVar</th>
+                      <th>MGeND</th>
+                      {% else %}
+                      <th>Category</th>
+                      <th>ClinVar</th>
+                      <th>MGeND</th>
+                      {% endif %}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
+                      <td>指定</td>
+                      {% else %}
+                      <td>Shitei</td>
+                      {% endif %}
+                      <td id="shitei-clinvar">-</td>
+                      <td id="shitei-mgend">-</td>
+                    </tr>
+                    <tr>
+                      {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
+                      <td>小慢</td>
+                      {% else %}
+                      <td>Shoman</td>
+                      {% endif %}
+                      <td id="shoman-clinvar">-</td>
+                      <td id="shoman-mgend">-</td>
                     </tr>
                   </tbody>
                 </table>
