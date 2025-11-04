@@ -133,6 +133,7 @@ function _applyHighlightFromUrl() {
 }
 
 let isExpandingParentNodes = false;
+let manuallyCollapsedNodes = new Set();
 
 function _expandParentNodesForSelectedNode(zTree, targetId) {
   if (!zTree || !targetId || isExpandingParentNodes) return;
@@ -165,7 +166,7 @@ function _expandParentNodesForSelectedNode(zTree, targetId) {
 
     let parentNode = targetNode.getParentNode();
     while (parentNode) {
-      if (!parentNode.open) {
+      if (!parentNode.open && !manuallyCollapsedNodes.has(parentNode.tId)) {
         if (parentNode.isFirstTimeLoad) {
           zTree.reAsyncChildNodes(parentNode, 'refresh');
           parentNode.isFirstTimeLoad = false;
@@ -182,7 +183,7 @@ function _expandParentNodesForSelectedNode(zTree, targetId) {
 
     const directParent = targetNode.getParentNode();
     if (directParent) {
-      if (!directParent.open) {
+      if (!directParent.open && !manuallyCollapsedNodes.has(directParent.tId)) {
         zTree.expandNode(directParent, true, false, false);
 
         if (container.length > 0) {
@@ -429,6 +430,8 @@ function init_ui_upstream_trace(startId, upstream_trace_data, currentLang) {
         return true;
       },
       onExpand: function (treeId, treeNode) {
+        manuallyCollapsedNodes.delete(treeNode.tId);
+
         treeNode.isFirstTimeLoad = false;
         const container = $('.treeview-container');
         if (container.length > 0) {
@@ -462,6 +465,8 @@ function init_ui_upstream_trace(startId, upstream_trace_data, currentLang) {
         }, 0);
       },
       onCollapse: function (treeId, treeNode) {
+        manuallyCollapsedNodes.add(treeNode.tId);
+
         const container = $('.treeview-container');
         if (container.length > 0) {
           savedScrollLeft = container.scrollLeft();
@@ -482,15 +487,32 @@ function init_ui_upstream_trace(startId, upstream_trace_data, currentLang) {
             });
           }
 
-          _applyHighlightFromUrl();
-
-          setTimeout(() => {
+          const currentNandoId = _getCurrentNandoIdFromUrl();
+          if (currentNandoId) {
+            const targetNode = zTreeObj.getNodesByParam(
+              'nando_id',
+              currentNandoId,
+              null
+            )[0];
+            if (targetNode) {
+              let parentNode = targetNode.getParentNode();
+              let isParentOfSelected = false;
+              while (parentNode) {
+                if (parentNode.tId === treeNode.tId) {
+                  isParentOfSelected = true;
+                  break;
+                }
+                parentNode = parentNode.getParentNode();
+              }
+              if (!isParentOfSelected) {
+                _applyHighlightFromUrl();
+              }
+            } else {
+              _applyHighlightFromUrl();
+            }
+          } else {
             _applyHighlightFromUrl();
-          }, 50);
-
-          setTimeout(() => {
-            _applyHighlightFromUrl();
-          }, 150);
+          }
         }, 0);
         setTimeout(function () {
           const button = $('#' + treeNode.tId + '_switch');
@@ -634,13 +656,6 @@ function init_ui_upstream_trace(startId, upstream_trace_data, currentLang) {
           });
         });
       }
-
-      setTimeout(() => {
-        if (container.length > 0) {
-          container.scrollLeft(currentScrollLeft);
-        }
-        _applyHighlightFromUrl();
-      }, 10);
     }
   });
 }
