@@ -47,6 +47,7 @@
     // 開いている時のみリサイズ可能な幅を設定
     &:not(.collapsed) {
       min-width: 250px;
+      width: 360px; // 開いたときのデフォルト幅（JavaScriptで動的変更される場合は上書きされる）
     }
 
     .sidebar-title {
@@ -66,19 +67,11 @@
         font-size: 18px;
         color: var(--color-secondary);
         opacity: 0.8;
-
-        &:hover {
-          opacity: 1;
-        }
       }
 
       .sidebar-title-text {
         writing-mode: sideways-rl;
         white-space: nowrap;
-      }
-
-      &:hover {
-        opacity: 1;
       }
     }
 
@@ -142,8 +135,7 @@
     overflow-y: auto;
     overflow-x: visible;
     height: calc(100vh - 76px);
-    min-width: 250px;
-    max-width: 350px;
+    min-width: 280px;
     width: 250px;
     background-color: var(--color-sidebar-toc);
     flex-shrink: 0;
@@ -153,6 +145,15 @@
     flex-direction: column;
     transition: none;
     position: relative;
+    // スクロールバーを非表示（スクロールは有効）
+    -ms-overflow-style: none; // IE/Edge
+    scrollbar-width: none; // Firefox
+    &::-webkit-scrollbar {
+      // Chrome/Safari
+      width: 0;
+      height: 0;
+      display: none;
+    }
 
     &.collapsed {
       width: auto;
@@ -181,19 +182,11 @@
         font-size: 18px;
         color: var(--color-secondary);
         opacity: 0.8;
-
-        &:hover {
-          opacity: 1;
-        }
       }
 
       .sidebar-title-text {
         writing-mode: sideways-rl;
         white-space: nowrap;
-      }
-
-      &:hover {
-        opacity: 1;
       }
     }
 

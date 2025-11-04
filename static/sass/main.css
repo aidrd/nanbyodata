@@ -36,7 +36,7 @@ Foundation
   --font-size-xl: 1.25rem; /* 20px */
   --font-size-2xl: 1.5rem; /* 24px */
   --font-size-3xl: 2rem; /* 32px */
-  --spacing-disease-content: 25px;
+  --spacing-disease-content: 27px;
   --spacing-inner-box: 10px;
   --spacing-heading-bottom: 8px;
   --radius-small: 2px;
@@ -499,6 +499,7 @@ footer .container .footer__bottom .footer__lisence small:before {
 }
 .content-wrapper #sidebar:not(.collapsed) {
   min-width: 250px;
+  width: 360px;
 }
 .content-wrapper #sidebar .sidebar-title {
   display: flex;
@@ -518,15 +519,9 @@ footer .container .footer__bottom .footer__lisence small:before {
   color: var(--color-secondary);
   opacity: 0.8;
 }
-.content-wrapper #sidebar .sidebar-title .sitemap-icon:hover {
-  opacity: 1;
-}
 .content-wrapper #sidebar .sidebar-title .sidebar-title-text {
   writing-mode: sideways-rl;
   white-space: nowrap;
-}
-.content-wrapper #sidebar .sidebar-title:hover {
-  opacity: 1;
 }
 .content-wrapper #sidebar:not(.collapsed) .sidebar-title {
   padding-right: 0;
@@ -574,8 +569,7 @@ footer .container .footer__bottom .footer__lisence small:before {
   overflow-y: auto;
   overflow-x: visible;
   height: calc(100vh - 76px);
-  min-width: 250px;
-  max-width: 350px;
+  min-width: 280px;
   width: 250px;
   background-color: var(--color-sidebar-toc);
   flex-shrink: 0;
@@ -585,6 +579,13 @@ footer .container .footer__bottom .footer__lisence small:before {
   flex-direction: column;
   transition: none;
   position: relative;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.content-wrapper #temp-side-navigation::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  display: none;
 }
 .content-wrapper #temp-side-navigation.collapsed {
   width: auto;
@@ -612,15 +613,9 @@ footer .container .footer__bottom .footer__lisence small:before {
   color: var(--color-secondary);
   opacity: 0.8;
 }
-.content-wrapper #temp-side-navigation .sidebar-title .list-icon:hover {
-  opacity: 1;
-}
 .content-wrapper #temp-side-navigation .sidebar-title .sidebar-title-text {
   writing-mode: sideways-rl;
   white-space: nowrap;
-}
-.content-wrapper #temp-side-navigation .sidebar-title:hover {
-  opacity: 1;
 }
 .content-wrapper #temp-side-navigation:not(.collapsed) .sidebar-title {
   padding-right: 0;
@@ -842,6 +837,229 @@ header.search-area .intro-text .keyword a {
   left: 48%;
 }
 
+/* ================================================
+Stats Overview Component
+================================================ */
+.stats-overview {
+  margin: 60px 0;
+}
+.stats-overview .section-title {
+  text-align: center;
+  color: #2c3e50;
+  margin-bottom: 40px;
+  font-size: 2rem;
+  font-weight: 600;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+.stats-grid .stats-card:nth-child(6) {
+  grid-column: 1;
+}
+.stats-grid .stats-card:nth-child(7) {
+  grid-column: 2;
+}
+.stats-grid .stats-card:nth-child(8) {
+  grid-column: 1;
+}
+.stats-grid .stats-card:nth-child(9) {
+  grid-column: 2;
+}
+
+.stats-card-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+.stats-card-link:hover {
+  text-decoration: none;
+  color: inherit;
+}
+
+.stats-card {
+  background: white;
+  border-radius: 12px;
+  padding: 24px 10px;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  height: 170px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+.stats-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+}
+
+.stats-icon {
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-bottom: 0;
+}
+.stats-icon i {
+  font-size: 2.5rem;
+  color: #20b2aa;
+}
+.stats-icon .stats-icon-svg {
+  width: 3rem;
+  height: 3rem;
+}
+
+.stats-number {
+  position: absolute;
+  top: 53%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--color-secondary);
+  margin: 0;
+  line-height: 1;
+}
+
+.stats-label {
+  position: absolute;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 1rem;
+  color: var(--color-secondary);
+  font-weight: 500;
+  line-height: 1.2;
+  width: calc(100% - 20px);
+  text-align: center;
+  min-height: 2.4em; /* 2行分の高さを確保 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (max-width: 1200px) {
+  .stats-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+  .stats-grid .stats-card:nth-child(6) {
+    grid-column: 1;
+  }
+  .stats-grid .stats-card:nth-child(7) {
+    grid-column: 2;
+  }
+  .stats-grid .stats-card:nth-child(8) {
+    grid-column: 3;
+  }
+  .stats-grid .stats-card:nth-child(9) {
+    grid-column: 4;
+  }
+}
+@media (max-width: 992px) {
+  .stats-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+  .stats-grid .stats-card:nth-child(6) {
+    grid-column: 1;
+  }
+  .stats-grid .stats-card:nth-child(7) {
+    grid-column: 2;
+  }
+  .stats-grid .stats-card:nth-child(8) {
+    grid-column: 3;
+  }
+  .stats-grid .stats-card:nth-child(9) {
+    grid-column: 1;
+  }
+}
+@media (max-width: 768px) {
+  .stats-overview {
+    margin: 40px 0;
+  }
+  .stats-overview .section-title {
+    font-size: 1.5rem;
+    margin-bottom: 30px;
+  }
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+  .stats-grid .stats-card:nth-child(6) {
+    grid-column: 1;
+  }
+  .stats-grid .stats-card:nth-child(7) {
+    grid-column: 2;
+  }
+  .stats-grid .stats-card:nth-child(8) {
+    grid-column: 1;
+  }
+  .stats-grid .stats-card:nth-child(9) {
+    grid-column: 2;
+  }
+  .stats-card {
+    padding: 20px 16px;
+    height: 120px;
+  }
+  .stats-icon {
+    top: 16px;
+  }
+  .stats-icon i {
+    font-size: 2rem;
+  }
+  .stats-icon .stats-icon-svg {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+  .stats-number {
+    font-size: 2rem;
+  }
+  .stats-label {
+    bottom: 12px;
+    font-size: 0.9rem;
+    min-height: 2.2em;
+  }
+}
+@media (max-width: 576px) {
+  .stats-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  .stats-grid .stats-card:nth-child(6),
+  .stats-grid .stats-card:nth-child(7),
+  .stats-grid .stats-card:nth-child(8),
+  .stats-grid .stats-card:nth-child(9) {
+    grid-column: 1;
+  }
+  .stats-card {
+    padding: 16px 12px;
+    height: 100px;
+  }
+  .stats-icon {
+    top: 12px;
+  }
+  .stats-icon i {
+    font-size: 1.8rem;
+  }
+  .stats-icon .stats-icon-svg {
+    width: 2.2rem;
+    height: 2.2rem;
+  }
+  .stats-number {
+    font-size: 1.8rem;
+  }
+  .stats-label {
+    bottom: 8px;
+    font-size: 0.85rem;
+    min-height: 2em;
+  }
+}
 .card-wrapper {
   display: flex;
   justify-content: space-between;
@@ -1039,6 +1257,16 @@ header.search-area .intro-text .keyword a {
   height: 20px;
   opacity: 0.5;
 }
+.loading-spinner.-stats {
+  position: relative;
+  top: unset;
+  left: unset;
+  width: 24px;
+  height: 24px;
+  margin: 0 auto;
+  border: 3px #e9ecef solid;
+  border-top: 3px #20b2aa solid;
+}
 
 @keyframes sp-anime {
   100% {
@@ -1232,28 +1460,33 @@ header.search-area .intro-text .keyword a {
   color: var(--color-secondary);
 }
 #temp-side-navigation > ul > li .bio-resource,
-#temp-side-navigation > ul > li .variant {
+#temp-side-navigation > ul > li .variant,
+#temp-side-navigation > ul > li .genes {
   color: var(--color-secondary);
   font-weight: bold;
   padding: 10px 0 20px 10px;
 }
 #temp-side-navigation > ul > li .bio-resource.-disabled,
-#temp-side-navigation > ul > li .variant.-disabled {
+#temp-side-navigation > ul > li .variant.-disabled,
+#temp-side-navigation > ul > li .genes.-disabled {
   color: rgba(19, 41, 90, 0.2705882353);
 }
 #temp-side-navigation > ul > li .bio-resource ul,
-#temp-side-navigation > ul > li .variant ul {
+#temp-side-navigation > ul > li .variant ul,
+#temp-side-navigation > ul > li .genes ul {
   position: relative;
   bottom: 6px;
 }
 #temp-side-navigation > ul > li .bio-resource ul li,
-#temp-side-navigation > ul > li .variant ul li {
+#temp-side-navigation > ul > li .variant ul li,
+#temp-side-navigation > ul > li .genes ul li {
   position: relative;
   margin-left: 20px;
   padding-top: 4px;
 }
 #temp-side-navigation > ul > li .bio-resource ul li::before,
-#temp-side-navigation > ul > li .variant ul li::before {
+#temp-side-navigation > ul > li .variant ul li::before,
+#temp-side-navigation > ul > li .genes ul li::before {
   content: "";
   display: block;
   width: 5px;
@@ -1265,12 +1498,14 @@ header.search-area .intro-text .keyword a {
   position: absolute;
 }
 #temp-side-navigation > ul > li .bio-resource ul li:first-child::before,
-#temp-side-navigation > ul > li .variant ul li:first-child::before {
+#temp-side-navigation > ul > li .variant ul li:first-child::before,
+#temp-side-navigation > ul > li .genes ul li:first-child::before {
   top: 8px;
   height: 26px;
 }
 #temp-side-navigation > ul > li .bio-resource ul li::after,
-#temp-side-navigation > ul > li .variant ul li::after {
+#temp-side-navigation > ul > li .variant ul li::after,
+#temp-side-navigation > ul > li .genes ul li::after {
   content: "";
   display: block;
   width: 1px;
@@ -1282,7 +1517,8 @@ header.search-area .intro-text .keyword a {
   position: absolute;
 }
 #temp-side-navigation > ul > li .bio-resource ul li a,
-#temp-side-navigation > ul > li .variant ul li a {
+#temp-side-navigation > ul > li .variant ul li a,
+#temp-side-navigation > ul > li .genes ul li a {
   display: block;
   text-decoration: none;
   position: relative;
@@ -1295,16 +1531,217 @@ header.search-area .intro-text .keyword a {
   background-color: transparent;
 }
 #temp-side-navigation > ul > li .bio-resource ul li a:hover,
-#temp-side-navigation > ul > li .variant ul li a:hover {
+#temp-side-navigation > ul > li .variant ul li a:hover,
+#temp-side-navigation > ul > li .genes ul li a:hover {
   background-color: var(--color-breadcrumb-hover);
 }
 #temp-side-navigation > ul > li .bio-resource ul li .-disabled:hover,
-#temp-side-navigation > ul > li .variant ul li .-disabled:hover {
+#temp-side-navigation > ul > li .variant ul li .-disabled:hover,
+#temp-side-navigation > ul > li .genes ul li .-disabled:hover {
   background-color: transparent;
 }
 #temp-side-navigation > ul > li .bio-resource ul li .selected,
-#temp-side-navigation > ul > li .variant ul li .selected {
+#temp-side-navigation > ul > li .variant ul li .selected,
+#temp-side-navigation > ul > li .genes ul li .selected {
   background-color: rgba(22, 35, 78, 0.2);
+}
+
+.treeview-container {
+  overflow-x: auto;
+  overflow-y: auto;
+  padding: 0;
+  width: 100%;
+  min-width: 250px;
+  max-width: 100%;
+  box-sizing: border-box;
+  /* スクロールバーを非表示 */
+  scrollbar-width: none;
+  /* Firefox */
+  -ms-overflow-style: none;
+  /* IE and Edge */
+  /* スクロール位置の変更を滑らかにする */
+  scroll-behavior: auto; /* 自動スクロールを無効化 */
+}
+
+.treeview-container::-webkit-scrollbar {
+  display: none;
+  /* Chrome, Safari, Opera */
+}
+
+/* 親要素の幅制限を考慮したスクロール設定 */
+.treeview-container .ztree {
+  min-width: max-content;
+  width: 100%;
+  padding: 0 15px;
+}
+
+.treeview-container .ztree * {
+  font-family: "Poppins", "Hiragino Sans", "ヒラギノ角ゴシック", "Yu Gothic", "メイリオ", sans-serif !important;
+  font-size: 14px;
+}
+
+/* ノードのスタイル */
+.treeview-container .ztree li {
+  line-height: 1.4;
+  list-style: none;
+}
+
+.treeview-container .ztree li a {
+  color: #16234e;
+  text-decoration: none;
+  padding: 2px 6px !important;
+  display: inline-block;
+  font-weight: normal;
+  height: auto !important;
+  min-height: 24px;
+  white-space: nowrap;
+  overflow: visible;
+  border-radius: 3px;
+}
+
+/* 外部CSSの::after疑似要素を無効化 */
+.treeview-container .ztree li a::after {
+  content: none !important;
+  display: none !important;
+}
+
+/* 外部CSSの::before疑似要素も無効化 */
+.treeview-container .ztree li a::before {
+  content: none !important;
+  display: none !important;
+}
+
+.treeview-container .ztree li a:hover {
+  background-color: rgba(22, 35, 78, 0.08);
+  color: #16234e;
+  text-decoration: none;
+  border-radius: 3px;
+}
+
+/* 展開/折りたたみアイコンのスタイル - CSS三角形 */
+.treeview-container .ztree li span.button {
+  background: none;
+  border: none;
+  width: 16px;
+  height: 16px;
+  vertical-align: middle;
+  display: inline-block;
+  position: relative;
+}
+
+.treeview-container .ztree li span.button.switch {
+  background-image: none;
+}
+
+/* デフォルトは右向き三角形 - CSS borderで作成 */
+.treeview-container .ztree li span.button.switch:before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 0;
+  height: 0;
+  border-left: 6px solid #16234e;
+  border-top: 4px solid transparent;
+  border-bottom: 4px solid transparent;
+}
+
+/* 展開状態のアイコンを下向き三角形に - CSS borderで作成 */
+.treeview-container .ztree li span.button.switch.open:before,
+.treeview-container .ztree li span.button.switch.open_docu:before,
+.treeview-container .ztree li span.button.switch.open_ico_docu:before,
+.treeview-container .ztree li span.button.switch.open_ico_open:before,
+.treeview-container .ztree li span.button.switch.open_ico_close:before,
+.treeview-container .ztree li span.button.switch.open_ico:before,
+.treeview-container .ztree li span.button.switch[class*=open]:before {
+  content: "" !important;
+  border-left: 4px solid transparent !important;
+  border-right: 4px solid transparent !important;
+  border-top: 6px solid #16234e !important;
+  border-bottom: none !important;
+}
+
+/* 折りたたみ状態のアイコンを右向き三角形に - CSS borderで作成 */
+.treeview-container .ztree li span.button.switch.close:before,
+.treeview-container .ztree li span.button.switch.close_docu:before,
+.treeview-container .ztree li span.button.switch.close_ico_docu:before,
+.treeview-container .ztree li span.button.switch.close_ico_close:before,
+.treeview-container .ztree li span.button.switch.close_ico_open:before,
+.treeview-container .ztree li span.button.switch.close_ico:before,
+.treeview-container .ztree li span.button.switch[class*=close]:before {
+  content: "" !important;
+  border-left: 6px solid #16234e !important;
+  border-top: 4px solid transparent !important;
+  border-bottom: 4px solid transparent !important;
+  border-right: none !important;
+}
+
+/* より具体的なセレクタで確実に制御 - CSS三角形 */
+.treeview-container .ztree li span.button.switch.open:before {
+  content: "" !important;
+  border-left: 4px solid transparent !important;
+  border-right: 4px solid transparent !important;
+  border-top: 6px solid #16234e !important;
+  border-bottom: none !important;
+}
+
+.treeview-container .ztree li span.button.switch.close:before {
+  content: "" !important;
+  border-left: 6px solid #16234e !important;
+  border-top: 4px solid transparent !important;
+  border-bottom: 4px solid transparent !important;
+  border-right: none !important;
+}
+
+/* 子要素がないノード（葉ノード）のアイコンを非表示 */
+.treeview-container .ztree li span.button.noline_docu {
+  display: none;
+}
+
+/* 子要素がないノードのテキスト位置調整 */
+.treeview-container .ztree li span.button.noline_docu + a {
+  margin-left: 0;
+}
+
+/* 選択されたノードのハイライト - テキスト部分のみ */
+.treeview-container .ztree li a.curSelectedNode {
+  background-color: rgba(22, 35, 78, 0.2) !important;
+  color: #16234e !important;
+  font-weight: normal;
+  border-radius: 3px;
+  border: none !important;
+  outline: none !important;
+}
+
+/* 子要素数のスタイル */
+.treeview-container .treeview-decendant-num,
+.treeview-container .treeview-descendant-num {
+  color: #16234e;
+  font-weight: normal;
+}
+
+/* 階層インデントの調整 */
+.treeview-container .ztree li ul {
+  margin: 0;
+  padding: 0;
+  padding-left: 18px;
+  /* 子要素のインデント */
+}
+
+/* ルートレベルのインデントをリセット */
+.treeview-container .ztree > li {
+  padding-left: 0;
+}
+
+/* 各レベルのインデント調整 */
+.treeview-container .ztree li {
+  position: relative;
+}
+
+/* 子要素のインデントを統一 */
+.treeview-container .ztree li ul li {
+  padding-left: 0;
 }
 
 /* Link */
@@ -1343,7 +1780,7 @@ header.search-area .intro-text .keyword a {
 .linked-items > dd {
   margin-inline-start: 0;
   display: inline-block;
-  margin: 0;
+  margin: 0 0 3px 0;
 }
 
 .data-num {
@@ -1727,4 +2164,27 @@ Disease page right top */
 .member-card .member-info .member-affiliation {
   font-size: 0.875rem;
   color: #666;
+}
+
+/* ---------- Stats Page ---------- */
+/* ================================================
+Stats Page Styles
+================================================ */
+.stats-section {
+  margin: 2rem 0;
+}
+.stats-section-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--color-secondary);
+  margin-bottom: 1rem;
+  padding-left: 0.75rem;
+  border-left: 6px solid var(--color-secondary);
+}
+
+.stats-table tbody td:not(:first-child) {
+  text-align: right;
+}
+.stats-table thead th:not(:first-child) {
+  text-align: right;
 }/*# sourceMappingURL=main.css.map */
