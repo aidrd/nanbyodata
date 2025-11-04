@@ -256,10 +256,15 @@ function _highlight_upstream_treeview_startNode(zTree, nodes, targetId) {
 
 function _onClick_handler(selectedId) {
   const u = new URL(window.location.href);
-  const currentHash = u.hash && u.hash.length > 0 ? u.hash : '#overview';
-  const next = `${
-    location.origin
-  }/disease/${selectedId}?lang=${encodeURIComponent(lang)}${currentHash}`;
+
+  const existingParams = new URLSearchParams(u.search);
+  existingParams.delete('lang');
+
+  let next = `${location.origin}/disease/${selectedId}`;
+  if (existingParams.toString()) {
+    next += `?${existingParams.toString()}`;
+  }
+
   window.location.href = next;
 }
 
