@@ -195,7 +195,7 @@ export function makePhenotypes(phenotypesData) {
   }
 }
 
-// publicHumanData(ヒト公開データ)
+// publicHumanData(NBDCヒトDB)
 export function makePublicHumanData(publicHumanData) {
   const currentLang = document.querySelector('.language-select').value;
   const publicHumanDataLang =
