@@ -155,6 +155,7 @@ async function loadStatsData() {
       fetchLinkData2(),
       fetchLinkData4(),
       fetchLinkData5(),
+      fetchGlycoGeneData(),
     ]).then((results) => {
       const linkData2 =
         results[0].status === 'fulfilled'
@@ -168,12 +169,17 @@ async function loadStatsData() {
         results[2].status === 'fulfilled'
           ? results[2].value
           : getDefaultLinkData5();
+      const glycoGeneData =
+        results[3].status === 'fulfilled'
+          ? results[3].value
+          : getDefaultGlycoGeneData();
       apiData.linkData2 = linkData2;
       apiData.linkData4 = linkData4;
       apiData.linkData5 = linkData5;
+      apiData.glycoGeneData = glycoGeneData;
 
       results.forEach((result, index) => {
-        const apiNames = ['Link2', 'Link4', 'Link5'];
+        const apiNames = ['Link2', 'Link4', 'Link5', 'GlycoGene'];
 
         if (result.status === 'rejected') {
           console.warn(`${apiNames[index]} API エラー:`, result.reason);
@@ -189,6 +195,9 @@ async function loadStatsData() {
           }
           if (index === 2) {
             hideSection('related-data');
+          }
+          if (index === 3) {
+            // GlycoGene API エラーは related-data に影響するが、他のデータは表示可能
           }
         }
       });
@@ -221,7 +230,7 @@ async function loadStatsData() {
       ) {
         const relatedData = {
           shitei: {
-            glycanGenes: '-',
+            glycanGenes: safeParseInt(glycoGeneData.glyco_gene_shitei?.num),
             geneticTestings: safeParseInt(linkData2.shitei_genetest?.genetest),
             clinicalFeatures: safeParseInt(linkData2.shitei_hp?.hp),
             facialFeatures: safeParseInt(linkData4.shitei_gm?.GM),
@@ -229,7 +238,7 @@ async function loadStatsData() {
             chemicals: safeParseInt(linkData5.shitei_pubchem?.pubchem),
           },
           shoman: {
-            glycanGenes: '-',
+            glycanGenes: safeParseInt(glycoGeneData.glyco_gene_shoman?.num),
             geneticTestings: safeParseInt(linkData2.shoman_genetest?.genetest),
             clinicalFeatures: safeParseInt(linkData2.shoman_hp?.hp),
             facialFeatures: safeParseInt(linkData4.shoman_gm?.GM),
@@ -376,7 +385,7 @@ function transformApiDataToStatsData(
       // 疾患関連データ
       relatedData: {
         shitei: {
-          glycanGenes: '-',
+          glycanGenes: '-', // transformApiDataToStatsDataでは使用しない（loadStatsDataで個別に取得）
           geneticTestings: safeParseInt(linkData2.shitei_genetest?.genetest),
           clinicalFeatures: safeParseInt(linkData2.shitei_hp?.hp),
           facialFeatures: safeParseInt(linkData4.shitei_gm?.GM),
@@ -384,7 +393,7 @@ function transformApiDataToStatsData(
           chemicals: safeParseInt(linkData5.shitei_pubchem?.pubchem),
         },
         shoman: {
-          glycanGenes: '-',
+          glycanGenes: '-', // transformApiDataToStatsDataでは使用しない（loadStatsDataで個別に取得）
           geneticTestings: safeParseInt(linkData2.shoman_genetest?.genetest),
           clinicalFeatures: safeParseInt(linkData2.shoman_hp?.hp),
           facialFeatures: safeParseInt(linkData4.shoman_gm?.GM),
@@ -637,6 +646,34 @@ async function fetchLinkData7() {
     return data;
   } catch (error) {
     console.error('Link7 API エラー:', error);
+    throw error;
+  }
+}
+
+// test_link_count_total_glycogene_test APIから糖鎖関連遺伝子データを取得する関数
+async function fetchGlycoGeneData() {
+  try {
+    const response = await fetch('/sparqlist/api/test_link_count_total_glycogene_test');
+
+    if (!response.ok) {
+      throw new Error(
+        `GlycoGene API request failed: ${response.status} ${response.statusText}`
+      );
+    }
+
+    const contentType = response.headers.get('content-type');
+
+    if (!contentType || !contentType.includes('application/json')) {
+      const text = await response.text();
+      console.error('Expected JSON but got:', contentType);
+      console.error('Response text:', text.substring(0, 200) + '...');
+      throw new Error(`Expected JSON response but got ${contentType}`);
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('GlycoGene API エラー:', error);
     throw error;
   }
 }
@@ -1052,5 +1089,13 @@ function getDefaultLinkData7() {
   return {
     shitei_clinvar: { num: '0' },
     shoman_clinvar: { num: '0' },
+  };
+}
+
+function getDefaultGlycoGeneData() {
+  return {
+    glyco_gene_shitei: { num: '0' },
+    glyco_gene_shoman: { num: '0' },
+    glyco_gene_total: { num: '0' },
   };
 }
