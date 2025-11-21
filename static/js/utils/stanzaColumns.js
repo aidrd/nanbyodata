@@ -352,7 +352,7 @@ export const chemicalInformationColumns = [
   { id: 'label', label: 'Chemical Name', rowspan: true },
   {
     id: 'title',
-    label: 'Title',
+    label: 'Reference Title',
     link: 'ref_url',
     target: '_blank',
   },
