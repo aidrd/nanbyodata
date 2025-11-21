@@ -133,7 +133,8 @@ export function makeGlycanRelatedGene(glycanRelatedGeneData) {
     'glycan-related-genes',
     'glycan-related-genes-table',
     convertColumnToText(glycanRelatedGeneColumns),
-    uniqueGeneIdCount // 重複のないgene_idの数を渡す
+    uniqueGeneIdCount, // 重複のないgene_idの数を渡す
+    'https://togostanza.github.io/togostanza-themes/contrib/nanbyodata-glycan.css'
   );
   if (glycanRelatedGeneData?.length > 0 && glycanRelatedGeneData !== null) {
     const navLink = document.querySelector('.nav-link.glycan-related-genes');
@@ -444,11 +445,18 @@ export function makeChemicalInformation(chemicalInformationData) {
  * @param {string} columns - Columns for togostanza-pagination-table.
  * @param {number} customCount - Optional custom count for data-num (used for unique gene counts).
  */
-function makeData(data, categoryName, tableId, columns, customCount) {
+function makeData(
+  data,
+  categoryName,
+  tableId,
+  columns,
+  customCount,
+  customCssUrl
+) {
   const container = document.getElementById(categoryName);
   const tableView = container.querySelector(`#${tableId}`);
   const objectUrl = createObjectUrlFromData(data);
-  updateElementWithTable(tableView, objectUrl, columns);
+  updateElementWithTable(tableView, objectUrl, columns, customCssUrl);
 
   // カスタム数値が指定されていれば使用し、そうでなければデータの長さを使用
   const displayCount =

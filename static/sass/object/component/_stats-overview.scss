@@ -53,11 +53,9 @@ Stats Overview Component
 
 .stats-card {
   background: white;
-  border-radius: 12px;
   padding: 24px 10px;
   text-align: center;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
   height: 170px;
   display: flex;
   flex-direction: column;
@@ -65,7 +63,6 @@ Stats Overview Component
 
   &:hover {
     transform: translateY(-2px);
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
   }
 }
 
@@ -82,18 +79,17 @@ Stats Overview Component
   }
 
   .stats-icon-svg {
-    width: 3rem;
-    height: 3rem;
+    width: 2.5rem;
+    height: 2.5rem;
   }
 }
 
 .stats-number {
   position: absolute;
-  top: 53%;
+  top: 55%;
   left: 50%;
   transform: translate(-50%, -50%);
-  font-size: 2.5rem;
-  font-weight: 700;
+  font-size: 1.5rem;
   color: var(--color-secondary);
   margin: 0;
   line-height: 1;
@@ -207,13 +203,9 @@ Stats Overview Component
     }
 
     .stats-icon-svg {
-      width: 2.5rem;
-      height: 2.5rem;
+      width: 2rem;
+      height: 2rem;
     }
-  }
-
-  .stats-number {
-    font-size: 2rem;
   }
 
   .stats-label {
@@ -249,13 +241,9 @@ Stats Overview Component
     }
 
     .stats-icon-svg {
-      width: 2.2rem;
-      height: 2.2rem;
+      width: 1.8rem;
+      height: 1.8rem;
     }
-  }
-
-  .stats-number {
-    font-size: 1.8rem;
   }
 
   .stats-label {

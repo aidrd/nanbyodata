@@ -107,16 +107,16 @@
             <a href="/stats" class="stats-card-link">
               <div class="stats-card">
                 <div class="stats-icon">
-                  <i class="fas fa-virus"></i>
+                  <img src="/static/img/NANDO.svg" alt="難病" class="stats-icon-svg">
                 </div>
                 <div class="stats-number" data-api="intractable_diseases">
                   <div class="loading-spinner -stats"></div>
                 </div>
                 <div class="stats-label">
                   {% if get_locale() == "ja" or get_locale() == "ja_JP" %}
-                  疾患数
+                  難病
                   {% else %}
-                  Disease
+                  Nanbyo
                   {% endif %}
                 </div>
               </div>
@@ -126,7 +126,7 @@
             <a href="/stats" class="stats-card-link">
               <div class="stats-card">
                 <div class="stats-icon">
-                  <i class="fas fa-dna"></i>
+                  <img src="/static/img/genes.svg" alt="疾患関連遺伝子" class="stats-icon-svg">
                 </div>
                 <div class="stats-number" data-api="disease_genes">
                   <div class="loading-spinner -stats"></div>
@@ -145,7 +145,7 @@
             <a href="/stats" class="stats-card-link">
               <div class="stats-card">
                 <div class="stats-icon">
-                  <img src="/static/img/tousa.svg" alt="糖鎖関連遺伝子" class="stats-icon-svg">
+                  <img src="/static/img/glycan-related_genes.svg" alt="糖鎖関連遺伝子" class="stats-icon-svg">
                 </div>
                 <div class="stats-number" data-api="glycan_genes">
                   <div class="loading-spinner -stats"></div>
@@ -164,7 +164,7 @@
             <a href="/stats" class="stats-card-link">
               <div class="stats-card">
                 <div class="stats-icon">
-                  <i class="fas fa-briefcase-medical"></i>
+                  <img src="/static/img/genetic_testings.svg" alt="診療用遺伝学的検査" class="stats-icon-svg">
                 </div>
                 <div class="stats-number" data-api="clinical_tests">
                   <div class="loading-spinner -stats"></div>
@@ -183,7 +183,7 @@
             <a href="/stats" class="stats-card-link">
               <div class="stats-card">
                 <div class="stats-icon">
-                  <i class="fas fa-stethoscope"></i>
+                  <img src="/static/img/clinical_features.svg" alt="臨床的特徴" class="stats-icon-svg">
                 </div>
                 <div class="stats-number" data-api="clinical_features">
                   <div class="loading-spinner -stats"></div>
@@ -202,7 +202,7 @@
             <a href="/stats" class="stats-card-link">
               <div class="stats-card">
                 <div class="stats-icon">
-                  <i class="fas fa-flask"></i>
+                  <img src="/static/img/bioresources.svg" alt="難病特異的バイオリソース" class="stats-icon-svg">
                 </div>
                 <div class="stats-number" data-api="bioresources">
                   <div class="loading-spinner -stats"></div>
@@ -221,7 +221,7 @@
             <a href="/stats" class="stats-card-link">
               <div class="stats-card">
                 <div class="stats-icon">
-                  <i class="fas fa-user-circle"></i>
+                  <img src="/static/img/facial_features.svg" alt="顔貌特徴" class="stats-icon-svg">
                 </div>
                 <div class="stats-number" data-api="facial_features">
                   <div class="loading-spinner -stats"></div>
@@ -240,7 +240,7 @@
             <a href="/stats" class="stats-card-link">
               <div class="stats-card">
                 <div class="stats-icon">
-                  <i class="fas fa-external-link-alt"></i>
+                  <img src="/static/img/external_links.svg" alt="外部リンク" class="stats-icon-svg">
                 </div>
                 <div class="stats-number" data-api="external_links">
                   <div class="loading-spinner -stats"></div>

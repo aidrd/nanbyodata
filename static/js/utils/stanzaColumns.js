@@ -115,7 +115,6 @@ export const glycanRelatedGeneColumns = [
     id: 'genesymbol',
     label: 'Glycan related gene (GlyCosmos)',
     link: 'glycosmosgene',
-    align: 'center',
     rowspan: true,
   },
   {

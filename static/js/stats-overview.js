@@ -122,8 +122,23 @@ class StatsOverview {
         this.updateCard('facial_features', 'N/A');
       });
 
-    // 糖鎖関連遺伝子は常に'-'
-    this.updateCard('glycan_genes', '-');
+    // APIから糖鎖関連遺伝子データを取得
+    fetch(`/sparqlist/api/NANDO_link_count8?timestamp=${this.timestamp}`)
+      .then((res) => (res.ok ? res.json() : null))
+      .then((glycoData) => {
+        if (glycoData) {
+          allData.glycoData = glycoData;
+          const glycoGeneTotal = parseInt(glycoData.glyco_gene_total?.num || 0);
+          this.updateCard(
+            'glycan_genes',
+            glycoGeneTotal > 0 ? glycoGeneTotal.toString() : '-'
+          );
+        }
+      })
+      .catch((error) => {
+        console.error('NANDO_link_count8 API failed:', error);
+        this.updateCard('glycan_genes', 'N/A');
+      });
 
     this.updateCard('external_links', '-');
 

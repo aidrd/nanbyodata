@@ -411,14 +411,17 @@ export const downloadDatasets = (nandoId, datasets) => {
     return txtData;
 
     function processObject(obj, prefix) {
+      if (!obj || typeof obj !== 'object') {
+        return;
+      }
       Object.entries(obj).forEach(([key, value]) => {
         if (Array.isArray(value)) {
-          if (typeof value[0] === 'object') {
+          if (value.length > 0 && typeof value[0] === 'object' && value[0] !== null) {
             processArray(value, `${prefix}${key}/`);
           } else {
             processArray(value, `${prefix}${key} - `);
           }
-        } else if (typeof value === 'object') {
+        } else if (typeof value === 'object' && value !== null) {
           processObject(value, `${prefix}${key}/`);
         } else {
           txtData += `${prefix}${key} - ${value}\n`;
@@ -428,7 +431,7 @@ export const downloadDatasets = (nandoId, datasets) => {
 
     function processArray(arr, prefix) {
       arr.forEach((item) => {
-        if (typeof item === 'object') {
+        if (typeof item === 'object' && item !== null) {
           processObject(item, prefix);
         } else {
           txtData += `${prefix}${item}\n`;
