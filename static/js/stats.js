@@ -650,10 +650,10 @@ async function fetchLinkData7() {
   }
 }
 
-// test_link_count_total_glycogene_test APIから糖鎖関連遺伝子データを取得する関数
+// NANDO_link_count8 APIから糖鎖関連遺伝子データを取得する関数
 async function fetchGlycoGeneData() {
   try {
-    const response = await fetch('/sparqlist/api/test_link_count_total_glycogene_test');
+    const response = await fetch('/sparqlist/api/NANDO_link_count8');
 
     if (!response.ok) {
       throw new Error(

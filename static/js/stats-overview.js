@@ -122,10 +122,8 @@ class StatsOverview {
         this.updateCard('facial_features', 'N/A');
       });
 
-    // test_link_count_total_glycogene_test APIから糖鎖関連遺伝子データを取得
-    fetch(
-      `/sparqlist/api/test_link_count_total_glycogene_test?timestamp=${this.timestamp}`
-    )
+    // APIから糖鎖関連遺伝子データを取得
+    fetch(`/sparqlist/api/NANDO_link_count8?timestamp=${this.timestamp}`)
       .then((res) => (res.ok ? res.json() : null))
       .then((glycoData) => {
         if (glycoData) {
@@ -138,10 +136,7 @@ class StatsOverview {
         }
       })
       .catch((error) => {
-        console.error(
-          'test_link_count_total_glycogene_test API failed:',
-          error
-        );
+        console.error('NANDO_link_count8 API failed:', error);
         this.updateCard('glycan_genes', 'N/A');
       });
 
