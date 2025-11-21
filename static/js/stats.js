@@ -485,7 +485,7 @@ async function fetchNANDOData() {
 // BRC APIからデータを取得する関数
 async function fetchBRCData() {
   try {
-    const response = await fetch('/sparqlist/api/NANDO_link_count3_brc');
+    const response = await fetch('/sparqlist/api/NANDO_link_count3');
 
     if (!response.ok) {
       throw new Error(

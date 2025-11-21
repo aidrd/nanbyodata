@@ -1805,6 +1805,10 @@ Stats Page Styles
 .stats-table tbody td:not(:first-child) {
   text-align: right;
 }
+.stats-table tbody td:first-child {
+  font-weight: bold;
+  font-size: 0.75rem;
+}
 .stats-table thead th:not(:first-child) {
   text-align: right;
 }/*# sourceMappingURL=main.css.map */

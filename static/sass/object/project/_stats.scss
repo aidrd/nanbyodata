@@ -23,8 +23,13 @@ Stats Page Styles
     &:not(:first-child) {
       text-align: right;
     }
+
+    &:first-child {
+      font-weight: bold;
+      font-size: 0.75rem;
+    }
   }
-  
+
   // ヘッダーも右寄せにする（区分列以外）
   thead th {
     &:not(:first-child) {

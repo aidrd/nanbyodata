@@ -75,8 +75,8 @@ class StatsOverview {
         this.updateCard('clinical_features', 'N/A');
       });
 
-    // NANDO_link_count3_brc APIからバイオリソースデータを取得
-    fetch(`/sparqlist/api/NANDO_link_count3_brc?timestamp=${this.timestamp}`)
+    // NANDO_link_count3 APIからバイオリソースデータを取得
+    fetch(`/sparqlist/api/NANDO_link_count3?timestamp=${this.timestamp}`)
       .then((res) => (res.ok ? res.json() : null))
       .then((brcData) => {
         if (brcData) {
@@ -98,7 +98,7 @@ class StatsOverview {
         }
       })
       .catch((error) => {
-        console.error('NANDO_link_count3_brc API failed:', error);
+        console.error('NANDO_link_count3 API failed:', error);
         this.updateCard('bioresources', 'N/A');
       });
 
