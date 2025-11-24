@@ -17,10 +17,21 @@ from flask_babel import Babel
 from flask_cors import CORS
 import markdown2
 import requests
+import MySQLdb
+import MySQLdb.cursors
+from contextlib import contextmanager
 
 
 app = Flask(__name__)
 CORS(app)
+
+# DB設定
+db_host = os.getenv('MYSQL_HOST')
+db_port = os.getenv('MYSQL_PORT')
+db_name = os.getenv('MYSQL_DATABASE')
+db_user = os.getenv('MYSQL_USER')
+db_pw   = os.getenv('MYSQL_PASSWORD')
+
 
 app.secret_key = 'nanbyodata0824'
 app.config['BASE_URI'] = os.getenv('BASE_URI', 'https://nanbyodata.jp/')
@@ -242,3 +253,40 @@ def get_overview(id_nando):
 @app.route('/news')
 def page():
     return render_template('news.html')
+
+@contextmanager
+def get_mysql_connection():
+    conn = MySQLdb.connect(host=db_host, db=db_name, user=db_user, passwd=db_pw, charset="utf8")
+    try:
+        yield conn
+    finally:
+        conn.close()
+
+@app.route('/mysql_test')
+def mysql_test():
+
+    response_data = {}
+    try:
+        with get_mysql_connection() as OBJ_MYSQL:
+            print("MySQL connection established successfully")
+            sql = "select COUNT(*) from nanbyodata_nando_panel_upstream_trace"
+            cr = OBJ_MYSQL.cursor()
+            cr.execute(sql)
+            rows = cr.fetchall()
+            cr.close()
+            for row in rows:
+                response_data = row[0]
+            print(f"Query executed successfully. Result: {response_data}")
+        return jsonify({
+            "status": "success",
+            "message": "MySQL connection and query successful",
+            "count": response_data
+        }), 200
+    except Exception as e:
+        error_msg = str(e)
+        print(f"MySQL connection or query failed: {error_msg}")
+        return jsonify({
+            "status": "error",
+            "message": "MySQL connection or query failed",
+            "error": error_msg
+        }), 500
