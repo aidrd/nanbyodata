@@ -21,14 +21,14 @@ import {
   makeGlycanRelatedGene,
   makeGeneticTesting,
   makePhenotypes,
-  makePublicHumanData,
+  makeHumanGenomicDatasets,
   makeCell,
   makeMouse,
   makeDNA,
   makeClinvar,
   makeMgend,
   makeFacialFeatures,
-  makeChemicalInformation,
+  makeCompounds,
   makeReferences,
 } from './diseaseContent.js';
 import { switchingDisplayContents } from './diseaseSideNavigation.js';
@@ -94,14 +94,14 @@ const datasets = [
   { name: 'Glycan-related Genes', data: null },
   { name: 'Genetic Testing', data: null },
   { name: 'Clinical Features', data: null },
-  { name: 'NBDC Human DB', data: null },
+  { name: 'Human Genomic Datasets', data: null },
   { name: 'Cell', data: null },
   { name: 'Mouse', data: null },
   { name: 'DNA', data: null },
   { name: 'Clinvar', data: null },
   { name: 'MGeND', data: null },
   { name: 'Facial Features', data: null },
-  { name: 'Chemical Information', data: null },
+  { name: 'Compounds', data: null },
   { name: 'References', data: null },
 ];
 
@@ -334,10 +334,10 @@ const datasets = [
         }
       ),
       fetchData('nanbyodata_get_nbdc_human_databases_info_by_nando_id').then(
-        (publicHumanData) => {
-          makePublicHumanData(publicHumanData);
-          datasets.find((d) => d.name === 'NBDC Human DB').data =
-            publicHumanData;
+        (humanGenomicDatasetsData) => {
+          makeHumanGenomicDatasets(humanGenomicDatasetsData);
+          datasets.find((d) => d.name === 'Human Genomic Datasets').data =
+            humanGenomicDatasetsData;
           checkAndLogDatasets();
         }
       ),
@@ -385,10 +385,9 @@ const datasets = [
         }
       ),
       fetchData('nanbyodata_get_pubchem_chemical_information_by_nando_id').then(
-        (chemicalInformationData) => {
-          makeChemicalInformation(chemicalInformationData);
-          datasets.find((d) => d.name === 'Chemical Information').data =
-            chemicalInformationData;
+        (compoundsData) => {
+          makeCompounds(compoundsData);
+          datasets.find((d) => d.name === 'Compounds').data = compoundsData;
           checkAndLogDatasets();
         }
       ),
@@ -434,14 +433,14 @@ function trySwitchingContent(hash, retries = 0) {
     'glycan-related-genes',
     'genetic-testing',
     'clinical-features',
-    'public-human-data',
+    'human-genomic-datasets',
     'bio-resources-cell',
     'bio-resources-mouse',
     'bio-resources-dna',
     'variants-clinvar',
     'variants-mgend',
     'facial-features',
-    'chemical-information',
+    'compounds',
     'references',
   ];
 
