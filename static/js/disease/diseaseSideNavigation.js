@@ -8,14 +8,14 @@ export function makeSideNavigation() {
     'glycan-related-genes',
     'genetic-testing',
     'clinical-features',
-    'public-human-data',
+    'human-genomic-datasets',
     'cell',
     'mouse',
     'dna',
     'clinvar',
     'mgend',
     'facial-features',
-    'chemical-information',
+    'compounds',
     'references',
   ];
 
@@ -161,7 +161,7 @@ export function switchingDisplayContents(selectedItemId) {
     '#glycan-related-genes',
     '#genetic-testing',
     '#clinical-features',
-    '#public-human-data',
+    '#human-genomic-datasets',
     '#bio-resource',
     '#variant',
     '#facial-features',
@@ -197,7 +197,7 @@ export function switchingDisplayContents(selectedItemId) {
       '#bio-resource',
       '#variant',
       '#facial-features',
-      '#chemical-information',
+      '#compounds',
       '#references',
     ];
 
@@ -266,8 +266,8 @@ export function switchingDisplayContents(selectedItemId) {
         prepareDataWrapper();
         toggleDisplay(`#${selectedItemId}`, 'block');
         break;
-      case 'chemical-information':
-      case 'public-human-data':
+      case 'compounds':
+      case 'human-genomic-datasets':
         prepareDataWrapper();
         toggleDisplay(`#${selectedItemId}`, 'block');
         break;

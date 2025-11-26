@@ -6,8 +6,8 @@ import {
   geneticTestingColumns,
   phenotypesJaColumns,
   phenotypesEnColumns,
-  publicHumanDataJaColumns,
-  publicHumanDataEnColumns,
+  humanGenomicDatasetsJaColumns,
+  humanGenomicDatasetsEnColumns,
   referencesColumns,
   bioResourceCellColumns,
   bioResourceMouseJaColumns,
@@ -16,7 +16,7 @@ import {
   variantClinvarColumns,
   variantMgendColumns,
   facialFeaturesColumns,
-  chemicalInformationColumns,
+  compoundsColumns,
   convertColumnToText,
 } from '../utils/stanzaColumns.js';
 
@@ -143,7 +143,7 @@ export function makeGlycanRelatedGene(glycanRelatedGeneData) {
   }
 }
 
-// geneticTesting(診療用遺伝学的検査情報)
+// geneticTesting(診療用遺伝学的検査)
 export function makeGeneticTesting(geneticTestingData) {
   makeData(
     geneticTestingData,
@@ -196,24 +196,29 @@ export function makePhenotypes(phenotypesData) {
   }
 }
 
-// publicHumanData(NBDCヒトDB)
-export function makePublicHumanData(publicHumanData) {
+// humanGenomicDatasets(ヒトゲノムデータセット)
+export function makeHumanGenomicDatasets(humanGenomicDatasetsData) {
   const currentLang = document.querySelector('.language-select').value;
-  const publicHumanDataLang =
-    currentLang === 'ja' ? 'public-human-data-ja' : 'public-human-data-en';
+  const humanGenomicDatasetsLang =
+    currentLang === 'ja'
+      ? 'human-genomic-datasets-ja'
+      : 'human-genomic-datasets-en';
   const columns = {
-    ja: convertColumnToText(publicHumanDataJaColumns),
-    en: convertColumnToText(publicHumanDataEnColumns),
+    ja: convertColumnToText(humanGenomicDatasetsJaColumns),
+    en: convertColumnToText(humanGenomicDatasetsEnColumns),
   };
   makeData(
-    publicHumanData,
-    'public-human-data',
-    publicHumanDataLang,
+    humanGenomicDatasetsData,
+    'human-genomic-datasets',
+    humanGenomicDatasetsLang,
     columns[currentLang],
-    publicHumanData?.length || 0
+    humanGenomicDatasetsData?.length || 0
   );
-  if (publicHumanData?.length > 0 && publicHumanData !== null) {
-    const navLink = document.querySelector('.nav-link.public-human-data');
+  if (
+    humanGenomicDatasetsData?.length > 0 &&
+    humanGenomicDatasetsData !== null
+  ) {
+    const navLink = document.querySelector('.nav-link.human-genomic-datasets');
     navLink.style.cursor = 'pointer';
     navLink.classList.remove('-disabled');
   }
@@ -415,23 +420,20 @@ export function makeFacialFeatures(facialFeaturesData) {
   }
 }
 
-// Chemical Information
-export function makeChemicalInformation(chemicalInformationData) {
+// Compounds
+export function makeCompounds(compoundsData) {
   const currentLang = document.querySelector('.language-select').value;
-  const chemicalInformationLang =
-    currentLang === 'ja'
-      ? 'chemical-information-ja'
-      : 'chemical-information-en';
-  const columns = convertColumnToText(chemicalInformationColumns);
+  const compoundsLang = currentLang === 'ja' ? 'compounds-ja' : 'compounds-en';
+  const columns = convertColumnToText(compoundsColumns);
   makeData(
-    chemicalInformationData,
-    'chemical-information',
-    chemicalInformationLang,
+    compoundsData,
+    'compounds',
+    compoundsLang,
     columns,
-    chemicalInformationData?.length || 0
+    compoundsData?.length || 0
   );
-  if (chemicalInformationData?.length > 0 && chemicalInformationData !== null) {
-    const navLink = document.querySelector('.nav-link.chemical-information');
+  if (compoundsData?.length > 0 && compoundsData !== null) {
+    const navLink = document.querySelector('.nav-link.compounds');
     navLink.style.cursor = 'pointer';
     navLink.classList.remove('-disabled');
   }
