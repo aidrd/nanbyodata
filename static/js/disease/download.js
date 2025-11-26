@@ -8,8 +8,8 @@ import {
   geneticTestingColumns,
   phenotypesJaColumns,
   phenotypesEnColumns,
-  publicHumanDataJaColumns,
-  publicHumanDataEnColumns,
+  humanGenomicDatasetsJaColumns,
+  humanGenomicDatasetsEnColumns,
   referencesColumns,
   bioResourceCellColumns,
   bioResourceMouseJaColumns,
@@ -22,7 +22,7 @@ import {
   subclassTableJaColumns,
   subclassTableEnColumns,
   glycanRelatedGeneColumns,
-  chemicalInformationColumns,
+  compoundsColumns,
 } from '../utils/stanzaColumns.js';
 
 export const downloadDatasets = (nandoId, datasets) => {
@@ -159,14 +159,14 @@ export const downloadDatasets = (nandoId, datasets) => {
               name,
               data: reconstructionData(facialFeaturesColumns, data),
             };
-          case 'NBDC Human DB':
-            const publicHumanDataColumns =
+          case 'Human Genomic Datasets':
+            const humanGenomicDatasetsColumns =
               currentLang === 'ja'
-                ? publicHumanDataJaColumns
-                : publicHumanDataEnColumns;
+                ? humanGenomicDatasetsJaColumns
+                : humanGenomicDatasetsEnColumns;
             return {
               name,
-              data: reconstructionData(publicHumanDataColumns, data),
+              data: reconstructionData(humanGenomicDatasetsColumns, data),
             };
           case 'Cell':
             return {
@@ -197,10 +197,10 @@ export const downloadDatasets = (nandoId, datasets) => {
               name,
               data: reconstructionData(variantMgendColumns, data),
             };
-          case 'Chemical Information':
+          case 'Compounds':
             return {
               name,
-              data: reconstructionData(chemicalInformationColumns, data),
+              data: reconstructionData(compoundsColumns, data),
             };
           case 'References':
             return { name, data: reconstructionData(referencesColumns, data) };
@@ -292,9 +292,9 @@ export const downloadDatasets = (nandoId, datasets) => {
       'Genetic Testing': [],
       'Clinical Features': [],
       'Facial Features': [],
-      'NBDC Human DB': [],
+      'Human Genomic Datasets': [],
       'Bio Resources': ['Cell', 'Mouse', 'DNA'],
-      'Chemical Information': [],
+      Compounds: [],
       Variants: ['Clinvar', 'MGeND'],
       References: [],
     };
@@ -416,7 +416,11 @@ export const downloadDatasets = (nandoId, datasets) => {
       }
       Object.entries(obj).forEach(([key, value]) => {
         if (Array.isArray(value)) {
-          if (value.length > 0 && typeof value[0] === 'object' && value[0] !== null) {
+          if (
+            value.length > 0 &&
+            typeof value[0] === 'object' &&
+            value[0] !== null
+          ) {
             processArray(value, `${prefix}${key}/`);
           } else {
             processArray(value, `${prefix}${key} - `);

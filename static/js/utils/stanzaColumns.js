@@ -207,7 +207,7 @@ export const phenotypesEnColumns = [
   },
 ];
 
-export const publicHumanDataJaColumns = [
+export const humanGenomicDatasetsJaColumns = [
   {
     id: 'hum_id',
     label: 'Hum ID',
@@ -220,7 +220,7 @@ export const publicHumanDataJaColumns = [
   { id: 'type_data_ja', label: 'アクセス制限' },
 ];
 
-export const publicHumanDataEnColumns = [
+export const humanGenomicDatasetsEnColumns = [
   {
     id: 'hum_id',
     label: 'Hum ID',
@@ -341,7 +341,7 @@ export const facialFeaturesColumns = [
   },
 ];
 
-export const chemicalInformationColumns = [
+export const compoundsColumns = [
   {
     id: 'id',
     label: 'Compound CID',
