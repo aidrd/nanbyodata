@@ -55,7 +55,7 @@ export const pediatricChronicSpecificDiseaseEnColumns = [
 export const referencesColumns = [
   { id: 'pmid', label: 'PMID', link: 'url', target: '_blank' },
   { id: 'title', label: 'Title' },
-  { id: 'magazine', label: 'Magazine' },
+  { id: 'magazine', label: 'Journal' },
   { id: 'date', label: 'Date', type: 'date' },
 ];
 
